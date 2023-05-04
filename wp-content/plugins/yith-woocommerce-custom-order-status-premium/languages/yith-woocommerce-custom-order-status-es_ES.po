@@ -1,0 +1,515 @@
+# Translation of YITH WooCommerce Custom Order Status in Spanish (Spain)
+# This file is distributed under the same license as the YITH WooCommerce Custom Order Status package.
+msgid ""
+msgstr ""
+"Project-Id-Version: YITH WooCommerce Custom Order Status\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/yith-woocommerce-"
+"custom-order-status-premium\n"
+"POT-Creation-Date: 2021-03-05 13:23:27+00:00\n"
+"PO-Revision-Date: 2020-08-13 20:50:22+0000\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/3.0.0-alpha.2\n"
+
+#: includes/class.yith-wccos-admin-premium.php:67
+#: includes/class.yith-wccos-admin.php:361
+msgid "Order Statuses"
+msgstr "Estados de pedido"
+
+#: includes/class.yith-wccos-admin-premium.php:68
+#: includes/class.yith-wccos-admin.php:400
+msgid "Settings"
+msgstr "Ajustes"
+
+#: includes/class.yith-wccos-admin-premium.php:141
+#: includes/class.yith-wccos-admin-premium.php:545
+msgid "User can cancel"
+msgstr "El usuario puede cancelar"
+
+#: includes/class.yith-wccos-admin-premium.php:142
+#: includes/class.yith-wccos-admin-premium.php:552
+msgid "User can pay"
+msgstr "El usuario puede pagar"
+
+#: includes/class.yith-wccos-admin-premium.php:143
+#: includes/class.yith-wccos-admin-premium.php:559
+msgid "Order is paid"
+msgstr "El pedido está pagado"
+
+#: includes/class.yith-wccos-admin-premium.php:144
+#: includes/class.yith-wccos-admin-premium.php:570
+msgid "Allow Downloads"
+msgstr "Permitir Descargas"
+
+#: includes/class.yith-wccos-admin-premium.php:145
+#: includes/class.yith-wccos-admin-premium.php:577
+msgid "Display in Reports"
+msgstr "Mostrar en Informes"
+
+#: includes/class.yith-wccos-admin-premium.php:146
+#: includes/class.yith-wccos-admin-premium.php:584
+msgid "Restore Stock"
+msgstr "Restaurar inventario"
+
+#: includes/class.yith-wccos-admin-premium.php:147
+#: includes/class.yith-wccos-admin-premium.php:591
+msgid "Show always in Actions"
+msgstr "Mostrar siempre en Acciones"
+
+#: includes/class.yith-wccos-admin-premium.php:148
+msgid "Send email to"
+msgstr "Enviar email a"
+
+#: includes/class.yith-wccos-admin-premium.php:152
+#: includes/class.yith-wccos-admin-premium.php:472
+msgid "Status Type"
+msgstr "Tipo de estado"
+
+#: includes/class.yith-wccos-admin-premium.php:153
+#: includes/class.yith-wccos-admin.php:403
+msgid "Slug"
+msgstr "Slug"
+
+#: includes/class.yith-wccos-admin-premium.php:154
+#: includes/class.yith-wccos-admin-premium.php:531
+msgid "Next Actions"
+msgstr "Próximas acciones"
+
+#: includes/class.yith-wccos-admin-premium.php:226
+msgid "None"
+msgstr "Ninguno"
+
+#: includes/class.yith-wccos-admin-premium.php:451
+msgid "Item %1$s variation #%2$s stock increased from %3$s to %4$s."
+msgstr ""
+"Variación %1$s artículo #%2$s inventario incrementado desde %3$s hasta %4$s."
+
+#: includes/class.yith-wccos-admin-premium.php:453
+msgid "Item %1$s stock increased from %2$s to %3$s."
+msgstr "Stock incrementado del %1$s artículo desde %2$s hasta %3$s."
+
+#: includes/class.yith-wccos-admin-premium.php:473
+msgid "Select a type for your status."
+msgstr "Selecciona un tipo para tu estado."
+
+#: includes/class.yith-wccos-admin-premium.php:493
+#: includes/class.yith-wccos-admin-premium.php:500
+#: includes/class.yith-wccos-admin-premium.php:523
+#: includes/class.yith-wccos-admin.php:186
+msgid "Icon"
+msgstr "Icono"
+
+#: includes/class.yith-wccos-admin-premium.php:494
+msgid "Icon of your status"
+msgstr "Icono de tu estado"
+
+#: includes/class.yith-wccos-admin-premium.php:499
+msgid "Default"
+msgstr "Por defecto"
+
+#: includes/class.yith-wccos-admin-premium.php:506
+msgid "Choose Icon"
+msgstr "Elegir icono"
+
+#: includes/class.yith-wccos-admin-premium.php:519
+msgid "Graphic Style"
+msgstr "Estilo Gráfico"
+
+#: includes/class.yith-wccos-admin-premium.php:520
+msgid "Style of your status button and indicator"
+msgstr "Estilo de tu botón de estado e indicador"
+
+#: includes/class.yith-wccos-admin-premium.php:524
+msgid "Text"
+msgstr "Texto"
+
+#: includes/class.yith-wccos-admin-premium.php:532
+msgid "Select statuses that will be enabled by this status"
+msgstr "Selecciona los estados que este estado habilitará"
+
+#: includes/class.yith-wccos-admin-premium.php:546
+msgid ""
+"Choose whether the customer can cancel orders when this status is applied or "
+"not"
+msgstr ""
+"Elige si el cliente puede cancelar los pedidos cuando este estado está "
+"aplicado o no"
+
+#: includes/class.yith-wccos-admin-premium.php:553
+msgid ""
+"Choose whether the customer can pay orders when this status is applied or not"
+msgstr ""
+"Elige si el cliente puede pagar los pedidos cuando este estado está aplicado "
+"o no"
+
+#: includes/class.yith-wccos-admin-premium.php:560
+msgid "Choose whether the order is considered paid or not"
+msgstr "Elige si el pedido se considera pagado o no"
+
+#: includes/class.yith-wccos-admin-premium.php:571
+msgid ""
+"Choose whether you want to allow downloads when this status is applied or not"
+msgstr ""
+"Elige si quieres permitir descargas cuando este estado esté aplicado o no"
+
+#: includes/class.yith-wccos-admin-premium.php:578
+msgid ""
+"Choose whether you want to include orders marked with this status in Reports"
+msgstr ""
+"Elige si quieres incluir los pedidos marcados con este estado en el Informe"
+
+#: includes/class.yith-wccos-admin-premium.php:585
+msgid ""
+"Choose whether you want to restore stock quantities or not when this status "
+"is applied"
+msgstr ""
+"Elige si quieres restaurar las cantidades de inventario o no cuando este "
+"estado es aplicado"
+
+#: includes/class.yith-wccos-admin-premium.php:592
+msgid ""
+"Choose whether you want to always show this status in WooCommerce Order "
+"Actions"
+msgstr ""
+"Elige si quieres mostrar siempre este estado en Acciones de pedido de "
+"WooCommerce"
+
+#: includes/class.yith-wccos-admin-premium.php:598
+#: includes/class.yith-wccos-admin-premium.php:606
+msgid "Email Settings"
+msgstr "Ajustes de Email"
+
+#: includes/class.yith-wccos-admin-premium.php:599
+msgid "To set emails for WooCommerce default status, use WooCommerce Panel in "
+msgstr ""
+"Para establecer emails para los estados predeterminados de WooCommerce, usa "
+"el Panel WooCommerce en "
+
+#: includes/class.yith-wccos-admin-premium.php:599
+msgid "WooCommerce -> Settings -> Emails"
+msgstr "WooCommerce -> Ajustes -> Emails"
+
+#: includes/class.yith-wccos-admin-premium.php:609
+msgid "Recipients"
+msgstr "Destinatarios"
+
+#: includes/class.yith-wccos-admin-premium.php:610
+msgid "Choose recipients of email notifications for this status"
+msgstr ""
+"Elige los destinatarios de las notificaciones de correo electrónico para "
+"este estado"
+
+#: includes/class.yith-wccos-admin-premium.php:618
+msgid "Recipient Email Address"
+msgstr "Dirección de email del receptor"
+
+#: includes/class.yith-wccos-admin-premium.php:619
+msgid ""
+"Type here the email address to notify when the selected status is selected"
+msgstr ""
+"Escribe aquí la dirección de email a la que notificar cuando el estado "
+"seleccionado se seleccione"
+
+#: includes/class.yith-wccos-admin-premium.php:625
+msgid "\"From\" Name"
+msgstr "Nombre del Remitente"
+
+#: includes/class.yith-wccos-admin-premium.php:626
+msgid "Enter the email sender name which will appear to recipients"
+msgstr ""
+"Introduce el nombre de la dirección de email del remitente que aparecerá "
+"para los receptores"
+
+#: includes/class.yith-wccos-admin-premium.php:632
+msgid "\"From\" Email Address"
+msgstr "Dirección de correo del Remitente"
+
+#: includes/class.yith-wccos-admin-premium.php:633
+msgid "Enter the email address which will appear to recipients"
+msgstr "Introduce la dirección de email que aparecerá para los receptores"
+
+#: includes/class.yith-wccos-admin-premium.php:639
+#: includes/integrations/class.yith-wccos-wpml-integration.php:63
+msgid "Email Subject"
+msgstr "Asunto del email"
+
+#: includes/class.yith-wccos-admin-premium.php:640
+msgid "Enter the email subject which will appear to recipients of the email"
+msgstr ""
+"Introduce el asunto del email que aparecerá para los receptores del email"
+
+#: includes/class.yith-wccos-admin-premium.php:646
+#: includes/integrations/class.yith-wccos-wpml-integration.php:59
+msgid "Email Heading"
+msgstr "Encabezado del email"
+
+#: includes/class.yith-wccos-admin-premium.php:647
+msgid "Enter the heading you want to appear in the email sent"
+msgstr "Introduce el encabezado que quieres que aparezca en el email enviado"
+
+#: includes/class.yith-wccos-admin-premium.php:653
+msgid "Custom Message"
+msgstr "Mensaje Personalizado"
+
+#: includes/class.yith-wccos-admin-premium.php:654
+msgid ""
+"Available Shortcodes: {customer_first_name} , {customer_last_name} , "
+"{order_date} , {order_number} , {order_value} , {billing_address} , "
+"{shipping_address}"
+msgstr ""
+"Marcadores de posición disponibles: {customer_first_name} , "
+"{customer_last_name} , {order_date} , {order_number} , {order_value} , "
+"{billing_address} , {shipping_address}"
+
+#: includes/class.yith-wccos-admin-premium.php:660
+msgid "Include Order Information"
+msgstr "Incluir información del pedido"
+
+#: includes/class.yith-wccos-admin-premium.php:661
+msgid ""
+"Select whether you want to include order information (billing and shipping "
+"address, order items, total, etc)"
+msgstr ""
+"Selecciona si quieres incluir información del pedido (dirección de envío y "
+"facturación, artículos del pedido, total, etc)"
+
+#: includes/class.yith-wccos-admin-premium.php:713
+#: includes/class.yith-wccos-admin-premium.php:783
+#: includes/class.yith-wccos-admin.php:241
+msgid "Complete"
+msgstr "Completa"
+
+#: includes/class.yith-wccos-admin-premium.php:821
+msgid "Mark"
+msgstr "Marca"
+
+#: includes/class.yith-wccos-admin.php:171
+msgid "Status changed because of the deletion of \"%s\" custom status"
+msgstr "Estado cambiado por la eliminación del estado personalizado \"%s\""
+
+#: includes/class.yith-wccos-admin.php:233
+msgid "Processing"
+msgstr "Procesando"
+
+#: includes/class.yith-wccos-admin.php:285
+msgid "Change status: "
+msgstr "Cambiar estado:"
+
+#: includes/class.yith-wccos-admin.php:362
+msgid "Order Status"
+msgstr "Estado del pedido"
+
+#: includes/class.yith-wccos-admin.php:363
+msgid "Add Order Status"
+msgstr "Añadir Estado del pedido"
+
+#: includes/class.yith-wccos-admin.php:364
+msgid "New Order Status"
+msgstr "Nuevo Estado del pedido"
+
+#: includes/class.yith-wccos-admin.php:365
+msgid "Edit Order Status"
+msgstr "Editar Estado del pedido"
+
+#: includes/class.yith-wccos-admin.php:366
+msgid "View Order Status"
+msgstr "Ver Estado del pedido"
+
+#: includes/class.yith-wccos-admin.php:367
+msgid "Order Status not found"
+msgstr "Estado del pedido no encontrado"
+
+#: includes/class.yith-wccos-admin.php:368
+msgid "Order Status not found in trash"
+msgstr "Estado del pedido no encontrado en la papelera"
+
+#: includes/class.yith-wccos-admin.php:391
+msgid "Status Options"
+msgstr "Opciones de estado"
+
+#: includes/class.yith-wccos-admin.php:404
+msgid "Unique slug of your status"
+msgstr "Slug único de tu estado"
+
+#: includes/class.yith-wccos-admin.php:410
+msgid "Color"
+msgstr "Color"
+
+#: includes/class.yith-wccos-admin.php:411
+msgid "Color of your status"
+msgstr "Color de tu estado"
+
+#: includes/class.yith-wccos-admin.php:530
+msgid "How To"
+msgstr "Cómo hacer"
+
+#: includes/class.yith-wccos-admin.php:531
+msgid "Premium Version"
+msgstr "Versión Premium"
+
+#: includes/class.yith-wccos-email.php:44
+msgid "Custom Order Status Mail"
+msgstr "Correo personalizado del estado del pedido"
+
+#: includes/class.yith-wccos-email.php:45
+msgid "YITH WooCommerce Custom Order Status Mail"
+msgstr "YITH WooCommerce Custom Order Status Mai"
+
+#: includes/class.yith-wccos-email.php:205
+msgid "Enable/Disable"
+msgstr "Habilitar/Deshabilitar"
+
+#: includes/class.yith-wccos-email.php:207
+msgid "Enable this email notification"
+msgstr "Habilitar esta notificación email"
+
+#: includes/class.yith-wccos-email.php:211
+msgid "Email type"
+msgstr "Tipo de email"
+
+#: includes/class.yith-wccos-email.php:213
+msgid "Choose which format of email to send."
+msgstr "Elige qué formato de email enviar"
+
+#: includes/functions.yith-wccos.php:34
+msgid "Administrator"
+msgstr "Administrador"
+
+#: includes/functions.yith-wccos.php:35
+msgid "Customer"
+msgstr "Cliente"
+
+#: includes/functions.yith-wccos.php:36
+msgid "Custom Email Address"
+msgstr "Dirección de email personalizada"
+
+#: includes/integrations/class.yith-wccos-multi-vendor-integration.php:29
+msgid "Vendor"
+msgstr "Vendedor"
+
+#: includes/integrations/class.yith-wccos-wpml-integration.php:50
+msgid "Title"
+msgstr "Título"
+
+#: includes/integrations/class.yith-wccos-wpml-integration.php:54
+msgid "Email Custom Message"
+msgstr "Mensaje personalizado de correo electrónico"
+
+#: includes/integrations/class.yith-wccos-wpml-integration.php:109
+msgid "WPML Traslations"
+msgstr "Traducciones WPML"
+
+#: init.php:52
+msgid ""
+"YITH WooCommerce Custom Order Status Premium is enabled but not effective. "
+"It requires WooCommerce in order to work."
+msgstr ""
+"YITH WooCommerce Custom Order Status Premium esta habilitado pero no es "
+"efectivo. Requiere WooCommerce para funcionar."
+
+#: plugin-options/settings-options.php:11
+msgid "General Options"
+msgstr "Opciones generales"
+
+#: plugin-options/settings-options.php:18
+msgid "Enable Shop Manager to manage Custom Order Statuses"
+msgstr ""
+"Activar el gerente de la tienda para gestionar estados de pedido "
+"personalizados"
+
+#: plugin-options/settings-options.php:25
+#: plugin-options/settings-options.php:29
+msgid "Import Custom Statuses"
+msgstr "Importar estados de clientes"
+
+#: templates/pretty-emails/emails/custom_status_email_template.php:20
+msgid "Order #%s"
+msgstr "Pedido #%s"
+
+#: templates/pretty-emails/emails/custom_status_email_template.php:25
+msgid "Product"
+msgstr "Producto"
+
+#: templates/pretty-emails/emails/custom_status_email_template.php:26
+msgid "Quantity"
+msgstr "Cantidad"
+
+#: templates/pretty-emails/emails/custom_status_email_template.php:27
+msgid "Price"
+msgstr "Precio"
+
+#. Description of the plugin/theme
+msgid ""
+"<code><strong>YITH WooCommerce Custom Order Status</strong></code> allows "
+"you to create and manage new custom order statuses. For example, you can "
+"create \"in shipping\" or \"shipped\" before setting orders with those "
+"statuses to completed. A big advantage for your internal management. <a href="
+"\"https://yithemes.com/\" target=\"_blank\">Get more plugins for your e-"
+"commerce shop on <strong>YITH</strong></a>"
+msgstr ""
+"<code><strong>YITH WooCommerce Custom Order Status</strong></code> te "
+"permite crear y gestionar nuevos estados de pedido. Por ejemplo, puedes "
+"crear ‘’en envío” o “enviado” antes de establecer esos pedidos con esos "
+"estados a completado. Una gran ventaja para tu gestionamiento interno <a "
+"href=\"https://yithemes.com/\" target=\"_blank\">Obtén más plugins para tu "
+"comercio electrónico en <strong>YITH</strong></a>"
+
+#: includes/class.yith-wccos-admin-premium.php:183
+#: includes/class.yith-wccos-admin-premium.php:476
+msgctxt "Select status type"
+msgid "Custom Status"
+msgstr "Estado Personalizado"
+
+#: includes/class.yith-wccos-admin-premium.php:184
+#: includes/class.yith-wccos-admin-premium.php:477
+msgctxt "Select status type"
+msgid "Pending Payment"
+msgstr "Pago Pendiente"
+
+#: includes/class.yith-wccos-admin-premium.php:185
+#: includes/class.yith-wccos-admin-premium.php:478
+msgctxt "Select status type"
+msgid "Processing"
+msgstr "Procesando"
+
+#: includes/class.yith-wccos-admin-premium.php:186
+#: includes/class.yith-wccos-admin-premium.php:479
+msgctxt "Select status type"
+msgid "On Hold"
+msgstr "Suspendido"
+
+#: includes/class.yith-wccos-admin-premium.php:187
+#: includes/class.yith-wccos-admin-premium.php:480
+msgctxt "Select status type"
+msgid "Completed"
+msgstr "Completado"
+
+#: includes/class.yith-wccos-admin-premium.php:188
+#: includes/class.yith-wccos-admin-premium.php:481
+msgctxt "Select status type"
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#: includes/class.yith-wccos-admin-premium.php:189
+#: includes/class.yith-wccos-admin-premium.php:482
+msgctxt "Select status type"
+msgid "Refunded"
+msgstr "Reembolsado"
+
+#: includes/class.yith-wccos-admin-premium.php:190
+#: includes/class.yith-wccos-admin-premium.php:483
+msgctxt "Select status type"
+msgid "Failed"
+msgstr "Fallido"
+
+#~ msgid "Tel:"
+#~ msgstr "Teléfono:"
+
+#~ msgid "Email:"
+#~ msgstr "Correo electrónico:"
+
+#~ msgid "Customer details"
+#~ msgstr "Detalles del cliente"

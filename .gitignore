@@ -1,0 +1,29 @@
+# Created by https://www.toptal.com/developers/gitignore/api/wordpress
+# Edit at https://www.toptal.com/developers/gitignore?templates=wordpress
+
+63A6559D0765D4908C8479B7071F7184.txt
+.user.ini
+backwpup_readme.txt
+wp-content\updraft
+wp-content\cache
+# Configuration
+wp-config.php
+wp-content/uploads
+# Log files
+*.log
+
+# htaccess
+/.htaccess
+
+# All plugins
+# Note: If you wish to whitelist plugins,
+# uncomment the next line
+#/wp-content/plugins
+
+# All themes
+# Note: If you wish to whitelist themes,
+# uncomment the next line
+#/wp-content/themes
+
+
+# End of https://www.toptal.com/developers/gitignore/api/wordpress

@@ -1,0 +1,977 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Admin Custom Login\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: Thu Feb 25 2016 14:25:35 GMT+0100 (CET)\n"
+"PO-Revision-Date: Thu Feb 25 2016 14:25:49 GMT+0100 (CET)\n"
+"Last-Translator: Bruno Sagnardon <bruno.sagnardon@gmail.com>\n"
+"Language-Team: \n"
+"Language: French (France)\n"
+"Plural-Forms: nplurals=2; plural=n > 1\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ../../plugins/admin-custom-login\n"
+"X-Poedit-KeywordsList: _:1;gettext:1;dgettext:2;ngettext:1,2;dngettext:2,3;"
+"__:1;_e:1;_c:1;_n:1,2;_n_noop:1,2;_nc:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
+"_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;"
+"esc_attr__:1;esc_html__:1;esc_attr_e:1;esc_html_e:1;esc_attr_x:1,2c;"
+"esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
+"X-Loco-Target-Locale: fr_FR\n"
+"X-Generator: Loco - https://localise.biz/"
+
+#. Name of the plugin
+msgid "Admin Custom Login"
+msgstr ""
+
+#. Description of the plugin
+msgid "Admin Custom Login plugin allows you to change your Login Form."
+msgstr ""
+
+#. Author of the plugin
+msgid "weblizar"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://www.weblizar.com"
+msgstr ""
+
+#. URI of the plugin
+msgid "http://weblizar.com/plugins/admin-custom-login"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/admin-custom-login.php:108 ../..
+#: /plugins/admin-custom-login/admin-custom-login.php:108 ../../plugins/admin-
+#: custom-login/admin-custom-login.php:114
+msgid "User Name"
+msgstr "Adresse email"
+
+#: ../../plugins/admin-custom-login/admin-custom-login.php:109 ../..
+#: /plugins/admin-custom-login/admin-custom-login.php:109 ../../plugins/admin-
+#: custom-login/admin-custom-login.php:115
+msgid "Password"
+msgstr "Mot de passe"
+
+#: ../../plugins/admin-custom-login/admin-custom-login.php:125
+msgid "Contact Us:"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/admin-custom-login.php:361
+msgid "Please upload a valid .json file"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/admin-custom-login.php:367
+msgid "Please upload a file to import"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:93
+msgid "Powered By"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:95
+msgid "Weblizar"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:133
+msgid "Dashboard"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:134
+msgid "Application overview"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:143
+msgid "Background Design"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:144
+msgid "Modify Background design here"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:154
+msgid "Login form Setting"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:155
+msgid "Modify Login design here"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:165
+msgid "Font Setting"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:166
+msgid "Modify Login Form Style here"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:176 ../../plugins/admin-
+#: custom-login/includes/settings/page-settings.php:46
+msgid "Logo Settings"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:177
+msgid "Customize Logo Settings here"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:188 ../../plugins/admin-
+#: custom-login/includes/social/social.php:17
+msgid "Social Settings"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:189
+msgid "Connect with your social profile"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:199
+msgid "Export / Import"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:200
+msgid "Export / Import Your Data"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:209
+msgid "Plugin Recommendations"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:210
+msgid "Get More Free Useful Plugins"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:219 ../../plugins/admin-
+#: custom-login/includes/help/help.php:11
+msgid "Help And Support"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:220
+msgid "Ask your query"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:229
+msgid "Please rate us "
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/content.php:230
+msgid "If you like us"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/import-export-setting/import_export.
+#: php:9
+msgid "Export Custom Login Data "
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/import-export-setting/import_export.
+#: php:15
+msgid ""
+"Export the plugin settings for this site as a .json file. This allows you to "
+"easily import the configuration into another site."
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/import-export-setting/import_export.
+#: php:34
+msgid "Import Custom Login Data "
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/import-export-setting/import_export.
+#: php:40
+msgid ""
+"Import the plugin settings from a .json file. This file can be obtained by "
+"exporting the settings on another site using the form above."
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/recommendations/recommendations.php:14
+msgid "Plugin Recommendation"
+msgstr ""
+
+#. translators: 1: The rating, 2: The number of ratings
+#: ../../plugins/admin-custom-login/includes/recommendations/recommendations.php:70
+#, php-format
+msgid "%1$s rating based on %2$s rating"
+msgid_plural "%1$s rating based on %2$s ratings"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: The rating
+#: ../../plugins/admin-custom-login/includes/recommendations/recommendations.php:74
+#, php-format
+msgid "%s rating"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/recommendations/recommendations.php:93
+msgid "Get More Free Wordpress Plguins From Weblizar"
+msgstr ""
+
+#. translators: 1: Plugin name and version.
+#: ../../plugins/admin-custom-login/includes/recommendations/recommendations.php:
+#: 142
+msgid "More Details"
+msgstr ""
+
+#. translators: 1: Plugin name and version.
+#: ../../plugins/admin-custom-login/includes/recommendations/recommendations.php:
+#: 153
+msgid "Install Now"
+msgstr ""
+
+#. translators: 1: Plugin name and version
+#: ../../plugins/admin-custom-login/includes/recommendations/recommendations.php:
+#: 160
+msgid "Update Now"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/recommendations/recommendations.php:
+#: 165
+msgid "This plugin is already installed and is up to date"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/recommendations/recommendations.php:
+#: 165
+msgctxt "plugin"
+msgid "Installed"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/recommendations/recommendations.php:
+#: 187
+msgid "By "
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/recommendations/recommendations.php:
+#: 206 ../../plugins/admin-custom-login/includes/recommendations/recommendations.
+#: php:216 ../../plugins/admin-custom-
+#: login/includes/recommendations/recommendations.php:226 ../../plugins/admin-
+#: custom-login/includes/recommendations/recommendations.php:236 ../..
+#: /plugins/admin-custom-login/includes/recommendations/recommendations.php:246 ..
+#: /../plugins/admin-custom-login/includes/recommendations/recommendations.php:256
+msgid "Premium Editions"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/recommendations/recommendations.php:
+#: 209 ../../plugins/admin-custom-login/includes/recommendations/recommendations.
+#: php:219 ../../plugins/admin-custom-
+#: login/includes/recommendations/recommendations.php:229 ../../plugins/admin-
+#: custom-login/includes/recommendations/recommendations.php:239 ../..
+#: /plugins/admin-custom-login/includes/recommendations/recommendations.php:249 ..
+#: /../plugins/admin-custom-login/includes/recommendations/recommendations.php:259
+msgid "Visit Website"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/recommendations/recommendations.php:
+#: 277
+msgid "Last Updated:"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/recommendations/recommendations.php:
+#: 282
+#, php-format
+msgid "%s download"
+msgid_plural "%s downloads"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../plugins/admin-custom-login/includes/recommendations/recommendations.php:
+#: 288
+msgid "<strong>Untested</strong> with your version of WordPress"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/recommendations/recommendations.php:
+#: 292
+msgid "Incompatible with your version of WordPress"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/recommendations/recommendations.php:
+#: 296
+msgid "Compatible with your version of WordPress"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/help/rate.php:11 ../../plugins/admin-
+#: custom-login/includes/help/rate.php:35 ../../plugins/admin-custom-
+#: login/includes/help/help.php:36
+msgid "Rate Us"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/help/help.php:25
+msgid "View Support Docs or Open a Ticket"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/help/help.php:78
+msgid "Share Us Your Suggestion"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/help/help.php:96
+msgid "Language Contribution "
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/help/help.php:103
+msgid "here is solution"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/dashboard/dashboard.php:11
+msgid "Admin Custom Login Dashboard"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/dashboard/dashboard.php:23
+msgid "Admin Custom login Status"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/dashboard/dashboard.php:29
+msgid "Disabled"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/dashboard/dashboard.php:32
+msgid "Enable Custom Login"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/dashboard/dashboard.php:43
+msgid "View Login Page"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/dashboard/dashboard.php:66 ../..
+#: /plugins/admin-custom-login/includes/dashboard/dashboard.php:80
+msgid "Dashboard "
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/dashboard/dashboard.php:66 ../..
+#: /plugins/admin-custom-login/includes/social/social.php:180 ../../plugins/admin-
+#: custom-login/includes/design/background.php:365 ../../plugins/admin-custom-
+#: login/includes/design/text_and_color.php:2636 ../../plugins/admin-custom-
+#: login/includes/Login-form-setting/Login-form-background.php:488 ../..
+#: /plugins/admin-custom-login/includes/settings/page-settings.php:164
+msgid "Setting Save Successfully"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/dashboard/dashboard.php:66 ../..
+#: /plugins/admin-custom-login/includes/dashboard/dashboard.php:80 ../..
+#: /plugins/admin-custom-login/includes/social/social.php:180 ../../plugins/admin-
+#: custom-login/includes/social/social.php:194 ../../plugins/admin-custom-
+#: login/includes/design/background.php:176 ../../plugins/admin-custom-
+#: login/includes/design/background.php:365 ../../plugins/admin-custom-
+#: login/includes/design/background.php:380 ../../plugins/admin-custom-
+#: login/includes/design/text_and_color.php:2636 ../../plugins/admin-custom-
+#: login/includes/design/text_and_color.php:2651 ../../plugins/admin-custom-
+#: login/includes/Login-form-setting/Login-form-background.php:276 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:488 ../../plugins/admin-custom-login/includes/Login-form-setting/Login-
+#: form-background.php:502 ../../plugins/admin-custom-
+#: login/includes/settings/page-settings.php:80 ../../plugins/admin-custom-
+#: login/includes/settings/page-settings.php:164 ../../plugins/admin-custom-
+#: login/includes/settings/page-settings.php:178
+msgid "Close"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/dashboard/dashboard.php:80 ../..
+#: /plugins/admin-custom-login/includes/social/social.php:194 ../../plugins/admin-
+#: custom-login/includes/design/background.php:380 ../../plugins/admin-custom-
+#: login/includes/design/text_and_color.php:2651 ../../plugins/admin-custom-
+#: login/includes/Login-form-setting/Login-form-background.php:502 ../..
+#: /plugins/admin-custom-login/includes/settings/page-settings.php:178
+msgid "Setting Reset Successfully"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/dashboard/dashboard.php:87 ../..
+#: /plugins/admin-custom-login/includes/social/social.php:201 ../../plugins/admin-
+#: custom-login/includes/design/background.php:388 ../../plugins/admin-custom-
+#: login/includes/design/text_and_color.php:2659 ../../plugins/admin-custom-
+#: login/includes/Login-form-setting/Login-form-background.php:509 ../..
+#: /plugins/admin-custom-login/includes/settings/page-settings.php:185
+msgid "Save Changes"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/dashboard/dashboard.php:90 ../..
+#: /plugins/admin-custom-login/includes/social/social.php:204 ../../plugins/admin-
+#: custom-login/includes/design/background.php:391 ../../plugins/admin-custom-
+#: login/includes/design/text_and_color.php:2662 ../../plugins/admin-custom-
+#: login/includes/Login-form-setting/Login-form-background.php:512 ../..
+#: /plugins/admin-custom-login/includes/settings/page-settings.php:188
+msgid "Reset Default"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:29
+msgid "Enable Social Icons"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:35
+msgid "No Icon"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:36
+msgid "Inner"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:37
+msgid "Outer"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:38
+msgid "Both"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:49
+msgid "Social Media Icon Size"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:55
+msgid "Small"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:58
+msgid "Medium"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:61
+msgid "Large"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:72
+msgid "Social Media Icon Layout"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:78
+msgid "Rectangle"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:81
+msgid "Circle"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:92
+msgid "Social Media Icon Color"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:107
+msgid "Social Media Icon Color On Hover"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:122
+msgid "Social Media Icon Background Color"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:137
+msgid "Social Media Background Color On Hover"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:152
+msgid "Social Profiles"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:157
+msgid "Enter your social profiles complete url here"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:159
+msgid "Facebook"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:160
+msgid "Twitter"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:161
+msgid "Linkedin"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:162
+msgid "google plus"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:163
+msgid "Pinterest"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/social/social.php:180 ../..
+#: /plugins/admin-custom-login/includes/social/social.php:194
+msgid "Social "
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:87
+msgid "Background Settings"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:99 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:191
+msgid "Select Background"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:105
+msgid "No background Selected"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:106 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:197
+msgid "Select background"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:107 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:198
+msgid "Static Background Color"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:108 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:199
+msgid "Static Background Image"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:109
+msgid "Background SlideShow"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:127 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:215
+msgid "Background Color"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:149 ../..
+#: /plugins/admin-custom-login/includes/design/background.php:168 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:252
+msgid "Background Image"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:154 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:257 ../../plugins/admin-custom-login/includes/settings/page-settings.php:63
+msgid "No media selected!"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:156 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:258 ../../plugins/admin-custom-login/includes/settings/page-settings.php:64
+msgid "Upload"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:158
+msgid "Preview"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:160 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:262
+msgid "Remove"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:192
+msgid "Cover or Strech"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:197 ../..
+#: /plugins/admin-custom-login/includes/design/text_and_color.php:286 ../..
+#: /plugins/admin-custom-login/includes/design/text_and_color.php:2573 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:453
+msgid "Yes"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:209 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:291
+msgid "Background Repeat"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:216 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:297
+msgid "No Repeat "
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:217 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:298
+msgid "Repeat"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:218 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:299
+msgid "Repeat Horizontally"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:219 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:300
+msgid "Repeat Vertically"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:231 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:311
+msgid "Background Position "
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:237 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:317
+msgid "Left Top"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:238 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:318
+msgid "Left Center"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:239 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:319
+msgid "Left Bottom"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:240 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:320
+msgid "Right Top"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:241 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:321
+msgid "Right Center"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:242 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:322
+msgid "Right Bottom"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:243 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:323
+msgid "Center Top"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:244 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:324
+msgid "Center Center"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:245 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:325
+msgid "Center Bottom"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:257
+msgid "Background Attachment"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:263
+msgid "Fixed"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:264
+msgid "Scroll"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:265
+msgid "Inherit"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:284 ../..
+#: /plugins/admin-custom-login/includes/design/background.php:306
+msgid "No. Of Background Slideshow"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:290
+msgid "Select Number of Slide Show"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:291
+msgid "2"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:292
+msgid "3"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:293
+msgid "4"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:294
+msgid "5"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:295
+msgid "6"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:336
+msgid "Slider Animation"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:343
+msgid "Slider Animation 1"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:344
+msgid "Slider Animation 2"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:345
+msgid "Slider Animation 3"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:346
+msgid "Slider Animation 4"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/background.php:365 ../..
+#: /plugins/admin-custom-login/includes/design/background.php:380
+msgid "Top Background "
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:131
+msgid "Text And Color Settings"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:144
+msgid "Headline Font Color"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:160
+msgid "Input Font Color"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:176
+msgid "Link Color"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:192
+msgid "Button Color"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:208
+msgid "Headline Font size"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:226
+msgid "Input Font Size"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:244
+msgid "Link Font Size"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:262
+msgid "Button Font Size"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:280
+msgid "Enable Link shadow?"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:289 ../..
+#: /plugins/admin-custom-login/includes/design/text_and_color.php:2576 ../..
+#: /plugins/admin-custom-login/includes/Login-form-setting/Login-form-background.
+#: php:456
+msgid "No"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:301
+msgid "Link Shadow Color"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:317
+msgid "Headline Font Style"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:879
+msgid "Input Font Style"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:1441
+msgid "Link Font Style"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:2004
+msgid "Button Font Style"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:2567
+msgid "Enable Input Box Icon?"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:2587
+msgid "Icon For user Input Box"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:2608
+msgid "Icon For Password Input Box"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/design/text_and_color.php:2636 ../..
+#: /plugins/admin-custom-login/includes/design/text_and_color.php:2651
+msgid "Text and Color "
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:155
+msgid "Login Settings"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:168
+msgid "Login from Floating"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:174
+msgid "Left"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:177
+msgid "Center"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:180
+msgid "Right"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:230
+msgid "Login Form Opacity"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:260 ../../plugins/admin-custom-login/includes/settings/page-
+#: settings.php:66
+msgid "preview"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:270 ../../plugins/admin-custom-login/includes/settings/page-
+#: settings.php:74
+msgid "Login Background Image"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:337
+msgid "Background Effect"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:343
+msgid "Select overlay effect"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:344
+msgid "No Overlay Effect"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:345
+msgid "Overlay Effect 1"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:346
+msgid "Overlay Effect 2"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:347
+msgid "Overlay Effect 3"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:360
+msgid "Login Form Width"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:377
+msgid "Border Color"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:392
+msgid "Border Radius"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:409
+msgid "Border Style"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:415
+msgid "None"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:416
+msgid "Solid"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:417
+msgid "Dotted"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:418
+msgid "Dashed"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:419
+msgid "Double"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:430
+msgid "Border Thickness"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:447
+msgid "Enable form shadow?"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:467
+msgid "Form Shadow Color"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/Login-form-setting/Login-form-
+#: background.php:488 ../../plugins/admin-custom-login/includes/Login-form-
+#: setting/Login-form-background.php:502
+msgid "Login "
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/settings/page-settings.php:58
+msgid "Logo"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/settings/page-settings.php:94
+msgid "Logo Width"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/settings/page-settings.php:111
+msgid "Logo Height"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/settings/page-settings.php:128 ../..
+#: /plugins/admin-custom-login/includes/settings/page-settings.php:133
+msgid "Logo URL"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/settings/page-settings.php:143 ../..
+#: /plugins/admin-custom-login/includes/settings/page-settings.php:148
+msgid "Logo URL Title"
+msgstr ""
+
+#: ../../plugins/admin-custom-login/includes/settings/page-settings.php:164 ../..
+#: /plugins/admin-custom-login/includes/settings/page-settings.php:178
+msgid "Logo "
+msgstr ""

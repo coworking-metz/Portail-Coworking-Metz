@@ -1,0 +1,173 @@
+@font-face {
+    font-family: 'DaftPlug';
+    src: url('./fonts/daftplug-light.woff') format('woff'),
+         url('./fonts/daftplug-light.woff2') format('woff2'),
+         url('./fonts/daftplug-light.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'DaftPlug';
+    src: url('./fonts/daftplug-normal.woff') format('woff'),
+         url('./fonts/daftplug-normal.woff2') format('woff2'),
+         url('./fonts/daftplug-normal.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'DaftPlug';
+    src: url('./fonts/daftplug-medium.woff') format('woff'),
+         url('./fonts/daftplug-medium.woff2') format('woff2'),
+         url('./fonts/daftplug-medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'DaftPlug';
+    src: url('./fonts/daftplug-bold.woff') format('woff'),
+         url('./fonts/daftplug-bold.woff2') format('woff2'),
+         url('./fonts/daftplug-bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'DaftPlug';
+    src: url('./fonts/daftplug-italic.woff') format('woff'),
+         url('./fonts/daftplug-italic.woff2') format('woff2'),
+         url('./fonts/daftplug-italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+.daftplugPublic div, .daftplugPublic span, .daftplugPublic applet, .daftplugPublic object, .daftplugPublic iframe,
+.daftplugPublic h1, .daftplugPublic h2, .daftplugPublic h3, .daftplugPublic h4, .daftplugPublic h5, .daftplugPublic h6, .daftplugPublic p, .daftplugPublic blockquote, .daftplugPublic pre,
+.daftplugPublic a, .daftplugPublic abbr, .daftplugPublic acronym, .daftplugPublic address, .daftplugPublic big, .daftplugPublic cite, .daftplugPublic code,
+.daftplugPublic del, .daftplugPublic dfn, .daftplugPublic em, .daftplugPublic img, .daftplugPublic ins, .daftplugPublic kbd, .daftplugPublic q, .daftplugPublic s, .daftplugPublic samp,
+.daftplugPublic small, .daftplugPublic strike, .daftplugPublic strong, .daftplugPublic sub, .daftplugPublic sup, .daftplugPublic tt, .daftplugPublic var,
+.daftplugPublic b, .daftplugPublic u, .daftplugPublic i:not([class^='fa'], [class*=' fa']),
+.daftplugPublic dl, .daftplugPublic dt, .daftplugPublic dd, .daftplugPublic ol, .daftplugPublic ul, .daftplugPublic li,
+.daftplugPublic fieldset, .daftplugPublic form, .daftplugPublic label, .daftplugPublic legend,
+.daftplugPublic table, .daftplugPublic caption, .daftplugPublic tbody, .daftplugPublic tfoot, .daftplugPublic thead, .daftplugPublic tr, .daftplugPublic th, .daftplugPublic td,
+.daftplugPublic article, .daftplugPublic aside, .daftplugPublic canvas, .daftplugPublic details, .daftplugPublic embed, 
+.daftplugPublic figure, .daftplugPublic figcaption, .daftplugPublic footer, .daftplugPublic header, .daftplugPublic hgroup, 
+.daftplugPublic menu, .daftplugPublic nav, .daftplugPublic output, .daftplugPublic section, .daftplugPublic summary,
+.daftplugPublic time, .daftplugPublic mark, .daftplugPublic audio, .daftplugPublic video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+.daftplugPublic article, .daftplugPublic aside, .daftplugPublic details, .daftplugPublic figcaption, .daftplugPublic figure, 
+.daftplugPublic footer, .daftplugPublic header, .daftplugPublic hgroup, .daftplugPublic menu, .daftplugPublic nav, .daftplugPublic section {
+    display: block;
+}
+
+.daftplugPublic ol, .daftplugPublic ul {
+    list-style: none;
+}
+
+.daftplugPublic blockquote, .daftplugPublic q {
+    quotes: none;
+}
+
+.daftplugPublic blockquote:before, .daftplugPublic blockquote:after,
+.daftplugPublic q:before, .daftplugPublic q:after {
+    content: '';
+    content: none;
+}
+
+.daftplugPublic table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.daftplugPublic {
+    position: relative;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    font: normal 18px/1.555 'DaftPlug', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    -webkit-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    transition: all .2s ease;
+}
+
+.daftplugPublic .-disabled {
+    pointer-events: none !important;
+    opacity: 0.6 !important;
+}
+
+.daftplugPublic .-hidden {
+    display: none !important;
+}
+
+.daftplugPublic .-textCenter {
+    text-align: center !important;
+}
+
+.daftplugPublic .daftplugPublicTooltip {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    pointer-events: none;
+    position: absolute;
+    text-align: center;
+    font-size: 12px;
+    text-transform: none;
+    line-height: 1;
+    font-weight: 500;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
+    padding: 8px 10px;
+    border-radius: 25px;
+    background: #3e4650;
+    color: #fff;
+    z-index: 1000;
+    -webkit-animation: daftplugFade .15s ease forwards;
+            animation: daftplugFade .15s ease forwards;
+}
+
+@-webkit-keyframes daftplugFade {
+	0% {
+		opacity: 0;
+	}
+	40% {
+		opacity: 0.4;
+	}
+	60% {
+		opacity: 0.6;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes daftplugFade {
+	0% {
+		opacity: 0;
+	}
+	40% {
+		opacity: 0.4;
+	}
+	60% {
+		opacity: 0.6;
+	}
+	100% {
+		opacity: 1;
+	}
+}

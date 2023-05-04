@@ -1,0 +1,67 @@
+# BEGIN WordPress
+# Les directives (lignes) entre « BEGIN WordPress » et « END WordPress » sont générées
+# dynamiquement, et doivent être modifiées uniquement via les filtres WordPress.
+# Toute modification des directives situées entre ces marqueurs sera surchargée.
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
+# BEGIN WP-HUMMINGBIRD-CACHING
+# Les directives (lignes) entre 'BEGIN WP-HUMMINGBIRD-CACHING' et 'END WP-HUMMINGBIRD-CACHING' sont
+# généré dynamiquement, et ne doivent uniquement être modifiées via les filtres WordPress.
+# Toute modification des directives entre ces marqueurs sera outrepassée.
+<IfModule mod_expires.c>
+	ExpiresActive On
+	ExpiresDefault A0
+	<FilesMatch "\.(txt|xml|js)$">
+		ExpiresDefault A691200
+	</FilesMatch>
+	<FilesMatch "\.(css)$">
+		ExpiresDefault A691200
+	</FilesMatch>
+	<FilesMatch "\.(flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav|mp4|m4v|ogg|webm|aac|eot|ttf|otf|woff|svg)$">
+		ExpiresDefault A691200
+	</FilesMatch>
+	<FilesMatch "\.(jpg|jpeg|png|gif|swf|webp)$">
+		ExpiresDefault A691200
+	</FilesMatch>
+</IfModule>
+<IfModule mod_headers.c>
+	<FilesMatch "\.(txt|xml|js)$">
+		Header set Cache-Control "max-age=691200"
+	</FilesMatch>
+	<FilesMatch "\.(css)$">
+		Header set Cache-Control "max-age=691200"
+	</FilesMatch>
+	<FilesMatch "\.(flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav|mp4|m4v|ogg|webm|aac|eot|ttf|otf|woff|svg)$">
+		Header set Cache-Control "max-age=691200"
+	</FilesMatch>
+	<FilesMatch "\.(jpg|jpeg|png|gif|swf|webp)$">
+		Header set Cache-Control "max-age=691200"
+	</FilesMatch>
+</IfModule>
+# END WP-HUMMINGBIRD-CACHING
+# Wordfence WAF
+<IfModule LiteSpeed>
+	php_value auto_prepend_file '/home/sabr8669/htdocs/coworking-metz.fr/wordfence-waf.php'
+</IfModule>
+<IfModule lsapi_module>
+	php_value auto_prepend_file '/home/sabr8669/htdocs/coworking-metz.fr/wordfence-waf.php'
+</IfModule>
+<Files ".user.ini">
+	<IfModule mod_authz_core.c>
+		Require all denied
+	</IfModule>
+	<IfModule !mod_authz_core.c>
+		Order deny,allow
+		Deny from all
+	</IfModule>
+</Files>
+# END Wordfence WAF

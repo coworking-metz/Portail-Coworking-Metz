@@ -1,0 +1,281 @@
+# Translation of Plugins - Login/Signup Popup ( Inline Form + Woocommerce ) - Stable (latest release) in French (France)
+# This file is distributed under the same license as the Plugins - Login/Signup Popup ( Inline Form + Woocommerce ) - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2023-01-22 16:58:32+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/4.0.0-alpha.3\n"
+"Language: fr\n"
+"Project-Id-Version: Plugins - Login/Signup Popup ( Inline Form + Woocommerce ) - Stable (latest release)\n"
+
+#: includes/xoo-el-functions.php:319
+msgid "%s cannot be empty"
+msgstr "%s ne peut pas être vide"
+
+#: templates/global/xoo-el-resetpw-section.php:25
+msgid "New Password"
+msgstr "Nouveau mot de passe"
+
+#: includes/class-xoo-el-form-handler.php:767
+msgid "To set your password, visit the following address:"
+msgstr "Pour configurer votre mot de passe, allez à l’adresse suivante :"
+
+#: includes/class-xoo-el-form-handler.php:573
+msgid "Your password has been reset successfully! Please <a class=\"xoo-el-login-tgr\">Login</a>"
+msgstr "Votre mot de passe a bien été réinitialisé ! Veuillez <a class=\"xoo-el-login-tgr\">vous connecter</a>"
+
+#: includes/xoo-el-functions.php:315
+msgid "Please check %s"
+msgstr "Veuillez vérifier %s"
+
+#: templates/xoo-el-form.php:27
+msgid "Continue to resetting password"
+msgstr "Continuer à réinitialiser le mot de passe"
+
+#: templates/global/xoo-el-resetpw-section.php:87
+msgid "Change Password"
+msgstr "Changer de mot de passe"
+
+#: templates/global/xoo-el-resetpw-section.php:67
+msgid "Please enter a new password"
+msgstr "Veuillez saisir un nouveau mot de passe"
+
+#: includes/class-xoo-el-form-handler.php:544
+#: templates/global/xoo-el-resetpw-section.php:63
+msgid "This key is invalid or has already been used. Please reset your password again if needed."
+msgstr "Cette clé n’est pas valide ou a déjà été utilisée. Veuillez réinitialiser votre mot de passe si nécessaire."
+
+#. Description of the plugin
+msgid "Allow users to login/signup using interactive popup design."
+msgstr "Autorisez les internautes à se connecter/s’inscrire avec une fenêtre modale interactive."
+
+#: xoo-form-fields-fw/admin/class-xoo-aff-fields.php:1248
+msgid "%s should be in multiple of %s."
+msgstr "%s doit être un multiple de %s."
+
+#: xoo-form-fields-fw/admin/class-xoo-aff-fields.php:1243
+msgid "%s cannot be more than %s."
+msgstr "%s ne peut pas dépasser  %s."
+
+#: xoo-form-fields-fw/admin/class-xoo-aff-fields.php:1233
+msgid "%s cannot exceed %s characters."
+msgstr "%s ne peut pas dépasser %s caractères."
+
+#: xoo-form-fields-fw/admin/class-xoo-aff-fields.php:1238
+msgid "%s should be minimum %s."
+msgstr "%s doit être au minimum de %s."
+
+#: xoo-form-fields-fw/admin/class-xoo-aff-fields.php:1228
+msgid "%s needs to be minimum %s characters."
+msgstr "%s doit être de %s caractères minimum."
+
+#: xoo-form-fields-fw/includes/class-xoo-aff.php:110
+msgid "Please enter a stronger password."
+msgstr "Veuillez saisir un mot de passe plus complexe."
+
+#: xoo-form-fields-fw/admin/class-xoo-aff-fields.php:1216
+msgid "Please check %s."
+msgstr "Veuillez vérifier %s."
+
+#: includes/class-xoo-el-form-handler.php:253
+msgid "Registration successful. Please <a class=\"xoo-el-login-tgr\">Login</a>"
+msgstr "Inscription réussie. Veuillez vous <a class=\"xoo-el-login-tgr\">connecter</a>"
+
+#: includes/class-xoo-el-form-handler.php:697
+msgid "The email could not be sent."
+msgstr "L’e-mail n’a pas pu être envoyé."
+
+#. translators: %s: site name
+#: includes/class-xoo-el-form-handler.php:658
+msgid "Site Name: %s"
+msgstr "Nom du site : %s"
+
+#: includes/class-xoo-el-form-handler.php:503
+msgid "A password reset email has been sent to the email address on file for your account, but may take several minutes to show up in your inbox. Please wait at least 10 minutes before attempting another reset."
+msgstr "Un e-mail de réinitialisation de mot de passe a été envoyé à l’adresse e-mail de votre compte, mais cela peut prendre plusieurs minutes avant qu’il ne s’affiche dans votre boîte de réception. Veuillez patientez au moins 10 minutes avant de tenter une autre réinitialisation."
+
+#: includes/class-xoo-el-form-handler.php:697
+msgid "Possible reason: your host may have disabled the mail() function."
+msgstr "Raison possible : votre hébergeur peut avoir désactivé la fonction mail()."
+
+#. translators: Password reset email subject. %s: Site name
+#: includes/class-xoo-el-form-handler.php:666
+msgid "[%s] Password Reset"
+msgstr "[%s] Réinitialiser le mot de passe"
+
+#: includes/class-xoo-el-form-handler.php:662
+msgid "To reset your password, visit the following address:"
+msgstr "Pour réinitialiser votre mot de passe, allez à l’adresse suivante :"
+
+#. translators: %s: user login
+#. translators: %s: User login.
+#: includes/class-xoo-el-form-handler.php:660
+#: includes/class-xoo-el-form-handler.php:766
+msgid "Username: %s"
+msgstr "Identifiant : %s"
+
+#: includes/class-xoo-el-form-handler.php:656
+msgid "Someone has requested a password reset for the following account:"
+msgstr "Nous avons reçu une demande de réinitialisation du mot de passe pour le compte suivant :"
+
+#: includes/class-xoo-el-form-handler.php:631
+msgid "<strong>ERROR</strong>: Invalid username or email."
+msgstr "<strong>ERREUR</strong> : identifiant ou adresse e-mail non valide."
+
+#: includes/class-xoo-el-form-handler.php:606
+msgid "<strong>ERROR</strong>: Enter a username or email address."
+msgstr "<strong>ERREUR</strong> : veuillez saisir une adresse e-mail ou un identifiant."
+
+#: includes/class-xoo-el-form-handler.php:661
+msgid "If this was a mistake, just ignore this email and nothing will happen."
+msgstr "S’il s’agit d’une erreur, ignorez simplement cet e-mail et rien ne se produira."
+
+#: includes/class-xoo-el-form-handler.php:610
+msgid "<strong>ERROR</strong>: There is no user registered with that email address."
+msgstr "<strong>ERREUR</strong> : Il n’y a aucun compte inscrit avec cette adresse e-mail."
+
+#: includes/class-xoo-el-form-handler.php:306
+msgid "An account is already registered with your email address. Please log in."
+msgstr "Un compte est déjà enregistré avec votre adresse e-mail. Veuillez vous connecter."
+
+#: includes/class-xoo-el-form-handler.php:343
+msgid "Couldn&#8217;t register you&hellip; please contact us if you continue to have problems."
+msgstr "Impossible de vous inscrire... veuillez nous contacter si le problème persiste."
+
+#: includes/class-xoo-el-form-handler.php:211
+msgid "Please enter an account password."
+msgstr "Veuillez saisir un mot de passe."
+
+#: includes/class-xoo-el-form-handler.php:318
+msgid "An account is already registered with that username. Please choose another."
+msgstr "Un compte est déjà enregistré avec cet identifiant. Veuillez en choisir un autre."
+
+#: includes/class-xoo-el-form-handler.php:314
+msgid "Please enter a valid account username."
+msgstr "Veuillez saisir un identifiant de compte valide."
+
+#: includes/class-xoo-el-form-handler.php:302
+msgid "Please provide a valid email address."
+msgstr "Veuillez saisir un e-mail valide."
+
+#: xoo-form-fields-fw/admin/class-xoo-aff-fields.php:1220
+msgid "%s cannot be empty."
+msgstr "%s ne peut pas être vide."
+
+#: includes/class-xoo-el-form-handler.php:118
+msgid "Incorrect Email or Username."
+msgstr "E-mail ou identifiant incorrect."
+
+#: templates/global/xoo-el-login-section.php:52
+msgid "Remember me"
+msgstr "Se souvenir de moi"
+
+#: includes/class-xoo-el-frontend.php:123
+msgid "My account"
+msgstr "Mon compte"
+
+#. Plugin Name of the plugin
+#: admin/class-xoo-el-menu-settings.php:15
+msgid "Login/Signup Popup"
+msgstr "Fenêtre de connexion/inscription"
+
+#: templates/global/xoo-el-header.php:31
+#: templates/global/xoo-el-register-section.php:30
+msgid "Sign Up"
+msgstr "S’inscrire"
+
+#: templates/global/xoo-el-login-section.php:54
+msgid "Forgot Password?"
+msgstr "Mot de passe oublié ?"
+
+#: includes/class-xoo-el-frontend.php:152
+msgid "Lost Password"
+msgstr "Mot de passe oublié"
+
+#: includes/class-xoo-el-frontend.php:147
+msgid "Signup"
+msgstr "S’inscrire"
+
+#: includes/class-xoo-el-frontend.php:128
+#: includes/class-xoo-el-frontend.php:132
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: includes/class-xoo-el-form-handler.php:134
+msgid "Login successful"
+msgstr "Connexion réussie"
+
+#: admin/class-xoo-el-menu-settings.php:66
+msgid "Add to menu"
+msgstr "Ajouter au menu"
+
+#: admin/class-xoo-el-menu-settings.php:62
+msgid "Select all"
+msgstr "Tout sélectionner"
+
+#. Author URI of the plugin
+msgid "http://xootix.com"
+msgstr "http://xootix.com"
+
+#. Author of the plugin
+msgid "XootiX"
+msgstr "XootiX"
+
+#. Plugin URI of the plugin
+msgid "http://xootix.com/easy-login-for-woocommerce"
+msgstr "http://xootix.com/easy-login-for-woocommerce"
+
+#: templates/global/xoo-el-resetpw-section.php:33
+msgid "Confirm Password"
+msgstr "Confirmer le mot de passe"
+
+#: templates/global/xoo-el-lostpw-section.php:52
+msgid "Email Reset Link"
+msgstr "Envoyer l’e-mail de réinitialisation"
+
+#: templates/global/xoo-el-lostpw-section.php:36
+msgid "Lost your password? Please enter your username or email address. You will receive a link to create a new password via email."
+msgstr "Mot de passe perdu ? Veuillez saisir votre identifiant ou adresse e-mail. Vous recevrez un lien par e-mail pour créer un nouveau mot de passe."
+
+#: templates/global/xoo-el-login-section.php:35
+msgid "Password"
+msgstr "Mot de passe"
+
+#: templates/global/xoo-el-login-section.php:26
+#: templates/global/xoo-el-lostpw-section.php:25
+msgid "Username / Email"
+msgstr "Identifiant/e-mail"
+
+#: templates/global/xoo-el-login-section.php:61
+msgid "Sign In"
+msgstr "Connexion"
+
+#: includes/class-xoo-el-frontend.php:142
+#: includes/class-xoo-el-frontend.php:157 templates/global/xoo-el-header.php:28
+msgid "Login"
+msgstr "Se connecter"
+
+#: includes/class-xoo-el-form-handler.php:248
+msgid "Registration successful"
+msgstr "Inscription réussie"
+
+#: includes/class-xoo-el-form-handler.php:215
+#: includes/class-xoo-el-form-handler.php:550
+msgid "Passwords don't match"
+msgstr "Les mots de passe ne correspondent pas"
+
+#: includes/class-xoo-el-form-handler.php:110
+msgid "Lost your password?"
+msgstr "Mot de passe perdu ?"
+
+#: includes/class-xoo-el-form-handler.php:86
+#: includes/class-xoo-el-form-handler.php:90
+msgid "Error:"
+msgstr "Erreur :"
+
+#: includes/class-xoo-el-form-handler.php:90
+msgid "Username is required."
+msgstr "L’identifiant est obligatoire."

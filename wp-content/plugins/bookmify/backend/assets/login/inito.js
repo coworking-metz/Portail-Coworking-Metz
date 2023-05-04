@@ -1,0 +1,1 @@
+!function(o){"use strict";var n=function(){o(".login form").prepend('<p class="bookmify_be_login"><span>Login:<strong>demo</strong>Password:<strong>demo</strong></span><span>Data is updated every hour.</span></p>'),o(".login form #user_login").val("demo"),o(".login form #user_pass").val("demo")};o(document).ready(function(){n()})}(jQuery);

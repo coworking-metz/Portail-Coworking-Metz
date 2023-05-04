@@ -1,0 +1,4774 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Bookmify\n"
+"POT-Creation-Date: 2021-04-03 17:06+0500\n"
+"PO-Revision-Date: 2021-04-03 17:07+0500\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.10\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;esc_html__;esc_html_e;"
+"esc_attr__;esc_attr_e\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../backend/inc/admin.php:271
+msgid "Are you sure? Resetting will lose all custom values in all section"
+msgstr ""
+"Вы уверены? Сброс потеряет все пользовательские значения во всем разделе"
+
+#: ../backend/inc/admin.php:272
+msgid "Defaults Restored"
+msgstr "Восстановлены настройки по умолчанию"
+
+#: ../backend/inc/admin.php:273
+msgid "Settings Saved!"
+msgstr "Настройки сохранены!"
+
+#: ../backend/inc/admin.php:274
+msgid "Save Process Failed!"
+msgstr "Ошибка сохранения процесса!"
+
+#: ../backend/inc/admin.php:283 ../backend/inc/admin.php:305
+#: ../backend/inc/admin.php:322 ../backend/inc/admin.php:488
+#: ../backend/inc/helpers/helper-admin.php:277 ../frontend/frontend.php:93
+msgid "Are you sure?"
+msgstr "Вы уверены?"
+
+#: ../backend/inc/admin.php:284 ../frontend/frontend.php:94
+msgid "A category has been updated!"
+msgstr "Категория была обновлена!"
+
+#: ../backend/inc/admin.php:285 ../frontend/frontend.php:95
+msgid "Please enter at least one character!"
+msgstr "Пожалуйста, введите хотя бы один символ!"
+
+#: ../backend/inc/admin.php:286 ../frontend/frontend.php:96
+msgid "A service has been added!"
+msgstr "Сервис был добавлен!"
+
+#: ../backend/inc/admin.php:287 ../frontend/frontend.php:97
+msgid "A category has been added!"
+msgstr "Категория была добавлена!"
+
+#: ../backend/inc/admin.php:288 ../frontend/frontend.php:98
+msgid "Categories' order have been changed!"
+msgstr "Порядок категорий был изменен!"
+
+#: ../backend/inc/admin.php:289 ../frontend/frontend.php:99
+msgid "A category has been deleted!"
+msgstr "Категория была удалена!"
+
+#: ../backend/inc/admin.php:290 ../frontend/frontend.php:100
+msgid "A service has been updated!"
+msgstr "Сервис обновлен!"
+
+#: ../backend/inc/admin.php:291 ../frontend/frontend.php:101
+msgid "Extra Services' order have been changed!"
+msgstr "Порядок экстра сервисов был изменен!"
+
+#: ../backend/inc/admin.php:292 ../frontend/frontend.php:102
+msgid "A service has been deleted!"
+msgstr "Служба была удалена!"
+
+#: ../backend/inc/admin.php:293 ../backend/inc/admin.php:327
+#: ../backend/inc/admin.php:340 ../backend/inc/admin.php:375
+#: ../backend/inc/admin.php:393 ../backend/inc/admin.php:431
+#: ../backend/inc/admin.php:443 ../backend/inc/admin.php:455
+#: ../backend/inc/admin.php:478 ../backend/inc/admin.php:521
+#: ../backend/inc/admin.php:552
+msgid "Please fill out this field!"
+msgstr "Пожалуйста, заполните это поле!"
+
+#: ../backend/inc/admin.php:294
+msgid ""
+"Please make sure that this category is not assigned to any services. Number "
+"of services related to this category:"
+msgstr ""
+"Пожалуйста, убедитесь, что эта категория не относится к каким-либо сервисам. "
+"Количество сервисов, относящихся к этой категории:"
+
+#: ../backend/inc/admin.php:295
+msgid ""
+"Please make sure that there are no appointments with this service. Number of "
+"expected appointments with this service:"
+msgstr ""
+"Пожалуйста, убедитесь, что нет никаких встреч с данным сервисом. Количество "
+"ожидаемых встреч с данным сервисом:"
+
+#: ../backend/inc/admin.php:306
+msgid "A holiday has been added!"
+msgstr "Праздник был добавлен!"
+
+#: ../backend/inc/admin.php:307
+msgid "A holiday has been deleted!"
+msgstr "Праздник был удален!"
+
+#: ../backend/inc/admin.php:308 ../backend/inc/admin.php:325
+msgid "Please choose at least one day!"
+msgstr "Пожалуйста, выберите хотя бы один день!"
+
+#: ../backend/inc/admin.php:309 ../backend/inc/admin.php:326
+msgid "Please enter title of offday!"
+msgstr "Пожалуйста, введите название выходного дня!"
+
+#: ../backend/inc/admin.php:310 ../backend/inc/admin.php:311
+msgid "A holiday has been updated!"
+msgstr "Праздник был обновлен!"
+
+#: ../backend/inc/admin.php:312
+msgid "Working hours and breaks have been saved!"
+msgstr "Рабочие часы и перерывы были сохранены!"
+
+#: ../backend/inc/admin.php:313
+msgid "Settings successfully saved!"
+msgstr "Настройки успешно сохранены!"
+
+#: ../backend/inc/admin.php:323 ../backend/inc/admin.php:342
+#: ../backend/inc/admin.php:371 ../backend/inc/admin.php:384
+#: ../backend/inc/admin.php:402 ../backend/inc/admin.php:427
+#: ../backend/inc/admin.php:440 ../backend/inc/admin.php:452
+#: ../backend/inc/admin.php:475 ../backend/inc/admin.php:489
+#: ../backend/inc/admin.php:554
+msgid "Successfully deleted"
+msgstr "Успешно удалено"
+
+#: ../backend/inc/admin.php:324 ../backend/inc/admin.php:344
+#: ../backend/inc/admin.php:373 ../backend/inc/admin.php:386
+#: ../backend/inc/admin.php:404 ../backend/inc/admin.php:429
+#: ../backend/inc/admin.php:442 ../backend/inc/admin.php:454
+#: ../backend/inc/admin.php:477 ../backend/inc/admin.php:491
+#: ../backend/inc/admin.php:556
+msgid "Successfully added"
+msgstr "Успешно добавлено"
+
+#: ../backend/inc/admin.php:328 ../backend/inc/admin.php:522
+msgid "Invalid Email."
+msgstr "Неверный адрес электронной почты."
+
+#: ../backend/inc/admin.php:329
+msgid "An Employee has been updated!"
+msgstr "Сотрудник был обновлен!"
+
+#: ../backend/inc/admin.php:330
+msgid ""
+"Please make sure that this employee does not have scheduled appointments. "
+"The number of scheduled appointments with this employee:"
+msgstr ""
+"Пожалуйста, убедитесь, что у этого сотрудника нет запланированных встреч. "
+"Количество запланированных встреч с этим сотрудником:"
+
+#: ../backend/inc/admin.php:331 ../backend/inc/admin.php:512
+msgid "Unable to add the wordpress user, because of it is demo version."
+msgstr ""
+"Невозможно добавить пользователя WordPress, потому что это демо-версия."
+
+#: ../backend/inc/admin.php:341 ../backend/inc/admin.php:553
+#: ../backend/inc/helpers/helper-appointments.php:1714
+msgid "Choose Service and Employee!"
+msgstr "Выберите Сервис и Сотрудник!"
+
+#: ../backend/inc/admin.php:343 ../backend/inc/admin.php:372
+#: ../backend/inc/admin.php:385 ../backend/inc/admin.php:403
+#: ../backend/inc/admin.php:428 ../backend/inc/admin.php:441
+#: ../backend/inc/admin.php:453 ../backend/inc/admin.php:476
+#: ../backend/inc/admin.php:490 ../backend/inc/admin.php:555
+msgid "Successfully saved"
+msgstr "Успешно сохранено"
+
+#: ../backend/inc/admin.php:345 ../backend/inc/admin.php:405
+#: ../backend/inc/admin.php:557
+msgid "Successfully updated"
+msgstr "Успешно обновлено"
+
+#: ../backend/inc/admin.php:346 ../backend/inc/admin.php:374
+#: ../backend/inc/admin.php:387 ../backend/inc/admin.php:406
+#: ../backend/inc/admin.php:430
+msgid "Successfully reordered"
+msgstr "Успешно переупорядочено"
+
+#: ../backend/inc/admin.php:347 ../backend/inc/admin.php:560
+msgid "You are trying to delete an appointment that has already taken place."
+msgstr "Вы пытаетесь удалить встречу, которая уже состоялась."
+
+#: ../backend/inc/admin.php:348 ../backend/inc/admin.php:561
+msgid "You are trying to change an appointment that has already taken place."
+msgstr "Вы пытаетесь изменить встречу, которая уже состоялась."
+
+#: ../backend/inc/admin.php:360 ../backend/inc/admin.php:418
+#: ../backend/inc/admin.php:574
+msgid "No Records"
+msgstr "Нет записей"
+
+#: ../backend/inc/admin.php:361 ../backend/inc/admin.php:575
+#: ../backend/inc/helpers/helper-appointments.php:1707
+msgid "Minimum Capacity:"
+msgstr "Минимальная Вместимость:"
+
+#: ../backend/inc/admin.php:362 ../backend/inc/admin.php:576
+#: ../backend/inc/helpers/helper-appointments.php:1709
+msgid "Maximum Capacity:"
+msgstr "Максимальная Вместимость:"
+
+#: ../backend/inc/admin.php:388 ../backend/inc/admin.php:509
+#: ../frontend/frontend.php:104
+msgid "Invalid Email"
+msgstr "Неверный адрес электронной почты"
+
+#: ../backend/inc/admin.php:389 ../backend/inc/admin.php:508
+#: ../frontend/frontend.php:105
+msgid "Invalid Phone"
+msgstr "Неверный Телефон"
+
+#: ../backend/inc/admin.php:390
+msgid "Test email successfully has been sent"
+msgstr "Тестовое письмо успешно отправлено"
+
+#: ../backend/inc/admin.php:391
+msgid "Test SMS successfully has been sent"
+msgstr "Тестовое СМС успешно отправлено"
+
+#: ../backend/inc/admin.php:392
+msgid "Mail warning"
+msgstr "Почтовое предупреждение"
+
+#: ../backend/inc/admin.php:456
+msgid "Enter a non-zero value!"
+msgstr "Введите ненулевое значение!"
+
+#: ../backend/inc/admin.php:457
+msgid "This coupon code already exists."
+msgstr "Этот код купона уже существует."
+
+#: ../backend/inc/admin.php:493 ../backend/inc/admin.php:531
+msgid "January"
+msgstr "Январь"
+
+#: ../backend/inc/admin.php:494 ../backend/inc/admin.php:532
+msgid "February"
+msgstr "Февраль"
+
+#: ../backend/inc/admin.php:495 ../backend/inc/admin.php:533
+msgid "March"
+msgstr "Март"
+
+#: ../backend/inc/admin.php:496 ../backend/inc/admin.php:534
+msgid "April"
+msgstr "Апрель"
+
+#: ../backend/inc/admin.php:497 ../backend/inc/admin.php:535
+msgid "May"
+msgstr "Май"
+
+#: ../backend/inc/admin.php:498 ../backend/inc/admin.php:536
+msgid "June"
+msgstr "Июнь"
+
+#: ../backend/inc/admin.php:499 ../backend/inc/admin.php:537
+msgid "July"
+msgstr "Июль"
+
+#: ../backend/inc/admin.php:500 ../backend/inc/admin.php:538
+msgid "August"
+msgstr "Август"
+
+#: ../backend/inc/admin.php:501 ../backend/inc/admin.php:539
+msgid "September"
+msgstr "Сентябрь"
+
+#: ../backend/inc/admin.php:502 ../backend/inc/admin.php:540
+msgid "October"
+msgstr "Октябрь"
+
+#: ../backend/inc/admin.php:503 ../backend/inc/admin.php:541
+msgid "November"
+msgstr "Ноябрь"
+
+#: ../backend/inc/admin.php:504 ../backend/inc/admin.php:542
+msgid "December"
+msgstr "Декабрь"
+
+#: ../backend/inc/admin.php:506
+msgid ""
+"Please make sure that this customer does not have scheduled appointments. "
+"The number of scheduled appointments with this customer:"
+msgstr ""
+"Пожалуйста, убедитесь, что у этого клиента нет запланированных встреч. "
+"Количество запланированных встреч с этим клиентом:"
+
+#: ../backend/inc/admin.php:507
+msgid "Please fill out this field"
+msgstr "Пожалуйста, заполните это поле"
+
+#: ../backend/inc/admin.php:510
+msgid "Invalid Date"
+msgstr "Недействительная дата"
+
+#: ../backend/inc/admin.php:511
+msgid "Email already exist!"
+msgstr "Электронная почта уже существует!"
+
+#: ../backend/inc/admin.php:523
+msgid "Invalid Date."
+msgstr "Недействительная дата."
+
+#: ../backend/inc/admin.php:524
+msgid "Details have been updated!"
+msgstr "Детали были обновлены!"
+
+#: ../backend/inc/admin.php:525
+msgid "Your google calendar has been disconnected."
+msgstr "Ваш календарь Google был отключен."
+
+#: ../backend/inc/admin.php:526
+msgid "Google Calendar has been connected."
+msgstr "Календарь Google подключен."
+
+#: ../backend/inc/admin.php:527
+msgid "This email already used by another customer."
+msgstr "Этот адрес электронной почты уже используется другим клиентом."
+
+#: ../backend/inc/admin.php:528
+msgid "Email exist."
+msgstr "Электронная почта существует."
+
+#: ../backend/inc/admin.php:529 ../backend/inc/admin.php:559
+msgid "Bunny error."
+msgstr "Читерская ошибка."
+
+#: ../backend/inc/admin.php:558
+msgid "Successfully canceled"
+msgstr "Успешно отменено"
+
+#: ../backend/inc/admin.php:562
+msgid ""
+"You are trying to cancel an appointment that has already taken place or has "
+"same status."
+msgstr ""
+"Вы пытаетесь отменить встречу, которая уже состоялась или имеет такой же "
+"статус."
+
+#: ../backend/inc/calendar/calendar.php:25
+#: ../backend/inc/calendar/calendar.php:26
+#: ../backend/inc/calendar/calendar.php:392
+#: ../backend/inc/settings/settings-page.php:144
+msgid "Calendar"
+msgstr "Календарь"
+
+#: ../backend/inc/calendar/calendar.php:260
+#: ../backend/inc/entities/appointments.php:258
+#: ../backend/inc/entities/appointments.php:351
+#: ../backend/inc/entities/appointments.php:494
+#: ../backend/inc/entities/appointments.php:585
+#: ../backend/inc/entities/appointments.php:2117
+#: ../backend/inc/entities/appointments.php:2208
+#: ../backend/inc/entities/appointments.php:2455
+#: ../backend/inc/entities/appointments.php:2546
+#: ../backend/inc/helpers/helper-appointments.php:1914
+#: ../backend/inc/helpers/helper-appointments.php:2042
+#: ../backend/inc/helpers/helper-appointments.php:2273
+#: ../backend/inc/helpers/helper-cabinet.php:489
+#: ../backend/inc/helpers/helper-cabinet.php:602
+#: ../backend/inc/helpers/helper-cabinet.php:741
+#: ../backend/inc/helpers/helper-calendar.php:75
+#: ../backend/inc/helpers/helper.php:1090
+#: ../backend/inc/user-cabinet/appointments.php:290
+#: ../backend/inc/user-cabinet/appointments.php:412
+#: ../backend/inc/user-cabinet/appointments.php:569
+#: ../backend/inc/user-cabinet/appointments.php:681
+#: ../backend/inc/user-cabinet/appointments.php:1348
+#: ../backend/inc/user-cabinet/appointments.php:1443
+msgid "Approved"
+msgstr "Одобрено"
+
+#: ../backend/inc/calendar/calendar.php:261
+#: ../backend/inc/entities/appointments.php:259
+#: ../backend/inc/entities/appointments.php:355
+#: ../backend/inc/entities/appointments.php:495
+#: ../backend/inc/entities/appointments.php:589
+#: ../backend/inc/entities/appointments.php:2118
+#: ../backend/inc/entities/appointments.php:2212
+#: ../backend/inc/entities/appointments.php:2456
+#: ../backend/inc/entities/appointments.php:2550
+#: ../backend/inc/entities/payments.php:272
+#: ../backend/inc/entities/payments.php:395
+#: ../backend/inc/entities/payments.php:519
+#: ../backend/inc/entities/payments.php:709
+#: ../backend/inc/helpers/helper-appointments.php:1915
+#: ../backend/inc/helpers/helper-appointments.php:2043
+#: ../backend/inc/helpers/helper-appointments.php:2274
+#: ../backend/inc/helpers/helper-cabinet.php:490
+#: ../backend/inc/helpers/helper-cabinet.php:603
+#: ../backend/inc/helpers/helper-cabinet.php:742
+#: ../backend/inc/helpers/helper-calendar.php:76
+#: ../backend/inc/helpers/helper-payments.php:78
+#: ../backend/inc/helpers/helper.php:1091
+#: ../backend/inc/user-cabinet/appointments.php:291
+#: ../backend/inc/user-cabinet/appointments.php:416
+#: ../backend/inc/user-cabinet/appointments.php:570
+#: ../backend/inc/user-cabinet/appointments.php:685
+#: ../backend/inc/user-cabinet/appointments.php:1349
+#: ../backend/inc/user-cabinet/appointments.php:1447
+msgid "Pending"
+msgstr "В ожидании"
+
+#: ../backend/inc/calendar/calendar.php:262
+#: ../backend/inc/entities/appointments.php:260
+#: ../backend/inc/entities/appointments.php:496
+#: ../backend/inc/entities/appointments.php:2119
+#: ../backend/inc/entities/appointments.php:2457
+#: ../backend/inc/helpers/helper-appointments.php:1916
+#: ../backend/inc/helpers/helper-appointments.php:2044
+#: ../backend/inc/helpers/helper-appointments.php:2275
+#: ../backend/inc/helpers/helper-cabinet.php:491
+#: ../backend/inc/helpers/helper-cabinet.php:604
+#: ../backend/inc/helpers/helper-cabinet.php:743
+#: ../backend/inc/helpers/helper-calendar.php:77
+#: ../backend/inc/user-cabinet/appointments.php:168
+#: ../backend/inc/user-cabinet/appointments.php:292
+#: ../backend/inc/user-cabinet/appointments.php:571
+#: ../backend/inc/user-cabinet/appointments.php:1350
+msgid "Canceled"
+msgstr "Отменено"
+
+#: ../backend/inc/calendar/calendar.php:263
+#: ../backend/inc/entities/appointments.php:261
+#: ../backend/inc/entities/appointments.php:497
+#: ../backend/inc/entities/appointments.php:2120
+#: ../backend/inc/entities/appointments.php:2458
+#: ../backend/inc/helpers/helper-appointments.php:1917
+#: ../backend/inc/helpers/helper-appointments.php:2045
+#: ../backend/inc/helpers/helper-appointments.php:2276
+#: ../backend/inc/helpers/helper-cabinet.php:492
+#: ../backend/inc/helpers/helper-cabinet.php:605
+#: ../backend/inc/helpers/helper-cabinet.php:744
+#: ../backend/inc/helpers/helper-calendar.php:78
+#: ../backend/inc/user-cabinet/appointments.php:293
+#: ../backend/inc/user-cabinet/appointments.php:572
+#: ../backend/inc/user-cabinet/appointments.php:1351
+msgid "Rejected"
+msgstr "Отклонено"
+
+#: ../backend/inc/calendar/calendar.php:345
+#: ../backend/inc/entities/appointments.php:160
+#: ../backend/inc/entities/shortcodes.php:522
+#: ../backend/inc/helpers/helper-appointments.php:1745
+#: ../backend/inc/helpers/helper-shortcodes.php:237
+#: ../backend/inc/user-cabinet/appointments.php:182
+msgid "Employee"
+msgstr "Сотрудник"
+
+#: ../backend/inc/calendar/calendar.php:346
+#: ../backend/inc/entities/appointments.php:158
+#: ../backend/inc/entities/payments.php:196
+#: ../backend/inc/entities/payments.php:737
+#: ../backend/inc/helpers/helper-appointments.php:2148
+#: ../backend/inc/helpers/helper-cabinet.php:812
+#: ../backend/inc/user-cabinet/appointments.php:180
+msgid "Customer"
+msgstr "Клиент"
+
+#: ../backend/inc/calendar/calendar.php:347
+#: ../backend/inc/core/notificationmanagement.php:253
+#: ../backend/inc/entities/customers.php:89
+#: ../backend/inc/entities/customers.php:90
+#: ../backend/inc/entities/customers.php:874
+#: ../backend/inc/entities/payments.php:120
+#: ../backend/inc/helpers/helper-appointments.php:1680
+#: ../backend/inc/helpers/helper-cabinet.php:413
+#: ../backend/inc/settings/settings-page.php:126
+#: ../backend/inc/settings/settings-page.php:769
+msgid "Customers"
+msgstr "Клиенты"
+
+#: ../backend/inc/calendar/calendar.php:348
+#: ../backend/inc/entities/locations.php:704
+#: ../backend/inc/entities/shortcodes.php:535
+#: ../backend/inc/helpers/helper-appointments.php:1753
+#: ../backend/inc/helpers/helper-employees.php:610
+#: ../backend/inc/helpers/helper-employees.php:741
+#: ../backend/inc/helpers/helper-locations.php:57
+#: ../backend/inc/helpers/helper-shortcodes.php:250
+msgid "Location"
+msgstr "Местоположение"
+
+#: ../backend/inc/calendar/calendar.php:349
+#: ../backend/inc/helpers/helper-appointments.php:2323
+#: ../backend/inc/helpers/helper-calendar.php:117
+msgid "All Customers"
+msgstr "Все клиенты"
+
+#: ../backend/inc/core/notificationmanagement.php:254
+msgid "Emails"
+msgstr "Сообщения электронной почты"
+
+#: ../backend/inc/core/notificationmanagement.php:255
+msgid "Phones"
+msgstr "Телефоны"
+
+#: ../backend/inc/core/notificationmanagement.php:407
+msgid "Local Date:"
+msgstr "Локальная дата:"
+
+#: ../backend/inc/core/notificationmanagement.php:408
+msgid "Local Time:"
+msgstr "Локальное время:"
+
+#: ../backend/inc/entities/appointments.php:81
+#: ../backend/inc/entities/appointments.php:82
+#: ../backend/inc/entities/appointments.php:2601
+#: ../backend/inc/user-cabinet/appointments.php:91
+#: ../backend/inc/user-cabinet/appointments.php:92
+#: ../backend/inc/user-cabinet/appointments.php:1704
+msgid "Appointments"
+msgstr "Встречи"
+
+#: ../backend/inc/entities/appointments.php:101
+#: ../backend/inc/user-cabinet/appointments.php:121
+msgid "Add New Appointment"
+msgstr "Добавить Новую Встречу"
+
+#: ../backend/inc/entities/appointments.php:125
+#: ../backend/inc/helpers/helper-appointments.php:385
+#: ../backend/inc/helpers/helper-appointments.php:1018
+#: ../backend/inc/user-cabinet/appointments.php:146
+msgid "Nothing to choose"
+msgstr "Нечего выбирать"
+
+#: ../backend/inc/entities/appointments.php:126
+#: ../backend/inc/user-cabinet/appointments.php:147
+msgid "Select service and employee"
+msgstr "Выберите сервис и сотрудника"
+
+#: ../backend/inc/entities/appointments.php:127
+#: ../backend/inc/user-cabinet/appointments.php:148
+msgid "Select customer, employee and service!"
+msgstr "Выберите клиента, сотрудника и сервис!"
+
+#: ../backend/inc/entities/appointments.php:137
+#: ../backend/inc/helpers/helper-appointments.php:967
+#: ../backend/inc/user-cabinet/appointments.php:158
+msgid ""
+"This is the number of people who will come with this customer including the "
+"customer. This number varies depending on the selected service and employee."
+msgstr ""
+"Это количество людей, которые придут с этим клиентом, включая клиента. Это "
+"количество варьируется в зависимости от выбранной услуги и сотрудника."
+
+#: ../backend/inc/entities/appointments.php:144
+#: ../backend/inc/helpers/helper-appointments.php:331
+#: ../backend/inc/helpers/helper-appointments.php:1419
+#: ../backend/inc/user-cabinet/appointments.php:165
+msgid "This service doesn't have extra services"
+msgstr "Эта услуга не имеет экстра сервисов"
+
+#: ../backend/inc/entities/appointments.php:157
+#: ../backend/inc/entities/employees.php:1141
+#: ../backend/inc/entities/payments.php:89
+#: ../backend/inc/entities/payments.php:195
+#: ../backend/inc/helpers/helper-appointments.php:1773
+#: ../backend/inc/helpers/helper-cabinet.php:321
+#: ../backend/inc/helpers/helper-employees.php:446
+#: ../backend/inc/helpers/helper-employees.php:485
+#: ../backend/inc/helpers/helper-employees.php:1119
+#: ../backend/inc/settings/settings-dayoff-query.php:59
+#: ../backend/inc/settings/settings-dayoff-query.php:151
+#: ../backend/inc/settings/settings-page.php:690
+#: ../backend/inc/settings/settings-page.php:727
+#: ../backend/inc/settings/settings.php:143
+#: ../backend/inc/user-cabinet/appointments.php:179
+msgid "Date"
+msgstr "Дата"
+
+#: ../backend/inc/entities/appointments.php:159
+#: ../backend/inc/entities/payments.php:197
+#: ../backend/inc/entities/shortcodes.php:509
+#: ../backend/inc/helpers/helper-appointments.php:1734
+#: ../backend/inc/helpers/helper-shortcodes.php:224
+#: ../backend/inc/user-cabinet/appointments.php:181
+#: ../frontend/helpers/helper-frontend.php:292
+msgid "Service"
+msgstr "Сервис"
+
+#: ../backend/inc/entities/appointments.php:161
+#: ../backend/inc/entities/services.php:119
+#: ../backend/inc/entities/services.php:1056
+#: ../backend/inc/helpers/helper-employees.php:919
+#: ../backend/inc/helpers/helper-employees.php:1043
+#: ../backend/inc/helpers/helper-services.php:78
+#: ../backend/inc/helpers/helper-services.php:189
+#: ../backend/inc/helpers/helper-services.php:735
+#: ../backend/inc/user-cabinet/appointments.php:183
+msgid "Price"
+msgstr "Цена"
+
+#: ../backend/inc/entities/appointments.php:162
+#: ../backend/inc/entities/services.php:120
+#: ../backend/inc/entities/services.php:1077
+#: ../backend/inc/entities/services.php:1078
+#: ../backend/inc/helpers/helper-services.php:84
+#: ../backend/inc/helpers/helper-services.php:85
+#: ../backend/inc/helpers/helper-services.php:210
+#: ../backend/inc/helpers/helper-services.php:211
+#: ../backend/inc/helpers/helper-services.php:741
+#: ../backend/inc/helpers/helper-services.php:742
+#: ../backend/inc/user-cabinet/appointments.php:184
+#: ../frontend/frontend.php:109
+msgid "Duration"
+msgstr "Продолжительность"
+
+#: ../backend/inc/entities/appointments.php:163
+#: ../backend/inc/entities/coupons.php:94
+#: ../backend/inc/entities/payments.php:166
+#: ../backend/inc/entities/payments.php:200
+#: ../backend/inc/helpers/helper-cabinet.php:498
+#: ../backend/inc/user-cabinet/appointments.php:185
+msgid "Status"
+msgstr "Статус"
+
+#: ../backend/inc/entities/appointments.php:914
+msgid "Busy Day"
+msgstr "Полный день"
+
+#: ../backend/inc/entities/appointments.php:1076
+msgid "Edit Appointment"
+msgstr "Изменить Встречу"
+
+#: ../backend/inc/entities/appointments.php:1091
+#: ../backend/inc/entities/employees.php:1029
+#: ../backend/inc/entities/services.php:1012
+#: ../backend/inc/helpers/helper-appointments.php:46
+#: ../backend/inc/helpers/helper-employees.php:43
+#: ../backend/inc/helpers/helper-services.php:145
+#: ../backend/inc/user-cabinet/appointments.php:356
+msgid "Details"
+msgstr "Детали"
+
+#: ../backend/inc/entities/appointments.php:1092
+#: ../backend/inc/entities/services.php:1018
+#: ../backend/inc/helpers/helper-appointments.php:47
+#: ../backend/inc/helpers/helper-appointments.php:2017
+#: ../backend/inc/helpers/helper-cabinet.php:716
+#: ../backend/inc/helpers/helper-services.php:151
+#: ../backend/inc/helpers/helper.php:1337 ../frontend/frontend.php:108
+#: ../frontend/helpers/helper-frontend.php:299
+msgid "Extras"
+msgstr "Экстра Сервисы"
+
+#: ../backend/inc/entities/appointments.php:1093
+#: ../backend/inc/entities/payments.php:777
+#: ../backend/inc/helpers/helper-appointments.php:48
+#: ../backend/inc/helpers/helper-appointments.php:2105
+#: ../backend/inc/helpers/helper-cabinet.php:769
+msgid "Payment"
+msgstr "Оплата"
+
+#: ../backend/inc/entities/appointments.php:1184
+#: ../backend/inc/helpers/helper-appointments.php:1949
+#: ../backend/inc/helpers/helper-cabinet.php:637
+#: ../backend/inc/user-cabinet/appointments.php:1549
+msgid "Appointment Details"
+msgstr "Детали Встречи"
+
+#: ../backend/inc/entities/coupons.php:47
+#: ../backend/inc/entities/coupons.php:48
+#: ../backend/inc/entities/coupons.php:799
+msgid "Coupons"
+msgstr "Купоны"
+
+#: ../backend/inc/entities/coupons.php:66
+msgid "Add New Coupon"
+msgstr "Добавить новый купон"
+
+#: ../backend/inc/entities/coupons.php:87
+#: ../backend/inc/entities/coupons.php:664
+#: ../backend/inc/entities/employees.php:1146
+#: ../backend/inc/entities/shortcodes.php:96
+#: ../backend/inc/entities/shortcodes.php:488
+#: ../backend/inc/entities/taxes.php:86 ../backend/inc/entities/taxes.php:360
+#: ../backend/inc/helpers/helper-employees.php:452
+#: ../backend/inc/helpers/helper-employees.php:488
+#: ../backend/inc/helpers/helper-employees.php:1124
+#: ../backend/inc/helpers/helper-shortcodes.php:203
+#: ../backend/inc/helpers/helper.php:165 ../backend/inc/helpers/helper.php:234
+#: ../backend/inc/settings/settings-dayoff-query.php:64
+#: ../backend/inc/settings/settings-dayoff-query.php:156
+#: ../backend/inc/settings/settings-page.php:695
+#: ../backend/inc/settings/settings-page.php:730
+#: ../backend/inc/settings/settings.php:148
+msgid "Title"
+msgstr "Название"
+
+#: ../backend/inc/entities/coupons.php:88
+#: ../backend/inc/entities/coupons.php:671
+#: ../backend/inc/helpers/helper.php:241
+msgid "Code"
+msgstr "Код"
+
+#: ../backend/inc/entities/coupons.php:89
+#: ../backend/inc/entities/coupons.php:687
+#: ../backend/inc/entities/coupons.php:700
+#: ../backend/inc/helpers/helper.php:257 ../backend/inc/helpers/helper.php:270
+msgid "Discount"
+msgstr "Скидка"
+
+#: ../backend/inc/entities/coupons.php:90
+#: ../backend/inc/entities/coupons.php:693
+#: ../backend/inc/entities/coupons.php:707
+#: ../backend/inc/helpers/helper.php:263 ../backend/inc/helpers/helper.php:277
+msgid "Deduction"
+msgstr "Сумма скидки"
+
+#: ../backend/inc/entities/coupons.php:91
+msgid "Used / Limit"
+msgstr "Использовано / Лимит"
+
+#: ../backend/inc/entities/coupons.php:92
+msgid "Start Date"
+msgstr "Дата начала:"
+
+#: ../backend/inc/entities/coupons.php:93
+msgid "End Date"
+msgstr "Дата окончания"
+
+#: ../backend/inc/entities/coupons.php:151
+#: ../backend/inc/entities/coupons.php:152
+#: ../backend/inc/entities/coupons.php:347
+#: ../backend/inc/entities/coupons.php:348
+#: ../backend/inc/entities/coupons.php:501
+#: ../backend/inc/entities/coupons.php:502
+msgid "No limit"
+msgstr "Безлимитный"
+
+#: ../backend/inc/entities/coupons.php:158
+#: ../backend/inc/entities/coupons.php:354
+#: ../backend/inc/entities/coupons.php:508
+msgid "open"
+msgstr "открыто"
+
+#: ../backend/inc/entities/coupons.php:159
+#: ../backend/inc/entities/coupons.php:355
+#: ../backend/inc/entities/coupons.php:509
+msgid "closed"
+msgstr "закрыто"
+
+#: ../backend/inc/entities/coupons.php:651
+msgid "Edit Coupon"
+msgstr "Изменить Купон"
+
+#: ../backend/inc/entities/coupons.php:678
+#: ../backend/inc/helpers/helper.php:248
+msgid "Limit Usage"
+msgstr "Ограничить использование"
+
+#: ../backend/inc/entities/coupons.php:717
+#: ../backend/inc/helpers/helper.php:287
+msgid "Date Limit"
+msgstr "Ограничение по дням"
+
+#: ../backend/inc/entities/coupons.php:737
+#: ../backend/inc/entities/customers.php:632
+#: ../backend/inc/helpers/helper-appointments.php:1812
+#: ../backend/inc/helpers/helper-appointments.php:2151
+#: ../backend/inc/helpers/helper-cabinet.php:144
+#: ../backend/inc/helpers/helper-cabinet.php:269
+#: ../backend/inc/helpers/helper-cabinet.php:815
+#: ../backend/inc/helpers/helper-customers.php:132
+#: ../backend/inc/helpers/helper-employees.php:636
+#: ../backend/inc/helpers/helper-employees.php:770
+#: ../backend/inc/helpers/helper.php:307
+msgid "Info"
+msgstr "Информация"
+
+#: ../backend/inc/entities/coupons.php:738
+#: ../backend/inc/entities/customers.php:633
+#: ../backend/inc/entities/services.php:1154
+#: ../backend/inc/helpers/helper-appointments.php:1813
+#: ../backend/inc/helpers/helper-cabinet.php:145
+#: ../backend/inc/helpers/helper-cabinet.php:270
+#: ../backend/inc/helpers/helper-customers.php:133
+#: ../backend/inc/helpers/helper-employees.php:637
+#: ../backend/inc/helpers/helper-employees.php:771
+#: ../backend/inc/helpers/helper-services.php:108
+#: ../backend/inc/helpers/helper-services.php:287
+#: ../backend/inc/helpers/helper-services.php:765
+#: ../backend/inc/helpers/helper.php:308
+msgid "Some info for internal usage"
+msgstr "Некоторая информация для внутреннего использования"
+
+#: ../backend/inc/entities/coupons.php:750
+#: ../backend/inc/entities/customers.php:644
+#: ../backend/inc/entities/customfields.php:331
+#: ../backend/inc/entities/employees.php:1052
+#: ../backend/inc/entities/locations.php:753
+#: ../backend/inc/entities/services.php:1188
+#: ../backend/inc/entities/taxes.php:380
+#: ../backend/inc/helpers/helper-cabinet.php:150
+#: ../backend/inc/helpers/helper-cabinet.php:276
+#: ../backend/inc/helpers/helper-customers.php:146
+#: ../backend/inc/helpers/helper-customfields.php:140
+#: ../backend/inc/helpers/helper-employees.php:65
+#: ../backend/inc/helpers/helper-locations.php:97
+#: ../backend/inc/helpers/helper-notifications.php:147
+#: ../backend/inc/helpers/helper-notifications.php:316
+#: ../backend/inc/helpers/helper-services.php:323
+#: ../backend/inc/helpers/helper-settings.php:279
+#: ../backend/inc/helpers/helper-settings.php:372
+#: ../backend/inc/helpers/helper-settings.php:511
+#: ../backend/inc/helpers/helper-settings.php:702
+#: ../backend/inc/helpers/helper-settings.php:968
+#: ../backend/inc/helpers/helper.php:35 ../backend/inc/helpers/helper.php:186
+#: ../backend/inc/helpers/helper.php:321 ../backend/inc/helpers/helper.php:636
+#: ../backend/inc/settings/settings-dayoff-query.php:76
+#: ../backend/inc/settings/settings-dayoff-query.php:168
+#: ../backend/inc/settings/settings-page.php:275
+#: ../backend/inc/settings/settings-page.php:673
+#: ../backend/inc/settings/settings-page.php:708
+#: ../backend/inc/settings/settings-page.php:797
+#: ../backend/inc/settings/settings-page.php:1160
+#: ../backend/inc/settings/settings-page.php:1220
+#: ../backend/inc/settings/settings.php:160
+msgid "Save"
+msgstr "Сохранить"
+
+#: ../backend/inc/entities/coupons.php:757
+#: ../backend/inc/entities/customers.php:651
+#: ../backend/inc/entities/customfields.php:338
+#: ../backend/inc/entities/employees.php:1059
+#: ../backend/inc/entities/locations.php:760
+#: ../backend/inc/entities/services.php:1195
+#: ../backend/inc/entities/taxes.php:387
+#: ../backend/inc/helpers/helper-admin.php:254
+#: ../backend/inc/helpers/helper-admin.php:281
+#: ../backend/inc/helpers/helper-customers.php:153
+#: ../backend/inc/helpers/helper-customfields.php:147
+#: ../backend/inc/helpers/helper-employees.php:72
+#: ../backend/inc/helpers/helper-locations.php:104
+#: ../backend/inc/helpers/helper-services.php:330
+#: ../backend/inc/helpers/helper.php:193 ../backend/inc/helpers/helper.php:328
+#: ../backend/inc/helpers/helper.php:637
+#: ../backend/inc/user-cabinet/appointments.php:384
+#: ../backend/inc/user-cabinet/appointments.php:653
+msgid "Cancel"
+msgstr "Отменить"
+
+#: ../backend/inc/entities/customers.php:108
+msgid "Add New Customer"
+msgstr "Добавить Нового Клиента"
+
+#: ../backend/inc/entities/customers.php:130
+msgid "Search Customer"
+msgstr "Поиск Клиента"
+
+#: ../backend/inc/entities/customers.php:160
+#: ../backend/inc/entities/employees.php:171
+#: ../backend/inc/entities/locations.php:88
+#: ../backend/inc/entities/locations.php:700
+#: ../backend/inc/entities/services.php:1052
+#: ../backend/inc/helpers/helper-locations.php:53
+#: ../backend/inc/helpers/helper-services.php:74
+#: ../backend/inc/helpers/helper-services.php:185
+#: ../backend/inc/helpers/helper-services.php:731
+#: ../backend/inc/helpers/helper-settings.php:340
+msgid "Name"
+msgstr "Имя"
+
+#: ../backend/inc/entities/customers.php:161
+#: ../backend/inc/entities/employees.php:172
+#: ../backend/inc/helpers/helper-cabinet.php:130
+#: ../backend/inc/helpers/helper-employees.php:604
+#: ../backend/inc/helpers/helper-employees.php:735
+#: ../frontend/helpers/helper-frontend.php:112
+msgid "Email"
+msgstr "Электронная почта"
+
+#: ../backend/inc/entities/customers.php:162
+#: ../backend/inc/entities/employees.php:173
+#: ../backend/inc/helpers/helper-cabinet.php:136
+#: ../backend/inc/helpers/helper-employees.php:621
+#: ../backend/inc/helpers/helper-employees.php:752
+#: ../backend/inc/helpers/helper-settings.php:358
+#: ../frontend/helpers/helper-frontend.php:118
+msgid "Phone"
+msgstr "Телефон"
+
+#: ../backend/inc/entities/customers.php:539
+msgid "Edit Customer"
+msgstr "Изменить Клиента"
+
+#: ../backend/inc/entities/customers.php:550
+#: ../backend/inc/helpers/helper-cabinet.php:115
+#: ../backend/inc/helpers/helper-cabinet.php:198
+#: ../backend/inc/helpers/helper-customers.php:50
+#: ../backend/inc/helpers/helper-employees.php:587
+#: ../backend/inc/helpers/helper-employees.php:720
+#: ../frontend/helpers/helper-frontend.php:100
+msgid "First Name"
+msgstr "Имя"
+
+#: ../backend/inc/entities/customers.php:557
+#: ../backend/inc/helpers/helper-cabinet.php:121
+#: ../backend/inc/helpers/helper-cabinet.php:205
+#: ../backend/inc/helpers/helper-customers.php:57
+#: ../backend/inc/helpers/helper-employees.php:593
+#: ../backend/inc/helpers/helper-employees.php:726
+#: ../frontend/helpers/helper-frontend.php:106
+msgid "Last Name"
+msgstr "Фамилия"
+
+#: ../backend/inc/entities/customers.php:564
+#: ../backend/inc/helpers/helper-cabinet.php:212
+#: ../backend/inc/helpers/helper-customers.php:64
+msgid "Email Address"
+msgstr "Адрес электронной почты"
+
+#: ../backend/inc/entities/customers.php:571
+#: ../backend/inc/helpers/helper-cabinet.php:219
+#: ../backend/inc/helpers/helper-customers.php:71
+msgid "Phone Number"
+msgstr "Номер телефона"
+
+#: ../backend/inc/entities/customers.php:579
+#: ../backend/inc/helpers/helper-cabinet.php:227
+#: ../backend/inc/helpers/helper-customers.php:79
+msgid "Date of Birth"
+msgstr "Дата рождения"
+
+#: ../backend/inc/entities/customers.php:587
+#: ../backend/inc/helpers/helper-customers.php:87
+#: ../backend/inc/helpers/helper-employees.php:628
+#: ../backend/inc/helpers/helper-employees.php:759
+msgid "WordPress User"
+msgstr "Пользователь WordPress"
+
+#: ../backend/inc/entities/customers.php:589
+#: ../backend/inc/helpers/helper-customers.php:89
+#: ../backend/inc/helpers/helper-employees.php:630
+#: ../backend/inc/helpers/helper-employees.php:761
+msgid "Select from WP users"
+msgstr "Выберите из пользователей WP"
+
+#: ../backend/inc/entities/customers.php:597
+#: ../backend/inc/helpers/helper-cabinet.php:234
+#: ../backend/inc/helpers/helper-customers.php:97
+msgid "Country"
+msgstr "Страна"
+
+#: ../backend/inc/entities/customers.php:604
+#: ../backend/inc/helpers/helper-cabinet.php:241
+#: ../backend/inc/helpers/helper-customers.php:104
+msgid "State"
+msgstr "Штат/Регион"
+
+#: ../backend/inc/entities/customers.php:611
+#: ../backend/inc/helpers/helper-cabinet.php:248
+#: ../backend/inc/helpers/helper-customers.php:111
+msgid "City"
+msgstr "Город"
+
+#: ../backend/inc/entities/customers.php:618
+#: ../backend/inc/helpers/helper-cabinet.php:255
+#: ../backend/inc/helpers/helper-customers.php:118
+msgid "Post Code"
+msgstr "Почтовый индекс"
+
+#: ../backend/inc/entities/customers.php:625
+#: ../backend/inc/helpers/helper-cabinet.php:262
+#: ../backend/inc/helpers/helper-customers.php:125
+#: ../backend/inc/helpers/helper-settings.php:346
+msgid "Address"
+msgstr "Адрес"
+
+#: ../backend/inc/entities/customfields.php:41
+#: ../backend/inc/entities/customfields.php:42
+#: ../backend/inc/entities/customfields.php:604
+msgid "Customfields"
+msgstr "Настраиваемые поля"
+
+#: ../backend/inc/entities/customfields.php:66
+#: ../backend/inc/entities/customfields.php:117
+#: ../backend/inc/entities/customfields.php:461
+msgid "Checkbox"
+msgstr "Галочка"
+
+#: ../backend/inc/entities/customfields.php:67
+#: ../backend/inc/entities/customfields.php:119
+#: ../backend/inc/entities/customfields.php:463
+msgid "Radio Buttons"
+msgstr "Радио Кнопки"
+
+#: ../backend/inc/entities/customfields.php:68
+#: ../backend/inc/entities/customfields.php:118
+#: ../backend/inc/entities/customfields.php:462
+msgid "Select"
+msgstr "Выбрать"
+
+#: ../backend/inc/entities/customfields.php:69
+msgid "Text Field"
+msgstr "Текстовое поле"
+
+#: ../backend/inc/entities/customfields.php:70
+#: ../backend/inc/entities/customfields.php:121
+#: ../backend/inc/entities/customfields.php:465
+msgid "Textarea"
+msgstr "Текстовая область"
+
+#: ../backend/inc/entities/customfields.php:72
+#: ../backend/inc/entities/customfields.php:122
+#: ../backend/inc/entities/customfields.php:466
+msgid "Text Content"
+msgstr "Информационная область"
+
+#: ../backend/inc/entities/customfields.php:120
+#: ../backend/inc/entities/customfields.php:464
+msgid "Text"
+msgstr "Текст"
+
+#: ../backend/inc/entities/customfields.php:207
+#: ../backend/inc/helpers/helper-customfields.php:39
+msgid "Label & Options"
+msgstr "Метка и Опции"
+
+#: ../backend/inc/entities/customfields.php:210
+msgid "Edit Checkbox"
+msgstr "Изменить флажок"
+
+#: ../backend/inc/entities/customfields.php:211
+msgid "Edit Select"
+msgstr "Изменить Раскрывающийся список"
+
+#: ../backend/inc/entities/customfields.php:212
+msgid "Edit Radio Buttons"
+msgstr "Изменить радио кнопки"
+
+#: ../backend/inc/entities/customfields.php:213
+msgid "Edit Text"
+msgstr "Изменить Текст"
+
+#: ../backend/inc/entities/customfields.php:213
+#: ../backend/inc/entities/customfields.php:214
+#: ../backend/inc/entities/customfields.php:215
+#: ../backend/inc/helpers/helper-customfields.php:40
+msgid "Label"
+msgstr "Метка"
+
+#: ../backend/inc/entities/customfields.php:214
+msgid "Edit Textarea"
+msgstr "Изменить Текстовую область"
+
+#: ../backend/inc/entities/customfields.php:215
+msgid "Edit Text Content"
+msgstr "Изменить Информационную область"
+
+#: ../backend/inc/entities/customfields.php:272
+#: ../backend/inc/helpers/helper-customfields.php:101
+msgid "Required field"
+msgstr "Обязательное поле"
+
+#: ../backend/inc/entities/customfields.php:292
+#: ../backend/inc/helpers/helper-customfields.php:114
+msgid "Add Option"
+msgstr "Добавить опцию"
+
+#: ../backend/inc/entities/customfields.php:305
+#: ../backend/inc/entities/customfields.php:313
+#: ../backend/inc/helpers/helper-customfields.php:122
+msgid "Attach Services"
+msgstr "Прикрепить Сервисы"
+
+#: ../backend/inc/entities/customfields.php:311
+#: ../backend/inc/helpers/helper-customfields.php:120
+msgid "Attached Services"
+msgstr "Прикрепленные сервисы"
+
+#: ../backend/inc/entities/employees.php:53
+#: ../backend/inc/entities/employees.php:54
+#: ../backend/inc/entities/employees.php:1269
+#: ../backend/inc/entities/locations.php:721
+#: ../backend/inc/entities/payments.php:143
+#: ../backend/inc/entities/services.php:1068
+#: ../backend/inc/helpers/helper-cabinet.php:458
+#: ../backend/inc/helpers/helper-locations.php:65
+#: ../backend/inc/helpers/helper-services.php:201
+msgid "Employees"
+msgstr "Сотрудники"
+
+#: ../backend/inc/entities/employees.php:89
+msgid "Add New Employee"
+msgstr "Добавить нового сотрудника"
+
+#: ../backend/inc/entities/employees.php:117
+msgid "Search Employees"
+msgstr "Поиск сотрудников"
+
+#: ../backend/inc/entities/employees.php:134
+#: ../backend/inc/entities/employees.php:1030
+#: ../backend/inc/entities/payments.php:97
+#: ../backend/inc/entities/services.php:48
+#: ../backend/inc/entities/services.php:49
+#: ../backend/inc/entities/services.php:118
+#: ../backend/inc/entities/services.php:1239
+#: ../backend/inc/helpers/helper-cabinet.php:371
+#: ../backend/inc/helpers/helper-employees.php:44
+#: ../backend/inc/settings/settings-page.php:132
+#: ../backend/inc/settings/settings-page.php:1194
+msgid "Services"
+msgstr "Сервисы"
+
+#: ../backend/inc/entities/employees.php:1016
+msgid "Edit Employee"
+msgstr "Редактировать Сотрудника"
+
+#: ../backend/inc/entities/employees.php:1031
+#: ../backend/inc/helpers/helper-employees.php:45
+#: ../backend/inc/settings/settings-page.php:300
+msgid "Working Hours"
+msgstr "Часы работы"
+
+#: ../backend/inc/entities/employees.php:1032
+#: ../backend/inc/helpers/helper-employees.php:46
+#: ../backend/inc/settings/settings-page.php:303
+msgid "Days Off"
+msgstr "Выходные дни"
+
+#: ../backend/inc/entities/employees.php:1142
+#: ../backend/inc/helpers/helper-appointments.php:1775
+#: ../backend/inc/helpers/helper-employees.php:1120
+#: ../backend/inc/settings/settings-dayoff-query.php:60
+#: ../backend/inc/settings/settings-dayoff-query.php:152
+#: ../backend/inc/settings/settings.php:144
+msgid "yy-mm-dd"
+msgstr "гг-мм-дд"
+
+#: ../backend/inc/entities/employees.php:1147
+#: ../backend/inc/helpers/helper-employees.php:454
+#: ../backend/inc/helpers/helper-employees.php:1125
+#: ../backend/inc/settings/settings-dayoff-query.php:65
+#: ../backend/inc/settings/settings-dayoff-query.php:157
+#: ../backend/inc/settings/settings-page.php:696
+#: ../backend/inc/settings/settings.php:149
+msgid "Enter Off Day Title..."
+msgstr "Введите название выходного дня ..."
+
+#: ../backend/inc/entities/employees.php:1155
+#: ../backend/inc/helpers/helper-employees.php:462
+#: ../backend/inc/helpers/helper-employees.php:515
+#: ../backend/inc/helpers/helper-employees.php:1133
+#: ../backend/inc/settings/settings-dayoff-query.php:73
+#: ../backend/inc/settings/settings-dayoff-query.php:165
+#: ../backend/inc/settings/settings-page.php:704
+#: ../backend/inc/settings/settings-page.php:744
+#: ../backend/inc/settings/settings.php:157
+msgid "Repeat Every Year"
+msgstr "Повторять каждый год"
+
+#: ../backend/inc/entities/locations.php:48
+#: ../backend/inc/entities/locations.php:49
+#: ../backend/inc/entities/locations.php:89
+#: ../backend/inc/entities/locations.php:802
+msgid "Locations"
+msgstr "Местоположения"
+
+#: ../backend/inc/entities/locations.php:67
+msgid "Add New Location"
+msgstr "Добавить новое местоположение"
+
+#: ../backend/inc/entities/locations.php:674
+msgid "Edit Location"
+msgstr "Изменить местоположение"
+
+#: ../backend/inc/entities/locations.php:701
+#: ../backend/inc/helpers/helper-locations.php:54
+#: ../backend/inc/helpers/helper.php:1340
+msgid "Location Name"
+msgstr "Название местоположения"
+
+#: ../backend/inc/entities/locations.php:705
+#: ../backend/inc/helpers/helper-locations.php:58
+#: ../backend/inc/helpers/helper.php:1341
+msgid "Location Address"
+msgstr "Адрес местонахождения"
+
+#: ../backend/inc/entities/locations.php:715
+#: ../backend/inc/entities/locations.php:723
+#: ../backend/inc/entities/services.php:978
+#: ../backend/inc/entities/services.php:1069
+#: ../backend/inc/entities/shortcodes.php:454
+#: ../backend/inc/entities/shortcodes.php:524
+#: ../backend/inc/helpers/helper-appointments.php:1747
+#: ../backend/inc/helpers/helper-locations.php:67
+#: ../backend/inc/helpers/helper-services.php:202
+#: ../backend/inc/helpers/helper-shortcodes.php:239
+msgid "Select from Employees"
+msgstr "Выберите из сотрудников"
+
+#: ../backend/inc/entities/locations.php:736
+#: ../backend/inc/entities/services.php:1153
+#: ../backend/inc/helpers/helper-locations.php:80
+#: ../backend/inc/helpers/helper-services.php:107
+#: ../backend/inc/helpers/helper-services.php:286
+#: ../backend/inc/helpers/helper-services.php:764
+msgid "Description"
+msgstr "Описание"
+
+#: ../backend/inc/entities/locations.php:737
+#: ../backend/inc/helpers/helper-locations.php:81
+msgid "Some info"
+msgstr "Некоторая информация"
+
+#: ../backend/inc/entities/notifications.php:42
+#: ../backend/inc/entities/notifications.php:43
+#: ../backend/inc/entities/notifications.php:657
+#: ../backend/inc/helpers/helper-admin.php:21
+#: ../backend/inc/helpers/helper-settings.php:400
+msgid "Notifications"
+msgstr "Уведомления"
+
+#: ../backend/inc/entities/notifications.php:73
+msgid ""
+"To send scheduled notifications please add the following command line in "
+"your cron:"
+msgstr ""
+"Для отправки запланированных уведомлений, пожалуйста, добавьте следующую "
+"командную строку в ваш cron:"
+
+#: ../backend/inc/entities/notifications.php:85
+msgid "Email to Customer"
+msgstr "Письмо клиенту"
+
+#: ../backend/inc/entities/notifications.php:86
+msgid "Email to Employee"
+msgstr "Письмо клиенту"
+
+#: ../backend/inc/entities/notifications.php:87
+msgid "SMS to Customer"
+msgstr "СМС клиенту"
+
+#: ../backend/inc/entities/notifications.php:88
+msgid "SMS to Employee"
+msgstr "СМС сотруднику"
+
+#: ../backend/inc/entities/notifications.php:116
+msgid "Shortcode List"
+msgstr "Список Шорткодов"
+
+#: ../backend/inc/entities/notifications.php:232
+#: ../backend/inc/entities/notifications.php:302
+#: ../backend/inc/entities/notifications.php:376
+#: ../backend/inc/entities/notifications.php:446
+msgid "Appointment Approved"
+msgstr "Встреча одобрена"
+
+#: ../backend/inc/entities/notifications.php:233
+msgid ""
+"Dear {{customer_full_name}}.\n"
+"\n"
+"This is a confirmation that you have booked {{service_name}}.\n"
+"\n"
+"We are waiting you at {{company_address}} on {{appointment_date}} at "
+"{{appointment_start_time}}.\n"
+"\n"
+"Thank you for choosing our company.\n"
+"\n"
+"{{company_name}}\n"
+"{{company_phone}}\n"
+"{{company_website}}"
+msgstr ""
+"Уважаемый(ая) {{customer_full_name}}.\n"
+"\n"
+"Это подтверждение того, что вы забронировали сервис:  {{service_name}}.\n"
+"\n"
+"Мы ждем Вас по адресу {{company_address}}  {{appointment_date}} в "
+"{{appointment_start_time}}.\n"
+"\n"
+"Спасибо, что выбрали нашу компанию.\n"
+".\n"
+"\n"
+"{{company_name}}\n"
+"{{company_phone}}\n"
+"{{company_website}}"
+
+#: ../backend/inc/entities/notifications.php:240
+#: ../backend/inc/entities/notifications.php:310
+#: ../backend/inc/entities/notifications.php:384
+#: ../backend/inc/entities/notifications.php:454
+msgid "Appointment Canceled"
+msgstr "Встреча отменена"
+
+#: ../backend/inc/entities/notifications.php:241
+msgid ""
+"Dear {{customer_full_name}}.\n"
+"\n"
+"You have canceled your booking of {{service_name}} on {{appointment_date}} "
+"at {{appointment_start_time}}.\n"
+"\n"
+"Thank you for choosing our company.\n"
+"\n"
+"{{company_name}}\n"
+"{{company_phone}}\n"
+"{{company_website}}"
+msgstr ""
+"Уважаемый(ая) {{customer_full_name}}.\n"
+"\n"
+"Вы отменили свое бронирование {{service_name}} {{appointment_date}} в  "
+"{{appointment_start_time}}.\n"
+"\n"
+"Спасибо, что выбрали нашу компанию.\n"
+"\n"
+"{{company_name}}\n"
+"{{company_phone}}\n"
+"{{company_website}}"
+
+#: ../backend/inc/entities/notifications.php:248
+#: ../backend/inc/entities/notifications.php:318
+#: ../backend/inc/entities/notifications.php:392
+#: ../backend/inc/entities/notifications.php:462
+msgid "Appointment Pending"
+msgstr "Встреча в ожидании"
+
+#: ../backend/inc/entities/notifications.php:249
+msgid ""
+"Dear {{customer_full_name}}.\n"
+"\n"
+" The {{service_name}} appointment with {{employee_full_name}} at "
+"{{company_address}}, scheduled for {{appointment_date}} at "
+"{{appointment_start_time}} is waiting for a confirmation.\n"
+"\n"
+" Thank you for choosing our company.\n"
+"\n"
+" {{company_name}}\n"
+"{{company_phone}}\n"
+"{{company_website}}"
+msgstr ""
+"Уважаемый(ая) {{customer_full_name}}.\n"
+"\n"
+"{{service_name}} встреча с {{employee_full_name}} в {{company_address}}, "
+"назначенная на {{appointment_date}} в  {{appointment_start_time}} ожидает "
+"подтверждения.\n"
+"\n"
+" Спасибо, что выбрали нашу компанию.\n"
+"\n"
+" {{company_name}}\n"
+"{{company_phone}}\n"
+"{{company_website}}"
+
+#: ../backend/inc/entities/notifications.php:256
+#: ../backend/inc/entities/notifications.php:326
+#: ../backend/inc/entities/notifications.php:400
+#: ../backend/inc/entities/notifications.php:470
+msgid "Appointment Rejected"
+msgstr "Встреча отклонена"
+
+#: ../backend/inc/entities/notifications.php:257
+msgid ""
+"Dear {{customer_full_name}}.\n"
+"\n"
+"Your booking of {{service_name}} on {{appointment_date}} at "
+"{{appointment_start_time}} has been rejected.\n"
+"\n"
+"Thank you for choosing our company.\n"
+"\n"
+"{{company_name}}\n"
+"{{company_phone}}\n"
+"{{company_website}}"
+msgstr ""
+"Уважаемый(ая) {{customer_full_name}}.\n"
+"\n"
+"Ваше бронирование {{service_name}} {{appointment_date}} в  "
+"{{appointment_start_time}} было отклонено.\n"
+"\n"
+"Спасибо, что выбрали нашу компанию.\n"
+"\n"
+"{{company_name}}\n"
+"{{company_phone}}\n"
+"{{company_website}}"
+
+#: ../backend/inc/entities/notifications.php:264
+#: ../backend/inc/entities/notifications.php:334
+#: ../backend/inc/entities/notifications.php:408
+#: ../backend/inc/entities/notifications.php:478
+msgid "Appointment Rescheduled"
+msgstr "Встреча перенесена"
+
+#: ../backend/inc/entities/notifications.php:265
+msgid ""
+"Dear {{customer_full_name}}.\n"
+"\n"
+"Were changed the details of your booking on {{service_name}} at "
+"{{location_name}} with {{employee_full_name}}. The booking has been "
+"rescheduled to {{appointment_date}} at {{appointment_start_time}}.\n"
+"\n"
+"Thank you for choosing our company.\n"
+"\n"
+"{{company_name}}\n"
+"{{company_phone}}\n"
+"{{company_website}}"
+msgstr ""
+"Уважаемый(ая) {{customer_full_name}}.\n"
+"\n"
+"Были изменены данные вашего бронирования {{service_name}} в "
+"{{location_name}} с {{employee_full_name}}. Бронирование было перенесено на "
+"{{appointment_date}} в  {{appointment_start_time}}.\n"
+"\n"
+"Спасибо, что выбрали нашу компанию.\n"
+"\n"
+"{{company_name}}\n"
+"{{company_phone}}\n"
+"{{company_website}}"
+
+#: ../backend/inc/entities/notifications.php:272
+#: ../backend/inc/entities/notifications.php:342
+#: ../backend/inc/entities/notifications.php:416
+#: ../backend/inc/entities/notifications.php:486
+msgid "Reminder Day Before Appointment"
+msgstr "Напоминание за день до встречи"
+
+#: ../backend/inc/entities/notifications.php:273
+#: ../backend/inc/entities/notifications.php:283
+msgid ""
+"Dear {{customer_full_name}}.\n"
+"\n"
+"This is a reminder that you have booked {{service_name}} on "
+"{{appointment_date}} at {{appointment_start_time}}.\n"
+"\n"
+"We look forward to seeing you!\n"
+"\n"
+"Kind regards.\n"
+"\n"
+"{{company_name}}\n"
+"{{company_phone}}\n"
+"{{company_website}}"
+msgstr ""
+"Уважаемый(ая) {{customer_full_name}}.\n"
+"\n"
+"Это напоминание о том, что вы забронировали {{service_name}} на "
+"{{appointment_date}} в  {{appointment_start_time}}.\n"
+"\n"
+"Мы с нетерпением ждем встречи с вами!\n"
+"\n"
+"С уважением.\n"
+"\n"
+"{{company_name}}\n"
+"{{company_phone}}\n"
+"{{company_website}}"
+
+#: ../backend/inc/entities/notifications.php:282
+#: ../backend/inc/entities/notifications.php:352
+#: ../backend/inc/entities/notifications.php:426
+#: ../backend/inc/entities/notifications.php:496
+msgid "Reminder Time Before Appointment"
+msgstr "Время напоминания до назначения"
+
+#: ../backend/inc/entities/notifications.php:292
+#: ../backend/inc/entities/notifications.php:362
+#: ../backend/inc/entities/notifications.php:436
+#: ../backend/inc/entities/notifications.php:506
+msgid "Thank you for registering!"
+msgstr "Спасибо за регистрацию!"
+
+#: ../backend/inc/entities/notifications.php:293
+#: ../backend/inc/entities/notifications.php:437
+msgid ""
+"Hello {{customer_full_name}}.\n"
+"\n"
+"Thanks for registering at {{site_address}}\n"
+"\n"
+"You can now login to manage your account and appointments using the "
+"following credentials:\n"
+"user: {{new_username}}\n"
+"password: {{new_password}}\n"
+"\n"
+"Thanks."
+msgstr ""
+"Привет {{customer_full_name}}.\n"
+"\n"
+"Спасибо за регистрацию на {{site_address}}\n"
+"\n"
+"Теперь вы можете войти, чтобы управлять своей учетной записью и встречами, "
+"используя следующие учетные данные:\n"
+"пользователь: {{new_username}}\n"
+"пароль: {{new_password}}\n"
+"\n"
+"Спасибо."
+
+#: ../backend/inc/entities/notifications.php:303
+msgid ""
+"Hello.\n"
+"\n"
+"You have a new booking.\n"
+"\n"
+"Service: {{service_name}}\n"
+"Date: {{appointment_date}}\n"
+"Time: {{appointment_start_time}}\n"
+"\n"
+"Customer name: {{customer_full_name}}\n"
+"Customer email: {{customer_email}}\n"
+"Customer phone: {{customer_phone}}"
+msgstr ""
+"Привет.\n"
+"\n"
+"У вас новое бронирование.\n"
+"\n"
+"Сервис: {{service_name}}\n"
+"Дата: {{appointment_date}}\n"
+"Время: {{appointment_start_time}}\n"
+"\n"
+"Имя клиента: {{customer_full_name}}\n"
+"Электронная почта клиента {{customer_email}}\n"
+"Телефон клиента: {{customer_phone}}"
+
+#: ../backend/inc/entities/notifications.php:311
+msgid ""
+"Hello.\n"
+"\n"
+"The following booking has been canceled.\n"
+"\n"
+"Service: {{service_name}}\n"
+"Date: {{appointment_date}}\n"
+"Time: {{appointment_start_time}}\n"
+"\n"
+"Customer name: {{customer_full_name}}\n"
+"Customer email: {{customer_email}}\n"
+"Customer phone: {{customer_phone}}"
+msgstr ""
+"Привет.\n"
+"\n"
+"Следующее бронирование было отменено.\n"
+"\n"
+"Сервис: {{service_name}}\n"
+"Дата: {{appointment_date}}\n"
+"Время: {{appointment_start_time}}\n"
+"\n"
+"Имя клиента: {{customer_full_name}}\n"
+"Электронная почта клиента {{customer_email}}\n"
+"Телефон клиента: {{customer_phone}}"
+
+#: ../backend/inc/entities/notifications.php:319
+msgid ""
+"Hello.\n"
+"\n"
+" You have a new booking.\n"
+"\n"
+"Service: {{service_name}}\n"
+"Date: {{appointment_date}}\n"
+"Time: {{appointment_start_time}}\n"
+"\n"
+"Customer name: {{customer_full_name}}\n"
+"Customer email: {{customer_email}}\n"
+"Customer phone: {{customer_phone}}"
+msgstr ""
+"Привет.\n"
+"\n"
+" У вас новое бронирование.\n"
+"\n"
+"Сервис: {{service_name}}\n"
+"Дата: {{appointment_date}}\n"
+"Время: {{appointment_start_time}}\n"
+"\n"
+"Имя клиента: {{customer_full_name}}\n"
+"Электронная почта клиента {{customer_email}}\n"
+"Телефон клиента: {{customer_phone}}"
+
+#: ../backend/inc/entities/notifications.php:327
+msgid ""
+"Hello.\n"
+"\n"
+"The following booking has been rejected.\n"
+"\n"
+"Service: {{service_name}}\n"
+"Date: {{appointment_date}}\n"
+"Time: {{appointment_start_time}}\n"
+"\n"
+"Customer name: {{customer_full_name}}\n"
+"Customer email: {{customer_email}}\n"
+"Customer phone: {{customer_phone}}"
+msgstr ""
+"Привет.\n"
+"\n"
+"Следующее бронирование было отклонено.\n"
+"\n"
+"Сервис: {{service_name}}\n"
+"Дата: {{appointment_date}}\n"
+"Время: {{appointment_start_time}}\n"
+"\n"
+"Имя клиента: {{customer_full_name}}\n"
+"Электронная почта клиента {{customer_email}}\n"
+"Телефон клиента: {{customer_phone}}"
+
+#: ../backend/inc/entities/notifications.php:335
+msgid ""
+"Hello.\n"
+"\n"
+"Were changed the details of your booking on {{service_name}} at "
+"{{location_name}}. The booking has been rescheduled to {{appointment_date}} "
+"at {{appointment_start_time}}.\n"
+"\n"
+"{{company_name}}\n"
+"{{company_phone}}\n"
+"{{company_website}}"
+msgstr ""
+"Привет.\n"
+"\n"
+"Были изменены данные вашего бронирования на {{service_name}} в "
+"{{location_name}}. Бронирование было перенесено на {{назначение_дата}} в "
+"{{назначение_старт_время}}..\n"
+"\n"
+"{{company_name}}\n"
+"{{company_phone}}\n"
+"{{company_website}}"
+
+#: ../backend/inc/entities/notifications.php:343
+msgid ""
+"Reminder:  {{customer_full_name}} has booked an appointment.\n"
+"\n"
+"Service: {{service_name}}\n"
+"Date: {{appointment_date}}\n"
+"Time: {{appointment_start_time}}\n"
+"\n"
+"Customer name: {{customer_full_name}}\n"
+"Customer email: {{customer_email}}\n"
+"Customer phone: {{customer_phone}}"
+msgstr ""
+"Напоминание:  {{customer_full_name}} забронировал(а) встречу.\n"
+"\n"
+"Сервис: {{service_name}}\n"
+"Дата: {{appointment_date}}\n"
+"Время: {{appointment_start_time}}\n"
+"\n"
+"Имя клиента: {{customer_full_name}}\n"
+"Электронная почта клиента {{customer_email}}\n"
+"Телефон клиента: {{customer_phone}}"
+
+#: ../backend/inc/entities/notifications.php:353
+msgid ""
+"Dear {{employee_full_name}}.\n"
+"\n"
+"This is a reminder that you have booked {{service_name}} on "
+"{{appointment_date}} at {{appointment_start_time}}.\n"
+"\n"
+"We look forward to seeing you!\n"
+"\n"
+"Kind regards.\n"
+"\n"
+"{{company_name}}\n"
+"{{company_phone}}\n"
+"{{company_website}}"
+msgstr ""
+"Уважаемый(ая) {{employee_full_name}}.\n"
+"\n"
+"Это напоминание о том, что вы забронировали {{service_name}} на "
+"{{appointment_date}} в  {{appointment_start_time}}.\n"
+"\n"
+"Мы с нетерпением ждем встречи с вами!\n"
+"\n"
+"С уважением.\n"
+"\n"
+"{{company_name}}\n"
+"{{company_phone}}\n"
+"{{company_website}}"
+
+#: ../backend/inc/entities/notifications.php:363
+#: ../backend/inc/entities/notifications.php:507
+msgid ""
+"Hello {{employee_full_name}}.\n"
+"\n"
+"Thanks for registering at {{site_address}}\n"
+"\n"
+"You can now login to manage your account and appointments using the "
+"following credentials:\n"
+"user: {{new_username}}\n"
+"password: {{new_password}}\n"
+"\n"
+"Thanks."
+msgstr ""
+"Привет  {{employee_full_name}}.\n"
+"\n"
+"Спасибо за регистрацию на {{site_address}}\n"
+"\n"
+"Теперь вы можете войти, чтобы управлять своей учетной записью и встречами, "
+"используя следующие учетные данные:\n"
+"пользователь: {{new_username}}\n"
+"пароль: {{new_password}}\n"
+"\n"
+"Спасибо."
+
+#: ../backend/inc/entities/notifications.php:377
+msgid ""
+"Dear {{customer_full_name}}.\n"
+"\n"
+"Your appointment has been approved.\n"
+"\n"
+"Service: {{service_name}}\n"
+"\n"
+"Date: {{appointment_date}} at {{appointment_start_time}}.\n"
+"\n"
+"{{company_name}}"
+msgstr ""
+"Уважаемый {{customer_full_name}}.\n"
+"\n"
+"Ваше назначение было одобрено.\n"
+"\n"
+"Служба: {{service_name}}\n"
+"\n"
+"Дата: {{appointment_date}} в {{appointment_start_time}}.\n"
+"\n"
+"{{company_name}}"
+
+#: ../backend/inc/entities/notifications.php:385
+msgid ""
+"Dear {{customer_full_name}}.\n"
+"\n"
+"Your appointment has been canceled.\n"
+"\n"
+"Service: {{service_name}}\n"
+"\n"
+"Date: {{appointment_date}} at {{appointment_start_time}}.\n"
+"\n"
+"{{company_name}}"
+msgstr ""
+"Уважаемый {{customer_full_name}}.\n"
+"\n"
+"Ваша встреча была отменена.\n"
+"\n"
+"Сервис: {{service_name}}\n"
+"\n"
+"Дата: {{appointment_date}} в {{appointment_start_time}}.\n"
+"\n"
+"{{company_name}}"
+
+#: ../backend/inc/entities/notifications.php:393
+msgid ""
+"Dear {{customer_full_name}}.\n"
+"\n"
+"Your appointment waiting for a confirmation.\n"
+"\n"
+"Service: {{service_name}}\n"
+"\n"
+"Date: {{appointment_date}} at {{appointment_start_time}}.\n"
+"\n"
+"{{company_name}}"
+msgstr ""
+"Уважаемый {{customer_full_name}}.\n"
+"\n"
+"Ваша встреча ждет подтверждения.\n"
+"\n"
+"Служба: {{service_name}}\n"
+"\n"
+"Дата: {{appointment_date}} в {{appointment_start_time}}.\n"
+"\n"
+"{{company_name}}"
+
+#: ../backend/inc/entities/notifications.php:401
+msgid ""
+"Dear {{customer_full_name}}.\n"
+"\n"
+"Your appointment has been rejected.\n"
+"\n"
+"Service:{{service_name}}\n"
+"\n"
+"Date: {{appointment_date}} at {{appointment_start_time}}.\n"
+"\n"
+"{{company_name}}"
+msgstr ""
+"Уважаемый {{customer_full_name}}.\n"
+"\n"
+"Ваша встреча была отклонена.\n"
+"\n"
+"Сервисы: {{service_name}}\n"
+"\n"
+"Дата: {{appointment_date}} в {{appointment_start_time}}.\n"
+"\n"
+"{{company_name}}"
+
+#: ../backend/inc/entities/notifications.php:409
+msgid ""
+"Dear {{customer_full_name}}.\n"
+"\n"
+"Your appointment has been rescheduled.\n"
+"\n"
+"Service: {{service_name}}\n"
+"\n"
+"Date: {{appointment_date}} at {{appointment_start_time}}.\n"
+"\n"
+"{{company_name}}"
+msgstr ""
+"Уважаемый {{customer_full_name}}.\n"
+"\n"
+"Ваша встреча была перенесена.\n"
+"\n"
+"Сервис: {{service_name}}\n"
+"\n"
+"Дата: {{appointment_date}} в {{appointment_start_time}}.\n"
+"\n"
+"{{company_name}}"
+
+#: ../backend/inc/entities/notifications.php:417
+#: ../backend/inc/entities/notifications.php:427
+msgid ""
+"Dear {{customer_full_name}}.\n"
+"\n"
+"This is a reminder that you have booked {{service_name}} on "
+"{{appointment_date}} at {{appointment_start_time}}.\n"
+"\n"
+"{{company_name}}"
+msgstr ""
+"Уважаемый {{customer_full_name}}.\n"
+"\n"
+"Это напоминание о том, что вы забронировали {{service_name}} на "
+"{{appointment_date}} в {{appointment_start_time}}.\n"
+"\n"
+"{{company_name}}"
+
+#: ../backend/inc/entities/notifications.php:447
+msgid ""
+"Hello.\n"
+"\n"
+"You have a new booking.\n"
+"\n"
+"Service: {{service_name}}\n"
+"Date: {{appointment_date}}\n"
+"Time: {{appointment_start_time}}"
+msgstr ""
+"Здравствуйте.\n"
+"\n"
+"У вас есть новое бронирование.\n"
+"\n"
+"Сервис: {{service_name}}\n"
+"Дата: {{appointment_date}}\n"
+"Время: {{appointment_start_time}}"
+
+#: ../backend/inc/entities/notifications.php:455
+msgid ""
+"Hello.\n"
+"\n"
+"The following booking has been canceled.\n"
+"\n"
+"Service: {{service_name}}\n"
+"Date: {{appointment_date}}\n"
+"Time: {{appointment_start_time}}"
+msgstr ""
+"Здравствуйте.\n"
+"\n"
+"Следующее бронирование было отменено.\n"
+"\n"
+"Сервис: {{service_name}}\n"
+"Дата: {{appointment_date}}\n"
+"Время: {{appointment_start_time}}"
+
+#: ../backend/inc/entities/notifications.php:463
+msgid ""
+"Hello.\n"
+"\n"
+" You have a new booking.\n"
+"\n"
+"Service: {{service_name}}\n"
+"Date: {{appointment_date}}\n"
+"Time: {{appointment_start_time}}"
+msgstr ""
+"Здравствуйте.\n"
+"\n"
+"  У вас есть новое бронирование.\n"
+"\n"
+"Сервис: {{service_name}}\n"
+"Дата: {{appointment_date}}\n"
+"Время: {{appointment_start_time}}"
+
+#: ../backend/inc/entities/notifications.php:471
+msgid ""
+"Hello.\n"
+"\n"
+"The following booking has been rejected.\n"
+"\n"
+"Service: {{service_name}}\n"
+"Date: {{appointment_date}}\n"
+"Time: {{appointment_start_time}}"
+msgstr ""
+"Здравствуйте.\n"
+"\n"
+"Следующее бронирование было отклонено.\n"
+"\n"
+"Сервис: {{service_name}}\n"
+"Дата: {{appointment_date}}\n"
+"Время: {{appointment_start_time}}"
+
+#: ../backend/inc/entities/notifications.php:479
+msgid ""
+"Hello.\n"
+"\n"
+"Were changed the details of your booking on {{service_name}} at "
+"{{location_name}}. The booking has been rescheduled to {{appointment_date}} "
+"at {{appointment_start_time}}.\n"
+"\n"
+msgstr ""
+"Здравствуйте.\n"
+"\n"
+"Были изменены данные вашего бронирования на {{service_name}} в "
+"{{location_name}}. Бронирование было перенесено на {{appointment_date}} в "
+"{{appointment_start_time}}.\n"
+
+#: ../backend/inc/entities/notifications.php:487
+msgid ""
+"Reminder:  {{customer_full_name}} has booked an appointment.\n"
+"\n"
+"Service: {{service_name}}\n"
+"Date: {{appointment_date}}\n"
+"Time: {{appointment_start_time}}"
+msgstr ""
+"Напоминание: {{customer_full_name}} забронировал встречу.\n"
+"\n"
+"Сервис: {{service_name}}\n"
+"Дата: {{appointment_date}}\n"
+"Время: {{appointment_start_time}}"
+
+#: ../backend/inc/entities/notifications.php:497
+msgid ""
+"Dear {{customer_full_name}}.\n"
+"\n"
+"This is a reminder that you have booked {{service_name}} on "
+"{{appointment_date}} at {{appointment_start_time}}.\n"
+"\n"
+"We look forward to seeing you!\n"
+"\n"
+"Kind regards."
+msgstr ""
+"Уважаемый {{customer_full_name}}.\n"
+"\n"
+"Это напоминание о том, что вы забронировали {{service_name}} на "
+"{{appointment_date}} в {{appointment_start_time}}.\n"
+"\n"
+"Мы с нетерпением ждем встречи с вами!\n"
+"\n"
+"С уважением."
+
+#: ../backend/inc/entities/payments.php:56
+#: ../backend/inc/entities/payments.php:57
+#: ../backend/inc/entities/payments.php:871
+#: ../backend/inc/settings/settings-page.php:114
+#: ../backend/inc/settings/settings-page.php:819
+msgid "Payments"
+msgstr "Платежи"
+
+#: ../backend/inc/entities/payments.php:198
+msgid "Paid"
+msgstr "Оплачено"
+
+#: ../backend/inc/entities/payments.php:199
+msgid "Total"
+msgstr "Итого"
+
+#: ../backend/inc/entities/payments.php:270
+#: ../backend/inc/entities/payments.php:392
+#: ../backend/inc/entities/payments.php:517
+#: ../backend/inc/entities/payments.php:707
+#: ../backend/inc/helpers/helper-payments.php:77
+msgid "Completed"
+msgstr "Завершено"
+
+#: ../backend/inc/entities/payments.php:713
+#: ../backend/inc/helpers/helper-appointments.php:2063
+#: ../backend/inc/helpers/helper-cabinet.php:762
+#: ../backend/inc/settings/settings-page.php:1014
+#: ../frontend/helpers/helper-frontend.php:341
+#: ../frontend/helpers/helper-frontend.php:375
+msgid "Paypal"
+msgstr "Paypal"
+
+#: ../backend/inc/entities/payments.php:714
+#: ../backend/inc/helpers/helper-appointments.php:2064
+#: ../backend/inc/helpers/helper-cabinet.php:763
+#: ../backend/inc/settings/settings-page.php:1098 ../frontend/frontend.php:112
+#: ../frontend/helpers/helper-frontend.php:343
+#: ../frontend/helpers/helper-frontend.php:381
+msgid "Stripe"
+msgstr "Stripe"
+
+#: ../backend/inc/entities/payments.php:716
+#: ../backend/inc/helpers/helper-appointments.php:496
+#: ../backend/inc/helpers/helper-appointments.php:503
+#: ../backend/inc/helpers/helper-appointments.php:1213
+#: ../backend/inc/helpers/helper-appointments.php:1356
+#: ../backend/inc/helpers/helper-appointments.php:2066
+#: ../backend/inc/helpers/helper-cabinet.php:765
+msgid "Local"
+msgstr "На месте"
+
+#: ../backend/inc/entities/payments.php:729
+msgid "Payment Details"
+msgstr "Детали платежа"
+
+#: ../backend/inc/entities/payments.php:740
+#: ../backend/inc/helpers/helper-appointments.php:2154
+#: ../backend/inc/helpers/helper-cabinet.php:818
+msgid "Name:"
+msgstr "Имя:"
+
+#: ../backend/inc/entities/payments.php:744
+#: ../backend/inc/helpers/helper-appointments.php:2158
+#: ../backend/inc/helpers/helper-cabinet.php:822
+msgid "Email:"
+msgstr "Эл. адрес:"
+
+#: ../backend/inc/entities/payments.php:750
+#: ../backend/inc/helpers/helper-appointments.php:2163
+#: ../backend/inc/helpers/helper-cabinet.php:827
+msgid "Phone:"
+msgstr "Телефон:"
+
+#: ../backend/inc/entities/payments.php:759
+#: ../backend/inc/helpers/helper-appointments.php:2169
+#: ../backend/inc/helpers/helper-cabinet.php:833
+msgid "Appointment"
+msgstr "Встреча"
+
+#: ../backend/inc/entities/payments.php:762
+#: ../backend/inc/entities/payments.php:780
+#: ../backend/inc/helpers/helper-appointments.php:515
+#: ../backend/inc/helpers/helper-appointments.php:1206
+#: ../backend/inc/helpers/helper-appointments.php:1359
+#: ../backend/inc/helpers/helper-appointments.php:1952
+#: ../backend/inc/helpers/helper-cabinet.php:640
+#: ../frontend/shortcodes/shortcode-alpha.php:181
+msgid "Date:"
+msgstr "Дата:"
+
+#: ../backend/inc/entities/payments.php:766
+#: ../backend/inc/helpers/helper-appointments.php:1968
+#: ../backend/inc/helpers/helper-cabinet.php:666
+msgid "Service:"
+msgstr "Сервис:"
+
+#: ../backend/inc/entities/payments.php:770
+#: ../backend/inc/helpers/helper-appointments.php:1964
+#: ../backend/inc/helpers/helper-cabinet.php:662
+msgid "Employee:"
+msgstr "Сотрудник:"
+
+#: ../backend/inc/entities/payments.php:784
+#: ../backend/inc/helpers/helper-appointments.php:521
+#: ../backend/inc/helpers/helper-appointments.php:1212
+#: ../backend/inc/helpers/helper-appointments.php:1365
+#: ../backend/inc/helpers/helper-appointments.php:2113
+#: ../backend/inc/helpers/helper-cabinet.php:777
+msgid "Payment Method:"
+msgstr "Способ оплаты:"
+
+#: ../backend/inc/entities/payments.php:788
+#: ../backend/inc/helpers/helper-appointments.php:1960
+#: ../backend/inc/helpers/helper-appointments.php:2172
+#: ../backend/inc/helpers/helper-cabinet.php:657
+#: ../backend/inc/helpers/helper-cabinet.php:836
+msgid "Status:"
+msgstr "Статус:"
+
+#: ../backend/inc/entities/payments.php:797
+#: ../backend/inc/helpers/helper-appointments.php:352
+#: ../backend/inc/helpers/helper-appointments.php:533
+#: ../backend/inc/helpers/helper-appointments.php:1139
+#: ../backend/inc/helpers/helper-appointments.php:1224
+#: ../backend/inc/helpers/helper-appointments.php:1377
+#: ../backend/inc/helpers/helper-appointments.php:1442
+#: ../backend/inc/helpers/helper-appointments.php:2117
+#: ../backend/inc/helpers/helper-cabinet.php:781
+msgid "Service Price:"
+msgstr "Стоимость сервиса:"
+
+#: ../backend/inc/entities/payments.php:801
+#: ../backend/inc/helpers/helper-appointments.php:356
+#: ../backend/inc/helpers/helper-appointments.php:527
+#: ../backend/inc/helpers/helper-appointments.php:1147
+#: ../backend/inc/helpers/helper-appointments.php:1218
+#: ../backend/inc/helpers/helper-appointments.php:1371
+#: ../backend/inc/helpers/helper-appointments.php:1447
+#: ../backend/inc/helpers/helper-appointments.php:2121
+#: ../backend/inc/helpers/helper-appointments.php:2192
+#: ../backend/inc/helpers/helper-cabinet.php:785
+#: ../backend/inc/helpers/helper-cabinet.php:855
+msgid "Extras Price:"
+msgstr "Цена на Экстра Сервисы:"
+
+#: ../backend/inc/entities/payments.php:805
+#: ../backend/inc/helpers/helper-appointments.php:363
+#: ../backend/inc/helpers/helper-appointments.php:545
+#: ../backend/inc/helpers/helper-appointments.php:1155
+#: ../backend/inc/helpers/helper-appointments.php:1236
+#: ../backend/inc/helpers/helper-appointments.php:1389
+#: ../backend/inc/helpers/helper-appointments.php:1452
+#: ../backend/inc/helpers/helper-appointments.php:2125
+#: ../backend/inc/helpers/helper-cabinet.php:789
+msgid "Service Tax:"
+msgstr "Налог на сервис:"
+
+#: ../backend/inc/entities/payments.php:809
+#: ../backend/inc/helpers/helper-appointments.php:367
+#: ../backend/inc/helpers/helper-appointments.php:1163
+#: ../backend/inc/helpers/helper-appointments.php:1230
+#: ../backend/inc/helpers/helper-appointments.php:1383
+#: ../backend/inc/helpers/helper-appointments.php:1457
+#: ../backend/inc/helpers/helper-appointments.php:2129
+#: ../backend/inc/helpers/helper-cabinet.php:793
+msgid "Extras Tax:"
+msgstr "Налог на экстра:"
+
+#: ../backend/inc/entities/payments.php:813
+#: ../backend/inc/helpers/helper-appointments.php:2133
+#: ../backend/inc/helpers/helper-appointments.php:2196
+#: ../backend/inc/helpers/helper-cabinet.php:797
+#: ../backend/inc/helpers/helper-cabinet.php:859
+msgid "Paid:"
+msgstr "Оплачено:"
+
+#: ../backend/inc/entities/payments.php:817
+#: ../backend/inc/helpers/helper-appointments.php:2137
+#: ../backend/inc/helpers/helper-appointments.php:2200
+#: ../backend/inc/helpers/helper-cabinet.php:801
+#: ../backend/inc/helpers/helper-cabinet.php:863
+msgid "Due:"
+msgstr "Осталось платить:"
+
+#: ../backend/inc/entities/payments.php:821
+#: ../backend/inc/helpers/helper-appointments.php:372
+#: ../backend/inc/helpers/helper-appointments.php:1171
+#: ../backend/inc/helpers/helper-appointments.php:1462
+#: ../backend/inc/helpers/helper-appointments.php:2204
+#: ../backend/inc/helpers/helper-cabinet.php:867
+#: ../frontend/helpers/helper-frontend.php:317
+#: ../frontend/shortcodes/shortcode-alpha.php:237
+msgid "Total Price:"
+msgstr "Итоговая цена:"
+
+#: ../backend/inc/entities/services.php:68
+msgid "Add New Service"
+msgstr "Добавить новый сервис"
+
+#: ../backend/inc/entities/services.php:87
+#: ../backend/inc/helpers/helper-appointments.php:2300
+#: ../backend/inc/helpers/helper-calendar.php:94
+#: ../frontend/helpers/helper-service.php:150
+#: ../frontend/helpers/helper-service.php:155
+msgid "All Services"
+msgstr "Все сервисы"
+
+#: ../backend/inc/entities/services.php:94
+msgid "Add New Category"
+msgstr "Добавить новую категорию"
+
+#: ../backend/inc/entities/services.php:107
+msgid "New Category"
+msgstr "Новая категория"
+
+#: ../backend/inc/entities/services.php:897
+msgid "Least Expensive"
+msgstr "Наименее дорогой"
+
+#: ../backend/inc/entities/services.php:898
+msgid "Most Expensive"
+msgstr "Самый дорогой"
+
+#: ../backend/inc/entities/services.php:899
+msgid "Least Occupied"
+msgstr "Наименее Занято"
+
+#: ../backend/inc/entities/services.php:900
+msgid "Most Occupied"
+msgstr "Самые занятые"
+
+#: ../backend/inc/entities/services.php:914
+#: ../backend/inc/helpers/helper-settings.php:761
+#: ../backend/inc/helpers/helper.php:961 ../backend/inc/helpers/helper.php:999
+#: ../backend/inc/helpers/helper.php:1136
+msgid "Disabled"
+msgstr "Отключено"
+
+#: ../backend/inc/entities/services.php:915
+msgid "Per Day"
+msgstr "Раз в день"
+
+#: ../backend/inc/entities/services.php:916
+msgid "Per Week"
+msgstr "Раз в неделю"
+
+#: ../backend/inc/entities/services.php:917
+msgid "Per Month"
+msgstr "Раз в месяц"
+
+#: ../backend/inc/entities/services.php:918
+msgid "Per Year"
+msgstr "Раз в год"
+
+#: ../backend/inc/entities/services.php:982
+#: ../backend/inc/entities/services.php:1146
+#: ../backend/inc/helpers/helper-services.php:279
+msgid "Select from Taxes"
+msgstr "Выберите из налогов"
+
+#: ../backend/inc/entities/services.php:985
+msgid "Edit Service"
+msgstr "Изменить Сервис"
+
+#: ../backend/inc/entities/services.php:988
+#: ../backend/inc/helpers/helper-services.php:130
+msgid "New Service"
+msgstr "Новый сервис"
+
+#: ../backend/inc/entities/services.php:1015
+#: ../backend/inc/helpers/helper-services.php:148
+msgid "Gallery"
+msgstr "Галлерея"
+
+#: ../backend/inc/entities/services.php:1038
+#: ../backend/inc/helpers/helper-services.php:171
+msgid "Select Color"
+msgstr "Выбрать цвет"
+
+#: ../backend/inc/entities/services.php:1045
+#: ../backend/inc/helpers/helper-cabinet.php:106
+#: ../backend/inc/helpers/helper-employees.php:578
+#: ../backend/inc/helpers/helper-employees.php:711
+#: ../backend/inc/helpers/helper-services.php:178
+msgid "Visible to Public"
+msgstr "Доступно для общественности"
+
+#: ../backend/inc/entities/services.php:1053
+#: ../backend/inc/helpers/helper-services.php:186
+#: ../backend/inc/helpers/helper.php:1344
+msgid "Service Name"
+msgstr "Название Сервиса"
+
+#: ../backend/inc/entities/services.php:1057
+#: ../backend/inc/helpers/helper-services.php:190
+msgid "Service Price"
+msgstr "Стоимость сервиса"
+
+#: ../backend/inc/entities/services.php:1062
+#: ../backend/inc/entities/shortcodes.php:496
+#: ../backend/inc/helpers/helper-appointments.php:1726
+#: ../backend/inc/helpers/helper-services.php:195
+#: ../backend/inc/helpers/helper-shortcodes.php:211
+msgid "Category"
+msgstr "Категория"
+
+#: ../backend/inc/entities/services.php:1063
+#: ../backend/inc/entities/shortcodes.php:455
+#: ../backend/inc/entities/shortcodes.php:498
+#: ../backend/inc/helpers/helper-appointments.php:1728
+#: ../backend/inc/helpers/helper-services.php:196
+#: ../backend/inc/helpers/helper-shortcodes.php:213
+msgid "Select from Categories"
+msgstr "Выберите из категории"
+
+#: ../backend/inc/entities/services.php:1084
+#: ../backend/inc/entities/services.php:1092
+#: ../backend/inc/helpers/helper-services.php:217
+#: ../backend/inc/helpers/helper-services.php:225
+msgid "Buffer Time Before"
+msgstr "Время буфера до"
+
+#: ../backend/inc/entities/services.php:1087
+#: ../backend/inc/helpers/helper-services.php:220
+msgid ""
+"Time before the start of the appointment with this service. When creating an "
+"appointment with this service, this time will be taken into account."
+msgstr ""
+"Время до начала встречи с этим сервисом. При создании встречи с этим "
+"сервисом это время будет учтено."
+
+#: ../backend/inc/entities/services.php:1098
+#: ../backend/inc/entities/services.php:1106
+#: ../backend/inc/helpers/helper-services.php:231
+#: ../backend/inc/helpers/helper-services.php:239
+msgid "Buffer Time After"
+msgstr "Время буфера после"
+
+#: ../backend/inc/entities/services.php:1101
+#: ../backend/inc/helpers/helper-services.php:234
+msgid ""
+"Time after the end of the appointment with this service. When creating an "
+"appointment with this service, this time will be taken into account."
+msgstr ""
+"Время после окончания встречи с этим сервисом. При создании встречи с этим "
+"сервисом это время будет учтено."
+
+#: ../backend/inc/entities/services.php:1114
+#: ../backend/inc/helpers/helper-services.php:247
+msgid "Min Capacity"
+msgstr "Минимальная Вместимость"
+
+#: ../backend/inc/entities/services.php:1117
+#: ../backend/inc/helpers/helper-services.php:250
+msgid ""
+"The minimum number of people who can come to an appointment with this "
+"service."
+msgstr ""
+"Минимальное количество людей, которые могут прийти на встречу на данный "
+"сервис."
+
+#: ../backend/inc/entities/services.php:1130
+#: ../backend/inc/helpers/helper-services.php:91
+#: ../backend/inc/helpers/helper-services.php:263
+#: ../backend/inc/helpers/helper-services.php:748
+msgid "Max Capacity"
+msgstr "Максимальная Вместимость"
+
+#: ../backend/inc/entities/services.php:1133
+#: ../backend/inc/helpers/helper-services.php:266
+msgid ""
+"The maximum number of people who can come to an appointment with this "
+"service."
+msgstr ""
+"Максимальное количество людей, которые могут прийти на встречу на данный "
+"сервис."
+
+#: ../backend/inc/entities/services.php:1145
+#: ../backend/inc/entities/taxes.php:46 ../backend/inc/entities/taxes.php:47
+#: ../backend/inc/entities/taxes.php:429
+#: ../backend/inc/helpers/helper-services.php:278
+msgid "Taxes"
+msgstr "Налоги"
+
+#: ../backend/inc/entities/services.php:1166
+#: ../backend/inc/helpers/helper-services.php:300
+msgid "Add Extra"
+msgstr "Добавить Экстра Сервис"
+
+#: ../backend/inc/entities/shortcodes.php:46
+#: ../backend/inc/entities/shortcodes.php:47
+#: ../backend/inc/entities/shortcodes.php:758
+#: ../backend/inc/helpers/helper-admin.php:96
+msgid "Shortcodes"
+msgstr "Шорткоды"
+
+#: ../backend/inc/entities/shortcodes.php:65
+msgid "Add New Shortcode"
+msgstr "Добавить новый шорткод"
+
+#: ../backend/inc/entities/shortcodes.php:97
+msgid "Shortcode"
+msgstr "Шорткод"
+
+#: ../backend/inc/entities/shortcodes.php:453
+#: ../backend/inc/entities/shortcodes.php:511
+#: ../backend/inc/helpers/helper-appointments.php:1736
+#: ../backend/inc/helpers/helper-shortcodes.php:226
+msgid "Select from Services"
+msgstr "Выберите из сервисов"
+
+#: ../backend/inc/entities/shortcodes.php:456
+#: ../backend/inc/entities/shortcodes.php:550
+#: ../backend/inc/helpers/helper-shortcodes.php:265
+msgid "Select from Options"
+msgstr "Выберите из вариантов"
+
+#: ../backend/inc/entities/shortcodes.php:457
+#: ../backend/inc/entities/shortcodes.php:537
+#: ../backend/inc/helpers/helper-appointments.php:1755
+#: ../backend/inc/helpers/helper-shortcodes.php:252
+msgid "Select from Locations"
+msgstr "Выберите из местоположений"
+
+#: ../backend/inc/entities/shortcodes.php:464
+#: ../backend/inc/helpers/helper-shortcodes.php:38
+msgid "Title Ascending"
+msgstr "Название по возрастанию"
+
+#: ../backend/inc/entities/shortcodes.php:465
+#: ../backend/inc/helpers/helper-shortcodes.php:39
+msgid "Title Descending"
+msgstr "Название по убыванию"
+
+#: ../backend/inc/entities/shortcodes.php:466
+#: ../backend/inc/helpers/helper-shortcodes.php:40
+msgid "Price Ascending"
+msgstr "Цена по возрастанию"
+
+#: ../backend/inc/entities/shortcodes.php:467
+#: ../backend/inc/helpers/helper-shortcodes.php:41
+msgid "Price Descending"
+msgstr "Цена по убыванию"
+
+#: ../backend/inc/entities/shortcodes.php:476
+msgid "Edit Shortcode"
+msgstr "Изменить шорткод"
+
+#: ../backend/inc/entities/shortcodes.php:548
+#: ../backend/inc/helpers/helper-shortcodes.php:263
+msgid "Sort By"
+msgstr "Сортировать по"
+
+#: ../backend/inc/entities/shortcodes.php:711
+#: ../frontend/helpers/helper-service.php:115
+msgid "Book Now"
+msgstr "Забронировать Сейчас"
+
+#: ../backend/inc/entities/taxes.php:65
+msgid "Add New Tax"
+msgstr "Добавить новый налог"
+
+#: ../backend/inc/entities/taxes.php:87 ../backend/inc/entities/taxes.php:367
+#: ../backend/inc/helpers/helper.php:172
+msgid "Rate"
+msgstr "Процент"
+
+#: ../backend/inc/entities/taxes.php:348
+msgid "Edit Tax"
+msgstr "Изменить налог"
+
+#: ../backend/inc/helpers/helper-admin.php:27
+#: ../backend/inc/helpers/helper-admin.php:45
+msgid "New add-on for Bookmify"
+msgstr "Новое дополнение для Bookmify"
+
+#: ../backend/inc/helpers/helper-admin.php:33
+msgid "Released New Version (1.0.1)"
+msgstr "Выпущена новая версия (1.0.1)"
+
+#: ../backend/inc/helpers/helper-admin.php:39
+msgid "Fixed Some Issues"
+msgstr "Исправлены некоторые проблемы"
+
+#: ../backend/inc/helpers/helper-admin.php:53
+msgid "Show All Notifications"
+msgstr "Показать все уведомления"
+
+#: ../backend/inc/helpers/helper-admin.php:105
+msgid "All Shortcodes / Add New"
+msgstr "Все шорткоды / Добавить новый"
+
+#: ../backend/inc/helpers/helper-admin.php:131
+msgid "Help Center"
+msgstr "Справочный центр"
+
+#: ../backend/inc/helpers/helper-admin.php:140
+msgid "Documentation"
+msgstr "Документация"
+
+#: ../backend/inc/helpers/helper-admin.php:148
+msgid "FAQ"
+msgstr "Часто задаваемые вопросы"
+
+#: ../backend/inc/helpers/helper-admin.php:156
+msgid "Contact Us"
+msgstr "Связаться с нами"
+
+#: ../backend/inc/helpers/helper-admin.php:164
+msgid "Feedback"
+msgstr "Обратная связь"
+
+#: ../backend/inc/helpers/helper-admin.php:196
+msgid "Online Bookings Management"
+msgstr "Управление онлайн-бронированием"
+
+#: ../backend/inc/helpers/helper-admin.php:201
+msgid "Hello"
+msgstr "Привет"
+
+#: ../backend/inc/helpers/helper-admin.php:249
+msgid ""
+"You are about to change a service setting which is also configured "
+"separately for each employees employee. Do you want to update it in "
+"employees settings too?"
+msgstr ""
+"Вы собираетесь изменить параметр сервиса, который также настраивается "
+"отдельно для каждого сотрудника. Вы хотите применить изменения для всех "
+"сотрудников?"
+
+#: ../backend/inc/helpers/helper-admin.php:252
+#: ../backend/inc/helpers/helper-admin.php:280
+msgid "Yes"
+msgstr "Да"
+
+#: ../backend/inc/helpers/helper-admin.php:253
+msgid "No, just change here"
+msgstr "Нет,  изменить только здесь"
+
+#: ../backend/inc/helpers/helper-admin.php:366
+#, fuzzy
+msgid "View Changelog"
+msgstr "Просмотр журнала изменений"
+
+#: ../backend/inc/helpers/helper-admin.php:366
+msgid "v"
+msgstr "Версия - "
+
+#: ../backend/inc/helpers/helper-appointments.php:34
+msgid "New Appointment"
+msgstr "Новая встреча"
+
+#: ../backend/inc/helpers/helper-appointments.php:196
+#: ../backend/inc/helpers/helper-appointments.php:1122
+#: ../backend/inc/helpers/helper-appointments.php:1527
+#: ../backend/inc/helpers/helper-appointments.php:2141
+#: ../backend/inc/helpers/helper-cabinet.php:805
+msgid "Subtotal:"
+msgstr "Промежуточный итог:"
+
+#: ../backend/inc/helpers/helper-appointments.php:322
+#: ../backend/inc/helpers/helper-appointments.php:567
+#: ../backend/inc/helpers/helper-appointments.php:1306
+#: ../backend/inc/helpers/helper-appointments.php:1411
+msgid "Select customer, employee and service"
+msgstr "Выберите клиента, сотрудника и сервис"
+
+#: ../backend/inc/helpers/helper-appointments.php:539
+msgid "Extra Tax:"
+msgstr "Налог на экстра:"
+
+#: ../backend/inc/helpers/helper-appointments.php:555
+#: ../backend/inc/helpers/helper-appointments.php:1244
+#: ../backend/inc/helpers/helper-appointments.php:1399
+#: ../frontend/helpers/helper-frontend.php:307
+msgid "Total:"
+msgstr "Итого:"
+
+#: ../backend/inc/helpers/helper-appointments.php:1598
+#: ../backend/inc/helpers/helper-appointments.php:1624
+#: ../backend/inc/helpers/helper-appointments.php:1681
+msgid "Select from Existing Customers"
+msgstr "Выберите из существующих клиентов"
+
+#: ../backend/inc/helpers/helper-appointments.php:1693
+msgid "Notify the Customer(s)"
+msgstr "Уведомить Клиента (ов)"
+
+#: ../backend/inc/helpers/helper-appointments.php:1693
+msgid ""
+"By ticking you indicate to send notifications to all customers about this "
+"appointment."
+msgstr ""
+"Поставив галочку, вы указываете отправлять уведомления всем клиентам об этой "
+"встрече."
+
+#: ../backend/inc/helpers/helper-appointments.php:1792
+msgid "Time"
+msgstr "Время"
+
+#: ../backend/inc/helpers/helper-appointments.php:1794
+msgid "hh:ii"
+msgstr "чч:мм"
+
+#: ../backend/inc/helpers/helper-appointments.php:1956
+#: ../backend/inc/helpers/helper-cabinet.php:646
+#: ../backend/inc/helpers/helper-cabinet.php:651
+msgid "Time:"
+msgstr "Время:"
+
+#: ../backend/inc/helpers/helper-appointments.php:1972
+#: ../backend/inc/helpers/helper-cabinet.php:671
+msgid "Buffer Before/After:"
+msgstr "Буфер до / после:"
+
+#: ../backend/inc/helpers/helper-appointments.php:1976
+#: ../backend/inc/helpers/helper-cabinet.php:675
+msgid "Capacity Min/Max:"
+msgstr "Вместимость Мин / Макс:"
+
+#: ../backend/inc/helpers/helper-appointments.php:1980
+#: ../backend/inc/helpers/helper-appointments.php:2176
+#: ../backend/inc/helpers/helper-cabinet.php:679
+#: ../backend/inc/helpers/helper-cabinet.php:840
+msgid "People Count:"
+msgstr "Количество людей:"
+
+#: ../backend/inc/helpers/helper-appointments.php:1981
+#: ../backend/inc/helpers/helper-appointments.php:2177
+#: ../backend/inc/helpers/helper-cabinet.php:680
+#: ../backend/inc/helpers/helper-cabinet.php:841
+msgid "People"
+msgstr "Люди"
+
+#: ../backend/inc/helpers/helper-appointments.php:1985
+#: ../backend/inc/helpers/helper-cabinet.php:685
+msgid "Info:"
+msgstr "Информация:"
+
+#: ../backend/inc/helpers/helper-appointments.php:2080
+#: ../backend/inc/helpers/helper.php:1326
+msgid "Custom Fields"
+msgstr "Пользовательские поля"
+
+#: ../backend/inc/helpers/helper-appointments.php:2109
+#: ../backend/inc/helpers/helper-cabinet.php:773
+msgid "Created Date:"
+msgstr "Дата создания:"
+
+#: ../backend/inc/helpers/helper-appointments.php:2188
+#: ../backend/inc/helpers/helper-cabinet.php:851
+msgid "Services Price:"
+msgstr "Стоимость сервисов:"
+
+#: ../backend/inc/helpers/helper-appointments.php:2292
+msgid "Date Filter"
+msgstr "Фильтр даты"
+
+#: ../backend/inc/helpers/helper-appointments.php:2345
+#: ../backend/inc/helpers/helper-calendar.php:139
+msgid "All Employees"
+msgstr "Все Сотрудники"
+
+#: ../backend/inc/helpers/helper-appointments.php:2368
+#: ../backend/inc/helpers/helper-calendar.php:162
+msgid "All Statuses"
+msgstr "Все статусы"
+
+#: ../backend/inc/helpers/helper-appointments.php:2391
+#: ../backend/inc/helpers/helper-cabinet.php:337
+#: ../backend/inc/helpers/helper-calendar.php:185
+#: ../backend/inc/helpers/helper.php:46
+msgid "Reset"
+msgstr "Сброс"
+
+#: ../backend/inc/helpers/helper-cabinet.php:68
+msgid "Disconnect"
+msgstr "Отключить"
+
+#: ../backend/inc/helpers/helper-cabinet.php:73
+#: ../backend/inc/user-cabinet/profile.php:152
+msgid "Authentification"
+msgstr "Аутентификация"
+
+#: ../backend/inc/helpers/helper-cabinet.php:74
+#: ../backend/inc/helpers/helper-employees.php:549
+#: ../backend/inc/helpers/helper-employees.php:681
+#: ../backend/inc/user-cabinet/profile.php:153
+msgid "Google Profile"
+msgstr "Профиль Google"
+
+#: ../backend/inc/helpers/helper-customers.php:38
+msgid "New Customer"
+msgstr "Новый Клиент"
+
+#: ../backend/inc/helpers/helper-customers.php:228
+#: ../backend/inc/helpers/helper-employees.php:1220
+msgid "Create New"
+msgstr "Создать новый"
+
+#: ../backend/inc/helpers/helper-customfields.php:22
+msgid "Do you like bookmify?"
+msgstr "Вам нравится  Bookmify?"
+
+#: ../backend/inc/helpers/helper-customfields.php:24
+msgid "Yes, of course"
+msgstr "Да, конечно"
+
+#: ../backend/inc/helpers/helper-customfields.php:25
+msgid "Not much"
+msgstr "Не очень"
+
+#: ../backend/inc/helpers/helper-customfields.php:42
+msgid "New Checkbox"
+msgstr "Новый флажок"
+
+#: ../backend/inc/helpers/helper-customfields.php:43
+msgid "New Radio Buttons"
+msgstr "Новые радио кнопки"
+
+#: ../backend/inc/helpers/helper-customfields.php:44
+msgid "New Selectbox"
+msgstr "Новый Раскрывающийся список"
+
+#: ../backend/inc/helpers/helper-customfields.php:45
+msgid "New Text"
+msgstr "Новый Текст"
+
+#: ../backend/inc/helpers/helper-customfields.php:46
+msgid "New Textarea"
+msgstr "Новый Текстовая область"
+
+#: ../backend/inc/helpers/helper-customfields.php:47
+msgid "New Text Content"
+msgstr "Новая Информационная область"
+
+#: ../backend/inc/helpers/helper-customfields.php:249
+#: ../backend/inc/helpers/helper-locations.php:139
+#: ../backend/inc/helpers/helper-services.php:574
+#: ../backend/inc/helpers/helper-services.php:620
+msgid "Select All"
+msgstr "Выбрать все"
+
+#: ../backend/inc/helpers/helper-employees.php:30
+msgid "New Employee"
+msgstr "Новый Сотрудник"
+
+#: ../backend/inc/helpers/helper-employees.php:185
+#: ../backend/inc/settings/settings-page.php:399
+msgid "Monday"
+msgstr "Понедельник"
+
+#: ../backend/inc/helpers/helper-employees.php:194
+#: ../backend/inc/helpers/helper-employees.php:231
+#: ../backend/inc/helpers/helper-employees.php:268
+#: ../backend/inc/helpers/helper-employees.php:305
+#: ../backend/inc/helpers/helper-employees.php:342
+#: ../backend/inc/helpers/helper-employees.php:379
+#: ../backend/inc/helpers/helper-employees.php:416
+#: ../backend/inc/settings/settings-page.php:408
+#: ../backend/inc/settings/settings-page.php:448
+#: ../backend/inc/settings/settings-page.php:488
+#: ../backend/inc/settings/settings-page.php:528
+#: ../backend/inc/settings/settings-page.php:568
+#: ../backend/inc/settings/settings-page.php:608
+#: ../backend/inc/settings/settings-page.php:648
+msgid "Breaks"
+msgstr "Перерывы"
+
+#: ../backend/inc/helpers/helper-employees.php:201
+#: ../backend/inc/helpers/helper-employees.php:238
+#: ../backend/inc/helpers/helper-employees.php:275
+#: ../backend/inc/helpers/helper-employees.php:312
+#: ../backend/inc/helpers/helper-employees.php:349
+#: ../backend/inc/helpers/helper-employees.php:386
+#: ../backend/inc/helpers/helper-employees.php:423
+#: ../backend/inc/settings/settings-page.php:418
+#: ../backend/inc/settings/settings-page.php:458
+#: ../backend/inc/settings/settings-page.php:498
+#: ../backend/inc/settings/settings-page.php:538
+#: ../backend/inc/settings/settings-page.php:578
+#: ../backend/inc/settings/settings-page.php:618
+#: ../backend/inc/settings/settings-page.php:658
+msgid "Add New"
+msgstr "Добавить новый"
+
+#: ../backend/inc/helpers/helper-employees.php:206
+#: ../backend/inc/helpers/helper-employees.php:243
+#: ../backend/inc/helpers/helper-employees.php:280
+#: ../backend/inc/helpers/helper-employees.php:317
+#: ../backend/inc/helpers/helper-employees.php:354
+#: ../backend/inc/helpers/helper-employees.php:391
+#: ../backend/inc/helpers/helper-employees.php:428
+#: ../backend/inc/settings/settings-page.php:423
+#: ../backend/inc/settings/settings-page.php:463
+#: ../backend/inc/settings/settings-page.php:503
+#: ../backend/inc/settings/settings-page.php:543
+#: ../backend/inc/settings/settings-page.php:583
+#: ../backend/inc/settings/settings-page.php:623
+#: ../backend/inc/settings/settings-page.php:663
+msgid "Apply to all days"
+msgstr "Применить ко всем дням"
+
+#: ../backend/inc/helpers/helper-employees.php:222
+#: ../backend/inc/settings/settings-page.php:439
+msgid "Tuesday"
+msgstr "Вторник"
+
+#: ../backend/inc/helpers/helper-employees.php:259
+#: ../backend/inc/settings/settings-page.php:479
+msgid "Wednesday"
+msgstr "Среда"
+
+#: ../backend/inc/helpers/helper-employees.php:296
+#: ../backend/inc/settings/settings-page.php:519
+msgid "Thursday"
+msgstr "Четверг"
+
+#: ../backend/inc/helpers/helper-employees.php:333
+#: ../backend/inc/settings/settings-page.php:559
+msgid "Friday"
+msgstr "Пятница"
+
+#: ../backend/inc/helpers/helper-employees.php:370
+#: ../backend/inc/settings/settings-page.php:599
+msgid "Saturday"
+msgstr "Суббота"
+
+#: ../backend/inc/helpers/helper-employees.php:407
+#: ../backend/inc/settings/settings-page.php:639
+msgid "Sunday"
+msgstr "Воскресенье"
+
+#: ../backend/inc/helpers/helper-employees.php:448
+#: ../backend/inc/settings/settings-page.php:691
+msgid "yy-mm-dd, yy-mm-dd ..."
+msgstr "гг-мм-дд, гг-мм-дд ..."
+
+#: ../backend/inc/helpers/helper-employees.php:466
+msgid "Add"
+msgstr "Добавить"
+
+#: ../backend/inc/helpers/helper-employees.php:474
+#: ../backend/inc/settings/settings-page.php:716
+msgid "Clear"
+msgstr "Очистить"
+
+#: ../backend/inc/helpers/helper-employees.php:496
+msgid "Private Days Off"
+msgstr "Частные выходные"
+
+#: ../backend/inc/helpers/helper-employees.php:497
+msgid "Global Days Off"
+msgstr "Глобальные выходные"
+
+#: ../backend/inc/helpers/helper-employees.php:521
+msgid "Once Only"
+msgstr "Только один раз"
+
+#: ../backend/inc/helpers/helper-employees.php:550
+#: ../backend/inc/helpers/helper-employees.php:682
+msgid "Inactive"
+msgstr "Неактивировано"
+
+#: ../backend/inc/helpers/helper-employees.php:612
+#: ../backend/inc/helpers/helper-employees.php:743
+msgid "Select from Existing Locations"
+msgstr "Выбрать из существующих местоположений"
+
+#: ../backend/inc/helpers/helper-employees.php:678
+msgid "Send mail to this email"
+msgstr "Отправить письмо на это письмо"
+
+#: ../backend/inc/helpers/helper-employees.php:679
+msgid "Active"
+msgstr "Активировано"
+
+#: ../backend/inc/helpers/helper-employees.php:920
+#: ../backend/inc/helpers/helper-employees.php:1044
+msgid "Capacity"
+msgstr "Вместимость"
+
+#: ../backend/inc/helpers/helper-employees.php:921
+#: ../backend/inc/helpers/helper-employees.php:1045
+#: ../frontend/helpers/helper-frontend.php:412
+msgid "Deposit"
+msgstr "Предоплата"
+
+#: ../backend/inc/helpers/helper-locations.php:28
+msgid "New Location"
+msgstr "Новое местоположение"
+
+#: ../backend/inc/helpers/helper-notifications.php:94
+#: ../backend/inc/helpers/helper-notifications.php:264
+msgid "Scheduled Notification"
+msgstr "Запланированное уведомление"
+
+#: ../backend/inc/helpers/helper-notifications.php:118
+#: ../backend/inc/helpers/helper-notifications.php:288
+msgid "Subject"
+msgstr "Тема"
+
+#: ../backend/inc/helpers/helper-notifications.php:123
+#: ../backend/inc/helpers/helper-notifications.php:292
+msgid "Scheduled For"
+msgstr "Запланировано на"
+
+#: ../backend/inc/helpers/helper-notifications.php:124
+#: ../backend/inc/helpers/helper-notifications.php:130
+#: ../backend/inc/helpers/helper-notifications.php:293
+#: ../backend/inc/helpers/helper-notifications.php:299
+msgid "Select Time"
+msgstr "Выберите время"
+
+#: ../backend/inc/helpers/helper-notifications.php:129
+#: ../backend/inc/helpers/helper-notifications.php:298
+msgid "Before..."
+msgstr "До..."
+
+#: ../backend/inc/helpers/helper-notifications.php:139
+#: ../backend/inc/helpers/helper-notifications.php:308
+#: ../frontend/helpers/helper-frontend.php:124
+msgid "Message"
+msgstr "Сообщение"
+
+#: ../backend/inc/helpers/helper-notifications.php:184
+msgid "Recipient Email"
+msgstr "Электронная почта получателя"
+
+#: ../backend/inc/helpers/helper-notifications.php:186
+msgid "Send Test Email"
+msgstr "Отправить тестовое письмо"
+
+#: ../backend/inc/helpers/helper-notifications.php:196
+msgid "Recipient Number"
+msgstr "Номер получателя"
+
+#: ../backend/inc/helpers/helper-notifications.php:198
+msgid "Send Test SMS"
+msgstr "Отправить тестовое СМС"
+
+#: ../backend/inc/helpers/helper-services.php:75
+#: ../backend/inc/helpers/helper-services.php:732
+msgid "Extra Name"
+msgstr "Название экстра сервиса"
+
+#: ../backend/inc/helpers/helper-services.php:94
+#: ../backend/inc/helpers/helper-services.php:751
+msgid "The maximum amount of this Extra that a customer can use."
+msgstr ""
+"Максимальное количество этого Экстра, которое клиент может использовать."
+
+#: ../backend/inc/helpers/helper-services.php:489
+msgid "Add Image"
+msgstr "Добавить изображение"
+
+#: ../backend/inc/helpers/helper-settings.php:20
+#: ../backend/inc/settings/settings-page.php:96
+msgid "General"
+msgstr "Общее"
+
+#: ../backend/inc/helpers/helper-settings.php:33
+msgid "Day Format"
+msgstr "Формат даты"
+
+#: ../backend/inc/helpers/helper-settings.php:51
+msgid "Time Format"
+msgstr "Формат времени"
+
+#: ../backend/inc/helpers/helper-settings.php:69
+msgid "Minimum time to Booking"
+msgstr "Минимальное время для бронирования"
+
+#: ../backend/inc/helpers/helper-settings.php:89
+msgid "Maximum time to Booking"
+msgstr "Максимальное время для бронирования"
+
+#: ../backend/inc/helpers/helper-settings.php:109
+msgid "Minimum time to Cancel"
+msgstr "Минимальное время для отмены"
+
+#: ../backend/inc/helpers/helper-settings.php:126
+msgid "Time Interval"
+msgstr "Интервал времени"
+
+#: ../backend/inc/helpers/helper-settings.php:146
+msgid "Service Duration as Time Slot"
+msgstr "Продолжительность обслуживания как временной интервал"
+
+#: ../backend/inc/helpers/helper-settings.php:159
+msgid "Show Front-end Time Slots in Client Time Zone"
+msgstr "Показать внешние временные интервалы в часовом поясе клиента"
+
+#: ../backend/inc/helpers/helper-settings.php:159
+msgid "Time Slots in Client Time Zone"
+msgstr "Временные интервалы в часовом поясе клиента"
+
+#: ../backend/inc/helpers/helper-settings.php:172
+msgid "Old Appointments Modifying"
+msgstr "Редактировании прошедших встреч"
+
+#: ../backend/inc/helpers/helper-settings.php:185
+msgid "Customer Phone as Required Field"
+msgstr "Телефон клиента как обязательное поле"
+
+#: ../backend/inc/helpers/helper-settings.php:217
+msgid "Front-end Appointment Status"
+msgstr "Статус предварительной записи"
+
+#: ../backend/inc/helpers/helper-settings.php:235
+msgid "Appointments Per Page"
+msgstr "Встречи на одной странице"
+
+#: ../backend/inc/helpers/helper-settings.php:241
+#: ../backend/inc/settings/settings-page.php:781
+#: ../backend/inc/settings/settings-page.php:832
+#: ../backend/inc/settings/settings-page.php:1204
+msgid "Show All"
+msgstr "Показать все"
+
+#: ../backend/inc/helpers/helper-settings.php:254
+msgid "Appointments Filter Date Range"
+msgstr "Диапазон дат фильтра встреч"
+
+#: ../backend/inc/helpers/helper-settings.php:306
+#: ../backend/inc/settings/settings-page.php:102
+msgid "Company Info"
+msgstr "Информация о компании"
+
+#: ../backend/inc/helpers/helper-settings.php:352
+msgid "Website"
+msgstr "Веб-сайт"
+
+#: ../backend/inc/helpers/helper-settings.php:408
+msgid "Mail Service"
+msgstr "Почтовый сервис"
+
+#: ../backend/inc/helpers/helper-settings.php:424
+msgid "Sender Name"
+msgstr "Имя отправителя"
+
+#: ../backend/inc/helpers/helper-settings.php:430
+msgid "Sender Email"
+msgstr "Электронная почта отправителя"
+
+#: ../backend/inc/helpers/helper-settings.php:444
+msgid "SMTP Host"
+msgstr "SMTP Host"
+
+#: ../backend/inc/helpers/helper-settings.php:450
+msgid "SMTP Port"
+msgstr "SMTP Port"
+
+#: ../backend/inc/helpers/helper-settings.php:456
+msgid "SMTP Username"
+msgstr "Имя пользователя SMTP"
+
+#: ../backend/inc/helpers/helper-settings.php:462
+msgid "SMTP Password"
+msgstr "Пароль SMTP"
+
+#: ../backend/inc/helpers/helper-settings.php:468
+msgid "SMTP Secure"
+msgstr "SMTP Secure"
+
+#: ../backend/inc/helpers/helper-settings.php:485
+msgid "Twilio Account SID"
+msgstr "SID учетной записи Twilio"
+
+#: ../backend/inc/helpers/helper-settings.php:491
+msgid "Twilio Auth Token"
+msgstr "Twilio Auth Token"
+
+#: ../backend/inc/helpers/helper-settings.php:497
+msgid "Twilio Number"
+msgstr "Twilio Номер"
+
+#: ../backend/inc/helpers/helper-settings.php:539
+msgid "Calendars"
+msgstr "Календари"
+
+#: ../backend/inc/helpers/helper-settings.php:555
+msgid "Calendar Hot Keys"
+msgstr "Горячие клавиши в Календаре"
+
+#: ../backend/inc/helpers/helper-settings.php:566
+msgid "Go To Today"
+msgstr "Перейти на сегодня"
+
+#: ../backend/inc/helpers/helper-settings.php:576
+msgid "Month View"
+msgstr "Просмотр месяца"
+
+#: ../backend/inc/helpers/helper-settings.php:586
+msgid "Week View"
+msgstr "Недельный вид"
+
+#: ../backend/inc/helpers/helper-settings.php:596
+msgid "Day View"
+msgstr "Дневной Вид"
+
+#: ../backend/inc/helpers/helper-settings.php:606
+msgid "List View"
+msgstr "Список"
+
+#: ../backend/inc/helpers/helper-settings.php:616
+msgid "Go To Previous"
+msgstr "Перейти к предыдущему"
+
+#: ../backend/inc/helpers/helper-settings.php:626
+msgid "Go To Next"
+msgstr "Перейти к следующему"
+
+#: ../backend/inc/helpers/helper-settings.php:636
+msgid "Reset All Filters"
+msgstr "Сбросить все фильтры"
+
+#: ../backend/inc/helpers/helper-settings.php:664
+msgid "Add pending appointments to Calendar"
+msgstr "Добавить ожидающие встречи в календарь"
+
+#: ../backend/inc/helpers/helper-settings.php:674
+msgid "Add canceled appointments to Calendar"
+msgstr "Добавить отмененные встречи в календарь"
+
+#: ../backend/inc/helpers/helper-settings.php:684
+msgid "Add rejected appointments to Calendar"
+msgstr "Добавить отклоненные встречи в календарь"
+
+#: ../backend/inc/helpers/helper-settings.php:728
+msgid "Enable select"
+msgstr "Включить выбор"
+
+#: ../backend/inc/helpers/helper-settings.php:729
+msgid "Disable the section"
+msgstr "Отключить раздел"
+
+#: ../backend/inc/helpers/helper-settings.php:730
+msgid "Enable the section"
+msgstr "Включить раздел"
+
+#: ../backend/inc/helpers/helper-settings.php:738
+msgid "Arial"
+msgstr "Arial"
+
+#: ../backend/inc/helpers/helper-settings.php:739
+msgid "Roboto"
+msgstr "Roboto"
+
+#: ../backend/inc/helpers/helper-settings.php:740
+msgid "Times New Roman"
+msgstr "Times New Roman"
+
+#: ../backend/inc/helpers/helper-settings.php:741
+msgid "Times"
+msgstr "Times"
+
+#: ../backend/inc/helpers/helper-settings.php:742
+msgid "Courier New"
+msgstr "Courier New"
+
+#: ../backend/inc/helpers/helper-settings.php:743
+msgid "Courier"
+msgstr "Courier"
+
+#: ../backend/inc/helpers/helper-settings.php:744
+msgid "Verdana"
+msgstr "Verdana"
+
+#: ../backend/inc/helpers/helper-settings.php:745
+msgid "Georgia"
+msgstr "Georgia"
+
+#: ../backend/inc/helpers/helper-settings.php:746
+msgid "Palatino"
+msgstr "Palatino"
+
+#: ../backend/inc/helpers/helper-settings.php:747
+msgid "Garamond"
+msgstr "Garamond"
+
+#: ../backend/inc/helpers/helper-settings.php:748
+msgid "Bookman"
+msgstr "Bookman"
+
+#: ../backend/inc/helpers/helper-settings.php:749
+msgid "Comic Sans MS"
+msgstr "Comic Sans MS"
+
+#: ../backend/inc/helpers/helper-settings.php:750
+msgid "Candara"
+msgstr "Candara"
+
+#: ../backend/inc/helpers/helper-settings.php:751
+msgid "Arial Black"
+msgstr "Arial Black"
+
+#: ../backend/inc/helpers/helper-settings.php:752
+msgid "Impact"
+msgstr "Impact"
+
+#: ../backend/inc/helpers/helper-settings.php:760
+msgid "Enabled"
+msgstr "Отключено"
+
+#: ../backend/inc/helpers/helper-settings.php:778
+msgid "Front-end Customizations"
+msgstr "Настройки интерфейса"
+
+#: ../backend/inc/helpers/helper-settings.php:786
+msgid "Confirmation Section"
+msgstr "Раздел Подтверждения"
+
+#: ../backend/inc/helpers/helper-settings.php:796
+msgid "Success Title"
+msgstr "Заголовок Успеха"
+
+#: ../backend/inc/helpers/helper-settings.php:803
+msgid "Success Description"
+msgstr "Описание Успеха"
+
+#: ../backend/inc/helpers/helper-settings.php:810
+msgid "Success Footer"
+msgstr "Нижний колонтитул Успеха"
+
+#: ../backend/inc/helpers/helper-settings.php:817
+msgid "Back to services"
+msgstr "Вернуться к Сервисам"
+
+#: ../backend/inc/helpers/helper-settings.php:828
+msgid "Single Employee Condition"
+msgstr "Пропустить , если сервис обслуживается единственным сотрудником"
+
+#: ../backend/inc/helpers/helper-settings.php:841
+msgid "\"Developed By\" Section"
+msgstr "Раздел «Разработано»"
+
+#: ../backend/inc/helpers/helper-settings.php:854
+msgid "Category Filter"
+msgstr "Фильтр Категорий"
+
+#: ../backend/inc/helpers/helper-settings.php:866
+msgid "Service Details"
+msgstr "Информация о сервисах"
+
+#: ../backend/inc/helpers/helper-settings.php:878
+msgid "Create Bookmify customer by default"
+msgstr "Создать клиента Bookmify по умолчанию"
+
+#: ../backend/inc/helpers/helper-settings.php:902
+msgid "Google Font"
+msgstr "Google Шрифты"
+
+#: ../backend/inc/helpers/helper-settings.php:912
+msgid "Default Body Font"
+msgstr "Основной шрифт"
+
+#: ../backend/inc/helpers/helper-settings.php:926
+msgid "Default Title Font"
+msgstr "Шрифт заголовка по умолчанию"
+
+#: ../backend/inc/helpers/helper-settings.php:942
+msgid "Main Color #1"
+msgstr "Основной цвет № 1"
+
+#: ../backend/inc/helpers/helper-settings.php:948
+msgid "Main Color #2"
+msgstr "Основной цвет № 2"
+
+#: ../backend/inc/helpers/helper-settings.php:954
+msgid "Main Color #3"
+msgstr "Основной цвет № 3"
+
+#: ../backend/inc/helpers/helper-shortcodes.php:20
+msgid "Main Shortcode #1"
+msgstr "Основной шорткод № 1"
+
+#: ../backend/inc/helpers/helper-shortcodes.php:159
+msgid "Live Preview"
+msgstr "Предварительный просмотр"
+
+#: ../backend/inc/helpers/helper-shortcodes.php:164
+#: ../frontend/shortcodes/shortcode-alpha.php:112
+msgid "Choose a Service"
+msgstr "Выберите Сервис"
+
+#: ../backend/inc/helpers/helper-shortcodes.php:191
+msgid "New Shortcode"
+msgstr "Новый шорткод"
+
+#: ../backend/inc/helpers/helper.php:60
+msgid "Delete"
+msgstr "Удалить"
+
+#: ../backend/inc/helpers/helper.php:153
+msgid "New Tax"
+msgstr "Новый налог"
+
+#: ../backend/inc/helpers/helper.php:222
+msgid "New Coupon"
+msgstr "Новый Купон"
+
+#: ../backend/inc/helpers/helper.php:639
+msgid "Generate"
+msgstr "Сгенерировать"
+
+#: ../backend/inc/helpers/helper.php:673
+#, php-format
+msgid "%dyear"
+msgid_plural "%dyears"
+msgstr[0] "%dгод"
+msgstr[1] "%dгода"
+msgstr[2] "%dлет"
+
+#: ../backend/inc/helpers/helper.php:674
+#, php-format
+msgid "%dmonth"
+msgid_plural "%dmonths"
+msgstr[0] "%dмесяц"
+msgstr[1] "%dмесяца"
+msgstr[2] "%dмесяцев"
+
+#: ../backend/inc/helpers/helper.php:675
+#, php-format
+msgid "%dweek"
+msgid_plural "%dweeks"
+msgstr[0] "%dнеделя"
+msgstr[1] "%dнедели"
+msgstr[2] "%dнеделей"
+
+#: ../backend/inc/helpers/helper.php:676
+#, php-format
+msgid "%dday"
+msgid_plural "%ddays"
+msgstr[0] "%dдень"
+msgstr[1] "%dдня"
+msgstr[2] "%dдней"
+
+#: ../backend/inc/helpers/helper.php:677
+#, php-format
+msgid "%dh"
+msgid_plural "%dh"
+msgstr[0] "%dч"
+msgstr[1] "%dч"
+msgstr[2] "%dч"
+
+#: ../backend/inc/helpers/helper.php:678 ../backend/inc/helpers/helper.php:679
+#, php-format
+msgid "%dmin"
+msgid_plural "%dmin"
+msgstr[0] "%dмин"
+msgstr[1] "%dмин"
+msgstr[2] "%dмин"
+
+#: ../backend/inc/helpers/helper.php:694
+msgid "Free"
+msgstr "Бесплатно"
+
+#: ../backend/inc/helpers/helper.php:771
+msgid "UAE dirham"
+msgstr "Дирхам ОАЭ"
+
+#: ../backend/inc/helpers/helper.php:772
+msgid "Afghan afghani"
+msgstr "Афганский Afghani"
+
+#: ../backend/inc/helpers/helper.php:773
+msgid "Albanian lek"
+msgstr "Албанский лек"
+
+#: ../backend/inc/helpers/helper.php:774
+msgid "Armenian dram"
+msgstr "Армянский драм"
+
+#: ../backend/inc/helpers/helper.php:775
+msgid "Netherlands Antillean guilder"
+msgstr "Нидерландский антильский гульден"
+
+#: ../backend/inc/helpers/helper.php:776
+msgid "Angolan kwanza"
+msgstr "Ангольская кванза"
+
+#: ../backend/inc/helpers/helper.php:777
+msgid "Argentine peso"
+msgstr "Аргентинское песо"
+
+#: ../backend/inc/helpers/helper.php:778
+msgid "Australian dollar"
+msgstr "Австралийский доллар"
+
+#: ../backend/inc/helpers/helper.php:779
+msgid "Aruban florin"
+msgstr "Арубанский флорин"
+
+#: ../backend/inc/helpers/helper.php:780
+msgid "Azerbaijani manat"
+msgstr "Азербайджанский манат"
+
+#: ../backend/inc/helpers/helper.php:781
+msgid "B&H convertible mark"
+msgstr "Конвертируемая марка B & H"
+
+#: ../backend/inc/helpers/helper.php:782
+msgid "Barbadian dollar"
+msgstr "Барбадосский доллар"
+
+#: ../backend/inc/helpers/helper.php:783
+msgid "Bangladeshi taka"
+msgstr "Бангладешская така"
+
+#: ../backend/inc/helpers/helper.php:784
+msgid "Bulgarian lev"
+msgstr "Болгарский лев"
+
+#: ../backend/inc/helpers/helper.php:785
+msgid "Bahraini dinar"
+msgstr "Бахрейнский динар"
+
+#: ../backend/inc/helpers/helper.php:786
+msgid "Burundian franc"
+msgstr "Бурундийский франк"
+
+#: ../backend/inc/helpers/helper.php:787
+msgid "Bermudian dollar"
+msgstr "Бермудский доллар"
+
+#: ../backend/inc/helpers/helper.php:788
+msgid "Brunei dollar"
+msgstr "Брунейский доллар"
+
+#: ../backend/inc/helpers/helper.php:789
+msgid "Bolivian boliviano"
+msgstr "Боливийский боливиано"
+
+#: ../backend/inc/helpers/helper.php:790
+msgid "Brazilian real"
+msgstr "Бразильский реал"
+
+#: ../backend/inc/helpers/helper.php:791
+msgid "Bahamian dollar"
+msgstr "Багамский доллар"
+
+#: ../backend/inc/helpers/helper.php:792
+msgid "Bitcoin"
+msgstr "Биткойн"
+
+#: ../backend/inc/helpers/helper.php:793
+msgid "Bhutanese ngultrum"
+msgstr "Бутанский нгултрум"
+
+#: ../backend/inc/helpers/helper.php:794
+msgid "Botswana pula"
+msgstr "Ботсвана пула"
+
+#: ../backend/inc/helpers/helper.php:795
+msgid "Belarusian ruble (old)"
+msgstr "Белорусский рубль (старый)"
+
+#: ../backend/inc/helpers/helper.php:796
+msgid "Belarusian ruble"
+msgstr "Белорусский рубль"
+
+#: ../backend/inc/helpers/helper.php:797
+msgid "Belize dollar"
+msgstr "Белизский доллар"
+
+#: ../backend/inc/helpers/helper.php:798
+msgid "Canadian dollar"
+msgstr "Канадский доллар"
+
+#: ../backend/inc/helpers/helper.php:799
+msgid "Congolese franc"
+msgstr "Конголезский франк"
+
+#: ../backend/inc/helpers/helper.php:800
+msgid "Swiss franc"
+msgstr "Швейцарский франк"
+
+#: ../backend/inc/helpers/helper.php:801
+msgid "Chilean peso"
+msgstr "Чилийское песо"
+
+#: ../backend/inc/helpers/helper.php:802 ../backend/inc/helpers/helper.php:890
+msgid "Chinese yuan"
+msgstr "Китайский юань"
+
+#: ../backend/inc/helpers/helper.php:803
+msgid "Colombian peso"
+msgstr "Колумбийское песо"
+
+#: ../backend/inc/helpers/helper.php:804
+msgid "Costa Rican col&oacute;n"
+msgstr "Коста-риканский колон"
+
+#: ../backend/inc/helpers/helper.php:805
+msgid "Cuban convertible peso"
+msgstr "Кубинский конвертируемый песо"
+
+#: ../backend/inc/helpers/helper.php:806
+msgid "Cuban peso"
+msgstr "Кубинское песо"
+
+#: ../backend/inc/helpers/helper.php:807
+msgid "Cape Verdean escudo"
+msgstr "Кабо-Верде эскудо"
+
+#: ../backend/inc/helpers/helper.php:808
+msgid "Czech koruna"
+msgstr "Чешская крона"
+
+#: ../backend/inc/helpers/helper.php:809
+msgid "Djiboutian franc"
+msgstr "Джибутийский франк"
+
+#: ../backend/inc/helpers/helper.php:810
+msgid "Danish krone"
+msgstr "Датская крона"
+
+#: ../backend/inc/helpers/helper.php:811
+msgid "Dominican peso"
+msgstr "Доминиканское песо"
+
+#: ../backend/inc/helpers/helper.php:812
+msgid "Algerian dinar"
+msgstr "Алжирский динар"
+
+#: ../backend/inc/helpers/helper.php:813
+msgid "Egyptian pound"
+msgstr "Египетский фунт"
+
+#: ../backend/inc/helpers/helper.php:814
+msgid "Eritrean nakfa"
+msgstr "Эритрейская накфа"
+
+#: ../backend/inc/helpers/helper.php:815
+msgid "Ethiopian birr"
+msgstr "Эфиопский быр"
+
+#: ../backend/inc/helpers/helper.php:816
+msgid "Euro"
+msgstr "Евро"
+
+#: ../backend/inc/helpers/helper.php:817
+msgid "Fijian dollar"
+msgstr "Фиджийский доллар"
+
+#: ../backend/inc/helpers/helper.php:818
+msgid "Falkland Islands pound"
+msgstr "Фунт Фолклендских островов"
+
+#: ../backend/inc/helpers/helper.php:819
+msgid "Pound sterling"
+msgstr "Фунт стерлингов"
+
+#: ../backend/inc/helpers/helper.php:820
+msgid "Georgian lari"
+msgstr "Грузинский лари"
+
+#: ../backend/inc/helpers/helper.php:821
+msgid "Guernsey pound"
+msgstr "Фунт Гернси"
+
+#: ../backend/inc/helpers/helper.php:822
+msgid "Ghana cedi"
+msgstr "Гана Седи"
+
+#: ../backend/inc/helpers/helper.php:823
+msgid "Gibraltar pound"
+msgstr "Гана Седи"
+
+#: ../backend/inc/helpers/helper.php:824
+msgid "Gambian dalasi"
+msgstr "Гамбийский даласи"
+
+#: ../backend/inc/helpers/helper.php:825
+msgid "Guinean franc"
+msgstr "Гвинейский франк"
+
+#: ../backend/inc/helpers/helper.php:826
+msgid "Guatemalan quetzal"
+msgstr "Гватемальский кетцаль"
+
+#: ../backend/inc/helpers/helper.php:827
+msgid "Guyanese dollar"
+msgstr "Гайанский доллар"
+
+#: ../backend/inc/helpers/helper.php:828
+msgid "Hong Kong dollar"
+msgstr "Гонконгский доллар"
+
+#: ../backend/inc/helpers/helper.php:829
+msgid "Honduran lempira"
+msgstr "Гондурасская лемпира"
+
+#: ../backend/inc/helpers/helper.php:830
+msgid "Croatian kuna"
+msgstr "Хорватская куна"
+
+#: ../backend/inc/helpers/helper.php:831
+msgid "Haitian gourde"
+msgstr "Гаитянский гурд"
+
+#: ../backend/inc/helpers/helper.php:832
+msgid "Hungarian forint"
+msgstr "Венгерский форинт"
+
+#: ../backend/inc/helpers/helper.php:833
+msgid "Indonesian rupiah"
+msgstr "Индонезийская рупия"
+
+#: ../backend/inc/helpers/helper.php:834
+msgid "Israeli new shekel"
+msgstr "Новый израильский шекель"
+
+#: ../backend/inc/helpers/helper.php:835
+msgid "Manx pound"
+msgstr "Мэнский фунт"
+
+#: ../backend/inc/helpers/helper.php:836
+msgid "Indian rupee"
+msgstr "Индийская рупия"
+
+#: ../backend/inc/helpers/helper.php:837
+msgid "Iraqi dinar"
+msgstr "Иракский динар"
+
+#: ../backend/inc/helpers/helper.php:838
+msgid "Iranian rial"
+msgstr "Иранский риал"
+
+#: ../backend/inc/helpers/helper.php:839
+msgid "Iranian toman"
+msgstr "Иранский томан"
+
+#: ../backend/inc/helpers/helper.php:840
+msgid "Icelandic kr&oacute;na"
+msgstr "Исландская крона"
+
+#: ../backend/inc/helpers/helper.php:841
+msgid "Jersey pound"
+msgstr "Джерси фунт"
+
+#: ../backend/inc/helpers/helper.php:842
+msgid "Jamaican dollar"
+msgstr "Ямайский доллар"
+
+#: ../backend/inc/helpers/helper.php:843
+msgid "Jordanian dinar"
+msgstr "Иорданский динар"
+
+#: ../backend/inc/helpers/helper.php:844
+msgid "Japanese yen"
+msgstr "Японская иена"
+
+#: ../backend/inc/helpers/helper.php:845
+msgid "Kenyan shilling"
+msgstr "Кенийский шиллинг"
+
+#: ../backend/inc/helpers/helper.php:846
+msgid "Kyrgyzstani som"
+msgstr "Киргизский сом"
+
+#: ../backend/inc/helpers/helper.php:847
+msgid "Cambodian riel"
+msgstr "Камбоджийский риель"
+
+#: ../backend/inc/helpers/helper.php:848
+msgid "Comorian franc"
+msgstr "Коморский франк"
+
+#: ../backend/inc/helpers/helper.php:849
+msgid "North Korean won"
+msgstr "Северокорейская вона"
+
+#: ../backend/inc/helpers/helper.php:850
+msgid "South Korean won"
+msgstr "Южнокорейский вон"
+
+#: ../backend/inc/helpers/helper.php:851
+msgid "Kuwaiti dinar"
+msgstr "Кувейтский динар"
+
+#: ../backend/inc/helpers/helper.php:852
+msgid "Cayman Islands dollar"
+msgstr "Доллар Каймановых островов"
+
+#: ../backend/inc/helpers/helper.php:853
+msgid "Kazakhstani tenge"
+msgstr "Казахстанский тенге"
+
+#: ../backend/inc/helpers/helper.php:854
+msgid "Lao kip"
+msgstr "Лаосский кип"
+
+#: ../backend/inc/helpers/helper.php:855
+msgid "Lebanese pound"
+msgstr "Ливанский фунт"
+
+#: ../backend/inc/helpers/helper.php:856
+msgid "Sri Lankan rupee"
+msgstr "Шри-ланкийская рупия"
+
+#: ../backend/inc/helpers/helper.php:857
+msgid "Liberian dollar"
+msgstr "Либерийский доллар"
+
+#: ../backend/inc/helpers/helper.php:858
+msgid "Lesotho loti"
+msgstr "Лесото Лоти"
+
+#: ../backend/inc/helpers/helper.php:859
+msgid "Libyan dinar"
+msgstr "Libyan dinar"
+
+#: ../backend/inc/helpers/helper.php:860
+msgid "Moroccan dirham"
+msgstr "Марокканский дирхам"
+
+#: ../backend/inc/helpers/helper.php:861
+msgid "Moldovan leu"
+msgstr "Молдавский лей"
+
+#: ../backend/inc/helpers/helper.php:862
+msgid "Malagasy ariary"
+msgstr "Малагасийский ариари"
+
+#: ../backend/inc/helpers/helper.php:863
+msgid "Macedonian denar"
+msgstr "Македонский динар"
+
+#: ../backend/inc/helpers/helper.php:864
+msgid "Burmese kyat"
+msgstr "Бирманский кьят"
+
+#: ../backend/inc/helpers/helper.php:865
+msgid "Mongolian t&ouml;gr&ouml;g"
+msgstr "Монгольский тугрик"
+
+#: ../backend/inc/helpers/helper.php:866
+msgid "Macanese pataca"
+msgstr "Macanese патака"
+
+#: ../backend/inc/helpers/helper.php:867
+msgid "Mauritanian ouguiya"
+msgstr "Мавританский угуия"
+
+#: ../backend/inc/helpers/helper.php:868
+msgid "Mauritian rupee"
+msgstr "Маврикийская рупия"
+
+#: ../backend/inc/helpers/helper.php:869
+msgid "Maldivian rufiyaa"
+msgstr "Мальдивская руфия"
+
+#: ../backend/inc/helpers/helper.php:870
+msgid "Malawian kwacha"
+msgstr "Малавийская квача"
+
+#: ../backend/inc/helpers/helper.php:871
+msgid "Mexican peso"
+msgstr "Мексиканское песо"
+
+#: ../backend/inc/helpers/helper.php:872
+msgid "Malaysian ringgit"
+msgstr "Малазийский ринггит"
+
+#: ../backend/inc/helpers/helper.php:873
+msgid "Mozambican metical"
+msgstr "Мозамбикский метикал"
+
+#: ../backend/inc/helpers/helper.php:874
+msgid "Namibian dollar"
+msgstr "Намибийский доллар"
+
+#: ../backend/inc/helpers/helper.php:875
+msgid "Nigerian naira"
+msgstr "Нигерийская найра"
+
+#: ../backend/inc/helpers/helper.php:876
+msgid "Nicaraguan c&oacute;rdoba"
+msgstr "Никарагуанская кордоба"
+
+#: ../backend/inc/helpers/helper.php:877
+msgid "Norwegian krone"
+msgstr "Норвежская крона"
+
+#: ../backend/inc/helpers/helper.php:878
+msgid "Nepalese rupee"
+msgstr "Непальская рупия"
+
+#: ../backend/inc/helpers/helper.php:879
+msgid "New Zealand dollar"
+msgstr "Новозеландский доллар"
+
+#: ../backend/inc/helpers/helper.php:880
+msgid "Omani rial"
+msgstr "Оманский риал"
+
+#: ../backend/inc/helpers/helper.php:881
+msgid "Panamanian balboa"
+msgstr "Панамский бальбоа"
+
+#: ../backend/inc/helpers/helper.php:882
+msgid "Peruvian nuevo sol"
+msgstr "Перуанский новый соль"
+
+#: ../backend/inc/helpers/helper.php:883
+msgid "Papua New Guinean kina"
+msgstr "Папуа-Новая Гвинея Кина"
+
+#: ../backend/inc/helpers/helper.php:884
+msgid "Philippine peso"
+msgstr "Филиппинское песо"
+
+#: ../backend/inc/helpers/helper.php:885
+msgid "Pakistani rupee"
+msgstr "Пакистанская рупия"
+
+#: ../backend/inc/helpers/helper.php:886
+msgid "Polish z&#x142;oty"
+msgstr "Польский злотый"
+
+#: ../backend/inc/helpers/helper.php:887
+msgid "Transnistrian ruble"
+msgstr "Приднестровский рубль"
+
+#: ../backend/inc/helpers/helper.php:888
+msgid "Paraguayan guaran&iacute;"
+msgstr "Парагвайский гуарани"
+
+#: ../backend/inc/helpers/helper.php:889
+msgid "Qatari riyal"
+msgstr "Катарский риал"
+
+#: ../backend/inc/helpers/helper.php:891
+msgid "Romanian leu"
+msgstr "Румынский лей"
+
+#: ../backend/inc/helpers/helper.php:892
+msgid "Serbian dinar"
+msgstr "Сербский динар"
+
+#: ../backend/inc/helpers/helper.php:893
+msgid "Russian ruble"
+msgstr "Русский рубль"
+
+#: ../backend/inc/helpers/helper.php:894
+msgid "Rwandan franc"
+msgstr "Руандийский франк"
+
+#: ../backend/inc/helpers/helper.php:895
+msgid "Saudi riyal"
+msgstr "Саудовский риал"
+
+#: ../backend/inc/helpers/helper.php:896
+msgid "Solomon Islands dollar"
+msgstr "Доллар Соломоновых островов"
+
+#: ../backend/inc/helpers/helper.php:897
+msgid "Seychellois rupee"
+msgstr "Сейшельская рупия"
+
+#: ../backend/inc/helpers/helper.php:898
+msgid "Sudanese pound"
+msgstr "Суданский фунт"
+
+#: ../backend/inc/helpers/helper.php:899
+msgid "Swedish krona"
+msgstr "Шведская крона"
+
+#: ../backend/inc/helpers/helper.php:900
+msgid "Singapore dollar"
+msgstr "Сингапурский доллар"
+
+#: ../backend/inc/helpers/helper.php:901
+msgid "Saint Helena pound"
+msgstr "Фунт Святой Елены"
+
+#: ../backend/inc/helpers/helper.php:902
+msgid "Sierra Leonean leone"
+msgstr "Сьерра леоне леоне"
+
+#: ../backend/inc/helpers/helper.php:903
+msgid "Somali shilling"
+msgstr "Сомалийский шиллинг"
+
+#: ../backend/inc/helpers/helper.php:904
+msgid "Surinamese dollar"
+msgstr "Суринамский доллар"
+
+#: ../backend/inc/helpers/helper.php:905
+msgid "South Sudanese pound"
+msgstr "Южно-Суданский фунт"
+
+#: ../backend/inc/helpers/helper.php:906
+msgid "S&atilde;o Tom&eacute; and Pr&iacute;ncipe dobra"
+msgstr "Сан-Томе и Принсипи Добра"
+
+#: ../backend/inc/helpers/helper.php:907
+msgid "Syrian pound"
+msgstr "Сирийский фунт"
+
+#: ../backend/inc/helpers/helper.php:908
+msgid "Swazi lilangeni"
+msgstr "Сваз лилангени"
+
+#: ../backend/inc/helpers/helper.php:909
+msgid "Thai baht"
+msgstr "Тайский бат"
+
+#: ../backend/inc/helpers/helper.php:910
+msgid "Tajikistani somoni"
+msgstr "Таджикский сомони"
+
+#: ../backend/inc/helpers/helper.php:911
+msgid "Turkmenistan manat"
+msgstr "Туркменский манат"
+
+#: ../backend/inc/helpers/helper.php:912
+msgid "Tunisian dinar"
+msgstr "Тунисский динар"
+
+#: ../backend/inc/helpers/helper.php:913
+msgid "Tongan pa&#x2bb;anga"
+msgstr "Тонганская паанга"
+
+#: ../backend/inc/helpers/helper.php:914
+msgid "Turkish lira"
+msgstr "Турецкая лира"
+
+#: ../backend/inc/helpers/helper.php:915
+msgid "Trinidad and Tobago dollar"
+msgstr "Доллар Тринидада и Тобаго"
+
+#: ../backend/inc/helpers/helper.php:916
+msgid "New Taiwan dollar"
+msgstr "Новый тайваньский доллар"
+
+#: ../backend/inc/helpers/helper.php:917
+msgid "Tanzanian shilling"
+msgstr "Танзанийский шиллинг"
+
+#: ../backend/inc/helpers/helper.php:918
+msgid "Ukrainian hryvnia"
+msgstr "Украинская гривна"
+
+#: ../backend/inc/helpers/helper.php:919
+msgid "Ugandan shilling"
+msgstr "Угандийский шиллинг"
+
+#: ../backend/inc/helpers/helper.php:920
+msgid "United States (US) dollar"
+msgstr "Доллар США"
+
+#: ../backend/inc/helpers/helper.php:921
+msgid "Uruguayan peso"
+msgstr "Уругвайское песо"
+
+#: ../backend/inc/helpers/helper.php:922
+msgid "Uzbekistani som"
+msgstr "Узбекский сом"
+
+#: ../backend/inc/helpers/helper.php:923
+msgid "Venezuelan bol&iacute;var"
+msgstr "Венесуэльский боливар"
+
+#: ../backend/inc/helpers/helper.php:924
+msgid "Vietnamese &#x111;&#x1ed3;ng"
+msgstr "Вьетнамский донг"
+
+#: ../backend/inc/helpers/helper.php:925
+msgid "Vanuatu vatu"
+msgstr "Вануату Вату"
+
+#: ../backend/inc/helpers/helper.php:926
+msgid "Samoan t&#x101;l&#x101;"
+msgstr "Самоанская тала"
+
+#: ../backend/inc/helpers/helper.php:927
+msgid "Central African CFA franc"
+msgstr "Центральноафриканский франк КФА"
+
+#: ../backend/inc/helpers/helper.php:928
+msgid "East Caribbean dollar"
+msgstr "Восточно-карибский доллар"
+
+#: ../backend/inc/helpers/helper.php:929
+msgid "West African CFA franc"
+msgstr "Франк КФА"
+
+#: ../backend/inc/helpers/helper.php:930
+msgid "CFP franc"
+msgstr "CFP франк"
+
+#: ../backend/inc/helpers/helper.php:931
+msgid "Yemeni rial"
+msgstr "Йеменский риал"
+
+#: ../backend/inc/helpers/helper.php:932
+msgid "South African rand"
+msgstr "Южноафриканский рэнд"
+
+#: ../backend/inc/helpers/helper.php:933
+msgid "Zambian kwacha"
+msgstr "Замбийская квача"
+
+#: ../backend/inc/helpers/helper.php:946
+msgid "Enable section"
+msgstr "Включить раздел"
+
+#: ../backend/inc/helpers/helper.php:947
+msgid "Disable section, enable total price"
+msgstr "Отключить раздел, включить итоговую сумму"
+
+#: ../backend/inc/helpers/helper.php:948
+msgid "Disable section, disable total price"
+msgstr "Отключить раздел, отключить итоговую сумму"
+
+#: ../backend/inc/helpers/helper.php:962
+#: ../backend/inc/helpers/helper.php:1031
+msgid "15 Minutes"
+msgstr "15 минут"
+
+#: ../backend/inc/helpers/helper.php:963
+#: ../backend/inc/helpers/helper.php:1033
+msgid "30 Minutes"
+msgstr "30 минут"
+
+#: ../backend/inc/helpers/helper.php:964
+#: ../backend/inc/helpers/helper.php:1034
+msgid "45 Minutes"
+msgstr "45 минут"
+
+#: ../backend/inc/helpers/helper.php:965
+#: ../backend/inc/helpers/helper.php:1035
+msgid "1 Hour"
+msgstr "1 час"
+
+#: ../backend/inc/helpers/helper.php:966
+#: ../backend/inc/helpers/helper.php:1037
+msgid "2 Hours"
+msgstr "2 часа"
+
+#: ../backend/inc/helpers/helper.php:967
+#: ../backend/inc/helpers/helper.php:1038
+msgid "3 Hours"
+msgstr "3 часа"
+
+#: ../backend/inc/helpers/helper.php:968
+#: ../backend/inc/helpers/helper.php:1039
+msgid "4 Hours"
+msgstr "4 часа"
+
+#: ../backend/inc/helpers/helper.php:969
+#: ../backend/inc/helpers/helper.php:1040
+msgid "5 Hours"
+msgstr "5 часов"
+
+#: ../backend/inc/helpers/helper.php:970
+#: ../backend/inc/helpers/helper.php:1041
+msgid "6 Hours"
+msgstr "6 часов"
+
+#: ../backend/inc/helpers/helper.php:971
+msgid "7 Hours"
+msgstr "7 часов"
+
+#: ../backend/inc/helpers/helper.php:972
+#: ../backend/inc/helpers/helper.php:1042
+msgid "8 Hours"
+msgstr "8 часов"
+
+#: ../backend/inc/helpers/helper.php:973
+msgid "9 Hours"
+msgstr "9 часов"
+
+#: ../backend/inc/helpers/helper.php:974
+msgid "10 Hours"
+msgstr "10 часов"
+
+#: ../backend/inc/helpers/helper.php:975
+msgid "11 Hours"
+msgstr "11 часов"
+
+#: ../backend/inc/helpers/helper.php:976
+#: ../backend/inc/helpers/helper.php:1043
+msgid "12 Hours"
+msgstr "12 часов"
+
+#: ../backend/inc/helpers/helper.php:977
+msgid "1 Day"
+msgstr "1 день"
+
+#: ../backend/inc/helpers/helper.php:978
+msgid "2 Days"
+msgstr "2 дня"
+
+#: ../backend/inc/helpers/helper.php:979
+msgid "3 Days"
+msgstr "3 дня"
+
+#: ../backend/inc/helpers/helper.php:980
+msgid "4 Days"
+msgstr "4 дня"
+
+#: ../backend/inc/helpers/helper.php:981
+msgid "5 Days"
+msgstr "5 дней"
+
+#: ../backend/inc/helpers/helper.php:982
+msgid "6 Days"
+msgstr "6 дней"
+
+#: ../backend/inc/helpers/helper.php:983
+msgid "1 Week"
+msgstr "1 неделя"
+
+#: ../backend/inc/helpers/helper.php:984
+msgid "2 Weeks"
+msgstr "2 недели"
+
+#: ../backend/inc/helpers/helper.php:985
+msgid "3 Weeks"
+msgstr "3 недели"
+
+#: ../backend/inc/helpers/helper.php:986
+msgid "4 Weeks"
+msgstr "4 недели"
+
+#: ../backend/inc/helpers/helper.php:1000
+msgid "1 Month"
+msgstr "1 месяц"
+
+#: ../backend/inc/helpers/helper.php:1001
+msgid "2 Months"
+msgstr "2 месяца"
+
+#: ../backend/inc/helpers/helper.php:1002
+msgid "3 Months"
+msgstr "3 месяца"
+
+#: ../backend/inc/helpers/helper.php:1003
+msgid "4 Months"
+msgstr "4 месяца"
+
+#: ../backend/inc/helpers/helper.php:1004
+msgid "5 Months"
+msgstr "5 месяцев"
+
+#: ../backend/inc/helpers/helper.php:1005
+msgid "6 Months"
+msgstr "6 месяцев"
+
+#: ../backend/inc/helpers/helper.php:1006
+msgid "7 Months"
+msgstr "7 месяцев"
+
+#: ../backend/inc/helpers/helper.php:1007
+msgid "8 Months"
+msgstr "8 месяцев"
+
+#: ../backend/inc/helpers/helper.php:1008
+msgid "9 Months"
+msgstr "9 месяцев"
+
+#: ../backend/inc/helpers/helper.php:1009
+msgid "10 Months"
+msgstr "10 месяцев"
+
+#: ../backend/inc/helpers/helper.php:1010
+msgid "11 Months"
+msgstr "11 месяцев"
+
+#: ../backend/inc/helpers/helper.php:1011
+msgid "1 year"
+msgstr "1 год"
+
+#: ../backend/inc/helpers/helper.php:1012
+msgid "1 year 6 months"
+msgstr "1 год и 6 месяцев"
+
+#: ../backend/inc/helpers/helper.php:1013
+msgid "2 years"
+msgstr "2 года"
+
+#: ../backend/inc/helpers/helper.php:1025
+msgid "1 Minute"
+msgstr "1 минута"
+
+#: ../backend/inc/helpers/helper.php:1026
+msgid "2 Minutes"
+msgstr "2 минуты"
+
+#: ../backend/inc/helpers/helper.php:1027
+msgid "3 Minutes"
+msgstr "3 минуты"
+
+#: ../backend/inc/helpers/helper.php:1028
+msgid "4 Minutes"
+msgstr "4 минуты"
+
+#: ../backend/inc/helpers/helper.php:1029
+msgid "5 Minutes"
+msgstr "5 минут"
+
+#: ../backend/inc/helpers/helper.php:1030
+msgid "10 Minutes"
+msgstr "10 минут"
+
+#: ../backend/inc/helpers/helper.php:1032
+msgid "20 Minutes"
+msgstr "20 минут"
+
+#: ../backend/inc/helpers/helper.php:1036
+msgid "1 Hour 30 Minutes"
+msgstr "1 час и 30 минут"
+
+#: ../backend/inc/helpers/helper.php:1056
+msgid "1h"
+msgstr "1 час"
+
+#: ../backend/inc/helpers/helper.php:1057
+msgid "2h"
+msgstr "2 часа"
+
+#: ../backend/inc/helpers/helper.php:1058
+msgid "3h"
+msgstr "3 часа"
+
+#: ../backend/inc/helpers/helper.php:1059
+msgid "4h"
+msgstr "4 часа"
+
+#: ../backend/inc/helpers/helper.php:1060
+msgid "5h"
+msgstr "5 часов"
+
+#: ../backend/inc/helpers/helper.php:1061
+msgid "6h"
+msgstr "6 часов"
+
+#: ../backend/inc/helpers/helper.php:1062
+msgid "7h"
+msgstr "7 часов"
+
+#: ../backend/inc/helpers/helper.php:1063
+msgid "8h"
+msgstr "8 часов"
+
+#: ../backend/inc/helpers/helper.php:1064
+msgid "9h"
+msgstr "9 часов"
+
+#: ../backend/inc/helpers/helper.php:1065
+msgid "10h"
+msgstr "10 часов"
+
+#: ../backend/inc/helpers/helper.php:1066
+msgid "11h"
+msgstr "11 часов"
+
+#: ../backend/inc/helpers/helper.php:1067
+msgid "12h"
+msgstr "12 часов"
+
+#: ../backend/inc/helpers/helper.php:1068
+msgid "1day"
+msgstr "1 день"
+
+#: ../backend/inc/helpers/helper.php:1069
+msgid "2days"
+msgstr "2 дня"
+
+#: ../backend/inc/helpers/helper.php:1070
+msgid "3days"
+msgstr "3 дня"
+
+#: ../backend/inc/helpers/helper.php:1071
+msgid "4days"
+msgstr "4 дня"
+
+#: ../backend/inc/helpers/helper.php:1072
+msgid "5days"
+msgstr "5 дней"
+
+#: ../backend/inc/helpers/helper.php:1073
+msgid "6days"
+msgstr "6 дней"
+
+#: ../backend/inc/helpers/helper.php:1074
+msgid "1week"
+msgstr "1 неделя"
+
+#: ../backend/inc/helpers/helper.php:1075
+msgid "2weeks"
+msgstr "2 недели"
+
+#: ../backend/inc/helpers/helper.php:1076
+msgid "3weks"
+msgstr "3 недели"
+
+#: ../backend/inc/helpers/helper.php:1077
+msgid "4weeks"
+msgstr "4 недели"
+
+#: ../backend/inc/helpers/helper.php:1121
+msgid "PHP Mail"
+msgstr "PHP Mail"
+
+#: ../backend/inc/helpers/helper.php:1122
+msgid "WP Mail"
+msgstr "WP Mail"
+
+#: ../backend/inc/helpers/helper.php:1123
+msgid "SMTP"
+msgstr "SMTP"
+
+#: ../backend/inc/helpers/helper.php:1137
+msgid "SSL"
+msgstr "SSL"
+
+#: ../backend/inc/helpers/helper.php:1138
+msgid "TLS"
+msgstr "TLS"
+
+#: ../backend/inc/helpers/helper.php:1312
+msgid "Appointment Date"
+msgstr "Дата встречи"
+
+#: ../backend/inc/helpers/helper.php:1313
+msgid "Appointment Start Time"
+msgstr "Время начала встречи"
+
+#: ../backend/inc/helpers/helper.php:1320
+msgid "Customer email"
+msgstr "Электронная почта клиента"
+
+#: ../backend/inc/helpers/helper.php:1321
+msgid "Customer First Name"
+msgstr "Имя клиента"
+
+#: ../backend/inc/helpers/helper.php:1322
+msgid "Customer Last Name"
+msgstr "Фамилия клиента"
+
+#: ../backend/inc/helpers/helper.php:1323
+msgid "Customer Full Name"
+msgstr "Полное имя Клиента"
+
+#: ../backend/inc/helpers/helper.php:1324
+msgid "Customer Phone"
+msgstr "Телефон Клиента"
+
+#: ../backend/inc/helpers/helper.php:1327
+msgid "Company Address"
+msgstr "Адрес Компании"
+
+#: ../backend/inc/helpers/helper.php:1329
+msgid "Company Name"
+msgstr "Название Компании"
+
+#: ../backend/inc/helpers/helper.php:1330
+msgid "Company Phone"
+msgstr "Телефон Компании"
+
+#: ../backend/inc/helpers/helper.php:1331
+msgid "Company Website"
+msgstr "Вебсайт Компании"
+
+#: ../backend/inc/helpers/helper.php:1332
+msgid "Employee email"
+msgstr "Электронная почта Сотрудника"
+
+#: ../backend/inc/helpers/helper.php:1333
+msgid "Employee First Name"
+msgstr "Имя Сотрудника"
+
+#: ../backend/inc/helpers/helper.php:1334
+msgid "Employee Last Name"
+msgstr "Фамилия Сотрудника"
+
+#: ../backend/inc/helpers/helper.php:1335
+msgid "Employee Full Name"
+msgstr "Полное имя Сотрудника"
+
+#: ../backend/inc/helpers/helper.php:1336
+msgid "Employee Phone"
+msgstr "Телефон Сотрудника"
+
+#: ../backend/inc/helpers/helper.php:1342
+msgid "Number Of People"
+msgstr "Количество людей"
+
+#: ../backend/inc/helpers/helper.php:1343
+msgid "Service Duration"
+msgstr "Продолжительность сервиса"
+
+#: ../backend/inc/helpers/helper.php:1345
+msgid "Total Price"
+msgstr "Итоговая Цена"
+
+#: ../backend/inc/helpers/helper.php:1356
+msgid "No Results"
+msgstr "Нет результатов"
+
+#: ../backend/inc/settings/settings-page.php:108
+#: ../backend/inc/settings/settings-page.php:294
+msgid "Working Schedule"
+msgstr "График Работы"
+
+#: ../backend/inc/settings/settings-page.php:120
+#: ../backend/inc/settings/settings-page.php:185
+msgid "Google Calendar"
+msgstr "Google Календарь"
+
+#: ../backend/inc/settings/settings-page.php:138
+msgid "Notification"
+msgstr "Уведомление"
+
+#: ../backend/inc/settings/settings-page.php:158
+msgid "Customization"
+msgstr "Настройка"
+
+#: ../backend/inc/settings/settings-page.php:206
+msgid "Client ID"
+msgstr "Client ID"
+
+#: ../backend/inc/settings/settings-page.php:213
+msgid "Client Secret"
+msgstr "Client Secret"
+
+#: ../backend/inc/settings/settings-page.php:221
+msgid "Redirect URL"
+msgstr "URL перенаправления"
+
+#: ../backend/inc/settings/settings-page.php:228
+msgid "Maximum Number Of Events Returned"
+msgstr "Максимальное количество возвращаемых событий"
+
+#: ../backend/inc/settings/settings-page.php:236
+msgid "Add Pending Appointments"
+msgstr "Добавить ожидающие встречи"
+
+#: ../backend/inc/settings/settings-page.php:248
+msgid "Add Event's Attendees"
+msgstr "Добавить участников мероприятия"
+
+#: ../backend/inc/settings/settings-page.php:260
+msgid "Send Event Invitation Email"
+msgstr "Отправить приглашение на мероприятие"
+
+#: ../backend/inc/settings/settings-page.php:775
+msgid "Customers Per Page"
+msgstr "Отображаемые клиенты на одной странице"
+
+#: ../backend/inc/settings/settings-page.php:827
+msgid "Payments Per Page"
+msgstr "Отображаемые платежи на одной странице"
+
+#: ../backend/inc/settings/settings-page.php:845
+msgid "Payment Filter Date Range"
+msgstr "Диапазон дат фильтра платежей"
+
+#: ../backend/inc/settings/settings-page.php:868
+msgid "Local Payment"
+msgstr "Оплата на месте"
+
+#: ../backend/inc/settings/settings-page.php:886
+msgid "Payment Section Action"
+msgstr "Действие раздела платежей"
+
+#: ../backend/inc/settings/settings-page.php:912
+msgid "Currency Format"
+msgstr "Формат валюты"
+
+#: ../backend/inc/settings/settings-page.php:932
+msgid "Currency Position"
+msgstr "Позиция значка купюры"
+
+#: ../backend/inc/settings/settings-page.php:939
+msgid "Left"
+msgstr "Слева"
+
+#: ../backend/inc/settings/settings-page.php:940
+msgid "Left-Space"
+msgstr "Слева с пробелом"
+
+#: ../backend/inc/settings/settings-page.php:941
+msgid "Right"
+msgstr "Справа"
+
+#: ../backend/inc/settings/settings-page.php:942
+msgid "Right-Space"
+msgstr "Справа с пробелом"
+
+#: ../backend/inc/settings/settings-page.php:956
+msgid "Price Format"
+msgstr "Формат цены"
+
+#: ../backend/inc/settings/settings-page.php:963
+msgid "Comma-Dot"
+msgstr "Запятая-Точка"
+
+#: ../backend/inc/settings/settings-page.php:964
+msgid "Dot-Comma"
+msgstr "Точка-Запятая"
+
+#: ../backend/inc/settings/settings-page.php:965
+msgid "Space-Dot"
+msgstr "Пробель-Точка"
+
+#: ../backend/inc/settings/settings-page.php:966
+msgid "Space-Comma"
+msgstr "Пробель-Запятая"
+
+#: ../backend/inc/settings/settings-page.php:979
+msgid "Price Decimal"
+msgstr "Количество цифр после запятой для всех цен"
+
+#: ../backend/inc/settings/settings-page.php:1023
+msgid "Paypal Sandbox Mode"
+msgstr "Paypal Sandbox Mode"
+
+#: ../backend/inc/settings/settings-page.php:1034
+msgid "Sandbox Paypal Client ID"
+msgstr "Sandbox Paypal Client ID"
+
+#: ../backend/inc/settings/settings-page.php:1043
+msgid "Sandbox Paypal Client Secret"
+msgstr "Sandbox Paypal Client Secret"
+
+#: ../backend/inc/settings/settings-page.php:1052
+msgid "Live Paypal Client ID"
+msgstr "Live Paypal Client ID"
+
+#: ../backend/inc/settings/settings-page.php:1061
+msgid "Live Paypal Client Secret"
+msgstr "Live Paypal Client Secret"
+
+#: ../backend/inc/settings/settings-page.php:1107
+msgid "Stripe Test Mode"
+msgstr "Тест режим Stripe"
+
+#: ../backend/inc/settings/settings-page.php:1118
+msgid "Test Stripe Publishable Key"
+msgstr "Test Stripe Publishable Key"
+
+#: ../backend/inc/settings/settings-page.php:1127
+msgid "Test Stripe Secret Key"
+msgstr "Test Stripe Secret Key"
+
+#: ../backend/inc/settings/settings-page.php:1136
+msgid "Live Stripe Publishable Key"
+msgstr "Live Stripe Publishable Key"
+
+#: ../backend/inc/settings/settings-page.php:1145
+msgid "Live Stripe Secret Key"
+msgstr "Live Stripe Secret Key"
+
+#: ../backend/inc/settings/settings-page.php:1199
+msgid "Services Per Page"
+msgstr "Отображаемые сервисы на одной странице"
+
+#: ../backend/inc/settings/settings.php:22
+#: ../backend/inc/settings/settings.php:23
+#: ../backend/inc/settings/settings.php:40
+msgid "Settings"
+msgstr "Настройки"
+
+#: ../backend/inc/settings/settings.php:68
+msgid "Core Settings"
+msgstr "Основные настройки"
+
+#: ../backend/inc/user-cabinet/appointments.php:369
+msgid "Edit"
+msgstr "Изменить"
+
+#: ../backend/inc/user-cabinet/appointments.php:1706
+#: ../backend/inc/user-cabinet/appointments.php:1708
+msgid "Your Appointments"
+msgstr "Ваши Встречи"
+
+#: ../backend/inc/user-cabinet/profile.php:78
+#: ../backend/inc/user-cabinet/profile.php:79
+msgid "Profile"
+msgstr "Профиль"
+
+#: ../backend/inc/user-cabinet/profile.php:289
+#: ../backend/inc/user-cabinet/profile.php:291
+msgid "Your Profile"
+msgstr "Ваш Профиль"
+
+#: ../backend/inc/userroles.php:124
+msgid "Bookmify Customer"
+msgstr "Bookmify Клиент"
+
+#: ../backend/inc/userroles.php:137
+msgid "Bookmify Employee"
+msgstr "Bookmify Сотрудник"
+
+#: ../backend/inc/userroles.php:151
+msgid "Bookmify Manager"
+msgstr "Bookmify Менеджер"
+
+#: ../frontend/frontend.php:103
+msgid "Please fill out fields:"
+msgstr "Пожалуйста, заполните поля:"
+
+#: ../frontend/frontend.php:106
+msgid "Invalid Email & Phone"
+msgstr "Неверный адрес электронной почты и телефон"
+
+#: ../frontend/frontend.php:107
+msgid "None"
+msgstr "Ничего"
+
+#: ../frontend/frontend.php:110 ../frontend/helpers/helper-frontend.php:236
+#: ../frontend/helpers/helper-frontend.php:312
+#: ../frontend/helpers/helper-frontend.php:592
+#: ../frontend/shortcodes/shortcode-alpha.php:363
+#: ../frontend/shortcodes/shortcode-alpha.php:440
+msgid "Next"
+msgstr "Следующее"
+
+#: ../frontend/frontend.php:111
+msgid "PayPal"
+msgstr "PayPal"
+
+#: ../frontend/frontend.php:113 ../frontend/helpers/helper-frontend.php:346
+#: ../frontend/helpers/helper-frontend.php:359
+msgid "On-site"
+msgstr "На месте"
+
+#: ../frontend/frontend.php:114
+msgid "Invalid login and/or password OR this user does not have client status."
+msgstr ""
+"Неверный логин и / или пароль ИЛИ у этого пользователя нет статуса клиента."
+
+#: ../frontend/frontend.php:125
+msgid "Done"
+msgstr "Готово"
+
+#: ../frontend/frontend.php:126 ../frontend/helpers/helper-frontend.php:946
+msgid "Time Slots"
+msgstr "Временные интервалы"
+
+#: ../frontend/helpers/helper-frontend.php:52
+msgid "Thank you!"
+msgstr "Спасибо!"
+
+#: ../frontend/helpers/helper-frontend.php:53
+msgid ""
+"Your appointment is succesfully received. Please meet us at your selected "
+"date and time."
+msgstr ""
+"Ваше назначение успешно получено. Пожалуйста, встречайте нас в выбранное "
+"вами время и дату."
+
+#: ../frontend/helpers/helper-frontend.php:54
+msgid "For any kind of inquiry, please call us at 543-323-3456"
+msgstr "Для любого запроса, пожалуйста, позвоните нам по телефону 543-323-3456"
+
+#: ../frontend/helpers/helper-frontend.php:55
+msgid "Go to services"
+msgstr "Перейти к сервисам"
+
+#: ../frontend/helpers/helper-frontend.php:91
+#: ../frontend/helpers/helper-frontend.php:130
+msgid "Sign Up"
+msgstr "Зарегистрироваться"
+
+#: ../frontend/helpers/helper-frontend.php:93
+msgid "Already have an account?"
+msgstr "Уже есть аккаунт?"
+
+#: ../frontend/helpers/helper-frontend.php:94
+msgid "Sign In."
+msgstr "Войти в систему."
+
+#: ../frontend/helpers/helper-frontend.php:142
+#: ../frontend/helpers/helper-frontend.php:166
+msgid "Sign In"
+msgstr "Войти в систему"
+
+#: ../frontend/helpers/helper-frontend.php:144
+msgid "Are you new here?"
+msgstr "Вы новичок здесь?"
+
+#: ../frontend/helpers/helper-frontend.php:145
+msgid "Sign Up."
+msgstr "Зарегистрироваться"
+
+#: ../frontend/helpers/helper-frontend.php:153
+msgid "Login"
+msgstr "Логин"
+
+#: ../frontend/helpers/helper-frontend.php:159
+msgid "Password"
+msgstr "Пароль"
+
+#: ../frontend/helpers/helper-frontend.php:173
+msgid "Forgot Password?"
+msgstr "Забыли пароль?"
+
+#: ../frontend/helpers/helper-frontend.php:183
+msgid "People coming together:"
+msgstr "Люди которые придут с Вами:"
+
+#: ../frontend/helpers/helper-frontend.php:222
+msgid "Count"
+msgstr "Количество"
+
+#: ../frontend/helpers/helper-frontend.php:286
+msgid "Entity"
+msgstr "Название"
+
+#: ../frontend/helpers/helper-frontend.php:287
+msgid "Amount"
+msgstr "Сумма"
+
+#: ../frontend/helpers/helper-frontend.php:322
+msgid "Payment Method"
+msgstr "Способ оплаты"
+
+#: ../frontend/helpers/helper-frontend.php:401
+msgid "Full Amount"
+msgstr "Полная предоплата"
+
+#: ../frontend/helpers/helper-frontend.php:404
+msgid "You can make a full payment now"
+msgstr "Вы можете сделать полную предоплату сейчас"
+
+#: ../frontend/helpers/helper-frontend.php:415
+msgid "Leave a deposit and pay the rest later"
+msgstr "Внесите депозит и оплатите остаток позже"
+
+#: ../frontend/helpers/helper-frontend.php:468
+msgid "Details:"
+msgstr "Детали:"
+
+#: ../frontend/helpers/helper-frontend.php:571
+msgid "Select an option"
+msgstr "Выберите опцию"
+
+#: ../frontend/helpers/helper-frontend.php:938
+msgid "Busy Day. Please, select another day."
+msgstr "Загруженный день. Выберите другой день."
+
+#: ../frontend/helpers/helper-service.php:74
+msgid ""
+"Please, set payment method in Bookmify Settings. You have not selected any "
+"payment method."
+msgstr ""
+"Пожалуйста, установите способ оплаты в настройках Bookmify. Вы не выбрали "
+"способ оплаты."
+
+#: ../frontend/shortcodes/shortcode-alpha.php:117
+msgid "Back to Services"
+msgstr "Вернуться к Сервисам"
+
+#: ../frontend/shortcodes/shortcode-alpha.php:144
+msgid "you have chosen"
+msgstr "вы выбрали"
+
+#: ../frontend/shortcodes/shortcode-alpha.php:165
+msgid "Specialist:"
+msgstr "Специалист:"
+
+#: ../frontend/shortcodes/shortcode-alpha.php:197
+msgid "Customer:"
+msgstr "Клиент:"
+
+#: ../frontend/shortcodes/shortcode-alpha.php:215
+msgid "Payment:"
+msgstr "Оплата:"
+
+#: ../frontend/shortcodes/shortcode-alpha.php:247
+msgid "Approve Booking"
+msgstr "Утвердить бронирование"
+
+#: ../frontend/shortcodes/shortcode-alpha.php:388
+msgid "Extras:"
+msgstr "Экстра:"
+
+#: ../frontend/shortcodes/shortcode-alpha.php:816
+msgid "This email already exists with different first name!"
+msgstr "Данный электронный адрес уде существует с другим именем!"
+
+#: ../frontend/shortcodes/shortcode-alpha.php:817
+msgid "This email already exists with different last name!"
+msgstr "Данный электронный адрес уде существует с другой фамилией!"
+
+#: ../frontend/shortcodes/shortcode-alpha.php:818
+msgid "This email already exists with different name!"
+msgstr "Данный электронный адрес уде существует с другим именем!"
+
+#: ../inc/plugin.php:76 ../inc/plugin.php:89
+msgid "Cheatin&#8217; huh?"
+msgstr "Зафиксирован чит?"
+
+#~ msgid "Discount %"
+#~ msgstr "Скидка %"
+
+#~ msgid "Bookmify Appointment"
+#~ msgstr "Bookmify Встреча"
+
+#~ msgid "Please just fill out the form."
+#~ msgstr "Пожалуйста, заполните это поле."
+
+#~ msgid "Tax:"
+#~ msgstr "Налог:"
+
+#~ msgid "Employee Appointments"
+#~ msgstr "Встречи Сотрудника"
+
+#~ msgid "Customer Appointments"
+#~ msgstr "Встречи Клиента"
+
+#~ msgid "Employee Profile"
+#~ msgstr "Профиль Сотрудника"
+
+#~ msgid "Customer Profile"
+#~ msgstr "Профиль Клиента"
+
+#~ msgid "Yen"
+#~ msgstr "Иена"

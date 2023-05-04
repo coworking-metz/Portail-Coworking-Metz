@@ -1,0 +1,343 @@
+/*
+Theme Name:     Poulailler Child Theme
+Template:       poulailler
+*/
+
+/* GLOBAL */
+@font-face{
+    font-family : "Andalusia";
+    src : url('/fonts/Andalusia.woff') format('woff'),
+          url('/fonts/Andalusia.svg#abcd') format('svg'),
+          url('/fonts/Andalusia.ttf') format('truetype'),
+          url('/fonts/Andalusia.eot') format('eot'),
+          url('/fonts/Andalusia.woff2') format('woff2');
+}
+.woocommerce-shipping-fields {
+    display: none;
+}
+.andalusia{
+    font-family: "Andalusia";
+}
+.blanc{
+    color: #ffffff !important;
+}
+.jaune{
+    color: #EAB234;
+}
+#masque{
+    display: none !important;
+}
+.chapeau p {
+    font-size: 1.2em !important;
+}
+
+/* MENU */
+.menu-hover-style-2 .main-navigation-ul > li.current-menu-item > a.menu-item-link{
+    color: #ffffff !important;
+}
+/*MON COMPTE*/
+.page-id-7 em {
+    color: #e9b142 !important;
+}
+/* FOOTER */
+.mk-footer-copyright{
+    color: #ffffff !important;
+}
+
+/* HOMEPAGE */
+.box-detail-wrapper.large-size {
+    text-align: center;
+}
+.new-style.pricing-table .pricing-cols li.pricing-col.three-table {
+    width: 32.5%;
+    margin-right: 2px;
+}
+.pricing-features.style-light {
+    padding: 3%;
+}
+p.mk-testimonial-quote {
+    font-size: 1.6em !important;
+    line-height: 1.6em !important;
+}
+
+/* CONTACT */
+.wpcf7-form .wpcf7-text, .wpcf7-form .wpcf7-textarea {
+    color: #fff;
+}
+.wpcf7-submit {
+    color: #fff;
+    font-family: "Raleway";
+    font-size: 16px;
+}
+.wpcf7-submit:hover {
+    color: #fff;
+}
+
+/* WOOCOMMERCE */
+.mk-header .mk-shoping-cart-link svg{
+    fill: #EAB234 !important;
+}
+.mk-header-cart-count{
+    color: #EAB234 !important;
+}
+p#billing_country_field {
+    display: none;
+}
+.woocommerce-checkout .col2-set {
+    float: left;
+    width: 48%;
+}
+
+#order_review_heading,
+.woocommerce-checkout-review-order {
+    float: right;
+    width: 48%;
+}
+
+.woocommerce-page .checkout .col-1,
+.woocommerce-page .checkout .col-2 {
+    width: 100%;
+}
+
+ul.woocommerce_error{
+    color: red ;
+    font-size:1.2em;
+}
+
+@media only screen and (max-width: 768px) {
+
+#order_review_heading,
+.woocommerce-checkout .col2-set,
+.woocommerce-checkout-review-order {
+    float: none;
+    width: 100%;
+}
+    
+}
+/*.main-navigation-ul > li.menu-item > a.menu-item-link{
+    color: #ffffff !important;
+}*/
+.related.products.compact-layout.grid--float,.mk-shop-header{
+    display: none;
+}
+.product-item-footer {
+    display: none !important;
+}
+
+.order-again {
+    display: none !important;
+}
+
+
+/**
+ * woocommerce my account
+ */
+ 
+ .woocommerce-account .woocommerce-MyAccount-content h3 {
+    margin-bottom: 20px;
+ }
+.my-account-title {
+    font-family: 'Andalusia';
+    text-align: center;
+    text-transform: none !important;
+    font-size: 36px;
+    padding-bottom: 30px;
+    background: url('/wp-content/uploads/2016/04/fleche-jaune.png') no-repeat center bottom;
+    margin: 0px 0px 30px 0;
+    display: block;
+}
+
+.text-account-warning {
+    margin-top: 40px;
+}
+.text-account-warning p {
+    text-align: left;
+    margin: 40px 20px 40px 50px;
+    font-weight: 500;
+}
+@media (min-width: 768px) {
+    .text-account-warning {
+        float: left;
+        width: 30%;
+    }
+}
+
+/*
+ * woocommerce checkout
+*/
+.woocommerce-checkout .mk-message-box.mk-info-message-box {
+    border: 1px solid #eab235;
+    padding: 15px;
+    font-weight: 700;
+}
+.woocommerce-checkout .mk-message-box.mk-info-message-box a {
+    color: #eab235;
+}
+.woocommerce-checkout .mk-message-box.mk-info-message-box a:hover,
+.woocommerce-checkout .mk-message-box.mk-info-message-box a:focus,
+.woocommerce-checkout .mk-message-box.mk-info-message-box a:active {
+    text-decoration: underline;
+}
+
+/* navigation pages my-account */
+/*responsive width */
+.woocommerce-account .woocommerce-MyAccount-navigation {
+    float: none;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.visible-inline-block-md {
+    display: none;
+}
+
+@media (min-width: 768px) {
+   .woocommerce-account .woocommerce-MyAccount-navigation {
+       float: left;
+       width: 30%;
+       -webkit-transform: translate(20px, 30px);
+            transform: translate(20px, 30px);
+   }
+   .visible-inline-block-md {
+        display: inline-block;
+   }
+}
+
+.woocommerce-MyAccount-navigation ul {
+    border: none;
+}
+.woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link {
+    border: none;
+    border-bottom: 1px solid #f4F4F4;
+}
+.woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link a {
+    display: block;
+    color: #eab234;
+    font-weight: bold;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    padding: 10px 30px;
+}
+
+.woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link a:hover,
+.woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link a:active,
+.woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link a:focus {
+    background: rgba(234, 178, 52, .1);
+    padding: 10px 30px 10px 45px;
+}
+
+.woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link.is-active a,
+.woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link.is-active a:hover,
+.woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link.is-active a:active,
+.woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link.is-active a:focus {
+    background: #eab234;
+    color: #fff;
+    padding: 10px 30px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,.3);
+}
+
+/* block contenu pages my-account */
+.woocommerce-account .woocommerce-MyAccount-content {
+    float: none;
+    width: 100%;
+    background-color: #FFF;
+    -webkit-box-shadow: 0 4px 14px rgba(0,0,0,.2);
+            box-shadow: 0 4px 14px rgba(0,0,0,.2);
+    padding: 20px 30px;
+    border-radius: 8px;
+    margin: 0 0 30px;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    min-height: 320px;
+}
+.woocommerce-account .woocommerce-MyAccount-content .button {
+    margin-bottom: 7px;
+    display: block;
+    text-align: center;
+    letter-spacing: 0;
+    font-size: 85%;
+}
+
+@media (min-width: 768px) {
+    .woocommerce-account .woocommerce-MyAccount-content {
+       float: right;
+       width: 68%;
+       position: relative;
+       z-index: 2;
+   }
+   .woocommerce-account .woocommerce-MyAccount-content .button {
+        display: inline-block;
+        text-align: left;
+        letter-spacing: 1px;
+        font-size: 100%;
+    }
+}
+
+/*
+    my-account-user-balance
+*/
+
+.my-account-user-balance {
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+.my-account-user-balance em,
+.presence-amount span {
+    font-weight: 700;
+    display: inline-block;
+    background-color: #F4F4F4;
+    padding: 2px 8px;
+    font-style: normal;
+    margin: 0 2px;
+    border-radius: 10px;
+    color: #eab234;
+}
+
+@media (min-width: 768px) {
+    .my-account-presences-list {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+}
+
+.my-account-presences-list table.table {
+    width: auto;
+    min-width: 100%;
+    margin-bottom: 0;
+}
+.my-account-presences-list table.table-right th {
+    display: none;
+}
+@media (min-width: 768px) {
+    .my-account-presences-list table.table {
+        -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
+        width: auto;
+        min-width: 50%;
+        margin-bottom: 30px;
+    }
+    .my-account-presences-list table.table-right th {
+        display: table-cell;
+    }
+}
+
+.my-account-presences-list table.table caption {
+    border-bottom: 1px solid #F4F4F4;
+    padding: 8px;
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .my-account-presences-list table.table caption {
+        display: table-caption;
+    }
+}
+.my-account-presences-list table.table td {
+    padding: 6px;
+}
+
+.my-account-presences-list table + table {
+    border-left: 1px solid #F4F4F4;
+}

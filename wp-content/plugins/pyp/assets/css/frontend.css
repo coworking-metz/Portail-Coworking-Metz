@@ -1,0 +1,22 @@
+.woocommerce div.product form.cart .pyp_custom_dropdown{
+    margin-bottom:1em;
+    border:0;
+    width:100%
+}
+.woocommerce div.product form.cart .pyp_custom_dropdown td,.woocommerce div.product form.cart .pyp_custom_dropdown th{
+    border:0;
+    vertical-align:top;
+    line-height:2em
+}
+.woocommerce div.product form.cart .pyp_custom_dropdown label{
+    font-weight:700
+}
+.woocommerce div.product form.cart .pyp_custom_dropdown select{
+    max-width:100%;
+    min-width:75%;
+    display:inline-block;
+    margin-right:1em
+}
+.woocommerce div.product form.cart .pyp_custom_dropdown td.label{
+    padding-right:1em
+}

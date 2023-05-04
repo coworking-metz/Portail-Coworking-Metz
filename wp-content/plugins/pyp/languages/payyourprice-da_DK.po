@@ -1,0 +1,536 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: payyourprice\n"
+"POT-Creation-Date: 2018-05-28 17:49+0530\n"
+"PO-Revision-Date: 2018-05-28 17:49+0530\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: da_DK\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.1\n"
+"X-Poedit-KeywordsList: _;__;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#: ../includes/class-pyp-product-settings.php:41
+#: ../includes/tabs/class-pyp-settings-tab.php:492
+msgid "Enable Pay Your Price"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:42
+msgid ""
+"Enable Pay Your Price if you want users to pay their own price for this "
+"product"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:44
+#: ../includes/class-pyp-product-settings.php:125
+#: ../includes/tabs/class-pyp-settings-tab.php:502
+msgid "Choose Option"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:45
+#: ../includes/class-pyp-product-settings.php:126
+#: ../includes/tabs/class-pyp-settings-tab.php:503
+msgid "Enable"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:46
+#: ../includes/class-pyp-product-settings.php:127
+#: ../includes/tabs/class-pyp-settings-tab.php:504
+msgid "Disable"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:53
+msgid "Input Field Type"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:54
+#: ../includes/class-pyp-product-settings.php:136
+msgid "Select input field type"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:56
+#: ../includes/class-pyp-product-settings.php:138
+msgid "Number (or) Text Field (Default)"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:57
+#: ../includes/class-pyp-product-settings.php:139
+msgid "Text Field"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:58
+#: ../includes/class-pyp-product-settings.php:140
+msgid "Button"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:59
+#: ../includes/class-pyp-product-settings.php:141
+msgid "Dropdown"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:60
+#: ../includes/class-pyp-product-settings.php:142
+msgid "Button & Text"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:68
+#: ../includes/class-pyp-product-settings.php:151
+msgid "comma seperated values"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:69
+msgid "Amount ("
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:75
+msgid "Minimum Price ("
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:81
+#: ../includes/tabs/class-pyp-settings-tab.php:520
+msgid "Hide Minimum Price"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:88
+msgid "Recommended Price ("
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:94
+msgid "Maximum Price ("
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:100
+#: ../includes/tabs/class-pyp-settings-tab.php:552
+msgid "Hide Maximum Price"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:122
+msgid "Enable Pay Your Price:"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:135
+msgid "Input Field Type:"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:152
+msgid "Amount: ("
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:157
+msgid "Minimum Price:("
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:159
+msgid "Please Enter Minimum Price"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:166
+msgid "Hide Minimum Price:"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:170
+#: ../includes/class-pyp-product-settings.php:199
+#: ../includes/tabs/class-pyp-settings-tab.php:141
+#: ../includes/tabs/class-pyp-settings-tab.php:166
+msgid "Show"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:171
+#: ../includes/class-pyp-product-settings.php:200
+#: ../includes/tabs/class-pyp-settings-tab.php:142
+#: ../includes/tabs/class-pyp-settings-tab.php:167
+msgid "Hide"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:177
+msgid "Recommended Price:("
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:180
+msgid "Please Enter Recommended Price"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:186
+msgid "Maximum Price:("
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:189
+msgid "Please Enter Maximum Price"
+msgstr ""
+
+#: ../includes/class-pyp-product-settings.php:195
+msgid "Hide Maximum Price:"
+msgstr ""
+
+#: ../includes/gdpr/class-pyp-privacy.php:42
+msgid "WooCommerce Pay Your Price"
+msgstr ""
+
+#: ../includes/gdpr/class-pyp-privacy.php:50
+msgid ""
+"This includes the basics of what personal data your store may be collecting, "
+"storing and sharing. Depending on what settings are enabled and which "
+"additional plugins are used, the specific information shared by your store "
+"will vary."
+msgstr ""
+
+#: ../includes/gdpr/class-pyp-privacy.php:53
+msgid "WHAT THE PLUGIN DOES"
+msgstr ""
+
+#: ../includes/gdpr/class-pyp-privacy.php:54
+msgid ""
+"This plugin allows the users to purchase a product by paying the price they "
+"wish."
+msgstr ""
+
+#: ../includes/gdpr/class-pyp-privacy.php:55
+msgid "WHAT WE COLLECT AND STORE"
+msgstr ""
+
+#: ../includes/gdpr/class-pyp-privacy.php:56
+msgid "This Plugin does not store any Personal Information from the user."
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:35
+msgid "Pay Your Price"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:92
+msgid "Single Product Page Label"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:98
+msgid "Minimum Price Label"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:99
+msgid "Please Enter Minimum Price Label for Product Page"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:109
+msgid "Maximum Price Label"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:110
+msgid "Please Enter Maximum Price Label for Product Page"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:120
+#: ../includes/tabs/class-pyp-settings-tab.php:199
+msgid "Pay Your Price Label"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:121
+#: ../includes/tabs/class-pyp-settings-tab.php:200
+msgid "Please Enter Pay Your Price Label"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:131
+msgid "Label for Predefined Buttons Show/Hide"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:132
+msgid "Show or Hide the Caption for Predefined Buttons"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:146
+msgid "Predefined Buttons Label"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:147
+msgid ""
+"Change Predefined Buttons Caption in Single Product Page by your Custom Words"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:157
+msgid "Amount You Wish to Contribute Label Show/Hide"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:158
+msgid "Show or Hide the Label for Amount You Wish to Contribute"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:171
+msgid "Predefined Buttons & Editable Texbox Label Line1"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:181
+msgid "Predefined Buttons & Editable Texbox Label Line2"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:182
+msgid ""
+"Change the Amount you Wish to Contribute Label in Single Product Page by "
+"your Custom Words"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:193
+msgid "Shop Page Label"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:211
+msgid "Button Settings"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:217
+msgid "Button color "
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:218
+msgid "Please enter the Button color"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:230
+msgid "Button Text color "
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:231
+msgid "Please enter the Button Text color"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:243
+msgid "Selected Button color "
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:244
+msgid "Please enter the Selected Button color"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:256
+msgid "Selected Button Text color "
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:257
+msgid "Please enter the Selected Button Text color"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:269
+msgid "Button Shadow"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:270
+msgid ""
+"Button Shadow option will only when you choose Button Selection in Single "
+"Product Page"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:281
+msgid "Error Message Settings"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:287
+msgid "Minimum Price Error Message"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:288
+msgid "Please Enter Minimum Price Error Message"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:298
+msgid "Maximum Price Error Message"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:299
+msgid "Please Enter Maximum Price Error Message"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:309
+msgid "Input Price Error Message"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:310
+msgid "Please Enter your Input Error Message"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:320
+msgid "Empty Field Error Message"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:321
+msgid "Please Enter Empty Field Error Message"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:331
+msgid "Button Error Message"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:332
+msgid ""
+"Button Error Message works only when you choose Button Type from Single "
+"Product Page, It works when user haven't select any amount in frontend"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:342
+msgid "Display Error Message on"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:343
+msgid "This Controls where the Error Message should be Displayed"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:352
+msgid "Above Price Text Box"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:353
+msgid "Below Price Text Box"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:358
+msgid "Color Selection"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:359
+msgid "This Controls what Color Selection you want"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:368
+msgid "Default Color"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:369
+msgid "Custom Color"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:374
+msgid "Error Message Color"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:375
+msgid "This Controls how the Error Message is appear click to change the color"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:386
+msgid "Single Product Page"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:392
+msgid "After Add to Cart Redirect To"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:402
+msgid "Show/Hide Regular/Sale Price in Product Page"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:414
+msgid "Add to Cart Button Settings"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:420
+msgid "Enable Custom Add to Cart Button Caption"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:430
+msgid "Add to Cart Button Caption for Single Product"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:431
+msgid "Change the Caption for Add to Cart in Single Product Page"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:441
+#: ../includes/tabs/class-pyp-settings-tab.php:447
+msgid "Custom CSS"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:448
+msgid "Customize Pay Your Price Fields using Custom CSS"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:459
+msgid "Update Setting For Existing Products"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:461
+msgid "Here you can update the following options for Existing Products"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:465
+msgid "Select Products"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:466
+#: ../includes/tabs/class-pyp-settings-tab.php:493
+msgid "Enable/Disable Product Selection in Pay Your Price"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:475
+msgid "All Products"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:476
+msgid "Selected Products"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:481
+#: ../includes/tabs/class-pyp-settings-tab.php:628
+msgid "Select Particular Products"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:483
+msgid "Select Particular Products in Pay Your Price"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:509
+msgid "Minimum Price("
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:510
+msgid "Please Enter Your Minimum Price"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:530
+msgid "Recommended Price("
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:531
+msgid "Please Enter Your Recommended Price"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:541
+msgid "Maximum Price("
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:542
+msgid "Please Enter Your Maximum Price"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:565
+msgid "Troubleshoot"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:571
+msgid "Load Template"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:572
+msgid ""
+"Troubleshooting the Problem by change the Option to load Template Files from "
+"Various Places"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:583
+msgid "Form Input type"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:594
+msgid "Page Reloading after Bulk Update for Existing Products"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:615
+msgid "Save and Update"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:617
+msgid "Updated Successfully"
+msgstr ""
+
+#: ../includes/tabs/class-pyp-settings-tab.php:634
+msgid "Search for a product&hellip;"
+msgstr ""

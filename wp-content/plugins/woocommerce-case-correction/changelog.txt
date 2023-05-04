@@ -1,0 +1,7 @@
+*** WooCommerce Customer Name & Address Case Correction ***
+
+2013.12.11 - version 1.1
+ * Feature added where the plugin now case corrects the shipping & billing fields, as well as company fields.
+
+2013.11.21 - version 1.0
+ * Initial release!
