@@ -5,3 +5,4 @@ if (file_exists('/home/sabr8669/htdocs/coworking-metz.fr/wp-content/plugins/word
 	define("WFWAF_LOG_PATH", '/home/sabr8669/htdocs/coworking-metz.fr/wp-content/wflogs/');
 	include_once '/home/sabr8669/htdocs/coworking-metz.fr/wp-content/plugins/wordfence/waf/bootstrap.php';
 }
+?>

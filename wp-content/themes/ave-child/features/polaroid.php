@@ -47,7 +47,7 @@ function picture_user_presence() {
       $imgPath = $image_url ? $image_url : 'https://www.coworking-metz.fr/wp-content/uploads/2022/07/pouleinvisible-polaroid.jpg';
 
       echo '<div class="animated-image' . $wanted_membership . $wanted_tickets . '" style="transform: rotate(' . $random_1 . 'deg); animation-delay: '. $random_2 . 'ms;">';
-      echo '<div class="test">' . $membership_Ok . '</div>';
+//      echo '<div class="test">' . $membership_Ok . '</div>';
       echo '<img src="' . $imgPath . '" />';
       echo '</div>';
 
