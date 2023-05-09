@@ -1,6 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/wordpress
 # Edit at https://www.toptal.com/developers/gitignore?templates=wordpress
 
+error_log
 63A6559D0765D4908C8479B7071F7184.txt
 .user.ini
 backwpup_readme.txt
