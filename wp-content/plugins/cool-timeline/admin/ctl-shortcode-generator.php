@@ -50,7 +50,7 @@ if (!class_exists('CSF_free_shortcode_generator')) {
             echo '<style>
         span.dashicon.dashicons.dashicons-ctl-custom-icon:before {
         content:"";
-        background: url(' . COOL_TIMELINE_PLUGIN_URL . 'assets/images/timeline-icon2-32x32.png);
+        background: url(' . CTL_PLUGIN_URL . 'assets/images/timeline-icon2-32x32.png);
         background-size: contain;
         background-repeat: no-repeat;
         height: 20px;
@@ -59,7 +59,7 @@ if (!class_exists('CSF_free_shortcode_generator')) {
         }
        #wp-content-wrap a[data-modal-id="ctl_timeline_shortcode"]:before {
         content: "";
-        background: url(' . COOL_TIMELINE_PLUGIN_URL . 'assets/images/cool-timeline-icon.svg);
+        background: url(' . CTL_PLUGIN_URL . 'assets/images/cool-timeline-icon.svg);
         background-size: contain;
         background-repeat: no-repeat;
         height: 17px;
@@ -93,6 +93,31 @@ if (!class_exists('CSF_free_shortcode_generator')) {
         {
             $id = isset($GLOBALS['_GET']['post'])?$GLOBALS['_GET']['post']:'';
             $post_type = isset($GLOBALS['_GET']['post_type'])?$GLOBALS['_GET']['post_type']:get_post_type($id);
+
+
+            // change block name if older block exists in current page condition start
+            $block_name='ctl-gutenberg-block';
+            if( $id != '' ){
+                $ctl_post_id=(int)$id;
+                $all_blocks=[];
+                $post_content = get_post( $ctl_post_id );
+                if( $post_content != null ){
+                    $parse_data=parse_blocks( $post_content->post_content );
+                    foreach( $parse_data as $parse ){
+                        if( $parse['blockName'] != null ){
+                            array_push( $all_blocks,$parse['blockName'] );
+                        };
+                    };
+                };
+    
+                if( !in_array( "csf/ctl-timeline-shortcode",$all_blocks ) ){
+                    $block_name='ctl-gutenberg-block';
+                }else{
+                    $block_name='ctl_timeline_shortcode';
+                };
+            }
+            // change block name if older block exists in current page condition end
+
             if($post_type!=='page' && $post_type!=='post' && $post_type!='') { 
                 return;
             }
@@ -108,11 +133,13 @@ if (!class_exists('CSF_free_shortcode_generator')) {
                     'button_title' => 'Add Shortcode',
                     'insert_title' => 'Insert shortcode',
                     'gutenberg' => array(
+                        'block_name'=>$block_name,
                         'title' => 'Cool Timeline Shortcode Generator',
                         'icon' => 'ctl-custom-icon',
                         'description' => 'Cool Timeline Shortcode Generator Block.',
                         'category' => 'widgets',
                         'keywords' => array('shortcode', 'ctl','cooltimeline','timeline'),
+                        'previewImage' => CTL_PLUGIN_URL.'includes/cool-timeline-block/images/timeline.27d3f3c7.png',
                     ),
                 ));
 

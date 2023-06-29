@@ -275,26 +275,19 @@ ob_start(); ?>
 			border-radius: 25px;
 			line-height: 1.4;
 			box-shadow: 0 1px 1px 0 hsla(0, 0%, 0%, 0.1);
-			font-size: 
-			<?php
-			if ( isset( $login_page['login_msg_fontsize'] ) ) {
-							echo esc_attr( $login_page['login_msg_fontsize'] );
-			} else {
-				echo 16;
-			}
-			?>
-						px !important;
+			<?php if ( $login_page['login_msg_fontsize'] !== '' ) { ?>
+			font-size: <?php echo esc_attr( $login_page['login_msg_fontsize'] ); ?>px !important;
+			<?php } ?>
 			text-align: center;
 			font-weight: 500;
 			color: 
 			<?php
 			if ( isset( $login_page['login_msg_font_color'] ) ) {
-						echo esc_attr( $login_page['login_msg_font_color'] );
+				echo esc_attr( $login_page['login_msg_font_color'] );
 			} else {
 				echo esc_attr( '#000' );
 			}
-			?>
-					 !important;
+			?>  !important;
 		}
 <?php
 $css .= ob_get_clean();

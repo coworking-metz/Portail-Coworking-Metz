@@ -1,11 +1,11 @@
 <?php
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
 	exit;
 }
-$login_Version = unserialize( get_option( 'Admin_custome_login_Version' ) );
+$login_Version = unserialize(get_option('Admin_custome_login_Version'));
 
-if ( ! isset( $login_Version['Version'] ) ) :
+if (!isset($login_Version['Version'])) :
 
 
 	$login_Version = serialize(
@@ -13,7 +13,7 @@ if ( ! isset( $login_Version['Version'] ) ) :
 			'Version' => $plugin_data['Version'],
 		)
 	);
-	add_option( 'Admin_custome_login_Version', $login_Version );
+	add_option('Admin_custome_login_Version', $login_Version);
 
 
 	$dashboard_page = serialize(
@@ -21,7 +21,7 @@ if ( ! isset( $login_Version['Version'] ) ) :
 			'dashboard_status' => 'disable',
 		)
 	);
-	add_option( 'Admin_custome_login_dashboard', $dashboard_page );
+	add_option('Admin_custome_login_dashboard', $dashboard_page);
 
 	$top_page = serialize(
 		array(
@@ -36,7 +36,7 @@ if ( ! isset( $login_Version['Version'] ) ) :
 			'top_bg_slider_animation' => 'slider-style1',
 		)
 	);
-	add_option( 'Admin_custome_login_top', $top_page );
+	add_option('Admin_custome_login_top', $top_page);
 
 	$login_page = serialize(
 		array(
@@ -75,7 +75,7 @@ if ( ! isset( $login_Version['Version'] ) ) :
 			'label_loginButton'              => 'Log In',
 		)
 	);
-	add_option( 'Admin_custome_login_login', $login_page );
+	add_option('Admin_custome_login_login', $login_page);
 	$text_and_color_page = serialize(
 		array(
 			'heading_font_color'      => '#ffffff',
@@ -98,7 +98,7 @@ if ( ! isset( $login_Version['Version'] ) ) :
 			'password_input_icon'     => 'fa-key',
 		)
 	);
-	add_option( 'Admin_custome_login_text', $text_and_color_page );
+	add_option('Admin_custome_login_text', $text_and_color_page);
 
 	$logo_page = serialize(
 		array(
@@ -109,7 +109,7 @@ if ( ! isset( $login_Version['Version'] ) ) :
 			'logo_url_title' => 'Your Site Name and Info',
 		)
 	);
-	add_option( 'Admin_custome_login_logo', $logo_page );
+	add_option('Admin_custome_login_logo', $logo_page);
 
 	$Social_page = serialize(
 		array(
@@ -135,7 +135,7 @@ if ( ! isset( $login_Version['Version'] ) ) :
 			'social_whatsapp_link'      => '',
 		)
 	);
-	add_option( 'Admin_custome_login_Social', $Social_page );
+	add_option('Admin_custome_login_Social', $Social_page);
 
 	$Slidshow_image = serialize(
 		array(
@@ -153,7 +153,7 @@ if ( ! isset( $login_Version['Version'] ) ) :
 			'Slidshow_image_label_6' => '',
 		)
 	);
-	add_option( 'Admin_custome_login_Slidshow', $Slidshow_image );
+	add_option('Admin_custome_login_Slidshow', $Slidshow_image);
 
 	$g_page = serialize(
 		array(
@@ -162,5 +162,5 @@ if ( ! isset( $login_Version['Version'] ) ) :
 			'login_enable_gcaptcha' => 'no',
 		)
 	);
-	add_option( 'Admin_custome_login_gcaptcha', $g_page );
+	add_option('Admin_custome_login_gcaptcha', $g_page);
 endif;

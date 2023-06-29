@@ -3,7 +3,7 @@ namespace Frontend_Admin\Actions;
 
 use Frontend_Admin\Plugin;
 use Frontend_Admin\Classes\ActionBase;
-use Frontend_Admin\Widgets;
+use Frontend_Admin\Forms\Actions;
 use Elementor\Controls_Manager;
 use ElementorPro\Modules\QueryControl\Module as Query_Module;
 
@@ -144,8 +144,8 @@ if ( ! class_exists( 'ActionPost' ) ) :
 					 'key'               => 'save_to_post',
 					 'field_label_hide'  => 1,
 					 'type'              => 'select',
-					 'instructions'      => __( 'If there is a "Post to Edit" field in the form, these settings will be overwritten.', 'acf-frontend-form-element' ),
-					 'required'          => 0,
+					 'instructions'      => __( 'If there is a Post to Edit field in the form, these settings will be overwritten.', 'acf-frontend-form-element' ),
+					 'required'			 => 0,           
 					 'conditional_logic' => 0,
 					 'choices'           => array(
 						 'edit_post'      => __( 'Edit Post', 'acf-frontend-form-element' ),
@@ -296,6 +296,7 @@ if ( ! class_exists( 'ActionPost' ) ) :
 					}
 
 					global $post;
+
 					if ( $form['post_to_edit'] == 'select_post' ) {
 						if ( ! empty( $form['select_post'] ) ) {
 							$form['post_id'] = $form['select_post'];
@@ -375,13 +376,8 @@ if ( ! class_exists( 'ActionPost' ) ) :
 		public function action_controls( $widget, $step = false, $type = '' ) {
 			if ( ! empty( $widget->form_defaults['save_to_post'] ) ) {
 				$type = $widget->form_defaults['save_to_post'];
-			}
-
-			if ( $step ) {
-				$condition = array(
-					'field_type'         => 'step',
-					'overwrite_settings' => 'true',
-				);
+			}else{
+				$type = 'edit_post';
 			}
 			$args = array(
 				'label'   => __( 'Post', 'acf-frontend-form-element' ),
@@ -391,24 +387,9 @@ if ( ! class_exists( 'ActionPost' ) ) :
 					'new_post'       => __( 'New Post', 'acf-frontend-form-element' ),
 					'duplicate_post' => __( 'Duplicate Post', 'acf-frontend-form-element' ),
 				),
-				'default' => $widget->get_name(),
+				'default' => $type,
 			);
-			if ( $step ) {
-				$condition         = array(
-					'field_type'         => 'step',
-					'overwrite_settings' => 'true',
-				);
-				$args['condition'] = $condition;
-			} else {
-				$condition = array();
-			}
-
-			if ( $type ) {
-				$args = array(
-					'type'    => Controls_Manager::HIDDEN,
-					'default' => $type,
-				);
-			}
+			$condition = array();			
 
 			$widget->add_control( 'save_to_post', $args );
 
@@ -558,11 +539,12 @@ if ( ! class_exists( 'ActionPost' ) ) :
 
 		public function run( $form, $step = false ) {
 			$record = $form['record'];
-			if ( empty( $record['_acf_post'] ) || empty( $record['fields']['post'] ) ) {
+
+			if ( empty( $record['post'] ) || empty( $record['fields']['post'] ) ) {
 				return $form;
 			}
 
-			$post_id = sanitize_text_field( $record['_acf_post'] );
+			$post_id = $record['post'];
 
 			// allow for custom save
 			$post_id = apply_filters( 'acf/pre_save_post', $post_id, $form );
@@ -578,7 +560,7 @@ if ( ! class_exists( 'ActionPost' ) ) :
 
 			switch ( $form['save_to_post'] ) {
 				case 'edit_post':
-					if ( get_post_type( $post_id ) == 'revision' && isset( $record['_acf_status'] ) && $record['_acf_status'] == 'publish' ) {
+					if ( get_post_type( $post_id ) == 'revision' && isset( $record['status'] ) && $record['status'] == 'publish' ) {
 						$revision_id = $post_id;
 						$post_id     = wp_get_post_parent_id( $revision_id );
 						wp_delete_post_revision( $revision_id );
@@ -616,10 +598,14 @@ if ( ! class_exists( 'ActionPost' ) ) :
 					if ( ! isset( $_field['key'] ) ) {
 						continue;
 					}
-					$field = acf_get_field( $_field['key'] );
+					$field = acf_maybe_get_field( $_field['key'] );
 
 					if ( ! $field ) {
-						continue;
+						if( isset( $form['fields'][$_field['key']] ) ){
+							$field = $form['fields'][$_field['key']];
+						}else{
+							continue;
+						}
 					}
 
 					$field_type      = $field['type'];
@@ -633,7 +619,7 @@ if ( ! class_exists( 'ActionPost' ) ) :
 
 					$submit_key = $field_type == 'post_slug' ? 'post_name' : $field_type;
 
-					if ( $field_type == 'post_title' && $field['custom_slug'] ) {
+					if ( 'post_title' == $field_type && ! empty( $field['custom_slug'] ) ) {
 						$post_to_edit['post_name'] = sanitize_title( $field['value'] );
 					}
 
@@ -656,7 +642,7 @@ if ( ! class_exists( 'ActionPost' ) ) :
 				if ( isset( $current_step ) && empty( $form['last_step'] ) && empty( $current_step['overwrite_settings'] ) ) {
 					$post_to_edit['post_status'] = 'auto-draft';
 				} else {
-					if ( isset( $record['_acf_status'] ) && $record['_acf_status'] == 'draft' ) {
+					if ( isset( $record['status'] ) && $record['status'] == 'draft' ) {
 						   $post_to_edit['post_status'] = 'draft';
 					} else {
 						$status = 'draft';
@@ -701,6 +687,8 @@ if ( ! class_exists( 'ActionPost' ) ) :
 				}
 
 				$post_id = wp_insert_post( $post_to_edit );
+				$GLOBALS['admin_form']['record']['post'] = $post_id;
+				$form['record']['post'] = $post_id;
 			} else {
 				$post_id = $post_to_edit['ID'];
 				wp_update_post( $post_to_edit );
@@ -748,7 +736,6 @@ if ( ! class_exists( 'ActionPost' ) ) :
 					acf_update_value( $meta['_input'], $post_id, $meta );
 				}
 			}
-			$form['record']['post'] = $post_id;
 
 			do_action( 'frontend_admin/save_post', $form, $post_id );
 			do_action( 'acf_frontend/save_post', $form, $post_id );

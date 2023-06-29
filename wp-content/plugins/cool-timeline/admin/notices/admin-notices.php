@@ -120,7 +120,7 @@ if (!class_exists('ctl_admin_notices')):
     	 * @return void
     	 */
     	public function ctl_load_script() {    	
-            wp_register_style( 'ctl-feedback-notice-styles', COOL_TIMELINE_PLUGIN_URL.'assets/css/ctl-admin-notices.css',array(),COOL_TIMELINE_CURRENT_VERSION,'all' );
+            wp_register_style( 'ctl-feedback-notice-styles', CTL_PLUGIN_URL.'assets/css/ctl-admin-notices.css',array(),CTL_V,'all' );
             wp_enqueue_style( 'ctl-feedback-notice-styles' );
         }
 
@@ -243,7 +243,6 @@ if (!class_exists('ctl_admin_notices')):
         $already_rated_text=esc_html__( 'I already rated it', 'atlt2' );
         $not_like_it_text=esc_html__( 'Not Interested', 'atlt2' );
         $plugin_link=  $messageObj['review_url'] ;
-        $pro_url=esc_url('https://1.envato.market/ct');
         $review_nonce = wp_create_nonce( $id . '_review_nonce' ); 
         $message="Thanks for using <b>".esc_html($plugin_name)."</b> - WordPress plugin.
         We hope you liked it ! <br/>Please give us a quick rating, it works as a boost for us to keep working on more <a href='https://coolplugins.net' target='_blank'><strong>Cool Plugins</strong></a>!<br/>";
@@ -260,7 +259,6 @@ if (!class_exists('ctl_admin_notices')):
             <li class="love_it"><a href="%5$s" class="like_it_btn button button-primary" target="_new" title="%6$s">%6$s</a></li>
             <li class="already_rated"><a href="javascript:void(0);" class="already_rated_btn button %11$s_dismiss_notice" title="%7$s">%7$s</a></li>  
             <li class="already_rated"><a href="javascript:void(0);" class="already_rated_btn button %11$s_dismiss_notice" title="%10$s">%10$s</a></li>    
-            <li class="buy_pro"><a href="%14$s" class="button" target="_blank">Buy Pro Version - $26</a></li>       
         </ul>
         <div class="clrfix"></div>
         </div>
@@ -299,8 +297,7 @@ if (!class_exists('ctl_admin_notices')):
                 $not_like_it_text,//10
                 $slug, //11
                 $review_nonce, //12
-                $id, //13
-                $pro_url
+                $id //13
         );
         
        }

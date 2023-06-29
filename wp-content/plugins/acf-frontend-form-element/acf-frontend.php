@@ -3,7 +3,7 @@
  * Plugin Name: Frontend Admin
  * Plugin URI: https://wordpress.org/plugins/acf-frontend-form-element/
  * Description: This awesome plugin allows you to easily display admin forms to the frontend of your site so your clients can easily edit content on their own from the frontend.
- * Version:     3.13.10
+ * Version:     3.16.7
  * Author:      Shabti Kaplan
  * Author URI:  https://www.dynamiapps.com/
  * Text Domain: acf-frontend-form-element
@@ -21,7 +21,7 @@ if ( ! function_exists( 'feap_fs' ) ) {
 
 if ( ! class_exists( 'Front_End_Admin' ) ) {
 	if ( ! defined( 'FEA_VERSION' ) ) {
-		define( 'FEA_VERSION', '3.13.10' );
+		define( 'FEA_VERSION', '3.16.7.1' );
 		define( 'FEA_PATH', __FILE__ );
 		define( 'FEA_NAME', plugin_basename( __FILE__ ) );
 		define( 'FEA_URL', plugin_dir_url( __FILE__ ) );

@@ -280,6 +280,34 @@ function feadmin_slug_exists( $post_name ) {
 	}
 }
 
+function feadmin_sanitize_input ( $data = false ) {
+	if( ! $data ) return $data;
+	if( is_array( $data ) ){
+		return feadmin_sanitize_array( $data );
+	}else{
+		return wp_kses_post( $data );
+	}
+}
+function feadmin_sanitize_array ($data = array()) {
+		if (!is_array($data) || !count($data)) {
+		return array();
+	}
+
+	foreach ($data as $k => $v) {
+		if (!is_array($v) && !is_object($v)) {
+			$v = str_replace( [ '<[', ']>' ], [ '{-', '-}' ], $v ); 
+			$v = wp_kses_post($v);
+			$v = str_replace( [ '{-', '-}' ], [ '<[', ']>' ], $v ); 
+			$data[$k] = $v;
+		}
+		if (is_array($v)) {
+			$data[$k] = feadmin_sanitize_array($v);
+		}
+	}
+
+	return $data;
+}
+
 function feadmin_parse_args( $args, $defaults ) {
 	$new_args = (array) $defaults;
 

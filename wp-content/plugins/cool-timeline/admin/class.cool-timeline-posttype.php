@@ -66,7 +66,7 @@ class CoolTimelinePosttypeFree
 		    //'show_in_rest' => true, 
 			'publicly_queryable'  => true,
 			'capability_type'     => 'page',
-			'menu_icon'=>COOL_TIMELINE_PLUGIN_URL.'assets/images/timeline-icon-small.png',
+			'menu_icon'=>CTL_PLUGIN_URL.'assets/images/timeline-icon-small.png',
 		);
 		register_post_type( 'cool_timeline', $args );
 	}

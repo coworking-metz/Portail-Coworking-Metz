@@ -19,7 +19,7 @@ if( class_exists( 'CSF' ) ) {
       'menu_type' =>'submenu',
       'menu_parent' => 'cool-plugins-timeline-addon',
       'menu_capability' => 'manage_options', // The capability needed to view the page 
-      'menu_icon'=>COOL_TIMELINE_PLUGIN_URL.'assets/images/cool-timeline-icon.svg',
+      'menu_icon'=>CTL_PLUGIN_URL.'assets/images/cool-timeline-icon.svg',
       'menu_position' => 6,
       'nav'=>'inline',
       'show_reset_section'=>false,
@@ -313,8 +313,8 @@ if( class_exists( 'CSF' ) ) {
         array(
           'id'=>'advanced-features',
           'type'=>'content',
-          'content'=> '<div class="advance_options" style="text-align:center"><a target="_blank" href="https://1.envato.market/ct">
-          <img src="'.COOL_TIMELINE_PLUGIN_URL.'assets/images/pro-features-list.png" ></a></div>',
+          'content'=> '<div class="advance_options" style="text-align:center"><a target="_blank" href="'.CTL_BUY_PRO.'">
+          <img src="'.CTL_PLUGIN_URL.'assets/images/pro-features-list.png" ></a></div>',
           
         ),
   

@@ -17,14 +17,4 @@ jQuery('document').ready(function($){
 		});
 			}
 });
-	
-	 $(".cool_timeline").find("a[class^='ctl_prettyPhoto']").prettyPhoto({
-	 social_tools: false,
-	 show_title:false,
-	});
-	$(".cool_timeline_horizontal").find("a[ref^='prettyPhoto']").prettyPhoto({
-	 social_tools: false,
-	 show_title:false,
-	}); 
-
 });

@@ -40,10 +40,10 @@ if ( ! class_exists( 'recaptcha' ) ) :
 				'secret_key_v3' => $secret_key_v3,
 			);
 
-			add_action( 'frontend_admin/form_assets/type=recaptcha', array( $this, 'form_assets' ), 10, 2 );
+			add_action( 'frontend_admin/form_assets/type=recaptcha', array( $this, 'form_assets' ) );
 		}
 
-		function form_assets( $field, $form ) {
+		function form_assets( $field ) {
 			if ( ! empty( $field['version'] ) && $field['version'] === 'v3' ) {
 				$global_site_key = get_option( 'frontend_admin_google_recaptcha_site' );
 				$global_site_key = get_option( 'frontend_admin_recaptcha_site_v3', $global_site_key );

@@ -39,7 +39,7 @@ class Frontend_Forms_UI {
 		acf_disable_filters();
 
 		if( empty( $_POST['form'] ) ) return $form_id;
-		$form = wp_kses_post_deep( $_POST['form'] );
+		$form = feadmin_sanitize_array( $_POST['form'] );
 
 		if ( isset( $form['admin_form_type'] ) ) {
 			update_post_meta( $form_id, 'admin_form_type', $form['admin_form_type'] );
@@ -185,7 +185,7 @@ class Frontend_Forms_UI {
 		$screen = get_current_screen();
 
 		$screen = get_current_screen();
-		if ( isset( $post->post_type ) && 'admin_form' != $post->post_type ) {
+		if ( empty( $post->post_type ) || 'admin_form' != $post->post_type ) {
 			return;
 		}
 
@@ -315,6 +315,7 @@ class Frontend_Forms_UI {
 		$fields_query = get_posts( $args );
 
 		if ( $fields_query ) {
+
 			foreach ( $fields_query as $field ) {
 				$form_fields[] = acf_get_field( $field );
 			}
@@ -336,7 +337,7 @@ class Frontend_Forms_UI {
 			'parent' => 0,
 		);
 		
-		acf_get_view( 'field-group-fields', $view );
+		acf_get_view( 'acf-field-group/fields', $view );
 
 	}
 
@@ -457,14 +458,14 @@ class Frontend_Forms_UI {
 	 */
 	public function admin_enqueue_scripts() {
 
-		// no autosave.
-		wp_dequeue_script( 'autosave' );
-
 		// custom scripts.
-		wp_enqueue_style( 'acf-field-group' );
+		wp_enqueue_script( 'acf-internal-post-type' );
+
 		wp_enqueue_style( 'acf-global' );
-		wp_enqueue_script( 'fea-form-builder' );
+		wp_dequeue_script( 'autosave' );
+		wp_enqueue_style( 'acf-field-group' );
 		wp_enqueue_script( 'acf-field-group' );
+		wp_enqueue_script( 'fea-form-builder' );
 
 		// localize text.
 		acf_localize_text(
@@ -509,6 +510,8 @@ class Frontend_Forms_UI {
 		acf_localize_data(
 			array(
 				'fieldTypes' => acf_get_field_types_info(),
+				'is_pro' => true,
+				'PROFieldTypes'       => acf_get_pro_field_types(),
 			)
 		);
 
@@ -596,7 +599,7 @@ class Frontend_Forms_UI {
 		global $post;
 
 		if ( isset( $post->post_type ) && 'admin_form' == $post->post_type && isset($_GET['action'])  && $_GET['action'] === 'edit' ) {
-			$classes .= ' acf-admin-single-field-group post-type-acf-field-group';
+			$classes .= ' acf-admin-page acf-admin-single-field-group post-type-acf-field-group';
 		}
 		return $classes;
 	}

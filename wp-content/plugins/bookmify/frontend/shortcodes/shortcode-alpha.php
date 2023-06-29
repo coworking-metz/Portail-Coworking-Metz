@@ -502,7 +502,6 @@ class BookmifyAlpha{
 	public function ajaxQueryGetTimeSlotsOfYear(){
 		global $wpdb;
 		$isAjaxCall 			= false;
-		
 		if (1) {
 			$isAjaxCall				= true;
 			

@@ -1186,7 +1186,7 @@ if ( ! class_exists( 'related_items' ) ) :
 			}
 
 			$args = array(
-				'post_type'      => array( 'admin_form', 'acf-field-group' ),
+				'post_type'      => array( 'acf-field-group' ),
 				'posts_per_page' => '-1',
 				'post_status'    => 'any',
 			);

@@ -936,3 +936,16 @@ html[dir="rtl"] .fea-uploads .fea-uploads-side-info img{
     padding-right: 0;
     width: auto;
 }
+
+.fea-single-plan > a{
+	display: none;
+	width: 10px;
+	height: 10px;
+}
+.fea-single-plan:hover > a{
+	display: inline-block;
+}
+
+.fea-plan{
+	margin-bottom: 10px;
+}

@@ -27,9 +27,15 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  **/
 
-global $capsman, $cme_cap_helper, $current_user;
+global $capsman, $cme_cap_helper, $current_user, $sidebar_metabox_state;
 
 do_action('publishpress-caps_manager-load');
+
+$sidebar_metabox_state = get_user_meta($current_user->ID, 'ppc_sidebar_metabox_state', true);
+if ($sidebar_metabox_state == '' || !is_array($sidebar_metabox_state)) {
+    $sidebar_metabox_state = [];
+    $sidebar_metabox_state['how_to_user_capabilities'] = 'opened';
+}
 
 $roles = $this->roles;
 $default = $this->current;
@@ -51,6 +57,14 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 	$pp_metagroup_caps = $pp_ui->get_metagroup_caps( $default );
 } else {
 	$pp_metagroup_caps = array();
+}
+
+if (defined('PUBLISHPRESS_REVISIONS_VERSION') && function_exists('rvy_get_option')) {
+    $pp_revisions_copy   = rvy_get_option("copy_posts_capability");
+    $pp_revisions_revise = rvy_get_option("revise_posts_capability");
+} else {
+    $pp_revisions_copy   = false;
+    $pp_revisions_revise = false;
 }
 ?>
 <div class="wrap publishpress-caps-manage pressshack-admin-wrapper">
@@ -178,6 +192,13 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
                 $cap_properties['list']['type'] = ['list_posts', 'list_others_posts', 'list_published_posts', 'list_private_posts'];
             }
 
+            if ($pp_revisions_copy) {
+                $cap_properties['copy']['type'] = ['copy_posts', 'copy_others_posts', 'copy_published_posts', 'copy_private_posts'];
+            }
+
+            if ($pp_revisions_revise) {
+                $cap_properties['revise']['type'] = ['revise_posts', 'revise_others_posts', 'revise_published_posts', 'revise_private_posts'];
+            }
 
 			$cap_properties['read']['type'] = array( 'read_private_posts' );
 
@@ -195,6 +216,14 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 
             if (defined('PRESSPERMIT_ACTIVE')) {
                 $cap_type_names['list'] = __('Listing', 'capsman-enhanced');
+            }
+
+            if ($pp_revisions_copy) {
+                $cap_type_names['copy'] = __('Copy', 'capsman-enhanced');
+            }
+
+            if ($pp_revisions_revise) {
+                $cap_type_names['revise'] = __('Revise', 'capsman-enhanced');
             }
 
 			$cap_tips = array(
@@ -217,6 +246,14 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 
             if (defined('PRESSPERMIT_ACTIVE')) {
                 $default_caps = array_merge($default_caps, ['list_posts', 'list_others_posts', 'list_published_posts', 'list_private_posts', 'list_pages', 'list_others_pages', 'list_published_pages', 'list_private_pages']);
+            }
+
+            if ($pp_revisions_copy) {
+                $default_caps = array_merge($default_caps, ['copy_posts', 'copy_others_posts', 'copy_pages', 'copy_others_pages']);
+            }
+
+            if ($pp_revisions_revise) {
+                $default_caps = array_merge($default_caps, ['revise_posts', 'revise_others_posts', 'revise_pages', 'revise_others_pages']);
             }
 
 			$type_caps = array();
@@ -355,6 +392,23 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
                         ];
                         $grouped_caps_lists = array_merge($grouped_caps_lists, $grouped_caps['Plugins']);
 
+                        if (is_multisite()) {
+                            //add multisite caps
+							$grouped_caps['Multisite'] = [
+								'create_sites',
+                                'delete_sites',
+                                'manage_network',
+                                'manage_sites',
+                                'manage_network_users',
+                                'manage_network_plugins',
+                                'manage_network_themes',
+                                'manage_network_options',
+                                'upgrade_network',
+                                'setup_network',
+							];
+                            $grouped_caps_lists = array_merge($grouped_caps_lists, $grouped_caps['Multisite']);
+                        }
+                        
 						$grouped_caps = apply_filters('cme_grouped_capabilities', $grouped_caps);
 
 						foreach($grouped_caps as $grouped_title => $__grouped_caps) {
@@ -677,6 +731,12 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 								$prop = str_replace( '_posts', '', $prop );
 								$prop = str_replace( '_pages', '', $prop );
 								$prop = str_replace( '_terms', '', $prop );
+
+								if (in_array($prop, ['copy_published', 'copy_private', 'revise_published', 'revise_private'])) {
+									echo "<th></th>";
+									continue;
+								}
+
 								$tip = ( isset( $cap_tips[$prop] ) ) ? $cap_tips[$prop] : '';
 								$th_class = ( 'taxonomy' == $item_type ) ? 'term-cap' : 'post-cap';
 								echo "<th style='text-align:center;' title='" . esc_attr($tip) . "' class='" . esc_attr($th_class) . "'>";
@@ -693,6 +753,14 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 							foreach( $defined[$item_type] as $key => $type_obj ) {
 								if ( in_array( $key, $unfiltered[$item_type] ) )
 									continue;
+
+								if (in_array($cap_type, ['copy', 'revise'])) {
+									global $revisionary;
+									
+									if (!empty($revisionary) && !empty($revisionary->enabled_post_types) && empty($revisionary->enabled_post_types[$key])) {
+										continue;
+									}
+								}
 
 								$row = "<tr class='cme_type_" . esc_attr($key) . "'>";
 
@@ -715,6 +783,26 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
                                         }
                                         if (isset($type_obj->cap->edit_private_posts) && !isset($type_obj->cap->list_private_posts)) {
                                             $type_obj->cap->list_private_posts = str_replace('edit_', 'list_', $type_obj->cap->edit_private_posts);
+                                        }
+                                    }
+
+                                    if ($pp_revisions_copy) {
+                                        //add copy capabilities
+                                        if (isset($type_obj->cap->edit_posts) && !isset($type_obj->cap->copy_posts)) {
+                                            $type_obj->cap->copy_posts = str_replace('edit_', 'copy_', $type_obj->cap->edit_posts);
+                                        }
+                                        if (isset($type_obj->cap->edit_others_posts) && !isset($type_obj->cap->copy_others_posts)) {
+                                            $type_obj->cap->copy_others_posts = str_replace('edit_', 'copy_', $type_obj->cap->edit_others_posts);
+                                        }
+                                    }
+                        
+                                    if ($pp_revisions_revise) {
+                                        //add revise capabilities
+                                        if (isset($type_obj->cap->edit_posts) && !isset($type_obj->cap->revise_posts)) {
+                                            $type_obj->cap->revise_posts = str_replace('edit_', 'revise_', $type_obj->cap->edit_posts);
+                                        }
+                                        if (isset($type_obj->cap->edit_others_posts) && !isset($type_obj->cap->revise_others_posts)) {
+                                            $type_obj->cap->revise_others_posts = str_replace('edit_', 'revise_', $type_obj->cap->edit_others_posts);
                                         }
                                     }
 
@@ -759,6 +847,7 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 												|| $type_obj->cap->$prop == str_replace( '_posts', "_" . _cme_get_plural($type_obj->name, $type_obj), $prop )
 												|| $type_obj->cap->$prop == str_replace( '_pages', "_" . _cme_get_plural($type_obj->name, $type_obj), $prop )
 												)
+                                            && (!in_array($type_obj->cap->$prop, $grouped_caps_lists)) //capabilitiy not enforced in $grouped_caps_lists
 											) {
 												// only present these term caps up top if we are ensuring that they get enforced separately from manage_terms
 												if ( in_array( $prop, array( 'edit_terms', 'delete_terms', 'assign_terms' ) ) && ( ! in_array( $type_obj->name, cme_get_detailed_taxonomies() ) || defined( 'OLD_PRESSPERMIT_ACTIVE' ) ) ) {
@@ -776,26 +865,56 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 													$td_classes []='cm-has-via-pp';
 
 												if ( $is_administrator || current_user_can($cap_name) ) {
+                                                    $cap_title = '';
 													if ( ! empty($pp_metagroup_caps[$cap_name]) ) {
-														$cap_title = sprintf(__( '%s: assigned by Permission Group', 'capsman-enhanced' ), esc_attr($cap_name) );
+														$tool_tip = sprintf(__( '%s: assigned by Permission Group', 'capsman-enhanced' ), '<strong>' . $cap_name . '</strong>' );
 													} else {
-														$cap_title = esc_attr($cap_name);
+														$tool_tip = sprintf(__( 'This capability is %s', 'capsman-enhanced' ), '<strong>' . $cap_name . '</strong>' );
 													}
 
-													$checkbox = '<input type="checkbox" title="' . esc_attr($cap_title) . '" name="caps[' . esc_attr($cap_name) . ']" autocomplete="off" value="1" ' . checked(1, ! empty($rcaps[$cap_name]), false ) . ' />';
+                                                    $checkbox = '<div class="ppc-tool-tip disabled"><input type="checkbox" name="caps[' . esc_attr($cap_name) . ']" autocomplete="off" value="1" ' . checked(1, ! empty($rcaps[$cap_name]), false ) . ' />
+                                                        <div class="tool-tip-text">
+                                                            <p>'. $tool_tip .'</p>
+                                                            <i></i>
+                                                        </div>
+                                                    </div>';
 
 													$type_caps [$cap_name] = true;
 													$display_row = true;
 													$any_caps = true;
 												}
 											} else {
-												$cap_title = sprintf( __( 'shared capability: %s', 'capsman-enhanced' ), esc_attr( $type_obj->cap->$prop ) );
+
+												// only present these term caps up top if we are ensuring that they get enforced separately from manage_terms
+												if ( in_array( $prop, array( 'edit_terms', 'delete_terms', 'assign_terms' ) ) && ( ! in_array( $type_obj->name, cme_get_detailed_taxonomies() ) || defined( 'OLD_PRESSPERMIT_ACTIVE' ) ) ) {
+													continue;
+												}
+                                                
+                                                $display_row = true;
+                                                $cap_name = sanitize_key($type_obj->cap->$prop);
+												$cap_title = '';
+                                                $tool_tip  = sprintf( __( 'This capability is controlled by %s Use the sidebar settings to allow this to be controlled independently.', 'capsman-enhanced' ), '<strong>' . $cap_name . '</strong>.<br /><br />' );
+
+                                                $checkbox = '<div class="ppc-tool-tip disabled"><input disabled class="disabled" type="checkbox" ' . checked(1, ! empty($rcaps[$cap_name]), false ) . ' />
+                                                    <div class="tool-tip-text">
+                                                        <p>'. $tool_tip .'</p>
+                                                        <i></i>
+                                                    </div>
+                                                </div>';
 											}
 
 											if ( isset($rcaps[$cap_name]) && empty($rcaps[$cap_name]) ) {
 												$td_classes []= "cap-neg";
 											}
 										} else {
+                                            $tool_tip  =__( 'This capability is not available for this post type.', 'capsman-enhanced');
+
+                                            $checkbox = '<div class="ppc-tool-tip disabled">&nbsp; &nbsp; &nbsp; &nbsp;
+                                                <div class="tool-tip-text">
+                                                    <p>'. $tool_tip .'</p>
+                                                    <i></i>
+                                                </div>
+                                            </div>';
 											$td_classes []= "cap-unreg";
 										}
 
@@ -1542,6 +1661,7 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 			$banners = new PublishPress\WordPressBanners\BannersMain;
             
             $banner_messages = [];
+            $banner_messages[] = esc_html__('Capabilities allows you change the permissions for any user role.', 'capsman-enhanced');
             $banner_messages[] = sprintf(esc_html__('%1$s = Capability granted %2$s', 'capsman-enhanced'), '<table class="pp-capabilities-cb-key"><tr><td class="pp-cap-icon pp-cap-icon-checked"><input type="checkbox" title="'. esc_attr__('usage key', 'capsman-enhanced') .'" checked disabled></td><td>', '</td></tr>');
             $banner_messages[] = sprintf(esc_html__('%1$s = Capability not granted %2$s', 'capsman-enhanced'), '<tr><td class="pp-cap-icon"><input type="checkbox" title="'. esc_attr__('usage key', 'capsman-enhanced') .'" disabled></td><td class="pp-cap-not-checked-definition">', '</td></tr>');
             $banner_messages[] = sprintf(esc_html__('%1$s = Capability denied, even if granted by another role %2$s', 'capsman-enhanced'), '<tr><td class="pp-cap-icon pp-cap-x"><span class="cap-x pp-cap-key" title="'. esc_attr__('usage key', 'capsman-enhanced') .'">X</span></td><td class="cap-x-definition">', '</td></tr></table>');
@@ -1561,42 +1681,101 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
                 }
             }
 
-            $banners->pp_display_banner(
-                '',
-                __('How to use Capabilities', 'capsman-enhanced'),
-                $banner_messages,
-                'https://publishpress.com/knowledge-base/checkboxes/',
-                __('View Documentation', 'capsman-enhanced'),
-                '',
-                'button ppc-checkboxes-documentation-link'
-            );
+            ?>
+            <div class="ppc-sidebar-panel-metabox meta-box-sortables">
+                <?php $meta_box_state = (isset($sidebar_metabox_state['how_to_user_capabilities'])) ? $sidebar_metabox_state['how_to_user_capabilities'] : 'closed';  ?>
+                <div class="postbox ppc-sidebar-panel <?php echo esc_attr($meta_box_state); ?>">
+                    <input 
+                        name="ppc_metabox_state[how_to_user_capabilities]"
+                        type="hidden" 
+                        class="metabox-state" 
+                        value="<?php echo esc_attr($meta_box_state); ?>"
+                    />
+                    <div class="postbox-header">
+                        <h2 class="hndle ui-sortable-handle"><?php esc_html_e('How to use Capabilities', 'capsman-enhanced'); ?></h2>
+                        <div class="handle-actions">
+                            <button type="button" class="handlediv">
+                                <span class="toggle-indicator"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="inside">
+                    <?php 
+                        $banners->pp_display_banner(
+                            '',
+                            '',
+                            $banner_messages,
+                            'https://publishpress.com/knowledge-base/capabilities-screen/',
+                            __('View Documentation', 'capsman-enhanced'),
+                            '',
+                            'button ppc-checkboxes-documentation-link'
+                        );
+                        ?>
+                    </div>
+                </div>
+            </div>
 
-			?>
-			<div class="pp-capabilities-safe-to-use">
-			<?php
-			$banners->pp_display_banner(
-			    '',
-			    __( 'PublishPress Capabilities is safe to use', 'capsman-enhanced' ),
-			    array(
-			        __( 'WordPress stores role capabilities in your database, where they remain even if the plugin is deactivated.', 'capsman-enhanced' ),
-			        __( 'Whenever you use PublishPress Capabilities to save changes, it also creates a backup which you can use to restore a previous configuration.', 'capsman-enhanced' )
-			    ),
-			    admin_url( 'admin.php?page=pp-capabilities-backup' ),
-			    __( 'Go to the Backup feature', 'capsman-enhanced' ),
-				'',
-				'button'
-			);
-			?>
-			</div>
+            <div class="ppc-sidebar-panel-metabox meta-box-sortables">
+                <?php $meta_box_state = (isset($sidebar_metabox_state['capabilities_safe_to_use'])) ? $sidebar_metabox_state['capabilities_safe_to_use'] : 'closed';  ?>
+                <div class="postbox ppc-sidebar-panel <?php echo esc_attr($meta_box_state); ?>">
+                    <input 
+                        name="ppc_metabox_state[capabilities_safe_to_use]"
+                        type="hidden" 
+                        class="metabox-state" 
+                        value="<?php echo esc_attr($meta_box_state); ?>"
+                    />
+                    <div class="postbox-header">
+                        <h2 class="hndle ui-sortable-handle"><?php esc_html_e( 'Capabilities is Safe to Use', 'capsman-enhanced' ); ?></h2>
+                        <div class="handle-actions">
+                            <button type="button" class="handlediv">
+                                <span class="toggle-indicator"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="inside">
+                     <?php
+                            $banners->pp_display_banner(
+                                '',
+                                '',
+                                array(
+                                    __( 'WordPress stores role capabilities in your database, where they remain even if the plugin is deactivated.', 'capsman-enhanced' ),
+                                    __( 'Whenever you use PublishPress Capabilities to save changes, it also creates a backup which you can use to restore a previous configuration.', 'capsman-enhanced' )
+                                ),
+                                admin_url( 'admin.php?page=pp-capabilities-backup' ),
+                                __( 'Go to the Backup feature', 'capsman-enhanced' ),
+                                '',
+                                'button'
+                            );
+                        ?>
+                    </div>
+                </div>
+            </div>
 
-
-			<dl>
-				<dt><?php esc_html_e('Add Capability', 'capsman-enhanced'); ?></dt>
-				<dd style="text-align:center;">
-					<p><input type="text" name="capability-name" class="regular-text" placeholder="<?php echo 'capability_name';?>" /><br />
-					<input type="submit" name="AddCap" value="<?php esc_attr_e('Add to role', 'capsman-enhanced') ?>" class="button" /></p>
-				</dd>
-			</dl>
+            <div class="ppc-sidebar-panel-metabox meta-box-sortables">
+                <?php $meta_box_state = (isset($sidebar_metabox_state['add_capability'])) ? $sidebar_metabox_state['add_capability'] : 'closed';  ?>
+                <div class="postbox ppc-sidebar-panel <?php echo esc_attr($meta_box_state); ?>">
+                    <input 
+                        name="ppc_metabox_state[add_capability]"
+                        type="hidden" 
+                        class="metabox-state" 
+                        value="<?php echo esc_attr($meta_box_state); ?>"
+                    />
+                    <div class="postbox-header">
+                        <h2 class="hndle ui-sortable-handle"><?php esc_html_e('Add a New Capability', 'capsman-enhanced'); ?></h2>
+                        <div class="handle-actions">
+                            <button type="button" class="handlediv">
+                                <span class="toggle-indicator"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="inside" style="text-align:center;">
+                        <p>
+                            <input type="text" name="capability-name" class="regular-text" placeholder="<?php echo 'capability_name';?>" /><br />
+                            <input type="submit" name="AddCap" value="<?php esc_attr_e('Add to role', 'capsman-enhanced') ?>" class="button" />
+                        </p>
+                    </div>
+                </div>
+            </div>
 
 			<?php
 				$pp_ui->pp_types_ui( $defined['type'] );

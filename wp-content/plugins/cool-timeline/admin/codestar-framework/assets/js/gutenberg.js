@@ -20,7 +20,10 @@
     var RawHTML           = element.RawHTML;
     var Button            = components.Button;
 
-    registerBlockType(block.name, {
+    let ctl_blockName=block.gutenberg.block_name=='ctl_timeline_shortcode'?'csf/ctl-timeline-shortcode':'ctl-gutenberg-block/block-'+block.hash;
+    let ctl_class=block.gutenberg.block_name=='ctl_timeline_shortcode'?'csf-shortcode':'ctl-shortcode';
+
+    registerBlockType(ctl_blockName, {
       title: block.gutenberg.title,
       description: block.gutenberg.description,
       icon: block.gutenberg.icon || 'screenoptions',
@@ -30,21 +33,29 @@
         html: false,
         className: false,
         customClassName: false,
+        inserter: false
       },
       attributes: {
         shortcode: {
           string: 'string',
           source: 'text',
+        },
+        isPreview:{
+          type: 'boolean',
+          default: false
         }
       },
       edit: function (props) {
         return (
-          createElement('div', {className: 'csf-shortcode-block'},
+          props.attributes.isPreview ?
+           createElement('img', {src: block.gutenberg.previewImage})
+           :
+          createElement('div', {className: ctl_class+'-block'},
 
             createElement(Button, {
               'data-modal-id': block.modal_id,
               'data-gutenberg-id': block.name,
-              className: 'is-secondary csf-shortcode-button',
+              className: 'is-secondary '+ctl_class+'-button',
               onClick: function () {
                 window.csf_gutenberg_props = props;
               },
@@ -66,7 +77,12 @@
       },
       save: function (props) {
         return createElement(RawHTML, {}, props.attributes.shortcode);
-      }
+      },
+      example: {
+        attributes: {
+          isPreview: true,
+        },
+      },
     });
 
   });

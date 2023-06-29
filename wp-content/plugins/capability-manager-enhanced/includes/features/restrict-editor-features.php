@@ -80,6 +80,7 @@ class PP_Capabilities_Post_Features {
             '#post-preview' => ['label' => esc_html__('Preview', 'capsman-enhanced')],
             '.misc-pub-post-status' => ['label' => esc_html__('Publish Status ', 'capsman-enhanced')],
             '.misc-pub-visibility' => ['label' => esc_html__('Publish Visibility', 'capsman-enhanced')],
+            '#sticky-span' => ['label' => esc_html__('Stick this post to the front page', 'capsman-enhanced')],
             '#passworddiv' => ['label' => esc_html__('Password Protect This Post', 'capsman-enhanced')],
             '#misc-publishing-actions' => ['label' => esc_html__('Publish Actions', 'capsman-enhanced')],
             '.misc-pub-curtime' => ['label' => esc_html__('Publish Schedule', 'capsman-enhanced')],
@@ -327,7 +328,8 @@ class PP_Capabilities_Post_Features {
             wp_register_script(
                 'ppc-features-block-script',
                 plugin_dir_url(CME_FILE) . 'includes/features/features-block-script.js',
-                ['wp-blocks', 'wp-edit-post']
+                ['wp-blocks', 'wp-edit-post'],
+                PUBLISHPRESS_CAPS_VERSION
             );
 
             //localize script
@@ -417,10 +419,11 @@ class PP_Capabilities_Post_Features {
                 'status_visibility' => ['label' => esc_html__('Status & visibility', 'capsman-enhanced'),   'elements' => 'post-status'],
                 'template'          => [
                     'label'       => esc_html__('Template', 'capsman-enhanced'),
-                    'elements'    => 'template'
+                    'elements'    => '.components-panel__row.edit-post-post-template'
                 ],
-                'revisions'         => ['label' => esc_html__('Revisions', 'capsman-enhanced'),             'elements' => '.editor-post-last-revision__title'],
-                'permalink' =>         ['label' => esc_html__('Permalink', 'capsman-enhanced'),             'elements' => 'post-link'],
+                'revisions'         => ['label' => esc_html__('Revisions', 'capsman-enhanced'), 'elements' => '.editor-post-last-revision__title'],
+                'permalink' =>         ['label' => esc_html__('Permalink', 'capsman-enhanced'), 'elements' => '.components-panel__row.edit-post-post-url'],
+                'sticky'    =>         ['label' => esc_html__('Stick to the top of the blog', 'capsman-enhanced'), 'elements' => '.components-panel .components-panel__body.edit-post-post-status .edit-post-post-url + .components-panel__row'],
                 'categories' =>        [
                     'label'        => esc_html__('Categories', 'capsman-enhanced'), 
                     'elements'     => 'taxonomy-panel-category',

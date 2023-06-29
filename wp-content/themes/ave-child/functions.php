@@ -16,7 +16,7 @@ include get_stylesheet_directory() . '/features/coworkers-now.php';
 include get_stylesheet_directory() . '/features/test.php';
 include get_stylesheet_directory() . '/features/top-challenge.php';
 include get_stylesheet_directory() . '/features/chart-day-month.php';
-include get_stylesheet_directory() . '/money.php';
+//include get_stylesheet_directory() . '/money.php';
 
 //coworkers functions
 include get_stylesheet_directory() . '/features/coworker-account/user-balance.php';

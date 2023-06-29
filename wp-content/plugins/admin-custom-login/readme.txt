@@ -3,8 +3,8 @@ Contributors: weblizar
 Donate link: https://www.weblizar.com/
 Tags: admin login page, custom login page, custom admin login, custom login, customize wordpress login page, design wordpress login
 Requires at least: 4.0
-Tested up to: 6.1
-Stable tag: 3.4.7
+Tested up to: 6.2
+Stable tag: 3.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ Customize Your WordPress Login Screen Amazingly - Add Own Logo, Add Social Profi
 
 Admin custom login plugin give ability to customize your WordPress admin login page according to you. Create unique login design or admin login design with admin custom login plugin, Almost every element on login page is customize-able with admin custom login plugin. Design beautiful and eye catching login page styles in few Minutes .
 
-Pugin allows to change background color, background image, background slide show, login form color, login form font size, login form position, add social media icon on form and many more features.
+Plugin allows to change background color, background image, background slide show, login form color, login form font size, login form position, add social media icon on form and many more features.
 
 **Live Demo:** [Admin Custom Login Live Demo](http://demo.weblizar.com/admin-custom-login/wp-admin)
 
@@ -23,21 +23,21 @@ Guys please send us your login screenshots at `lizarweb[at]gmail[dot]com`.
 ### Admin Custom Login Standard Features
 
 * Add Your Own Custom Logo On Login Form
-* Background Colour
+* Background Color
 * Background Image
 * Background Image Slide Show
 * Login Form Position
-* Login Form Colour
-* Login Form Colour Opacity
-* Login Form Font Colour
+* Login Form Color
+* Login Form Color Opacity
+* Login Form Font Color
 * Login Form Font Size
-* Login Form Button Colour
+* Login Form Button Color
 * Login Form Button Size
 * Login Form Background
 * Google reCaptcha
 * Redirect Users like (All Subscribers, Editors, Authors and Contributors) on Custom URL After Login
 * Add Social Media Icons On Login Form
-* Social Media Icon Colour
+* Social Media Icon Color
 * Social Media Icon Size
 * Interactive Plugin Dashboard
 * Customize Login Form Positions
@@ -66,7 +66,7 @@ Guys please send us your login screenshots at `lizarweb[at]gmail[dot]com`.
 
 * **Google Font Integrated:** -Plugin is integrated with 500+ google fonts. So add beautiful font styles fro you form panel.
 
-* **Unlimited Colour Scheme:** -Theere you able update plugin design with unlimited colours. Colour option is available for both login form panel and background
+* **Unlimited Color Scheme:** -Theere you able update plugin design with unlimited colours. Colour option is available for both login form panel and background
 
 #### Admin Custom Login Demo
 
@@ -174,7 +174,7 @@ If any support required then post your query in WordPress [Plugin Support Forum 
 
 = We Need Your Support =
 
-It is really hard to continue development and support for this free plugin without contributions from users like you. If you are enjoying using our Admin Cusrom Login plugin and find it useful, then please consider to write your positive [__Feedback__](http://wordpress.org/support/view/plugin-reviews/admin-custom-login). Your feedback will help us to encourage and support the plugin's continued development and better user support.
+It is really hard to continue development and support for this free plugin without contributions from users like you. If you are enjoying using our Admin custom Login plugin and find it useful, then please consider to write your positive [__Feedback__](http://wordpress.org/support/view/plugin-reviews/admin-custom-login). Your feedback will help us to encourage and support the plugin's continued development and better user support.
 
 = Translators =
 
@@ -187,7 +187,21 @@ Please use WordPress [support forum](http://wordpress.org/support/plugin/admin-c
 
 == Changelog ==
 
-For more information, see [Weblizar](http://www.weblizar.com/)
+For more information, see [Weblizar](http://www.weblizar.com/)  
+
+3.5.1 - [25-03-2023]
+* Tested With Wordpress 6.2
+* Tested PHP 8
+
+3.5.0 - [13-03-2023]
+* Google captcha bug fixed.
+
+3.4.9 - [23-02-2023]
+* Minor bug fixes.
+
+3.4.8 - [07-02-2023]
+* Fixed : Settings issue fixed.
+* Bug Fixed
 
 3.4.7 - [27-12-2022]
 * File bug fixed for unix base system.

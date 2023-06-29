@@ -7,8 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 class UsersFeedback{
 
-	private $plugin_url = COOL_TIMELINE_PLUGIN_URL;
-	private $plugin_version = COOL_TIMELINE_CURRENT_VERSION;
+	private $plugin_url = CTL_PLUGIN_URL;
+	private $plugin_version = CTL_V;
 	private $plugin_name = 'Cool Timeline';
 	private $plugin_slug = 'ctl';
     /*

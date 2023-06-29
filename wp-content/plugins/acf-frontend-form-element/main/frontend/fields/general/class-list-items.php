@@ -96,7 +96,7 @@ if ( ! class_exists( 'list_items' ) ) :
 				<div class="acf-input acf-input-sub">
 					<?php
 
-					acf_get_view( 'field-group-fields', $args );
+					acf_get_view( 'acf-field-group/fields', $args );
 
 					?>
 				</div>

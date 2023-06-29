@@ -2740,3 +2740,15 @@ WHERE pm.meta_key = 'wpsebec7ad8bb2-a807-4bf3-258e-15eabb65b86f'' at line 1 pour
 WHERE pm.meta_key = 'wpsebec7ad8bb2-a807-4bf3-258e-15eabb65b86f'  faite par do_action('wp_ajax_vgse_bulk_edit_formula_big'), WP_Hook->do_action, WP_Hook->apply_filters, WP_Sheet_Editor_Formulas->bulk_execute_formula_ajax, WP_Sheet_Editor_Formulas->bulk_execute_formula, VGSE_Provider_User->delete_meta_key
 [31-Jan-2023 13:48:56 UTC] woocommerce_add_order_item_meta is deprecated since version 3.0.0! Use woocommerce_new_order_item instead.
 [31-Jan-2023 13:48:56 UTC] The woocommerce_add_order_item_meta function is deprecated since version 3.0. Replace with wc_add_order_item_meta.
+[10-May-2023 13:12:05 UTC] PHP Warning:  include(/home/sabr8669/htdocs/coworking-metz.fr/wp-content/themes/ave-child/money.php): failed to open stream: No such file or directory in /home/sabr8669/htdocs/coworking-metz.fr/wp-content/themes/ave-child/functions.php on line 19
+[10-May-2023 13:12:05 UTC] PHP Warning:  include(): Failed opening '/home/sabr8669/htdocs/coworking-metz.fr/wp-content/themes/ave-child/money.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/sabr8669/htdocs/coworking-metz.fr/wp-content/themes/ave-child/functions.php on line 19
+[10-May-2023 13:12:08 UTC] PHP Deprecated:  implode(): Passing glue string after array is deprecated. Swap the parameters in /home/sabr8669/htdocs/coworking-metz.fr/wp-content/plugins/bookmify/inc/googleAPC/src/Google/Service/Resource.php on line 297
+[10-May-2023 13:12:08 UTC] PHP Fatal error:  Uncaught Google_Service_Exception: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+} in /home/sabr8669/htdocs/coworking-metz.fr/wp-content/plugins/bookmify/inc/googleAPC/src/Google/Http/REST.php:118
+Stack trace:
+#0 /home/sabr8669/htdocs/coworking-metz.fr/wp-content/plugins/bookmify/inc/googleAPC/src/Google/Http/REST.php(94): Google_Http_REST::decodeHttpResponse(Object(GuzzleHttp\Psr7\Response), Object(GuzzleHttp\Psr7\Request), 'Google_Service_...')
+#1 /home/sabr8669/htdocs/coworking-metz.fr/wp-content/plugins/bookmify/inc/googleAPC/src/Google/Task/Runner.php(176): Google_Http_REST::doExecute(Object(GuzzleHttp\Client), Object(GuzzleHttp\Psr7\Request), 'Google_Service_...')
+#2 /home/sabr8669/htdocs/coworking-metz.fr/wp-content/plugins/bookmify/inc/googleAPC/src/Google/Http/REST.php(58): Google_Task_Runner->run()
+#3 /home/sabr8669/htdocs/coworking-metz.fr/wp-content/plugins/bookmify/inc/googleAPC/src/Google/Client.php(798): Google_Http_REST::execute(Object(GuzzleHttp\Cli in /home/sabr8669/htdocs/coworking-metz.fr/wp-content/plugins/bookmify/inc/googleAPC/src/Google/Http/REST.php on line 118

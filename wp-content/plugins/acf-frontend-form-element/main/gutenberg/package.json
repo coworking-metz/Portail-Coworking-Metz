@@ -17,6 +17,7 @@
   },
   "description": "",
   "dependencies": {
+    "@automattic/isolated-block-editor": "2.23.1 --save",
     "react": "^18.2.0",
     "react-select": "^5.7.0"
   }

@@ -6,13 +6,18 @@ if ( ! class_exists( 'Field_Base' ) ) :
 	class Field_Base {
 
 		// vars
-		var $name = '',
-		$label    = '',
-		$category = 'basic',
-		$defaults = array(),
-		$l10n     = array(),
-		$public   = true;
-		public $show_in_rest = true;
+		public $name          = '';
+		public $label         = '';
+		public $category      = 'basic';
+		public $description   = '';
+		public $doc_url       = false;
+		public $tutorial_url  = false;
+		public $preview_image = false;
+		public $pro           = false;
+		public $defaults      = array();
+		public $l10n          = array();
+		public $public        = true;
+		public $show_in_rest  = true;
 
 		/*
 		*  __construct

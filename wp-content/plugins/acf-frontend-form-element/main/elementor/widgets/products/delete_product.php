@@ -1,5 +1,5 @@
 <?php
-namespace Frontend_Admin\Widgets;
+namespace Frontend_Admin\Elementor\Widgets;
 
 use Frontend_Admin\Plugin;
 
@@ -254,20 +254,11 @@ class Delete_Product_Widget extends Widget_Base {
 			'custom_url'          => $settings['redirect_after_delete']['url'],
 		);
 
-		if ( feadmin_edit_mode() ) {
-			acf_add_local_field( $local_field );
-			$field_key = $local_field['key'];
-		} else {
-			$local_field['key'] = 'field_' . $local_field['key'];
-			$field_obj          = acf_get_field( $local_field['key'] );
-			if ( $field_obj ) {
-				$local_field = array_merge( $field_obj, $local_field );
-			}
-			acf_update_field( $local_field );
-			$field_key = $local_field['key'];
-		}
+		
+		acf_add_local_field( $local_field );
+		
 
-		$form_args = array( 'fields' => array( $local_field['key'] ) );
+		$form_args = array( 'fields' => [ 'button_' . $wg_id => $local_field] );
 
 		$form_args = $this->get_settings_to_pass( $form_args, $settings );
 

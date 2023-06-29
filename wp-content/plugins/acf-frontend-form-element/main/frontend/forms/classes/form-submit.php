@@ -13,7 +13,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 		public function check_inline_field() {
 			// validate
 			if ( ! acf_verify_ajax() ) {
-				die();
+				wp_send_json_error( __( 'Invalid Nonce', 'acf-frontend-form-element' ) );
 			}
 			do_action( 'frontend_admin/validate_field' );
 
@@ -51,7 +51,6 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 						$valid = acf_validate_value( $value, $field, $input );
 
 						if ( $valid ) {
-							$value = $this->check_for_files( $value, $field );
 							acf_update_value( $value, $source, $field );
 
 							if ( empty( $fields_select ) ) {
@@ -168,16 +167,13 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 			}
 
 			// load form
+			//$form = fea_instance()->form_display->get_form( sanitize_text_field( $_POST['_acf_form'] ) );
 			$form = wp_kses_post_deep( json_decode( fea_decrypt( $_POST['_acf_form'] ), true ) );
+
 			
 			// bail ealry if form is corrupt
 			if ( empty( $form ) ) {
 				wp_send_json_error( __( 'No Form Data', 'acf-frontend-form-element' ) );
-			}
-
-			// kses
-			if ( $form['kses'] && isset( $_POST['acff'] ) ) {
-				$_POST['acff'] = wp_kses_post_deep( $_POST['acff'] );
 			}
 
 			// submit
@@ -201,46 +197,58 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 				$objects = false;
 			}
 
-			$record = array();
+			$form['record'] = array();
 
 			if ( ! empty( $form['save_all_data'] ) && in_array( 'verify_email', $form['save_all_data'] ) ) {
-				$record['emails_to_verify'] = array();
+				$form['record']['emails_to_verify'] = array();
 			}
 
-			if ( ! empty( $_POST ) ) {
-				foreach ( $_POST as $key => $value ) {
-					if ( $key == 'acff' ) {
-						$actions = array( 'form', 'post', 'user', 'term', 'woo_product', 'options', 'admin_options' );
-						foreach ( $value as $k => $inputs ) {
-							if ( in_array( $k, $actions ) ) {
-								if ( is_array( $inputs ) ) {
-									foreach ( $inputs as $i => $input ) {
-										   $record = $this->add_value_to_record( $record, $i, $input, $k, $objects );
-									}
-								}
-							}
-						}
-					} else {
-						if ( $key == '_acf_form' ) {
-							continue;
-						}
-						$record[ $key ] = $value;
-					}
+			$types = array( 'post', 'user', 'term', 'product' );
+			foreach ( $types as $type ) {
+				if ( isset( $_POST['_acf_' . $type] ) ) {
+					$form['record'][ $type ] = sanitize_text_field( $_POST['_acf_' . $type] );
 				}
 			}
 
-			if ( isset( $record['submission_title_filled'] ) ) {
-				unset( $record['submission_title_filled'] );
+			if ( isset( $_POST['_acf_taxonomy_type'] ) ) {
+				$form['record']['taxonomy_type'] = sanitize_text_field( $_POST['_acf_taxonomy_type'] );
 			}
-
-			$form['record'] = $record;
+			if ( isset( $_POST['_acf_status'] ) ) {
+				$form['record']['status'] = sanitize_text_field( $_POST['_acf_status'] );
+			}
 
 			if ( ! empty( $form['submission_title'] ) ) {
-				$form['submission_title'] = fea_instance()->dynamic_values->get_dynamic_values( $form['submission_title'], $form );
+				$form['dynamic_title'] = true;
 			}
+
+			if ( ! empty( $_POST['acff']['_validate_email'] ) ) {
+				wp_send_json_error( __( 'Spam Detected', 'acf' ) );
+			}
+
+			if ( ! empty( $_POST['acff'] ) ) {
+				
+				foreach ( array_keys( $_POST['acff'] ) as $key ) {
+					$key = sanitize_text_field( $key );
+					
+					$inputs = $_POST['acff'][$key];
+					if ( is_array( $inputs ) ) {
+						foreach ( $inputs as $index => $input ) {
+							$form = $this->add_value_to_record( $form, $index, $input, $key, $objects );
+						}
+					}
+				}
+					
+			}
+			//error_log( print_r( $form, true ) );
+
+			if ( ! empty( $form['dynamic_title'] ) ) {
+				$form['submission_title'] = fea_instance()->dynamic_values->get_dynamic_values( $form['submission_title'], $form );
+			}	
 
 			// add global for backwards compatibility
 			$GLOBALS['admin_form'] = $form;
+			global $fea_form;
+			$fea_form = $form;
 
 			$form = fea_instance()->dynamic_values->get_form_dynamic_values( $form );
 
@@ -264,80 +272,26 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 				}
 			}
 
-			return $form;
-		}
+			// vars
+			$errors = acf_get_validation_errors();
 
-		function upload_files( $value, $field, $multiple = false ) {
-			if ( empty( $value['file'] ) ) {
-				if ( empty( $value['id'] ) ) {
-					$value = false;
-				}
-				return $value;
-			} else {
-				if ( ! isset( $value['index'] ) ) {
-					if ( $multiple ) {
-						return false;
-					}
-					$index = 0;
-				} else {
-					$index = $value['index'] - 1;
-				}
-
-				$files = $_FILES[ $field['key'] ]; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Validating below.		
-
-				$file = array(
-					'name'     => $files['name'][ $index ],
-					'tmp_name' => $files['tmp_name'][ $index ],
-					'type'     => $files['type'][ $index ],
-				);
-				// get errors
-				$errors = acf_validate_attachment( $file, $field, 'upload' );
-
-				// append error
-				if ( ! empty( $errors ) ) {
-					$data = implode( "\n", $errors );
-					return false;
-				}
-
-				/* Getting file name */
-				$upload = wp_upload_bits( $file['name'], null, file_get_contents( $file['tmp_name'] ) );
-
-				$wp_filetype = wp_check_filetype( basename( $upload['file'] ), null );
-
-				$wp_upload_dir = wp_upload_dir();
-
-				$attachment = array(
-					'guid'           => $wp_upload_dir['baseurl'] . _wp_relative_upload_path( $upload['file'] ),
-					'post_mime_type' => $wp_filetype['type'],
-					'post_status'    => 'inherit',
+			// bail ealry if no errors
+			if ( $errors ) {
+				// update vars
+				$json = array(
+					'valid'  => 0,
+					'errors' => $errors,
 				);
 
-				if ( empty( $value['title'] ) ) {
-					$attachment['post_title'] = preg_replace( '/\.[^.]+$/', '', basename( $upload['file'] ) );
-				} else {
-					$attachment['post_title'] = $value['title'];
+				if( ! empty( $form['submission'] ) ){
+					$json['submission'] = $form['submission'];
 				}
-
-				if ( ! empty( $value['description'] ) ) {
-					$attachment['post_content'] = $value['description'];
-				}
-				if ( ! empty( $value['capt'] ) ) {
-					$attachment['post_excerpt'] = $value['capt'];
-				}
-
-				$attach_id = wp_insert_attachment( $attachment, $upload['file'] );
-
-				if ( ! empty( $value['alt'] ) ) {
-					update_post_meta( $attach_id, '_wp_attachment_image_alt', $value['alt'] );
-				}
-
-				$attach_data = wp_generate_attachment_metadata( $attach_id, $upload['file'] );
-				wp_update_attachment_metadata( $attach_id, $attach_data );
-
-				$value = $attach_id;
-				return $value;
+				
+				// return
+				wp_send_json_error( $json );
 			}
 
+			return $form;
 		}
 
 		function get_sub_field( $key, $field ) {
@@ -358,133 +312,34 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 
 		}
 
-		function upload_signature( $value ) {
-			// If the user skipped the field, escape this function
-			if ( empty( $value['id'] ) && empty( $value['src'] ) ) {
-				return '';
-			}
-
-			// If the user didn't change the signature, leave it alone
-			if ( empty( $value['changed'] ) ) {
-				return $value['id'];
-			}
-
-			$upload     = wp_upload_dir();
-			$upload_dir = $upload['basedir'];
-			$upload_dir = $upload_dir . '/signatures/';
-			if ( ! is_dir( $upload_dir ) ) {
-				mkdir( $upload_dir );
-
-				$signatures_htaccess = $upload_dir . '.htaccess';
-
-				// Protect uploads directory for the servers that support .htaccess
-				if ( ! file_exists( $signatures_htaccess ) ) {
-					file_put_contents( $signatures_htaccess, 'Deny from all' . PHP_EOL ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
-				}
-
-				if ( ! file_exists( $upload_dir . 'index.php' ) ) {
-					touch( $upload_dir . 'index.php' );
-				}
-			}
-
-			// Upload dir.
-			$upload_path = str_replace( '/', DIRECTORY_SEPARATOR, $upload_dir ) . DIRECTORY_SEPARATOR;
-
-			if ( $value['id'] ) {
-				$title = $value['id'];
-			} else {
-				$title = wp_create_nonce( $value['src'] );
-			}
-
-			$img       = str_replace( 'data:image/png;base64,', '', $value['src'] );
-			$img       = str_replace( ' ', '+', $img );
-			$decoded   = base64_decode( $img );
-			$filename  = $title . '.png';
-			$file_type = 'image/png';
-
-			$signature_url = $upload_path . $filename;
-
-			if ( empty( $value['src'] ) ) {
-				// If the user clear the signature, delete the file
-				unlink( $signature_url );
-			} else {
-				// If the signature is new or is changed save the file in the protected uploads directory.
-				$upload_file = file_put_contents( $signature_url, $decoded );
-			}
-
-			return $title;
-		}
-
-		function check_for_files( $input, $field, $id = false ) {
-			if ( ! $id ) {
-				$id = $field['key'];
-			}
-
-			$multiple = array( 'list_items', 'repeater' );
-			if ( in_array( $field['type'], $multiple ) ) {
-				if ( is_array( $input ) ) {
-					$new_input = array();
-					$i         = 0;
-					foreach ( $input as $index => $row ) {
-						$row_id = $id . '-' . $index;
-						foreach ( $row as $key => $sub_value ) {
-							$sub_field = $this->get_sub_field( $key, $field );
-							if ( $sub_field ) {
-								$new_input[ $i ][ $key ] = $this->check_for_files( $sub_value, $sub_field, $row_id . '-' . $key );
-							}
-						}
-						$i++;
-					}
-					$input = $new_input;
-				}
-			} elseif ( in_array( $field['type'], array( 'signature', 'form_signature' ) ) ) {
-				return $this->upload_signature( $input );
-			} else {
-				if ( ! empty( $_FILES[ $id ] ) ) {
-					$multiple_files = array( 'gallery', 'upload_files', 'product_images' );
-					if ( in_array( $field['type'], $multiple_files ) ) {
-						if ( is_array( $input ) ) {
-							unset( $input['{file-index}'] );
-							$new_input = array();
-							foreach ( $input as $index => $attachment ) {
-								$attachment = $this->upload_files( $attachment, $field, true );
-								if ( $attachment ) {
-									$new_input[] = $attachment;
-								}
-							}
-							if ( $new_input ) {
-								$input = $new_input;
-							}
-						}
-					} else {
-						$attachment = $this->upload_files( $input, $field );
-
-						if ( $attachment ) {
-							$input = $attachment;
-						}
-					}
-
-					$_FILES[ $id ] = false;
-
-				}
-			}
-
-			return $input;
-		}
-
-		public function add_value_to_record( $record, $key, $input, $group, $objects = false ) {
+		public function add_value_to_record( $form, $key, $input, $group ) {
+			$record = $form['record'];
 			$field = acf_get_field( $key );
-
-			print_r( $objects );
-			if ( ! $field && ! empty( $objects[ $key ] ) ) {
-				$field = $objects[ $key ];
+			if ( ! $field && ! empty( $form['fields'][ $key ] ) ) {
+				$field = $form['fields'][ $key ];
 			}
 
 			if ( $field ) {
-				$input = $this->check_for_files( $input, $field );
+
+				$input_key = 'acff[' . $group . '][' . $key . ']';
+
+				// validate
+				/* $valid = acf_validate_value( $input, $field, $input_key );
+
+				if ( ! $valid ) return $form; */
+
+				if( $form['kses'] ){
+					// sanitize input based on field settings
+					$sanitized = apply_filters( 'frontend_admin/forms/sanitize_input', false, $input, $field );
+					if( ! $sanitized ){
+						$input = feadmin_sanitize_input( $input, $field );
+					}else{
+						$input = $sanitized;
+					}			
+				}
 
 				if ( $field['type'] == 'fields_select' ) {
-					return $record;
+					return $form;
 				}
 
 				if ( isset( $record['emails_to_verify'] ) && in_array( $field['type'], array( 'email', 'user_email' ) ) ) {
@@ -492,7 +347,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 						if ( email_exists( $input ) ) {
 							$user = get_user_by( 'email', $input );
 							if ( isset( $user->ID ) ) {
-								   $verified = get_user_meta( $user->ID, 'frontend_admin_email_verified', 1 );
+								$verified = get_user_meta( $user->ID, 'frontend_admin_email_verified', 1 );
 							}
 						} else {
 							$verified_emails = get_option( 'frontend_admin_verified_emails' );
@@ -517,14 +372,11 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 
 				$field['_input'] = $input;
 
-				if ( $field['type'] == 'user_password' ) {
+				if ( 'user_password' == $field['type'] ) {
 					$field['value'] = $field['_input'] = wp_hash_password( $field['_input'] );
-				} else {
-					$field['value'] = acf_format_value( $input, 0, $field );
-				}
-				if ( is_string( $field['value'] ) && $field['type'] != 'form_step' && empty( $record['submission_title_filled'] ) ) {
-					$record['submission_title']        = $field['value'];
-					$record['submission_title_filled'] = true;
+				} 
+				if ( $input && $field['type'] != 'form_step' && empty( $form['dynamic_title'] ) && empty( $form['submission_title'] ) ) {
+					$form['submission_title'] = $field['_input'];
 				}
 				$record = apply_filters( 'frontend_admin/add_to_record', $record, $group, $field );
 				$record = apply_filters( 'frontend_admin/add_to_record/' . $field['type'], $record, $group, $field );
@@ -532,8 +384,8 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 
 				$value = array(
 					'key'    => $field['key'],
-					'value'  => $field['value'],
 					'_input' => $field['_input'],
+					'value' => $field['_input'],
 				);
 
 				if ( isset( $field['default_value'] ) ) {
@@ -541,21 +393,27 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 				}
 
 				if ( $group ) {
-					$record['fields'][ $group ][ $field['name'] ] = $value;
+					if( 'file_data' == $group ){
+						$record['fields'][ $group ][ $field['name'] ] = $input;
+					}else{
+						$record['fields'][ $group ][ $field['name'] ] = $value;
+					}
 				} else {
 					$record['fields'][ $field['name'] ] = $value;
 				}
 			}
-			return $record;
+
+			$form['record'] = $record;
+			return $form;
 		}
 
 
 		public function submit_form( $form ) {
+			$form = $this->create_record( $form );
+
 			if ( empty( $form['approval'] ) ) {
 				do_action( 'frontend_admin/form/on_submit', $form );
 			}
-
-			$form = $this->create_record( $form );
 
 			$form['submission_status'] = 'approved';
 			$save                      = get_option( 'frontend_admin_save_submissions' );
@@ -665,11 +523,12 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 
 			if ( ! empty( $form['ajax_submit'] ) ) {
 				$response['location'] = 'current';
-				$title                = $form['record']['submission_title'];
-				if ( ! empty( $form['submission_title'] ) ) {
-					$title = fea_instance()->dynamic_values->get_dynamic_values( $form['submission_title'], $form );
-				}
+			
 				if ( $form['ajax_submit'] === 'submission_form' ) {
+					$title  = $form['record']['submission_title'];
+					if ( ! empty( $form['submission_title'] ) ) {
+						$title = fea_instance()->dynamic_values->get_dynamic_values( $form['submission_title'], $form );
+					}
 					$response['submission']       = $form['submission'];
 					$response['submission_title'] = $title;
 					$response['close_modal']      = 1;
@@ -678,6 +537,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 					if ( isset( $form['form_attributes']['data-field'] ) ) {
 						$response['post_id']   = $form['post_id'];
 						$response['field_key'] = $form['form_attributes']['data-field'];
+						$response['modal'] = true;
 
 						$host_field = acf_maybe_get_field( $response['field_key'] );
 
@@ -689,7 +549,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 
 						$title = $field_class->get_post_title( get_post( $form['post_id'] ), $host_field );
 
-						$response['append'] = array(
+						$response['post_info'] = array(
 							'id'         => $form['post_id'],
 							'text'       => $title,
 							'action'     => $form['save_to_post'] == 'edit_post' ? 'edit' : 'add',
@@ -743,7 +603,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 
 					$expiration_time = time() + 600;
 					setcookie( 'admin_form_success', json_encode( $response ), $expiration_time, '/' );
-
+					unset($response['frontend-form-nonce']);
 				}
 			}
 
@@ -780,7 +640,6 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 			do_action( 'fea_after_submit', $form );
 
 			wp_send_json_success( $response );
-			die;
 		}
 
 		public function reload_form( $form ) {
@@ -814,9 +673,6 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 			$expiration_time = time() + 600;
 			setcookie( 'admin_form_success', json_encode( $json ), $expiration_time, '/' );
 			wp_send_json_success( $json );
-
-			die;
-
 		}
 
 		public function save_record( $form, $status = 'in_progress' ) {
@@ -830,7 +686,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 
 			global $wpdb;
 
-			$title = $form['record']['submission_title'];
+			$title = isset( $form['submission_title'] ) ? $form['submission_title'] : $form['form_title'];
 
 			$args = array(
 				'fields' => fea_encrypt( json_encode( $form['record'] ) ),
@@ -841,7 +697,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 
 			if ( empty( $form['submission'] ) ) {
 				$args['created_at'] = current_time( 'mysql' );
-				$args['form']       = isset( $form['ID'] ) ? $form['ID'] : $form['id'];
+				$args['form']       = 'admin_form' == get_post_type( $form['ID'] ) ? $form['ID'] : $form['ID']. ':' .$form['id'];
 				$form['submission'] = fea_instance()->submissions_handler->insert_submission( $args );
 			} else {
 				fea_instance()->submissions_handler->update_submission( $form['submission'], $args );
@@ -899,19 +755,18 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 					} else {
 						$redirect_url = $form['custom_url'];
 					}
-					break;
-				case 'current':
-					global $wp;
-					$redirect_url = $form['current_url'];
-					// $form_args['reload_current'] = true;
-					$form['message_location'] = 'current';
-					break;
+					break;					
 				case 'referer_url':
 					$redirect_url = $form['referer_url'];
 					break;
 				case 'post_url':
 					$redirect_url = '%post_url%';
 					break;
+				default:
+					global $wp;
+					$redirect_url = $form['current_url'];
+					// $form_args['reload_current'] = true;
+					$form['message_location'] = 'current';
 			}
 			$form['return'] = $redirect_url;
 
@@ -929,8 +784,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 			// load form
 			$form = json_decode( fea_decrypt( $_POST['_acf_form'] ), true );
 
-			$form = wp_kses_post_deep( $form );
-			
+			$form = wp_kses_post_deep( $form );			
 
 			// bail ealry if form is corrupt
 			if ( empty( $form ) ) {
@@ -941,9 +795,14 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 				wp_send_json_error( __( 'Delete Button Key Not Found', 'acf-frontend-form-element' ) );
 			}
 
-			$field = acf_get_field( sanitize_key( $_POST['field'] ) );
+			$key = sanitize_key( $_POST['field'] );
 
-			if ( ! $field ) {
+			$field = acf_get_field( $key );
+			if ( ! $field && ! empty( $form['fields'][ $key ] ) ) {
+				$field = $form['fields'][ $key ];
+			}
+
+			if ( ! $field ) {                                      
 				wp_send_json_error( __( 'Invalid Delete Button', 'acf-frontend-form-element' ) );
 			}
 
@@ -959,7 +818,6 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 			$form                     = $this->get_redirect_url( $form );
 			$form['message_location'] = 'other';
 
-			$redirect_args = array( 'redirect' => $form['return'] );
 
 			if ( $field['show_delete_message'] ) {
 				if ( ! empty( $field['delete_message'] ) ) {
@@ -980,7 +838,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 				case 'delete_post':
 					if ( ! empty( $_POST['_acf_post'] ) ) {
 						$post_id = intval( $_POST['_acf_post'] );
-						if ( empty( $form['force_delete'] ) ) {
+						if ( empty( $field['force_delete'] ) ) {
 							$deleted = wp_trash_post( $post_id );
 						} else {
 							$deleted = wp_delete_post( $post_id, true );
@@ -991,7 +849,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 				case 'delete_product':
 					if ( ! empty( $_POST['_acf_product'] ) ) {
 						$product_id = intval( $_POST['_acf_product'] );
-						if ( empty( $form['force_delete'] ) ) {
+						if ( empty( $field['force_delete'] ) ) {
 							$deleted = wp_trash_post( $product_id );
 						} else {
 							$deleted = wp_delete_post( $product_id, true );
@@ -1021,7 +879,6 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 			setcookie( 'admin_form_success', json_encode( $redirect_args ), $expiration_time, '/' );
 
 			wp_send_json_success( $redirect_args );
-			die();
 		}
 
 

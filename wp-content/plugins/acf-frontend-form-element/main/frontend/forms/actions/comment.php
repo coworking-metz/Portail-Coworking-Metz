@@ -3,7 +3,7 @@ namespace Frontend_Admin\Actions;
 
 use Frontend_Admin\Plugin;
 use Frontend_Admin\Classes\ActionBase;
-use Frontend_Admin\Widgets;
+use Frontend_Admin\Forms\Actions;
 use Elementor\Controls_Manager;
 use ElementorPro\Modules\QueryControl\Module as Query_Module;
 

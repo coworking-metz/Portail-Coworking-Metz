@@ -38,11 +38,17 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 			if ( is_numeric( $key ) && get_post_type( $key ) == 'admin_form' ) {
 				$form = get_post( $key );
 				return $this->get_form_args( $form, $export );
+			}else{
+				$form = apply_filters( 'frontend_admin/forms/get_form', $key );
+				if( is_array( $form ) ){
+					return $form;
+				}
 			}
 
 			if ( strpos( $key, 'form_' ) === false ) {
 				$key = 'form_' . $key;
 			}
+
 			$args = array(
 				'post_type'      => 'admin_form',
 				'posts_per_page' => '1',
@@ -113,7 +119,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 						 continue;
 					 }
 					 $object['parent'] = $form;
-					 do_action( 'frontend_admin/form_assets/type=' . $object['type'], $object, $form );
+					 do_action( 'frontend_admin/form_assets/type=' . $object['type'], $object );
 
 					 /*
 					  $content_types = array( 'post', 'product' );
@@ -150,9 +156,10 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 				$form,
 				array(
 					'id'                    => isset( $form['ID'] ) ? $form['ID'] : 'acf-form',
+					'ID'					=> '',
 					'parent_form'           => '',
 					'main_action'           => '',
-					'custom_fields_save'    => '',
+					'custom_fields_save'    => 'post',
 					'fields'                => array(),
 					'field_objects'         => false,
 					'form'                  => true,
@@ -188,6 +195,11 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 					'current_url'           => home_url( $wp->request ),
 				)
 			);
+
+			if( is_admin() && ! wp_doing_ajax() ){
+				$form['current_url'] = admin_url( $wp->request );
+			}
+
 			if( isset( $_SERVER['QUERY_STRING'] ) ){
 				$form['current_url'] .= '?' . sanitize_text_field( $_SERVER['QUERY_STRING'] );
 			}
@@ -233,9 +245,9 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 					'message'    => '',
 				)
 			);
-
 			if( ! empty( $form['id'] ) ){
 				$data['form'] = fea_encrypt( json_encode( $form ) );
+				//$data['form'] = 'admin_form' == get_post_type( $form['ID'] ) ? $form['ID'] : $form['ID']. ':' .$form['id'];
 			}
 
 			$data_types = array( 'post', 'user', 'term', 'product' );
@@ -267,6 +279,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 
 			// loop
 			foreach ( $data as $name => $value ) {
+				
 				// input
 				acf_hidden_input(
 					array(
@@ -527,44 +540,24 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 		}
 
 
-		public function get_field_to_display( $field_data, $fields, $parent = false ) {
-			if ( $parent ) {
-				$field_data = acf_maybe_get_field( $field_data, false, false );
-				if ( ! $field_data ) {
-					return $fields;
-				}
-				if ( isset( $parent['fields_class'] ) ) {
-					$field_data['wrapper']['class'] .= ' ' . $parent['fields_class'];
-				}
-				if ( ! empty( $parent['custom_fields_save'] ) ) {
-					$field_data['custom_fields_save'] = $parent['custom_fields_save'];
-				}
+		public function get_field_to_display( $field_data, $fields ) {
+			
+			if ( is_string( $field_data ) ) {
+				$field_data = acf_get_field( $field_data );
+			}
 
-				$fields[]                                      = $field_data;
-				$GLOBALS['form_fields'][ $field_data['type'] ] = $field_data['key'];
-				return $fields;
-			}
-			if ( isset( $field_data['column'] ) ) {
+			if ( ! empty( $field_data['sub_fields'] ) ) {
+				$sub_fields = array();
+				foreach ( $field_data['sub_fields'] as $sub_field ) {
+						$sub_fields = $this->get_field_to_display( $sub_field, $sub_fields );
+				}
+				$field_data['sub_fields'] = $sub_fields;
 				$fields[] = $field_data;
-				return $fields;
 			} else {
-				if ( is_string( $field_data ) ) {
-					$field_data = acf_maybe_get_field( $field_data, false, false );
-				}
-				if ( $field_data ) {
-					if ( ! empty( $field_data['sub_fields'] ) ) {
-						$sub_fields = array();
-						foreach ( $field_data['sub_fields'] as $sub_field ) {
-							   $sub_fields = $this->get_field_to_display( $sub_field, $sub_fields );
-						}
-						$field_data['sub_fields'] = $sub_fields;
-						$fields[]                 = $field_data;
-					} else {
-						$fields[]                                      = $field_data;
-						$GLOBALS['form_fields'][ $field_data['type'] ] = $field_data['key'];
-					}
-				}
+				$fields[] = $field_data;
+				$GLOBALS['form_fields'][ $field_data['type'] ] = $field_data['key'];
 			}
+			
 			return $fields;
 		}
 
@@ -601,53 +594,10 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 			return $fields;
 		}
 
-		public function render_fields( $current_fields = array(), $form = array(), $defaults = false, $hooked = false, $step = false ) {
+		public function render_fields( $fields = array(), $form = array(), $defaults = false ) {
 			if ( empty( $form ) ) {
 				$form = $GLOBALS['admin_form'];
 			}
-			if ( isset( $form['fields_to_display'] ) ) {
-				foreach ( $form['fields_to_display'] as $chosen_fields ) {
-
-					if ( is_numeric( $chosen_fields ) ) {
-						if ( get_post_type( $chosen_fields ) == 'acf-field-group' ) {
-							$type_of_choice = array( 'group', $chosen_fields );
-						}
-						if ( get_post_type( $chosen_fields ) == 'admin_form' ) {
-							$type_of_choice = array( 'form', $chosen_fields );
-						}
-					}
-
-					if ( empty( $type_of_choice ) ) {
-						$type_of_choice = explode( '_', $chosen_fields );
-					}
-					if ( empty( $type_of_choice[1] ) ) {
-						continue;
-					}
-
-					switch ( $type_of_choice[0] ) {
-						case 'field':
-							$current_field = acf_get_field( $type_of_choice[1] );
-							if ( $current_field ) {
-								$current_fields[] = $current_field;
-							}
-							break;
-						case 'group':
-							$current_fields = array_merge( $current_fields, acf_get_fields( $type_of_choice[1] ) );
-							break;
-						case 'form':
-							$current_group = $this->get_form_fields( $type_of_choice[1] );
-							if ( isset( $current_group['fields'] ) ) {
-								$current_fields = array_merge( $current_fields, $current_group['fields'] );
-							}
-							break;
-					}
-				}
-			}
-			if ( empty( $current_fields ) ) {
-				$current_fields = $form['fields'];
-			}
-
-			$fields = $this->get_fields_to_display( $form, $current_fields );
 
 			$cf_save = $form['custom_fields_save'];
 			if ( $cf_save == 'none' ) {
@@ -665,18 +615,17 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 			 * @param array $fields An array of fields.
 			 * @param array $form An array of all of the form data.
 			 */
-			if ( empty( $form['nested_form'] ) ) {
+			if ( $defaults ) {
 				$fields = apply_filters( 'frontend_admin/pre_render_fields', $fields, $form );
+				foreach ( $fields as $field ) {
+					$GLOBALS['form_fields'][$field['type']] = $field['key'];
+				}
 			}
 
 			// Loop over and render fields.
 			if ( $fields ) {
 				// Filter our false results.
 				$fields = array_filter( $fields );
-
-				if ( $defaults ) {
-					$fields = array_merge( $this->hidden_default_fields( $form ), $fields );
-				}
 
 				$open_columns = 0;
 				foreach ( $fields as $field ) {
@@ -723,7 +672,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 						$show_submit_button = 1;
 					}
 
-					if ( $field['type'] == 'submit_button' ) {
+					if ( 'submit_button' == $field['type'] ) {
 						$GLOBALS['admin_form']['submit_button_field'] = $field['key'];
 					}
 
@@ -733,6 +682,10 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 
 					// Render wrap.
 					$this->render_field_wrap( $field, $el, $instruction );
+				}
+
+				if ( $defaults ) {
+					$fields = array_merge( $this->hidden_default_fields( $form ), $fields );
 				}
 
 				if ( $open_columns > 0 ) {
@@ -768,6 +721,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 		}
 
 		function get_field_value( $id, $data_type, $field, $form = array() ) {
+
 			if ( $data_type == 'woo_product' ) {
 				$type = 'post';
 			} else {
@@ -813,18 +767,37 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 				}
 			}
 
-			if ( $value === null && isset( $form['record'] ) ) {
+			if ( isset( $form['record'] ) && ( null == $value || 'edit_'.$type == $form['save_to_'.$type] ) ) {
 				$field_name = $field['name'];
 				if ( isset( $form['record']['fields'][ $data_type ][ $field_name ]['_input'] ) ) {
 					$value = $form['record']['fields'][ $data_type ][ $field_name ]['_input'];
 				}
 
 				if ( ! empty( $field['fields_select'] ) ) {
-					$value = array();
+					$sub_fields = array();
 					foreach ( $field['fields_select'] as $sub_field ) {
-						$sub_name = $sub_field['name'];
-						if ( isset( $form['record']['fields'][ $data_type ][ $sub_name ]['_input'] ) ) {
-							$value[ $sub_field['key'] ] = $form['record']['fields'][ $data_type ][ $sub_name ]['_input'];
+						if( is_string( $sub_field )  ){
+							if( strpos( $sub_field, 'group_' ) !== false ){
+								$sub_fields = array_merge( $sub_fields, acf_get_fields( $sub_field ) );
+								continue;
+							}
+							$sub_field = acf_maybe_get_field( $sub_field );
+							if( ! $sub_field ) continue;
+						}
+
+						$sub_fields[] = $sub_field;
+						
+					}
+
+					if( $sub_fields ){
+						$value = array();
+						foreach ( $sub_fields as $sub_field ) {
+							$sub_name = $sub_field['name'];
+
+							if ( isset( $form['record']['fields'][ $data_type ][ $sub_name ]['_input'] ) ) {
+
+								$value[ $sub_field['key'] ] = $form['record']['fields'][ $data_type ][ $sub_name ]['_input'];
+							}
 						}
 					}
 				}
@@ -882,258 +855,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 			return $form;
 		}
 
-		public function get_form_structure( $form ) {
-			if ( empty( $form['fields_selection'] ) ) {
-				return $form;
-			}
-
-			$wg_id = $form['id'];
-
-			$form['fields'] = array();
-
-			if ( ! empty( $form['multi'] ) ) {
-				array_unshift( $form['fields_selection'], $form['first_step'][0] );
-			}
-
-			if ( isset( $form['fields_selection'] ) ) {
-				foreach ( $form['fields_selection'] as $ind => $form_field ) {
-					$local_field = $acf_field_groups = $acf_fields = array();
-
-					switch ( $form_field['field_type'] ) {
-						case 'ACF_field_groups':
-							if ( $form_field['dynamic_acf_fields'] ) {
-								 $filters = $this->get_field_group_filters( $form );
-
-								 $acf_field_groups = feadmin_get_acf_field_choices( $filters, 'key' );
-							} elseif ( $form_field['field_groups_select'] ) {
-								  $acf_field_groups = feadmin_get_acf_field_choices( array( 'groups' => $form_field['field_groups_select'] ), 'key' );
-							}
-							if ( $acf_field_groups ) {
-								$fields_exclude = $form_field['fields_select_exclude'];
-
-								if ( $fields_exclude ) {
-									$acf_fields = array_diff( $acf_field_groups, $fields_exclude );
-								} else {
-									$acf_fields = $acf_field_groups;
-								}
-							}
-							break;
-						case 'ACF_fields':
-							$acf_fields = $form_field['fields_select'];
-							break;
-
-						case 'column':
-							if ( $form_field['endpoint'] == 'true' ) {
-								$fields[] = array(
-									'column' => 'endpoint',
-								);
-							} else {
-								$column = array(
-									'column' => $form_field['_id'],
-								);
-								if ( $form_field['nested'] ) {
-									$column['nested'] = true;
-								}
-
-								$fields[] = $column;
-							}
-							break;
-						case 'tab':
-							if ( $form_field['endpoint'] == 'true' ) {
-								$fields[] = array(
-									'tab' => 'endpoint',
-								);
-							} else {
-								$tab      = array(
-									'tab' => $form_field['_id'],
-								);
-								$fields[] = $tab;
-							}
-							break;
-						case 'recaptcha':
-							$local_field = array(
-								'key'          => $wg_id . '_' . $form_field['field_type'] . '_' . $form_field['_id'],
-								'type'         => 'recaptcha',
-								'wrapper'      => array(
-									'class' => '',
-									'id'    => '',
-									'width' => '',
-								),
-								'required'     => 0,
-								'version'      => $form_field['recaptcha_version'],
-								'v2_theme'     => $form_field['recaptcha_theme'],
-								'v2_size'      => $form_field['recaptcha_size'],
-								'site_key'     => $form_field['recaptcha_site_key'],
-								'secret_key'   => $form_field['recaptcha_secret_key'],
-								'disabled'     => 0,
-								'readonly'     => 0,
-								'v3_hide_logo' => $form_field['recaptcha_hide_logo'],
-							);
-							break;
-						case 'step':
-							$local_field         = acf_get_valid_field( $form_field );
-							$local_field['type'] = 'form_step';
-							$local_field['key']  = $local_field['name'] = $wg_id . '_' . $form_field['field_type'] . '_' . $form_field['_id'];
-							break;
-						default:
-							if ( isset( $form_field['__dynamic__'] ) ) {
-								$form_field = $this->parse_tags( $form_field );
-							}
-							$default_value = $form_field['field_default_value'];
-							$local_field   = array(
-								'label'         => '',
-								'wrapper'       => array(
-									'class' => '',
-									'id'    => '',
-									'width' => '',
-								),
-								'instructions'  => $form_field['field_instruction'],
-								'required'      => ( $form_field['field_required'] ? 1 : 0 ),
-								'placeholder'   => $form_field['field_placeholder'],
-								'default_value' => $default_value,
-								'disabled'      => $form_field['field_disabled'],
-								'readonly'      => $form_field['field_readonly'],
-								'min'           => $form_field['minimum'],
-								'max'           => $form_field['maximum'],
-								'prepend'       => $form_field['prepend'],
-								'append'        => $form_field['append'],
-							);
-
-							if ( isset( $data_default ) ) {
-								$local_field['wrapper']['data-default']       = $data_default;
-								$local_field['wrapper']['data-dynamic_value'] = $default_value;
-							}
-
-							if ( $form_field['field_hidden'] ) {
-								$local_field['frontend_admin_display_mode'] = 'hidden';
-							}
-
-							if ( $form_field['field_type'] == 'message' ) {
-								$local_field['type']    = 'message';
-								$local_field['message'] = $form_field['field_message'];
-								$local_field['name']    = $local_field['key'] = $wg_id . '_' . $form_field['_id'];
-							}
-
-							break;
-					}
-
-					if ( $acf_fields ) {
-						$local_field = array(
-							'key'           => $wg_id . '_' . $form_field['field_type'] . '_' . $form_field['_id'],
-							'name'          => $wg_id . '_' . $form_field['field_type'] . '_' . $form_field['_id'],
-							'type'          => 'fields_select',
-							'fields_select' => $acf_fields,
-							'fields_class'  => 'elementor-repeater-item-' . $form_field['_id'],
-							'wrapper'       => array(
-								'class' => '',
-							),
-						);
-					}
-
-					if ( isset( $local_field ) ) {
-
-						$sub_fields = false;
-						if ( $form_field['field_type'] == 'attributes' ) {
-							$sub_fields = $form['attribute_fields'];
-							unset( $form['attribute_fields'] );
-						}
-						if ( $form_field['field_type'] == 'variations' ) {
-							$sub_fields = $form['variable_fields'];
-							unset( $form['variable_fields'] );
-						}
-
-						foreach ( feadmin_get_field_type_groups() as $name => $group ) {
-
-							if ( in_array( $form_field['field_type'], array_keys( $group['options'] ) ) ) {
-								$action_name = explode( '_', $name )[0];
-								if ( isset( fea_instance()->local_actions[ $action_name ] ) ) {
-									   $action   = fea_instance()->local_actions[ $action_name ];
-									$local_field = $action->get_fields_display(
-										$form_field,
-										$local_field,
-										$wg_id,
-										$sub_fields
-									);
-
-									if ( isset( $form_field['field_label_on'] ) ) {
-										$field_label          = ucwords( str_replace( '_', ' ', $form_field['field_type'] ) );
-										$local_field['label'] = ( $form_field['field_label'] ? $form_field['field_label'] : $field_label );
-									}
-
-									if ( isset( $local_field['type'] ) ) {
-
-										if ( $local_field['type'] == 'number' ) {
-											$local_field['placeholder']   = $form_field['number_placeholder'];
-											$local_field['default_value'] = $form_field['number_default_value'];
-										}
-
-										if ( $form_field['field_type'] == 'taxonomy' ) {
-											$taxonomy            = ( isset( $form_field['field_taxonomy'] ) ? $form_field['field_taxonomy'] : 'category' );
-											$local_field['name'] = $wg_id . '_' . $taxonomy;
-											$local_field['key']  = $wg_id . '_' . $taxonomy;
-										} else {
-											$local_field['name'] = $wg_id . '_' . $form_field['field_type'];
-											$local_field['key']  = $wg_id . '_' . $form_field['field_type'];
-										}
-									}
-
-									if ( ! empty( $form_field['default_terms'] ) ) {
-										$local_field['default_terms'] = $form_field['default_terms'];
-									}
-								}
-								break;
-							}
-						}
-					}
-					if ( isset( $local_field['label'] ) ) {
-
-						if ( empty( $form_field['field_label_on'] ) ) {
-							$local_field['field_label_hide'] = 1;
-						} else {
-							$local_field['field_label_hide'] = 0;
-						}
-					}
-
-					if ( isset( $form_field['button_text'] ) && $form_field['button_text'] ) {
-						$local_field['button_text'] = $form_field['button_text'];
-					}
-
-					if ( isset( $local_field['key'] ) ) {
-						$field_key                        = '';
-						$local_field['wrapper']['class'] .= ' elementor-repeater-item-' . $form_field['_id'];
-
-						if ( feadmin_edit_mode() && $local_field['type'] != 'fields_select' ) {
-							acf_add_local_field( $local_field );
-							$field_key                    = $local_field['key'];
-							$form['fields'][ $field_key ] = $local_field;
-						} else {
-							$local_field['key'] = 'field_' . $wg_id . $form_field['_id'];
-							$field_obj          = acf_get_field( $local_field['key'] );
-							if ( $field_obj ) {
-								$local_field = array_merge( $field_obj, $local_field );
-							}
-							acf_update_field( $local_field );
-							$field_obj = acf_get_field( $local_field['key'] );// todo: remove after 3.5. Put in place to fix bug
-
-							$field_key                    = $local_field['key'];
-							$form['fields'][ $field_key ] = $field_obj;
-						}
-					}
-				}
-			}
-			unset( $form['fields_selection'] );
-			unset( $form['first_step'] );
-
-			return $form;
-		}
-
-		public function parse_tags( $settings ) {
-			$dynamic_tags = $settings['__dynamic__'];
-			foreach ( $dynamic_tags as $control_name => $tag ) {
-				$settings[ $control_name ] = $tag;
-			}
-			return $settings;
-		}
+	
 
 		public function get_field_group_filters( $form ) {
 			$filters = array( 'post_id' => $form['post_id'] );
@@ -1424,9 +1146,8 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 
 			$GLOBALS['admin_form'] = $form;
 
-			$form = $this->get_form_structure( $form );
+			$form = apply_filters( 'frontend_admin/forms/before_render', $form );
 
-			$current_step = 1;
 			$form_title   = $form['form_title'];
 
 			?>
@@ -1516,18 +1237,14 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 			}
 			foreach ( $file_data as $data ) {
 				$data['prefix'] = $prefix;
+				$data['disabled'] = true;
 				$data['class']  = 'fea-file-meta';
 				if ( isset( $values[ $data['name'] ] ) ) {
 					$data['value'] = $values[ $data['name'] ];
 				}
 				$this->render_field_wrap( $data );
 			}
-			acf_hidden_input(
-				array(
-					'name'  => $prefix . '[meta]',
-					'class' => 'fea-meta-update',
-				)
-			);
+		
 			if ( $button ) {
 				echo '<button type="button" class="update-meta button button-primary">' . esc_html( __( 'Update Image', 'acf-frontend-form-element' ) ) . '</button>';
 			}
@@ -1564,19 +1281,18 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 		public function hidden_default_fields( $form ) {
 			$fields = array();
 			if ( $form['honeypot'] ) {
-				acf_add_local_field(
-					array(
-						'prefix'          => 'acff',
-						'name'            => '_validate_email',
-						'key'             => '_validate_email',
-						'no_data_collect' => 1,
-						'type'            => 'text',
-						'value'           => '',
-						'no_save'         => 1,
-						'wrapper'         => array( 'style' => 'display:none !important' ),
-					)
+				$kses_field = array(
+					'prefix'          => 'acff',
+					'name'            => '_validate_email',
+					'key'             => '_validate_email',
+					'no_data_collect' => 1,
+					'type'            => 'text',
+					'value'           => '',
+					'no_save'         => 1,
+					'wrapper'         => array( 'style' => 'display:none !important' ),
 				);
-				$fields[] = acf_get_field( '_validate_email' );
+				acf_add_local_field( $kses_field );
+				$fields[] = $kses_field;
 			}
 			$element_id = $form['id'];
 			if ( ! feadmin_edit_mode() && ! empty( $form['product_id'] ) ) {
@@ -1735,7 +1451,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 			}
 
 			if ( $args['data_type'] == 'plan' ) {
-				$form                = fea_instance()->plans_handler->get_plan_form( $args['form_action'] );
+				$form                = fea_instance()->plans_handler->get_plan_form( sanitize_text_field( $args['form_action'] ) );
 				$form['ajax_submit'] = 'plan_form';
 				$form['close_modal'] = 1;
 				$this->render_form( $form );
@@ -1830,15 +1546,47 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 			);
 
 			if ( ! empty( $field['post_form_template'] ) ) {
-				if ( is_array( $field['post_form_template'] ) ) {
-					$form_args['fields_to_display'] = $field['post_form_template'];
-				} else {
-					$form_args['fields_to_display'] = array( $field['post_form_template'] );
+				$chosen = acf_get_array( $field['post_form_template'] );
+				if ( in_array( 'current', $chosen ) ) {
+					$pos = array_search( 'current', $chosen );
+					$chosen[ $pos ] = $field['parent'];
 				}
-				if ( in_array( 'current', $form_args['fields_to_display'] ) ) {
-					$pos                                    = array_search( 'current', $form_args['fields_to_display'] );
-					$form_args['fields_to_display'][ $pos ] = $field['parent'];
+				foreach ( $chosen as $chosen_fields ) {
+					if ( is_numeric( $chosen_fields ) ) {
+						if ( get_post_type( $chosen_fields ) == 'acf-field-group' ) {
+							$type_of_choice = array( 'group', $chosen_fields );
+						}
+						if ( get_post_type( $chosen_fields ) == 'admin_form' ) {
+							$type_of_choice = array( 'form', $chosen_fields );
+						}
+					}
+
+					if ( empty( $type_of_choice ) ) {
+						$type_of_choice = explode( '_', $chosen_fields );
+					}
+					if ( empty( $type_of_choice[1] ) ) {
+						continue;
+					}
+
+					switch ( $type_of_choice[0] ) {
+						case 'field':
+							$current_field = acf_get_field( $type_of_choice[1] );
+							if ( $current_field ) {
+								$form_args['fields'][] = $current_field;
+							}
+							break;
+						case 'group':
+							$form_args['fields'] = array_merge( $form_args['fields'], acf_get_fields( $type_of_choice[1] ) );
+							break;
+						case 'form':
+							$current_group = $this->get_form_fields( $type_of_choice[1] );
+							if ( isset( $current_group['fields'] ) ) {
+								$form_args['fields'] = array_merge( $form_args['fields'], $current_group['fields'] );
+							}
+							break;
+					}
 				}
+				
 				$template = true;
 
 			} else {
@@ -1901,13 +1649,28 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 			die;
 		}
 
-
-		function render_field_display( $atts ) {
-			$field_pre = explode( 'field_', $atts['field'] );
-			if ( ! isset( $field_pre[1] ) ) {
-				$atts['field'] = 'field_' . $atts['field'];
+		function render_field_group_display( $atts ) {
+			$group_pre = explode( 'group_', $atts['group'] );
+			if ( ! isset( $group_pre[1] ) ) {
+				$atts['group'] = 'group_' . $atts['group'];
 			}
 
+			$fields = acf_get_fields( $atts['group'] );
+
+			if( $fields ){
+				foreach( $fields as $field ){
+					$group = acf_get_field_group( $atts['group'] );
+					if( ! empty( $group['no_values_message'] ) ){
+						$atts['no_values_message'] = $group['no_values_message'];
+					}
+					$atts['field'] = $field['key'];
+
+					$this->render_field_display( $atts );
+				}
+			}
+		}
+
+		function render_field_display( $atts ) {
 			$source = get_the_ID();
 
 			if ( isset( $atts['source'] ) ) {
@@ -1916,8 +1679,14 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 
 			$field = get_field_object( $atts['field'], $source, false );
 
+			do_action( 'frontend_admin/form_assets/type=' . $field['type'], $field );
+
 			if ( ! $field ) {
 				return;
+			}
+
+			if( empty( $field['no_values_message'] ) && ! empty( $atts['no_values_message'] ) ){
+				$field['no_values_message'] = $atts['no_values_message'];
 			}
 
 			if ( ! empty( $atts['edit'] ) && $atts['edit'] == 'true' ) {
@@ -1977,7 +1746,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 			$wrapper = apply_filters( 'acf/field_wrapper_attributes', $wrapper, $field );
 
 			?>
-			<span <?php echo acf_esc_attrs( $wrapper ) ?>>
+			<div <?php echo acf_esc_attrs( $wrapper ) ?>>
 			<?php
 			if ( $permissions ) {
 				?>
@@ -1995,7 +1764,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 				 <?php
 			}
 			?>
-			</span>
+			</div>
 			<?php
 		}
 
@@ -2007,7 +1776,18 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 		public function shortcode( $atts ) {
 			if ( isset( $atts['field'] ) ) {
 				ob_start();
+				$field_pre = explode( 'field_', $atts['field'] );
+				if ( ! isset( $field_pre[1] ) ) {
+					$atts['field'] = 'field_' . $atts['field'];
+				}
 				$this->render_field_display( $atts );
+				$output = ob_get_clean();
+				return $output;
+			}
+
+			if ( isset( $atts['group'] ) ) {
+				ob_start();
+				$this->render_field_group_display( $atts );
 				$output = ob_get_clean();
 				return $output;
 			}

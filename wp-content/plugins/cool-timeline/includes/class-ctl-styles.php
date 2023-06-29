@@ -30,9 +30,10 @@ class CTL_styles
 		// all common assets	
 		wp_enqueue_style('ctl-default-fonts');
         wp_enqueue_style("ctl-gfonts");
-		
-		wp_enqueue_style('ctl-prettyPhoto');
-		wp_enqueue_script('ctl-prettyPhoto');	
+			
+		wp_enqueue_script('ctl-glightbox-jquery');	
+		wp_enqueue_style('ctl-glightbox-jquery');
+		wp_enqueue_script('ctl-glightbox');	
 		wp_enqueue_style('ctl-styles');
 		// vertical layout only assets.
 		if($layout!="horizontal"){
@@ -127,31 +128,32 @@ class CTL_styles
 	        if(is_array($gfont_arr)){
 	            $allfonts=implode("|",$gfont_arr);
 	            if($allfonts){
-                    wp_register_style("ctl-gfonts", "//fonts.googleapis.com/css?family=$allfonts", false, COOL_TIMELINE_CURRENT_VERSION, 'all');
+                    wp_register_style("ctl-gfonts", "//fonts.googleapis.com/css?family=$allfonts", false, CTL_V, 'all');
                 }
 	        }	       
 		}
 
 	  	// includes google fonts
-        wp_register_style("ctl-default-fonts", "https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800", false, COOL_TIMELINE_CURRENT_VERSION, 'all');
+        wp_register_style("ctl-default-fonts", "https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800", false, CTL_V, 'all');
 
-		wp_register_style('ctl-styles', COOL_TIMELINE_PLUGIN_URL . 'assets/css/ctl_styles.min.css',null, COOL_TIMELINE_CURRENT_VERSION,'all' );	
-	
-	  	// register popup assets
-		wp_register_style('ctl-prettyPhoto', COOL_TIMELINE_PLUGIN_URL . 'assets/css/prettyPhoto.css', null, COOL_TIMELINE_CURRENT_VERSION, 'all');
-		wp_register_script('ctl-prettyPhoto', COOL_TIMELINE_PLUGIN_URL . 'assets/js/jquery.prettyPhoto.js', array('jquery'), COOL_TIMELINE_CURRENT_VERSION, true);  
+		wp_register_style('ctl-styles', CTL_PLUGIN_URL . 'assets/css/ctl_styles.min.css',null, CTL_V,'all' );	
+
+        // register glightbox popup assets
+		wp_register_style('ctl-glightbox-jquery', CTL_PLUGIN_URL . 'assets/css/glightbox.min.css', null, CTL_V, 'all');
+		wp_register_script('ctl-glightbox-jquery', CTL_PLUGIN_URL . 'assets/js/jquery.glightbox.min.js', array('jquery'), CTL_V, true);  
+		wp_register_script('ctl-glightbox', CTL_PLUGIN_URL . 'assets/js/ctl_glightbox.min.js', array('jquery'), CTL_V, true);  
 		// includes slick slider for horizontal timeline
-		wp_register_script('ctl-slick-js',COOL_TIMELINE_PLUGIN_URL . 'assets/js/slick.min.js', array('jquery'), COOL_TIMELINE_CURRENT_VERSION, true);
-		wp_register_style("ctl-slick-css", COOL_TIMELINE_PLUGIN_URL."assets/css/slick.css");
+		wp_register_script('ctl-slick-js',CTL_PLUGIN_URL . 'assets/js/slick.min.js', array('jquery'), CTL_V, true);
+		wp_register_style("ctl-slick-css", CTL_PLUGIN_URL."assets/css/slick.css");
 		
-		wp_register_script('ctl-scripts', COOL_TIMELINE_PLUGIN_URL . 'assets/js/ctl_scripts.min.js', array('jquery'), COOL_TIMELINE_CURRENT_VERSION, false);
-		wp_register_script('ctl-horizontal-tm-js', COOL_TIMELINE_PLUGIN_URL . 'assets/js/ctl_hori_scripts.min.js', array('jquery'), COOL_TIMELINE_CURRENT_VERSION, false);
+		wp_register_script('ctl-scripts', CTL_PLUGIN_URL . 'assets/js/ctl_scripts.min.js', array('jquery'), CTL_V, false);
+		wp_register_script('ctl-horizontal-tm-js', CTL_PLUGIN_URL . 'assets/js/ctl_hori_scripts.min.js', array('jquery'), CTL_V, false);
 		// load settings for compacy layout
-		wp_register_script('ctl-masonry', COOL_TIMELINE_PLUGIN_URL . 'assets/js/masonry.pkgd.min.js', array('jquery'), COOL_TIMELINE_CURRENT_VERSION, false);
-		wp_register_script('ctl-compact-js', COOL_TIMELINE_PLUGIN_URL . 'assets/js/ctl_compact_scripts.min.js', array('jquery','ctl-masonry'), COOL_TIMELINE_CURRENT_VERSION, false);
+		wp_register_script('ctl-masonry', CTL_PLUGIN_URL . 'assets/js/masonry.pkgd.min.js', array('jquery'), CTL_V, false);
+		wp_register_script('ctl-compact-js', CTL_PLUGIN_URL . 'assets/js/ctl_compact_scripts.min.js', array('jquery','ctl-masonry'), CTL_V, false);
 	  	// on scroll animations 
-		wp_register_style('aos-css',COOL_TIMELINE_PLUGIN_URL. 'assets/css/aos.css', null, COOL_TIMELINE_CURRENT_VERSION, 'all');
-		wp_register_script('aos-js', COOL_TIMELINE_PLUGIN_URL . 'assets/js/aos.js', array('jquery'), COOL_TIMELINE_CURRENT_VERSION, true);
+		wp_register_style('aos-css',CTL_PLUGIN_URL. 'assets/css/aos.css', null, CTL_V, 'all');
+		wp_register_script('aos-js', CTL_PLUGIN_URL . 'assets/js/aos.js', array('jquery'), CTL_V, true);
   
 	}
     
@@ -193,7 +195,7 @@ class CTL_styles
         $styles = '';
       
         if ($timeline_background) {
-            $styles.='.cool_timeline.cool-timeline-wrapper {background:'.$timeline_bg_color.';}';
+            $styles.='.cool_timeline.cool-timeline-wrapper {background:'.$timeline_bg_color.'; padding-inline: 15px;}';
         }
           
         $styles.=' 
@@ -219,7 +221,11 @@ class CTL_styles
             $styles.=' .cool-timeline.white-timeline .timeline-year{
                 -webkit-box-shadow: 0 0 0 4px white, inset 0 0 0 2px rgba(0, 0, 0, 0.05), 0 0 0 8px '.$line_color.';
                 box-shadow: 0 0 0 4px white, inset 0 0 0 2px rgba(0, 0, 0, 0.05), 0 0 0 8px '.$line_color.';
-            }';              
+            }';    
+            $styles.=' .cool-timeline .timeline-year::before,
+            .cool-timeline.one-sided .timeline-year::before{
+             background-color:'.$line_color.';   
+            }';        
             $styles.='.cool-timeline.white-timeline .timeline-post .iconbg-turqoise{
                 box-shadow: 0 0 0 4px white, inset 0 0 0 2px #fff, 0 0 0 8px '.$line_color.';
             }';      
@@ -256,15 +262,15 @@ class CTL_styles
       
         $styles.='
         .cool-timeline .timeline-post .timeline-content h2.content-title,
-        .ctl-popup-content h2{
+        .ctl_glightbox_container .ctl_glightbox_title{
             '.$story_title_typo.';
         } 
-        .ctl-popup-content .story-posted-date {
+        .ctl_glightbox_content .ctl_glightbox_date {
             font-family:'.$story_title_font_family.';           
         }';
         $styles.=' .cool-timeline .timeline-post .timeline-content .content-details,
         .cool-timeline .timeline-post .timeline-content .content-details p,
-        .ctl-popup-content{
+        .ctl_glightbox_container .ginlined-content{
            '.$story_content_typo.';
         }';
        
@@ -369,8 +375,7 @@ class CTL_styles
             .cool-timeline.white-timeline  .timeline-post.odd .timeline-meta .meta-details,
             .ctl_road_map_wrp li.odd .ctl-story-year,
             .ctl_road_map_wrp li.odd .ctl-story-title,
-            .ctl_road_map_wrp li.odd .ctl-story-title a,
-            .ctl-popup-content h2{
+            .ctl_road_map_wrp li.odd .ctl-story-title a{
                 color:'.$second_post_color.';
             }';
             $styles.='

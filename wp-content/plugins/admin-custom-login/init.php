@@ -119,7 +119,6 @@ function acl_admin_custom_login_css()
         wp_enqueue_style('wl-acl-googleapis-css_02');
         wp_register_style('wl-acl-googleapis-css_03', 'https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic|Montserrat:400,700');
         wp_enqueue_style('wl-acl-googleapis-css_03');
-        // wp_enqueue_style('fonts', WEBLIZAR_NALF_PLUGIN_URL.'fonts/stylesheet.css');
     }
 }
 
@@ -1030,7 +1029,7 @@ function acl_import_settings()
         'login_bg_repeat' 			=> $login_bg_repeat,
         'login_bg_position' 		=> $login_bg_position,
         'login_enable_shadow' 		=> $login_enable_shadow,
-        'login_enable_language_switcher' 		=> $login_enable_language_switcher,
+        'login_enable_language_switcher'=> isset($login_enable_language_switcher) ? $login_enable_language_switcher : '',
         'login_shadow_color' 		=> $login_shadow_color,
         'log_form_above_msg' 		=> $log_form_above_msg,
         'login_pass_reset_msg' 		=> $login_pass_reset_msg,

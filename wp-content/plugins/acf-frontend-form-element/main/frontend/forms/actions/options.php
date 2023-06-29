@@ -3,7 +3,7 @@ namespace Frontend_Admin\Actions;
 
 use Frontend_Admin\Plugin;
 use Frontend_Admin\Classes\ActionBase;
-use Frontend_Admin\Widgets;
+use Frontend_Admin\Forms\Actions;
 use Elementor\Controls_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -76,9 +76,14 @@ if ( ! class_exists( 'ActionOptions' ) ) :
 					if ( ! isset( $option['key'] ) ) {
 						continue;
 					}
-					$field = acf_get_field( $option['key'] );
+					$field = acf_maybe_get_field( $option['key'] );
+
 					if ( ! $field ) {
-						continue;
+						if( isset( $form['fields'][$option['key']] ) ){
+							$field = $form['fields'][$option['key']];
+						}else{
+							continue;
+						}
 					}
 
 					acf_update_value( $option['_input'], 'options', $field );

@@ -14,9 +14,9 @@
         setTimeout(function() {
  
             $('.compact-wrapper .cooltimeline_cont').find('.timeline-mansory').each(function(index) {
- 
+
                 var leftPos = $(this).position().left;
- 
+
                 if (leftPos <= 0) {
                     var topPos = $(this).position().top + left_plus;
                     $($(".timeline-mansory").get(i)).removeClass("ctl-right");
@@ -53,7 +53,8 @@
                     'top': topPos + 'px'
                 });
  
-                $('.compact-wrapper .cooltimeline_cont').css({
+                let parent_wrapper=$(this).closest('.compact-wrapper .cooltimeline_cont');
+                $(parent_wrapper).css({
                     'height': firstBottom + 'px'
                 });
  
@@ -113,9 +114,10 @@
                 'top': topPos + 'px'
             });
  
-            $('.compact-wrapper .cooltimeline_cont').css({
-                'height': firstBottom + 'px'
-            });
+                let parent_wrapper=$(this).closest('.compact-wrapper .cooltimeline_cont');
+                $(parent_wrapper).css({
+                    'height': firstBottom + 'px'
+                });
  
         });
     });

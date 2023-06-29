@@ -1,7 +1,7 @@
 <?php
-namespace Frontend_Admin\Widgets;
+namespace Frontend_Admin\Elementor\Widgets;
 
-use Frontend_Admin\Widgets\ACF_Elementor_Form_Base;
+
 
 
 
@@ -10,7 +10,7 @@ use Frontend_Admin\Widgets\ACF_Elementor_Form_Base;
  *
  * @since 1.0.0
  */
-class Edit_Options_Widget extends ACF_Frontend_Form_Widget {
+class Edit_Options_Widget extends Frontend_Form {
 
 
 	/**

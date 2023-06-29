@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Admin Custom Login
- * Version: 3.4.7
+ * Version: 3.5.1
  * Description: Customize Your WordPress Login Screen Amazingly - Add Own Logo, Add Social Profiles, Login Form Positions, Background Image Slide Show
  * Author: Weblizar
  * Author URI: https://weblizar.com/plugins/

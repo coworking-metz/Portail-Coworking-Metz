@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     endif;
 
     $cool_plugins_docs = "https://docs.coolplugins.net/";
-    $cool_plugins_more_info = COOL_TIMELINE_DEMO_URL;
+    $cool_plugins_more_info ='https://cooltimeline.com/demo/?utm_source=ctl_plugin&utm_medium=inside&utm_campaign=demo&utm_content=dashboard';
 ?>
 
 <div id="cool-plugins-container" class="<?php echo esc_attr($this->main_menu_slug) ; ?>">

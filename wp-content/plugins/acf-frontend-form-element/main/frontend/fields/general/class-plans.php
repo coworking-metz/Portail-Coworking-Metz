@@ -52,78 +52,63 @@ if ( ! class_exists( 'Frontend_Admin\Field_Types\plans' ) ) :
 		function render_field( $field ) {
 
 			// convert
-			$value   = acf_get_array( $field['value'] );
+			$field['value'] = acf_get_array( $field['value'] );
 			$plans = fea_instance()->plans_handler->get_plans();
 
 			$choices = [];
 
-			foreach( $plans as $plan ){
-				$choices[$plan->ID] = $plan->title;
-			}
-
-			// placeholder
-			if ( empty( $field['placeholder'] ) ) {
-				$field['placeholder'] = _x( 'Select', 'verb', 'acf' );
-			}
-
-			// add empty value (allows '' to be selected)
-			if ( empty( $value ) ) {
-				$value = array( '' );
-			}
-
-			// prepend empty choice
-			// - only for single selects
-			// - have tried array_merge but this causes keys to re-index if is numeric (post ID's)
-			if ( $field['allow_null'] && ! $field['multiple'] ) {
-				$choices = array( '' => "- {$field['placeholder']} -" ) + $choices;
-			}
-
-		/* 	// clean up choices if using ajax
-			if ( $field['ui'] && $field['ajax'] ) {
-				$minimal = array();
-				foreach ( $value as $key ) {
-					if ( isset( $choices[ $key ] ) ) {
-						$minimal[ $key ] = $choices[ $key ];
-					}
-				}
-				$choices = $minimal;
-			}
-*/
-			// vars
-			$select = array(
-				'id'               => $field['id'],
-				'class'            => $field['class'],
-				'name'             => $field['name'],
-				'data-placeholder' => $field['placeholder'],
-				'data-allow_null'  => $field['allow_null'],
-			);
-
-		
-
-			// special atts
-			if ( ! empty( $field['readonly'] ) ) {
-				$select['readonly'] = 'readonly';
-			}
-			if ( ! empty( $field['disabled'] ) ) {
-				$select['disabled'] = 'disabled';
-			}
-			if ( ! empty( $field['ajax_action'] ) ) {
-				$select['data-ajax_action'] = $field['ajax_action'];
-			}				
-
-
-			// append
-			$select['value']   = $value;
-			$select['choices'] = $choices;
-
-			// render
-			acf_select_input( $select );
 			?>
+			<div class="fea-plans">
+
+			<?php
+			foreach( $plans as $plan ){
+				$this->render_single_plan( $plan, $field );
+			}
+			$this->render_single_plan( 'clone', $field );
+			?>
+			</div>
 			<button type="button" class="acf-btn acf-btn-secondary add-plan"><?php esc_html_e( 'Add New Plan', 'acf-frontend-form-element' ); ?></button>
 
 			<?php
 		}
 
+		function render_single_plan( $plan, $field ){
+			if( 'clone' == $plan ){
+				$choice = [
+					'label' => '',
+					'value' => '',
+					'name' => $field['name'],
+					'disabled' => 'disabled'
+				];
+			}else{
+				$choice = [
+					'label' => $plan['title'],
+					'value' => $plan['id'],
+					'name' => $field['name']
+				];
+				if( in_array( intval( $plan['id'] ), $field['value'], true ) ){
+					$choice['checked'] = true;
+				}
+			}
+			
+			?>
+			<div class="fea-single-plan <?php if( 'clone' == $plan ) echo 'acf-hidden clone'; ?>" data-plan="<?php esc_attr_e( $choice['value'] ); ?>">
+			<?php
+			$label = '';
+			if ( isset( $choice['label'] ) ) {
+				$label = $choice['label'];
+				unset( $choice['label'] );
+			}
+		
+			// Render.
+			$checked = isset( $choice['checked'] );
+			echo '<label' . ( $checked ? ' class="selected"' : '' ) . '><input type="radio" ' . acf_esc_attr( $choice ) . '/> <span class="fea-plan-title">' . acf_esc_html( $label ) . '</span></label>';
+			?>
+			<a href="#" title="<?php esc_html_e( 'Edit Plan', 'acf-frontend-form-element' ); ?>" class="acf-icon -pencil small edit-plan"></a>
+			<a href="#" title="<?php esc_html_e( 'Delete Plan', 'acf-frontend-form-element' ); ?>" class="acf-icon -minus small delete-plan"></a>
+			</div>
+			<?php
+		}
 
 	}
 

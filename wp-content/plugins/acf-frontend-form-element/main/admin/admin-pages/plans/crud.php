@@ -20,6 +20,7 @@ if( ! class_exists( 'Frontend_Admin\Admin\Plans_Crud' ) ) :
 				description text NULL,
 				pricing int NOT NULL,
 				currency text NOT NULL,
+				plan_value JSON NULL,
 				plan_parent int NOT NULL,
 				menu_order int NOT NULL,
 				UNIQUE KEY id (id)
@@ -29,7 +30,39 @@ if( ! class_exists( 'Frontend_Admin\Admin\Plans_Crud' ) ) :
             maybe_create_table( $table_name, $sql );
 		}
 
-		public function insert_plan( $args ){
+		public function insert_plan( $args = [] ){
+			if( empty( $args['created_at'] ) ){
+				$args['created_at'] = current_time( 'mysql' );
+			}
+	
+			if( empty( $args['title'] ) ){
+				$args['title'] = '(no name)';
+			}
+
+			if( empty( $args['slug'] ) && '(no name)' !== $args['title'] ){
+				$args['slug'] = sanitize_title( $args['title'] );
+			}
+
+			if( empty( $args['expires_after'] ) ){
+				$args['expires_after'] = 'never';
+			}
+
+			if( empty( $args['pricing'] ) ){
+				$args['pricing'] = 0;
+			}
+
+			if( empty( $args['currency'] ) ){
+				$args['currency'] = 'USD';
+			}
+
+			if( empty( $args['plan_parent'] ) ){
+				$args['plan_parent'] = 0;
+			}
+
+			if( empty( $args['menu_order'] ) ){
+				$args['menu_order'] = 0;
+			}
+
 			global $wpdb;
 			$wpdb->insert( $wpdb->prefix . 'fea_plans', $args );
 			return $wpdb->insert_id;
@@ -47,11 +80,11 @@ if( ! class_exists( 'Frontend_Admin\Admin\Plans_Crud' ) ) :
 
 		public function get_plan( $id = 0 ){
 			if( ! $id ) return $id;
-
+			
 			global $wpdb;
 			$plan = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}fea_plans WHERE id = %d", $id ) );
 
-            if( $plan->$by == $id ) return $plan;
+            if( $plan->id == $id ) return $plan;
 
             return false;
 		}
@@ -107,11 +140,27 @@ if( ! class_exists( 'Frontend_Admin\Admin\Plans_Crud' ) ) :
 			return $wpdb->get_var( $sql );
 		}
 
+		public function ajax_delete_plan(){
+			// validate
+			if ( ! acf_verify_ajax() ) {
+				die();
+			}
+
+			if( empty( $_POST['plan'] ) ) wp_send_json_error( __( 'No plan found', 'acf-frontend-form-element' ) );
+
+			$plan_id = intval( $_POST['plan'] );
+
+			$deleted = $this->delete_plan( $plan_id );
+
+			if( 'success' == $deleted ) wp_send_json_success();
+
+			wp_send_json_error( __( 'Could not delete plan.', 'acf-frontend-form-element' ) );
+		}
 		public function delete_plan( $id = 0 ){
 			if( $id == 0 ) return $id;
 			global $wpdb;
 			$wpdb->delete( $wpdb->prefix.'fea_plans', array( 'id' => $id ) );
-			return 1;
+			return 'success';
 		}
 
         public function plans_page_options(){
@@ -137,7 +186,7 @@ if( ! class_exists( 'Frontend_Admin\Admin\Plans_Crud' ) ) :
 
 		public function get_plan_form( $plan_id ) {
 			if ( is_numeric( $plan_id ) ) {
-				$plan = $this->get_plan( $plan_id );
+				$plan = $this->get_plan( intval( $plan_id ) );
 				if ( ! $plan ) {
 					esc_html_e( 'Plan not found. Did you erase it?', 'acf-frontend-form-element' );
 					return false;
@@ -154,15 +203,19 @@ if( ! class_exists( 'Frontend_Admin\Admin\Plans_Crud' ) ) :
 					'expires_after' => 'never',
 					'pricing' => 1,
 					'currency' => 'USD',
+					'plan_value' => [
+						
+					]
 				];
 			} else {
-				$submit_value    = __( 'Updated', 'acf-frontend-form-element' );
+				$submit_value    = __( 'Update', 'acf-frontend-form-element' );
 				$success_message = __( 'Plan has been updated successfully.', 'acf-frontend-form-element' );
 				$defaults = [
 					'title' => $plan->title,
 					'expires_after' => $plan->expires_after,
 					'pricing' => $plan->pricing,
 					'currency' => $plan->currency,
+					''
 				];
 			}
 
@@ -177,24 +230,35 @@ if( ! class_exists( 'Frontend_Admin\Admin\Plans_Crud' ) ) :
 				'kses'                => 0,
 				'no_cookies'          => 1,
 				'no_record'           => 1,
-				'ajax_submit'         => 0,
+				'ajax_submit'         => 1,
 				'update_message'      => $success_message,
 				'show_update_message' => 1,
 				'custom_fields_save'  => 'plan', 
 				'plan_id'			  => $plan_id,	
 				'default_submit_button' => 1,			  
-				'fields'			  => [
-					array(
-						'key'               => 'title',
+				'field_objects' 	  => [
+					'title' => array(
 						'name'               => 'title',
+						'key'               => 'title',
 						'label'             => __( 'Title', 'acf-frontend-form-element' ),
 						'type'              => 'text',
 						'instructions'      => '',
 						'default_value'     => $defaults['title'],
 					),
-					array(
-						'key'               => 'expires_after',
+					/* 'slug' => array(
+						'name'               => 'slug',
+						'key'               => 'slug',
+						'label'             => __( 'Slug', 'acf-frontend-form-element' ),
+						'type'              => 'text',
+						'instructions'      => '',
+						'default_value'     => sanitize_title( $defaults['title'] ),
+						'wrapper'     		=> array(
+							'class' => 'post-slug-field',
+						),
+					), */
+					/* 'expires_after' => array(
 						'name'              => 'expires_after',
+						'key'              => 'expires_after',
 						'label'             => __( 'Expires After', 'acf-frontend-form-element' ),
 						'type'              => 'select',
 						'choices'			=> [
@@ -203,25 +267,27 @@ if( ! class_exists( 'Frontend_Admin\Admin\Plans_Crud' ) ) :
 							'month' => __( 'Month', 'acf-frontend-form-element' ),
 							'year' => __( 'Year', 'acf-frontend-form-element' ),
 						],
+						'return_format'		=> 'value',
 						'instructions'      => '',
 						'default_value'     => $defaults['expires_after'],
 						'multiple'	=> 0
-					),
-					array(
-						'key'               => 'pricing',
+					), */
+					'pricing' => array(
 						'name'               => 'pricing',
+						'key'               => 'pricing',
 						'label'             => __( 'Price', 'acf-frontend-form-element' ),
 						'type'              => 'number',
 						'instructions'      => '',
 						'min'    			=> 1,
 						'default_value'     => $defaults['pricing'],
 					),
-					array(
-						'key'               => 'currency',
+					'currency' => array(
 						'name'               => 'currency',
+						'key'               => 'currency',
 						'label'             => __( 'Currency', 'acf-frontend-form-element' ),
 						'type'              => 'select',
 						'choices'			=> $currencies,
+						'return_format'		=> 'value',
 						'instructions'      => '',
 						'default_value'     => $defaults['currency'],
 						'multiple'	=> 0
@@ -253,17 +319,29 @@ if( ! class_exists( 'Frontend_Admin\Admin\Plans_Crud' ) ) :
 		}
 
 		function save_plan( $form ){
-			$record = $form['record'];
-			if ( empty( $form['plan_id'] ) || empty( $record['fields']['plan'] ) ) {
+			if ( empty( $form['plan_id'] ) || empty( $form['record']['fields']['plan'] ) ) {
 				return $form;
 			}
 
+			$plan_args = [];
+			foreach( $form['record']['fields']['plan'] as $key => $field ){
+				$plan_args[$key] = $field['_input'];
+			}
+
+			$response = array(
+				'modal' => true,
+				'plan' => $plan_args
+			);
+
 			if( is_numeric( $form['plan_id'] ) ){
-				$this->update_plan( $form['plan_id'], $record['fields']['plan'] );
+				$this->update_plan( $form['plan_id'], $plan_args );
+				$response['plan']['id'] = $form['plan_id'];
 			}else{
-				$this->insert_plan( $record['fields']['plan'] );
+				$response['new'] = true;
+				$response['plan']['id'] = $this->insert_plan( $plan_args );
 			}			
 
+			wp_send_json_success( $response );
 
 		}
        
@@ -271,6 +349,7 @@ if( ! class_exists( 'Frontend_Admin\Admin\Plans_Crud' ) ) :
             $this->create_plans();	
 
 			add_action( 'frontend_admin/form/on_submit', [ $this, 'save_plan' ] );
+			add_action( 'wp_ajax_frontend_admin/plans/delete', [ $this, 'ajax_delete_plan'] );
 
           // add_action( 'admin_menu', array( $this, 'plans_list' ), 20 );	
 		//	add_filter( 'set-screen-option', array( $this, 'set_plans_per_page' ), 11, 3 );

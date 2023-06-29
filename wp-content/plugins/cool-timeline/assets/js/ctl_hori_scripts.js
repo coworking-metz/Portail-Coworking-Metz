@@ -1,12 +1,4 @@
-jQuery('document').ready(function($){
-	 $(".cool_timeline").find("a[class^='ctl_prettyPhoto']").prettyPhoto({
-	 social_tools: false,
-	 show_title:false,
-	});
-	$(".cool_timeline_horizontal").find("a[ref^='prettyPhoto']").prettyPhoto({
-	 social_tools: false,
-	 show_title:false,
-	}); 
+jQuery('document').ready(function($){ 
 var nextBtn='<div class="clt_h_nav_btn ctl-slick-next"><i class="fa fa-angle-right"></i></div>';
 var preBtn='<div class="clt_h_nav_btn ctl-slick-prev"><i class="fa fa-angle-left"></i></div>';
 $('.cool_timeline_horizontal').each(function(){

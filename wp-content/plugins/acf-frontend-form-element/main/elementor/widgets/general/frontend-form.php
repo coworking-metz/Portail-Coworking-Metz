@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend_Admin\Widgets;
+namespace Frontend_Admin\Elementor\Widgets;
 
 use  Frontend_Admin\Plugin;
 use  Frontend_Admin\FEA_Module;
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class ACF_Frontend_Form_Widget extends Widget_Base {
+class Frontend_Form extends Widget_Base {
 
 	public $form_defaults;
 	/**
@@ -727,94 +727,14 @@ class ACF_Frontend_Form_Widget extends Widget_Base {
 	 */
 	protected function render() {
 		$wg_id = $this->get_id();
-		global $post, $fea_instance;
-		$current_post_id = $fea_instance->elementor->get_current_post_id();
-		$settings        = $this->get_settings_for_display();
+		$settings = $this->get_settings_for_display();
 
-		if ( ! empty( $settings['admin_forms_select'] ) ) {
-			$form_args = $fea_instance->form_display->get_form( $settings['admin_forms_select'] );
-		} else {
-			$fields = false;
-
-			$form_attributes['data-widget'] = $wg_id;
-
-			$instructions = isset( $settings['field_instruction_position'] ) ? $settings['field_instruction_position'] : '';
-
-			$form_args = array(
-				'id'                    => $wg_id,
-				'form_attributes'       => $form_attributes,
-				'default_submit_button' => 1,
-				'submit_value'          => $settings['submit_button_text'],
-				'instruction_placement' => $instructions,
-				'html_submit_spinner'   => '',
-				'label_placement'       => 'top',
-				'field_el'              => 'div',
-				'kses'                  => ! $settings['allow_unfiltered_html'],
-				'html_after_fields'     => '',
-			);
-			$form_args = $this->get_settings_to_pass( $form_args, $settings );
-
-			if ( isset( $fea_instance->remote_actions ) ) {
-				foreach ( $fea_instance->remote_actions as $name => $action ) {
-					if ( ! empty( $settings['more_actions'] ) && in_array( $name, $settings['more_actions'] ) && ! empty( $settings[ "{$name}s_to_send" ] ) ) {
-						$form_args[ "{$name}s" ] = $settings[ "{$name}s_to_send" ];
-					}
-				}
-			}
-
-			if ( isset( $settings['user_manager'] ) && $settings['user_manager'] != 'none' ) {
-
-				if ( $settings['user_manager'] == 'current_user' ) {
-					$user_manager = get_current_user_id();
-				} else {
-					$user_manager = $settings['manager_select'];
-				}
-
-				$form_args['user_manager'] = $user_manager;
-			}
-
-			if ( empty( $settings['hide_field_labels'] ) && isset( $settings['field_label_position'] ) ) {
-				$form_args['label_placement'] = $settings['field_label_position'];
-			}
-			if ( isset( $settings['no_reload'] ) && $settings['no_reload'] == 'true' || isset( $ajax_submit ) ) {
-				$form_args['ajax_submit'] = true;
-			}
-		}
-
-		if ( isset( $settings['show_in_modal'] ) ) {
-			$form_args['_in_modal'] = true;
-		}
-
-		$form_args = apply_filters( 'frontend_admin/form_args', $form_args, $settings );
+		$form_args = apply_filters( 'frontend_admin/elementor/form/args', $settings, $wg_id );
 
 		$form_args['page_builder'] = 'elementor';
-		$fea_instance->form_display->render_form( $form_args );
 
-	}
+		fea_instance()->form_display->render_form( $form_args );
 
-	public function get_settings_to_pass( $form_args, $settings ) {
-		 $settings_to_pass = array( 'form_title', 'show_form_title', 'new_post_type', 'new_post_status', 'saved_draft_message', 'new_post_terms', 'new_terms_select', 'new_product_status', 'new_product_terms', 'new_product_terms_select', 'new_term_taxonomy', 'new_user_role', 'hide_admin_bar', 'username_default', 'login_user', 'steps_tabs_display', 'steps_counter_display', 'counter_prefix', 'counter_suffix', 'validate_steps', 'steps_display', 'tab_links', 'step_number', 'display_name_default', 'redirect', 'custom_url', 'error_message', 'custom_fields_save', 'redirect_action', 'update_message', 'more_actions', 'style_messages', 'who_can_see', 'by_role', 'by_user_id', 'dynamic', 'dynamic_manager', 'not_allowed', 'not_allowed_message', 'not_allowed_content', 'multi', 'fields_selection', 'first_step', 'attribute_fields', 'variable_fields', 'tabs_align', 'limiting_rules', 'limit_reached', 'limit_submit_message', 'limit_submit_content', 'limit_submissions', 'save_all_data', 'save_form_submissions', 'wp_uploader', 'modal_button_icon', 'modal_button_text' );
-
-		if ( ! class_exists( 'One_Click_Modal' ) ) {
-			$settings_to_pass[] = 'show_in_modal';
-		}
-
-		$types = array( 'post', 'user', 'term', 'product' );
-		foreach ( $types as $type ) {
-			$settings_to_pass[] = "save_to_{$type}";
-			$settings_to_pass[] = "{$type}_to_edit";
-			$settings_to_pass[] = "url_query_{$type}";
-			$settings_to_pass[] = "{$type}_select";
-		}
-
-		foreach ( $settings_to_pass as $setting ) {
-			if ( isset( $settings[ $setting ] ) ) {
-				$form_args[ $setting ] = $settings[ $setting ];
-			}
-		}
-		$form_args['show_update_message'] = $settings['show_success_message'];
-
-		return $form_args;
 	}
 
 	public function __construct( $data = array(), $args = null ) {
@@ -826,6 +746,7 @@ class ACF_Frontend_Form_Widget extends Widget_Base {
 		$this->form_defaults = $this->get_form_defaults();
 
 		fea_instance()->elementor->form_widgets[] = $this->get_name();
+
 	}
 
 }

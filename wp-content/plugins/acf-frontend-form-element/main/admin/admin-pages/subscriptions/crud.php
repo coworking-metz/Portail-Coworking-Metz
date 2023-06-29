@@ -17,7 +17,7 @@ if( ! class_exists( 'Frontend_Admin\Admin\Subscriptions_Crud' ) ) :
 				created_at datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 				expires_at datetime DEFAULT '0000-00-00 00:00:00' NULL,
 				status text NOT NULL,
-				user int NOT NULL,
+				user text NOT NULL,
 				plan int NOT NULL,
 				gross text NOT NULL,
 				payment_token text NULL,
@@ -30,6 +30,9 @@ if( ! class_exists( 'Frontend_Admin\Admin\Subscriptions_Crud' ) ) :
 		}
 
 		public function insert_subscription( $args ){
+			if( empty( $args['created_at'] ) ){
+				$args['created_at'] = current_time( 'mysql' );
+			}
 			global $wpdb;
 			$wpdb->insert( $wpdb->prefix . 'fea_subscriptions', $args );
 			return $wpdb->insert_id;
@@ -72,6 +75,10 @@ if( ! class_exists( 'Frontend_Admin\Admin\Subscriptions_Crud' ) ) :
 			) );
 
 			$sql = "SELECT * FROM {$wpdb->prefix}fea_subscriptions";
+
+			if( ! empty( $args['user'] ) ){
+				$sql .= $wpdb->prepare( ' WHERE user LIKE %s', intval( $args['user'] ) );
+			}
 
 			if( ! empty( $_REQUEST['s'] ) ){
 				$value = $_REQUEST['s'] . '%';

@@ -150,7 +150,14 @@ function superpwa_register_settings() {
 			'superpwa_basic_settings_section',						// Page slug
 			'superpwa_basic_settings_section'						// Settings Section ID
 		);
-		
+		// Monodchome Icon
+		add_settings_field(
+			'superpwa_app_monochrome',								// ID
+			__('Monochome Icon', 'super-progressive-web-apps'),	    // Title
+			'superpwa_app_monochrome_icon_cb',						// Callback function
+			'superpwa_basic_settings_section',						// Page slug
+			'superpwa_basic_settings_section'						// Settings Section ID
+		);
 		// Splash Screen Icon
 		add_settings_field(
 			'superpwa_splash_icon',									// ID
@@ -241,6 +248,14 @@ function superpwa_register_settings() {
 			'superpwa_basic_settings_section'						// Settings Section ID
 		);
 
+		add_settings_field(
+			'superpwa_related_applications',									// ID
+			esc_html__('Related Application', 'super-progressive-web-apps'),	// Title
+			'superpwa_related_applications_cb',								// Callback function
+			'superpwa_basic_settings_section',						// Page slug
+			'superpwa_basic_settings_section'						// Settings Section ID
+		);
+
 	// PWA Status
     add_settings_section(
         'superpwa_pwa_status_section',					// ID
@@ -288,7 +303,7 @@ function superpwa_register_settings() {
     	// Disabling "Add to home screen"
 		add_settings_field(
 			'superpwa_disable_add_to_home',								// ID
-			__('Disable "Add to home screen"', 'super-progressive-web-apps'),				// Title
+			__('<label for="superpwa_settings[disable_add_to_home]">Disable "Add to home screen"</label>', 'super-progressive-web-apps'),				// Title
 			'superpwa_disable_add_to_home_cb',								// CB
 			'superpwa_pwa_advance_section',							// Page slug
 			'superpwa_pwa_advance_section'							// Settings Section ID
@@ -306,7 +321,7 @@ function superpwa_register_settings() {
 		// Yandex Support
 		add_settings_field(
 			'superpwa_yandex_support_shortcut',								// ID
-			__('Yandex support', 'super-progressive-web-apps'),				// Title
+			__('<label for="superpwa_settings[yandex_support]">Yandex support</label>', 'super-progressive-web-apps'),				// Title
 			'superpwa_yandex_support_cb',								// CB
 			'superpwa_pwa_advance_section',							// Page slug
 			'superpwa_pwa_advance_section'							// Settings Section ID
@@ -314,7 +329,7 @@ function superpwa_register_settings() {
 		// Analytics support
 		add_settings_field(
 			'superpwa_analytics_support_shortcut',								// ID
-			__('Offline analytics ', 'super-progressive-web-apps'),				// Title
+			__('<label for="superpwa_settings[analytics_support]">Offline analytics </label>', 'super-progressive-web-apps'),				// Title
 			'superpwa_analytics_support_cb',								// CB
 			'superpwa_pwa_advance_section',							// Page slug
 			'superpwa_pwa_advance_section'							// Settings Section ID
@@ -322,7 +337,7 @@ function superpwa_register_settings() {
 		// Cache External Origin URLs
 		add_settings_field(
 			'superpwa_cache_external_urls_shortcut',								// ID
-			__('Cache External Origin URLs', 'super-progressive-web-apps'),				// Title
+			__('<label for="superpwa_settings[cache_external_urls]">Cache External Origin URLs</label>', 'super-progressive-web-apps'),				// Title
 			'superpwa_cache_external_urls_support_cb',								// CB
 			'superpwa_pwa_advance_section',							// Page slug
 			'superpwa_pwa_advance_section'							// Settings Section ID
@@ -348,14 +363,6 @@ function superpwa_register_settings() {
 			'superpwa_exclude_add_to_homescreen_shortcut',								// ID
 			__('Exclude Add to homescreen banner', 'super-progressive-web-apps'),				// Title
 			'superpwa_exclude_add_to_homescreen_cb',								// CB
-			'superpwa_pwa_advance_section',							// Page slug
-			'superpwa_pwa_advance_section'							// Settings Section ID
-		);
-		//Regenerate Service worker
-		add_settings_field(
-			'superpwa_bypass_sw_url_cache',								// ID
-			__('Bypass Service Worker Caching', 'super-progressive-web-apps'),				// Title
-			'superpwa_bypass_sw_url_cache_cb',								// CB
 			'superpwa_pwa_advance_section',							// Page slug
 			'superpwa_pwa_advance_section'							// Settings Section ID
 		);
@@ -390,9 +397,9 @@ function superpwa_validater_and_sanitizer( $settings ) {
 	
 	// Sanitize Application Short Name
 	if(function_exists('mb_substr')){
-	$settings['app_short_name'] = mb_substr( sanitize_text_field( $settings['app_short_name'] ) == '' ? get_bloginfo( 'name' ) : sanitize_text_field( $settings['app_short_name'] ), 0, 15 );
+	$settings['app_short_name'] = mb_substr( sanitize_text_field( $settings['app_short_name'] ) == '' ? get_bloginfo( 'name' ) : sanitize_text_field( $settings['app_short_name'] ), 0, 20 );
 	} else {
-	    $settings['app_short_name'] = substr( sanitize_text_field( $settings['app_short_name'] ) == '' ? get_bloginfo( 'name' ) : sanitize_text_field( $settings['app_short_name'] ), 0, 15 );
+	    $settings['app_short_name'] = substr( sanitize_text_field( $settings['app_short_name'] ) == '' ? get_bloginfo( 'name' ) : sanitize_text_field( $settings['app_short_name'] ), 0, 20 );
 	}
 	
 	// Sanitize description
@@ -411,7 +418,9 @@ function superpwa_validater_and_sanitizer( $settings ) {
 	
 	// Sanitize splash screen icon
 	$settings['splash_icon'] = sanitize_text_field( superpwa_httpsify( $settings['splash_icon'] ) );
-	
+
+	// Sanitize startpage type
+	$settings['startpage_type'] = sanitize_text_field( $settings['startpage_type'] );
 	/**
 	 * Get current settings already saved in the database.
 	 * 
@@ -472,6 +481,7 @@ function superpwa_get_settings() {
 				'excluded_urls'=> '',
 				'exclude_homescreen'=> '',
 				'bypass_sw_url_cache'=> '',
+				'monochrome_icon'=>'',
 			);
 
 	$settings = get_option( 'superpwa_settings', $defaults );

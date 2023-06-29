@@ -19,7 +19,8 @@ if ( ! class_exists( 'Admin_Settings' ) ) :
 
 		function admin_settings_page() {
 			global $frontend_admin_active_tab;
-			$frontend_admin_active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'welcome'; ?>
+			$frontend_admin_active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'welcome';
+			?>
 
 			<h2 class="nav-tab-wrapper">
 			<?php
@@ -34,6 +35,7 @@ if ( ! class_exists( 'Admin_Settings' ) ) :
 		public function settings_tabs() {
 			global $frontend_admin_active_tab;
 			foreach ( $this->tabs as $name => $label ) {
+
 				?>
 				<a class="nav-tab <?php echo $frontend_admin_active_tab == $name || '' ? 'nav-tab-active' : ''; ?>" href="<?php echo esc_url( admin_url( '?page=' .  'fea-settings&tab=' . $name ) ); ?>"><?php esc_html_e( $label, 'acf-frontend-form-element' ); ?> </a>
 				<?php
@@ -75,16 +77,18 @@ if ( ! class_exists( 'Admin_Settings' ) ) :
 									'hidden_fields'  => array(
 										'admin_page' => $frontend_admin_active_tab,
 									),
+									/* 'form_attributes' => [
+										'class'	=> 'fea-admin-options',
+									], */
 									'_screen_id'     => 'options',
-									'field_objects'  => $admin_fields,
+									'fields'  => $admin_fields,
 									'submit_value'   => __( 'Save Settings', 'acf-frontend-form-element' ),
 									'default_submit_button' => 1,
 									'update_message' => __( 'Settings Saved', 'acf-frontend-form-element' ),
-									'redirect'       => 'custom_url',
+									'redirect'       => 'current',
 									'kses'           => 0,
 									'honeypot'       => 0,
 									'no_record'      => 1,
-									'custom_url'     => admin_url( '?page=' .  'fea-settings&tab=' . sanitize_text_field( $_GET['tab'] ) ),
 								)
 							);
 						} else {
@@ -206,8 +210,8 @@ if ( ! class_exists( 'Admin_Settings' ) ) :
 		public function settings_sections() {
 			include_once __DIR__ . '/admin-pages/submissions/crud.php';
 			
-			include_once __DIR__ . '/admin-pages/plans/crud.php';
-			include_once __DIR__ . '/admin-pages/subscriptions/crud.php';
+			//include_once __DIR__ . '/admin-pages/plans/crud.php';
+			//include_once __DIR__ . '/admin-pages/subscriptions/crud.php'; 
 
 			foreach ( $this->tabs as $tab => $label ) {
 				if ( ! in_array( $tab, array( 'welcome', 'payments', 'pdf', 'tools', 'license' ) ) ) {
@@ -278,6 +282,8 @@ if ( ! class_exists( 'Admin_Settings' ) ) :
 			return $forms_list;
 		}
 
+
+
 		public function __construct() {
 			global $fea_instance;
 
@@ -300,6 +306,7 @@ if ( ! class_exists( 'Admin_Settings' ) ) :
 			add_action( 'admin_menu', array( $this, 'plugin_page' ), 15 );
 			add_action( 'acf/validate_save_post', array( $this, 'validate_save_post' ) );
 			add_action( 'rest_api_init', array( $this, 'register_forms_list' ) );
+
 
 		}
 	}

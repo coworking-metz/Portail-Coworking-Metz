@@ -66,6 +66,7 @@ if ( ! class_exists( 'Dynamic_Values' ) ) :
 				return $form;
 			}
 			foreach ( $form['record']['fields'] as $type => $fields ) {
+				if( 'file_data' == $type ) continue;
 				foreach ( $fields as $key => $field ) {
 
 					if ( ! is_string( $field['_input'] ) ) {
@@ -118,11 +119,18 @@ if ( ! class_exists( 'Dynamic_Values' ) ) :
 					$value    = $this->get_all_fields_values( $form );
 					$replaced = true;
 				}
+
+				
 				if ( preg_match_all( '/acf\s*:\s*(.*)/', $tag, $args ) ) {
 					$value = $this->get_field_value( $args, $form );
 					if ( ! $value ) {
 						$value = $this->get_sub_field_value( $args, $form );
 					}
+					$replaced = true;
+				}
+
+				if ( ! $value && preg_match_all( '/current\s*:\s*(.*)/', $tag, $args ) ) {
+					$value = $this->get_current_data( $args, $form );
 					$replaced = true;
 				}
 
@@ -320,6 +328,12 @@ if ( ! class_exists( 'Dynamic_Values' ) ) :
 			switch ( $field_name ) {
 				case 'id':
 					return $post_id;
+				break;
+				case 'type':
+					if ( isset( $record['post_type']['_input'] ) ) {
+						return $record['post_type']['_input'];
+					}
+					return $edit_post->post_type;
 				break;
 				case 'post_title':
 				case 'title':
@@ -625,11 +639,19 @@ if ( ! class_exists( 'Dynamic_Values' ) ) :
 			return '';
 		}
 
-		function get_field_value( $matches, $form = false ) {
-			if ( ! $form ) {
-				$form = $this->get_current_form();
-			}
+		function get_current_data( $matches, $form = false ) {
+			if( empty( $matches[1][0] ) ) return '';
 
+			switch ( $matches[1][0] ) {
+				case 'year':
+					return date('Y');
+					break;
+				default:
+					return '';
+			}
+		}
+
+		function get_field_value( $matches, $form = false ) {
 			$post_id = isset( $form['record']['post_id'] ) ? $form['record']['post_id'] : false;
 			$record  = array();
 			if ( ! empty( $form['record']['fields'] ) ) {
@@ -735,7 +757,11 @@ if ( ! class_exists( 'Dynamic_Values' ) ) :
 			if ( empty( $field['type'] ) ) {
 				$field = acf_get_field( $field['key'] );
 				if ( ! $field ) {
-					return;
+					if( $form && ! empty( $form['fields'][$_field['key']] ) ){
+						$field = $form['fields'][$field['key']];
+					}else{
+						return;
+					}
 				}
 			}
 

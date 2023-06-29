@@ -4,7 +4,7 @@ namespace Frontend_Admin\Actions;
 use Frontend_Admin\Plugin;
 use Frontend_Admin;
 use Frontend_Admin\Classes\ActionBase;
-use Frontend_Admin\Widgets;
+use Frontend_Admin\Forms\Actions;
 use Elementor\Controls_Manager;
 
 
@@ -353,11 +353,11 @@ if ( ! class_exists( 'ActionTerm' ) ) :
 
 		public function run( $form, $step = false ) {
 			$record = $form['record'];
-			if ( empty( $record['_acf_term'] ) || empty( $record['fields']['term'] ) ) {
+			if ( empty( $record['term'] ) || empty( $record['fields']['term'] ) ) {
 				return $form;
 			}
 
-			$term_id = sanitize_text_field( $record['_acf_term'] );
+			$term_id = $record['term'];
 
 			// allow for custom save
 			$term_id = apply_filters( 'acf/pre_save_term', $term_id, $form );
@@ -372,10 +372,14 @@ if ( ! class_exists( 'ActionTerm' ) ) :
 					if ( ! isset( $_field['key'] ) ) {
 						continue;
 					}
-					$field = acf_get_field( $_field['key'] );
+					$field = acf_maybe_get_field( $_field['key'] );
 
 					if ( ! $field ) {
-						continue;
+						if( isset( $form['fields'][$_field['key']] ) ){
+							$field = $form['fields'][$_field['key']];
+						}else{
+							continue;
+						}
 					}
 
 					$field_type      = $field['type'];
@@ -395,7 +399,7 @@ if ( ! class_exists( 'ActionTerm' ) ) :
 				}
 			}
 
-			$taxonomy = ! empty( $record['_acf_taxonomy_type'] ) ? $record['_acf_taxonomy_type'] : 'category';
+			$taxonomy = ! empty( $record['taxonomy_type'] ) ? $record['taxonomy_type'] : 'category';
 
 			if ( $form['save_to_term'] == 'new_term' ) {
 				$term_data = wp_insert_term( $term_name, $taxonomy, $term_args );
@@ -403,6 +407,8 @@ if ( ! class_exists( 'ActionTerm' ) ) :
 					return $form;
 				} else {
 					$term_id = $term_data['term_id'];
+					$GLOBALS['admin_form']['record']['term'] = $term_id;
+					$form['record']['term'] = $term_id;
 				}
 			} elseif ( is_numeric( $term_id ) ) {
 				wp_update_term( $term_id, $taxonomy, $term_args );

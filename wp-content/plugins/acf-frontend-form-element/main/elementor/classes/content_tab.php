@@ -76,21 +76,6 @@ class ContentTab {
 		}
 
 		$repeater->add_control(
-			'dynamic_acf_fields',
-			array(
-				'label'        => __( 'Current ACF fields', 'acf-frontend-form-element' ),
-				'type'         => Controls_Manager::SWITCHER,
-				'description'  => __( 'Dynamically pull in any field groups from the current post, user, or other data that you are editing.', 'acf-frontend-form-element' ),
-				'label_on'     => __( 'Yes', 'acf-frontend-form-element' ),
-				'label_off'    => __( 'No', 'acf-frontend-form-element' ),
-				'return_value' => 'true',
-				'condition'    => array(
-					'field_type' => array( 'ACF_field_groups' ),
-				),
-			)
-		);
-
-		$repeater->add_control(
 			'field_groups_select',
 			array(
 				'label'       => __( 'ACF Field Groups', 'acf-frontend-form-element' ),
@@ -100,7 +85,6 @@ class ContentTab {
 				'options'     => $field_group_choices,
 				'condition'   => array(
 					'field_type'          => 'ACF_field_groups',
-					'dynamic_acf_fields!' => 'true',
 				),
 			)
 		);
@@ -128,7 +112,6 @@ class ContentTab {
 				'options'     => $field_choices,
 				'condition'   => array(
 					'field_type'          => array( 'ACF_field_groups' ),
-					'dynamic_acf_fields!' => 'true',
 				),
 			)
 		);
@@ -1121,7 +1104,7 @@ class ContentTab {
 			)
 		);
 
-		if ( class_exists( 'woocommerce' ) && isset( $widget->form_defaults['custom_fields_save'] ) ) {
+		if ( isset( $legacy ) && class_exists( 'woocommerce' ) && isset( $widget->form_defaults['custom_fields_save'] ) ) {
 
 			$save_action = $widget->form_defaults['custom_fields_save'];
 			if ( $save_action == 'all' || $save_action == 'product' ) {

@@ -2,7 +2,7 @@
 Contributors: SuperPWA
 Tags: pwa, progressive web apps, manifest, web manifest, android app, chrome app, add to homescreen, mobile web
 Requires at least: 3.6.0
-Tested up to: 6.1
+Tested up to: 6.2
 Requires PHP: 5.3
 Stable tag: trunk
 License: GPLv2 or later
@@ -66,6 +66,7 @@ Here are the current features of Super Progressive Web Apps:
 * New in version 2.0: SuperPWA is now compatible with WordPress installed in a sub-folder. 
 * New in version 2.0: You can now set [display property](https://superpwa.com/doc/web-app-manifest-display-modes/?utm_source=wordpress.org&utm_medium=description) from SuperPWA settings.
 * New in version 2.1.1: SuperPWA now supports Maskable Icons.
+* New in version 2.1.15: SuperPWA now supports Monochrome Icon.
 * [Full changelog](https://superpwa.com/changelog/) 
 
 **Upcoming features:**
@@ -185,6 +186,50 @@ Feel free to get in touch if you have any questions.
 1. Settings page in WordPress Admin > SuperPWA > Settings
 
 == Changelog ==
+
+= 2.2.16 =
+* Date: [27.April.2023](https://superpwa.com/superpwa-2-2-16-release-note/?utm_source=wordpress.org&utm_medium=changelog)
+* New : Add related_applications to manifest #387
+* Enhancement : Label should be clickable for all checkbox labels #411 
+
+
+= 2.2.15 =
+* Date: [12.April.2023](https://superpwa.com/superpwa-2-2-15-release-note/?utm_source=wordpress.org&utm_medium=changelog)
+* New : Added Monochrome icon to manifest  #328
+* Enhancement : Set post as Start Page #328 
+* Enhancement : Increased character limit of app name to 20  #328  
+* BugFixed : Conflict with WP Fastescache plugin. #401
+* BugFixed : Assets not loading with Cache First then Network strategy. #408
+
+= 2.2.14.1 =
+* Date: [02.April.2023](https://superpwa.com/superpwa-2-2-14-1-release-note/?utm_source=wordpress.org&utm_medium=changelog)
+* BugFixed : Media files not loading properly after 2.2.14 update #405
+
+= 2.2.14 =
+* Date: [01.April.2023](https://superpwa.com/superpwa-2-2-14-release-note/?utm_source=wordpress.org&utm_medium=changelog)
+* BugFixed : Call To Action banner should not be shown on inner page #392
+* BugFixed : Super PWA conflicts with the Real Media Library plugin. #391
+* BugFixed : Conflict issue with Wolmart theme #390
+* BugFixed : An error appears in the console if the page contains a video #386
+* BugFixed : QR code is not working #400
+* BugFixed : <a class="superpwa_add_home_close"> effect on SEO #385
+* BugFixed : Conflict with CHP ads block detector #399
+* BugFixed : Need to add JavaScript:void instead of href # in the SuperPwa  #398
+* BugFixed : Need to create an option where the user can show the add-to-screen banner for particular pages. #402
+
+= 2.2.13 =
+* Date: [10.March.2023](https://superpwa.com/superpwa-2-2-13-release-note/?utm_source=wordpress.org&utm_medium=changelog)
+* BugFixed : CTA install banner is appearing even after installing the PWA #381
+* BugFixed : Manifest file showing wrong logo images link #379
+* BugFixed : QR code install link not working #394
+* BugFixed : Preloader showing with delay and takes longer when click is on Image link #395
+* BugFixed : "Stale while revalidate" in the Caching Strategies addon has no effect, it doesn't change the service worker js at all. #396
+
+= 2.2.12 =
+* Date: [13.February.2023](https://superpwa.com/superpwa-2-2-12-release-note/?utm_source=wordpress.org&utm_medium=changelog)
+* BugFixed : Issue with Network first, then Cache #336
+* BugFixed : Preloader not working properly. #375
+* Enhancement :Remove Offer Banner #372
 
 = 2.2.11 =
 * Date: [29.December.2022](https://superpwa.com/superpwa-2-2-11-release-note/?utm_source=wordpress.org&utm_medium=changelog)

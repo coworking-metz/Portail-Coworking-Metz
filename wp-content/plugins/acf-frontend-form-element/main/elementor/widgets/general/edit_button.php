@@ -1,5 +1,5 @@
 <?php
-namespace Frontend_Admin\Widgets;
+namespace Frontend_Admin\Elementor\Widgets;
 
 use Frontend_Admin\Plugin;
 

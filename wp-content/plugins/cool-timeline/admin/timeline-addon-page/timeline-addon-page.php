@@ -243,8 +243,8 @@ if ( !class_exists('cool_plugins_timeline_addons')) {
                 if(isset($this->pro_plugins)){
                     foreach(  $this->pro_plugins as  $plugin)
                     {
-                    if( isset( $plugin['free_version']) && $plugin['free_version'] != null ){
-                        $this->disable_plugins[ $plugin['free_version'] ] = array( 'pro'=>$plugin['slug'] );
+                    if( isset( $plugin['incompatible']) && $plugin['incompatible'] != null ){
+                        $this->disable_plugins[ $plugin['incompatible'] ] = array( 'pro'=>$plugin['slug'] );
                         }
                     }   
                  }
@@ -356,15 +356,15 @@ if ( !class_exists('cool_plugins_timeline_addons')) {
                 $logos_arr=[
                     'cool-timeline'=>'cool-timeline.png',
                     'timeline-widget-addon-for-elementor'=>'timeline-widget-addon-for-elementor.png',
-                    'timeline-widget-pro-addon-for-elementor'=>'timeline-widget-pro-addon-for-elementor.png',
+                    'timeline-widget-addon-for-elementor-pro'=>'timeline-widget-addon-for-elementor-pro.png',
                     'cool-timeline-pro'=>'cool-timeline-pro.png',
                     'timeline-block'=>'timeline-block.png',
                     'timeline-builder-pro'=>'timeline-builder-pro.png'
                 ];
                 if(isset($logos_arr[$slug])){
-                    return $logo_url=COOL_TIMELINE_PLUGIN_URL.'admin/timeline-addon-page/assets/images/'.$logos_arr[$slug];
+                    return $logo_url=CTL_PLUGIN_URL.'admin/timeline-addon-page/assets/images/'.$logos_arr[$slug];
                 }else{
-                    return $logo_url=COOL_TIMELINE_PLUGIN_URL.'admin/timeline-addon-page/assets/images/default-logo.png';
+                    return $logo_url=CTL_PLUGIN_URL.'admin/timeline-addon-page/assets/images/default-logo.png';
                 }
                 
             }

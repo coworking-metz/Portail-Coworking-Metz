@@ -49,7 +49,7 @@ class CoolTmVCAddon
                     "base" => "cool-timeline",
                     "class" => "",
                     "controls" => "full",
-                    "icon" => COOL_TIMELINE_PLUGIN_URL.'assets/images/timeline-icon2-32x32.png', // or css class name which you can reffer in your css file later. Example: "cool-timeline_my_class"
+                    "icon" => CTL_PLUGIN_URL.'assets/images/timeline-icon2-32x32.png', // or css class name which you can reffer in your css file later. Example: "cool-timeline_my_class"
                     "category" => __('Cool Timeline', 'cool-timeline'),
                     "params" => array(
                         array(

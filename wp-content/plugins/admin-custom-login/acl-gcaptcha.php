@@ -78,10 +78,7 @@ function acl_captcha3_form() {
 
 function acl_captcha3_output() {
 	$g_page = unserialize( get_option( 'Admin_custome_login_gcaptcha' ) );
-
 	$site_key_v3 = isset( $g_page['site_key_v3'] ) ? $g_page['site_key_v3'] : '';
-
-	$site_key_v3 = sanitize_key( $site_key_v3 );
 
 	wp_enqueue_script( 'acl-recaptcha-api-js', "https://www.google.com/recaptcha/api.js?render=$site_key_v3" );
 	wp_register_script( 'acl-recaptcha-v3-js', '', array( 'acl-recaptcha-api-js' ) );

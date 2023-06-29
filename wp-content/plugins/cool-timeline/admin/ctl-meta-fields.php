@@ -85,7 +85,7 @@ if( class_exists( 'CSF' ) ) {
                 array(
                     'id'=>'ctl_pro_screenshot',
                     'type'=>'content',
-                    'content'=> '<div class="desc-field"><h4 >Premium Settings | <a target="_blank" href="https://1.envato.market/ct">Buy Pro</a></h4><img src="'.COOL_TIMELINE_PLUGIN_URL.'/assets/images/pro-story-settings.png" style="max-width: 100%;border: 2px solid #ef2e2e;"></div>',
+                    'content'=> '<div class="desc-field"><h4 >Premium Settings | <a target="_blank" href="'.CTL_BUY_PRO.'">Buy Pro</a></h4><img src="'.CTL_PLUGIN_URL.'/assets/images/pro-story-settings.png" style="max-width: 100%;border: 2px solid #ef2e2e;"></div>',
                     'class'=>'story_format_image',
                 ),
     
@@ -141,10 +141,10 @@ if( class_exists( 'CSF' ) ) {
                    <strong class="ctl_add_head">'.__('Upgrade to Pro version','cool-timeline2').'</strong>
                   </br>
                   </br>
-                   <a target="_blank" class="button button-primary" href="'.COOL_TIMELINE_DEMO_URL.'">
+                   <a target="_blank" class="button button-primary" href="'.CTL_DEMO_URL.'&utm_content=add_stories">
                   View Demos
                    </a> 
-                   <a style="background:#CD143B;font-weight:bold" target="_blank" class="button button-primary" href="https://1.envato.market/ct">
+                   <a style="background:#CD143B;font-weight:bold" target="_blank" class="button button-primary" href="'.CTL_BUY_PRO.'">
                    Buy Now 
                    </a>
                </div>', 
@@ -171,7 +171,7 @@ if( class_exists( 'CSF' ) ) {
                'type'=>'content',
                'content'=>'<div>'.
                __('If you find our plugin and support helpful.<br>Please rate and review us,It helps us grow <br>and improve our services','cool-timeline').'.<br>
-               <a target="_blank" href="https://wordpress.org/support/plugin/cool-timeline/reviews/#new-post"><img src="'.COOL_TIMELINE_PLUGIN_URL.'assets/images/stars5.png"></a><br>
+               <a target="_blank" href="https://wordpress.org/support/plugin/cool-timeline/reviews/#new-post"><img src="'.CTL_PLUGIN_URL.'assets/images/stars5.png"></a><br>
                <a class="button button-primary" target="_blank" href="https://wordpress.org/support/plugin/cool-timeline/reviews/#new-post">'.__('Submit Review ★★★★★','cool-timeline2').'</a>
            </div>', 
            'class'=>'pro_features',

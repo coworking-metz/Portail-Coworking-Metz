@@ -212,8 +212,6 @@
 
 			var formData = new FormData( $form[0] );
 
-			formData = acf.handleFileInputs( $form,formData );
-
 			formData.append( 'action','frontend_admin/forms/update_field' );
 
 			formData.append( 'nonce',feadata.nonce );
@@ -246,7 +244,7 @@
 									);
 								}
 							}
-							$el.removeClass( 'disabled' );
+							$form.find('button').removeAttr('disabled').removeClass( 'disabled' );
 							spinner.hide();
 						}
 					},
@@ -389,7 +387,7 @@
 		}
 	);
 
-	var modalLevel = 1;
+	var modalLevel = 0;
 	var narrowfy   = 0;
 	var $controls  = [];
 
@@ -902,6 +900,9 @@
 			var $dataType = 'plan';
 			var $form_action = 'add_item';
 			var $el = $clicked;
+			if( $el.hasClass('edit-plan') ){
+				$form_action = $el.parents('.fea-single-plan').data('plan');
+			}
 		}else{
 			var inList = $clicked.closest( '.fea-list-item' );
 			if ( inList.length > 0 ) {
@@ -940,9 +941,9 @@
 		}else{
 			formWidth = 600;
 		}
+		modalLevel++;
 		var request = acf.showModal( $clicked, formWidth - narrowfy );
 		$controls[modalLevel] = $clicked.parents( '.acf-field' );
-		modalLevel++;
 		narrowfy += 20;
 
 		if ( request ) {
@@ -976,6 +977,10 @@
 		// update popup
 		currentModal.find( '.content-container' ).html( html );
 		acf.doAction( 'append',currentModal );
+
+		var event = new CustomEvent('renderModalContent');
+		// Dispatch/Trigger/Fire the event
+		document.dispatchEvent(event);
 	};
 
 	$( 'body' ).on(
@@ -1028,8 +1033,8 @@
 				contentType: false,
 				success: function(response){
 					if (response.success) {
-						if ( response.data.redirect ) {
-							if (response.data.delete_message) {
+						if ( response.data ) {
+							if (response.data.success_message) {
 								$.redirectPost( response.data.redirect, response.data );
 							} else {
 								window.location = response.data.redirect;
@@ -1080,44 +1085,28 @@
 
 			if ( button.data( 'state' ) == 'save' ) {
 				acf.submitFrontendForm( $form );
-			} else {
-				args = {
-					form: $form,
-					reset: false,
-					complete: acf.submitFrontendForm,
-				}
-				acf.validateFrontendForm( args );
+				return;
+			} 
+
+			args = {
+				form: $form,
+				reset: false,
+				complete: acf.submitFrontendForm,
 			}
+			acf.validateFrontendForm( args );
+			
 
 		}
 	);
 
-	acf.handleFileInputs = function( $form, $formData ){
+	acf.handleFileInputs = function( $form ){
 		let $fileInputs = $( 'input[type="file"]:not([disabled])', $form )
 		$fileInputs.each(
 			function (i, input) {
-				var fieldWrap = $( input ).closest( '.acf-field' );
-				if ( fieldWrap ) {
-					var field   = acf.getField( fieldWrap );
-					var fieldId = fieldWrap.attr( 'id' );
-					if ( ! fieldId ) {
-						fieldId = fieldWrap.data( 'key' );
-					}
-					if ( field.files && field.files.length > 0 ) {
-						field.files.forEach(
-							function(item) {
-								$formData.append( fieldId + '[]',item );
-							}
-						);
-					}
-				}
 				$( input ).prop( 'disabled', true );
-				return;
-
 			}
 		);
 
-		return $formData
 	}
 
 	acf.submitFrontendForm = function( $form, $validator ){
@@ -1137,7 +1126,7 @@
 		}
 		var formData = new FormData( $form[0] );
 
-		acf.handleFileInputs( $form,formData );
+		acf.handleFileInputs( $form );
 
 		formData.append( 'action','frontend_admin/form_submit' );
 
@@ -1152,12 +1141,15 @@
 				processData: false,
 				contentType: false,
 				success: acf.frontendFormSuccess,
+				error: acf.frontendFormSuccess,
 			}
 		);
 	}
 
 	acf.frontendFormSuccess = function(response){
 		if (response.success) {
+			acf.doAction( 'frontend_form_success', response );
+			
 			var data = response.data;
 			if ( data.redirect ) {
 				var url = data.redirect.replace(/&amp;/g, "&");
@@ -1165,10 +1157,12 @@
 			} else {
 				acf.unlockForm( $form );
 				successMessage = '<div class="frontend-admin-message"><div class="acf-notice -success acf-success-message"><p class="success-msg">' + data.success_message + '</p><span class="frontend-admin-dismiss close-msg acf-notice-dismiss acf-icon -cancel small"></span></div></div>';
-				if (data.append) {
+				if (data.modal) {
 					// modal window ajax form
-					modalFormSuccess( response );
+					modalLevel--;
+					narrowfy -= 20;
 					$form.parents( '.fea-modal' ).remove();
+					$( '.acf-loading' ).addClass( 'acf-hidden' );
 				} else {
 					if (data.submission) {
 						acf.updateSubmission( data );
@@ -1178,10 +1172,6 @@
 						var $newForm = $( data.reload_form );
 						$form.replaceWith( $newForm );
 						acf.doAction( 'append',$newForm );
-						/* if(data.saved_message){
-							$newForm.find('.save-progress-button').after('<p class="draft-saved">'+data.saved_message+'</p>');
-							setTimeout(function(){$('body').find('.draft-saved').remove();}, 3000);
-						} */
 
 						if (data.success_message) {
 							$newForm.prepend( successMessage );
@@ -1204,19 +1194,7 @@
 				}
 			}
 		} else {
-			var errorMessage = $form.find( '.acf-form-data' ).data( 'error' );
-
-			if ( response.data ) {
-				errorMessage = response.data;
-			}
-
-			$form.before( '<div style="margin-top:10px" class="frontend-admin-message"><div class="acf-notice -error acf-error-message"><p class="error-msg">' + errorMessage + '</p><span class="frontend-admin-dismiss close-msg acf-notice-dismiss acf-icon -cancel small"></span></div></div>' );
-
-			$( 'body, html' ).animate( {scrollTop:$form.offset().top - 50}, 'slow' );
-			var formModal = $form.closest( 'div.edit-modal' );
-			if ( typeof formModal != 'undefined' ) {
-				$( formModal ).animate( {scrollTop:$form.offset().top - 50}, 'slow' );
-			}
+			window.location.reload();
 		}
 	}
 
@@ -1226,36 +1204,39 @@
 		$submission.prepend( successMessage );
 	}
 
-	function modalFormSuccess( response ){
 
-		var postData = response.data.append;
-		modalLevel--;
-		narrowfy -= 20;
-
-		if (postData.action == 'edit') {
-			$( '.acf-field div.values' ).find( 'span[data-id=' + postData.id + ']' ).html( postData.text + '<a href="#" class="acf-icon -minus small dark" data-name="remove_item"></a>' );
-			$( '.acf-field div.choices' ).find( 'span[data-id=' + postData.id + ']' ).html( postData.text );
-		} else {
-			var thisField = $controls[modalLevel];
-			if ( postData.field_type == 'relationship' ) {
-				thisField.find( 'div.values ul' ).append( '<li><input type="hidden" name="' + thisField.find( 'div.selection' ).siblings( 'input' ).attr( 'name' ) + '[]" value="' + postData.id + '" /><span data-id="' + postData.id + '" class="acf-rel-item">' + postData.text + '<a href="#" class="acf-icon -minus small dark" data-name="remove_item"></a></span></li>' );
-
-				thisField.find( 'div.choices ul' ).prepend( '<li><span class="acf-rel-item disabled" data-id="' + postData.id + '">' + postData.text + '</span></li>' );
-			}
-			if ( postData.field_type == 'post_object' ) {
+	acf.addAction(
+		'frontend_form_success',
+		function(response){
+			if( ! response.data ) return;
+			var postData = response.data.post_info;
+			if( ! postData ) return;
+			if (postData.action == 'edit') {
+				$( '.acf-field div.values' ).find( 'span[data-id=' + postData.id + ']' ).html( postData.text + '<a href="#" class="acf-icon -minus small dark" data-name="remove_item"></a>' );
+				$( '.acf-field div.choices' ).find( 'span[data-id=' + postData.id + ']' ).html( postData.text );
+			} else {
+				var thisField = $controls[modalLevel];
 				var fieldObject = acf.getField( thisField );
-				console.log( thisField );
-				fieldObject.select2.addOption(
-					{
-						id:			postData.id,
-						text:		postData.text,
-					}
-				);
-				fieldObject.select2.selectOption( postData.id );
+				if ( postData.field_type == 'relationship' ) {
+					thisField.find( 'div.values ul' ).append( '<li><input type="hidden" name="' + thisField.find( 'div.selection' ).siblings( 'input' ).attr( 'name' ) + '[]" value="' + postData.id + '" /><span data-id="' + postData.id + '" class="acf-rel-item">' + postData.text + '<a href="#" class="acf-icon -minus small dark" data-name="remove_item"></a></span></li>' );
+	
+					thisField.find( 'div.choices ul' ).prepend( '<li><span class="acf-rel-item disabled" data-id="' + postData.id + '">' + postData.text + '</span></li>' );
+				}
+				if ( postData.field_type == 'post_object' ) {
+					var fieldObject = acf.getField( thisField );
+					fieldObject.select2.addOption(
+						{
+							id:			postData.id,
+							text:		postData.text,
+						}
+					);
+					fieldObject.select2.selectOption( postData.id );
+				}
+	
 			}
-
 		}
-	}
+	);
+
 
 	var Field = acf.Field.extend(
 		{
@@ -1559,17 +1540,19 @@
 						const file    = files[i];
 						const reader  = new FileReader();
 						reader.onload = (e) => {
-						if (file.type == 'application/pdf') {
-							container.find( '.margin' ).append( '<span class="gi-file-name">' + file.name + '</span>' );
-						}
-						var img = container.find( 'img' );
-						if (file.type != 'image/png' && file.type != 'image/jpg' && file.type != 'image/jpeg') {
-							img.attr( 'src',img.data( 'default' ) );
-						} else {
-							img.attr( 'src',reader.result );
-						}
+							if (file.type == 'application/pdf') {
+								container.find( '.margin' ).append( '<span class="gi-file-name">' + file.name + '</span>' );
+							}
+							var img = container.find( 'img' );
+							if (file.type != 'image/png' && file.type != 'image/jpg' && file.type != 'image/jpeg') {
+								img.attr( 'src',img.data( 'default' ) );
+								self.validateFile(file, container);
+							} else {
+								img.attr( 'src',reader.result );
+								feaResizeFile( file, reader.result, self, container );
+							}
 
-							var filesCount = self.files.length + 1;
+							/* var filesCount = self.files.length + 1;
 							var urlInput   = $( '<input>' ).attr(
 								{
 									type:"hidden",
@@ -1578,8 +1561,7 @@
 									value: parseInt( i ) + filesCount,
 								}
 							);
-							container.prepend( urlInput );
-							feaResizeFile( file, reader.result, self, container );
+							container.prepend( urlInput ); */
 						}
 						numAttachments++;
 						reader.readAsDataURL( file );
@@ -1627,15 +1609,14 @@
 				).done(
 					function(response){
 						if (response.success) {
-							self.files.push( file );
 							$.updateNumberTo( '100','%',progPrc );
 							progBar.animate( {'width': '100%'}, 'slow' );
 
 							var idInput = $( '<input>' ).attr(
 								{
 									type:"hidden",
-									name:self.$input().attr( 'name' ) + "[" + container.data( 'index' ) + "][file]",
-									value:1
+									name:self.$input().attr( 'name' ) + "[" + container.data( 'index' ) + "]",
+									value:response.data.id
 								}
 							);
 							$.updateNumberTo( '100','%',progPrc );
@@ -1890,6 +1871,8 @@
 					filemeta.html( newHtml );
 					filemeta.removeClass( 'clone' );
 				}
+				filemeta.find('.fea-file-meta').removeAttr( 'disabled' );
+
 				var side     = this.$side();
 				var sideData = this.$sideData();
 				if ( this.$control().hasClass( '-open' ) ) {
@@ -1995,7 +1978,6 @@
 
 			onUpdate: function( e, $el ){
 				var metaFields = this.$side().find( '.file-meta-data' );
-				metaFields.find( '.fea-meta-update' ).val( 1 );
 				metaFields.hide().appendTo( this.$active() );
 				this.closeSidebar();
 			},
@@ -2210,6 +2192,7 @@
 	feaResizeFile = function( file, result, field, container ){
 		container     = container || '';
 		var control   = field.$control();
+		var resize 	  = true; 
 		var maxWidth  = control.data( 'resize_width' );
 		var maxHeight = control.data( 'resize_height' );
 		var quality   = true;
@@ -2217,7 +2200,7 @@
 		var canvas    = document.createElement( 'canvas' );
 
 		img.onload = function () {
-			if (img.width < maxWidth && img.height < maxHeight) {
+			if (!resize || (img.width < maxWidth && img.height < maxHeight )) {
 				// Resize not required
 				field.validateFile( file, container );
 				return;
@@ -2238,7 +2221,9 @@
 
 			canvas.toBlob(
 				function (blob) {
-					var resizedFile = new File( [blob], 'resized_' + file.name, file );
+					// get new file name and strip malicious characters
+					let newFileName = file.name.replace( /[^a-z0-9.]/gi, '_' );
+					var resizedFile = new File( [blob], newFileName, file );
 					field.validateFile( resizedFile, container );
 				},
 				'image/jpeg',
@@ -2285,9 +2270,6 @@
 			},
 			$img: function(){
 				return this.$( '.image-wrap > img' );
-			},
-			$file: function () {
-				return this.$( 'input[data-name="file"]' );
 			},
 			$id: function () {
 				return this.$( 'input[data-name="id"]' );
@@ -2465,8 +2447,7 @@
 			onClickEdit: function (e, $el) {
 				this.editAttachment();
 			},
-			onChangeMeta: function(e,$el){
-				this.$( '.fea-meta-update' ).val( 1 );
+			onChangeMeta: function(e,$el){				
 				$el.closest( '.edit-modal' ).hide();
 			},
 			onClickEditPreview: function(e,$el){
@@ -2478,6 +2459,7 @@
 				if ( this.$( '.edit-modal' ).find( 'img' ).length == '0' ) {
 					$fileData.prepend( this.$img().clone() ).show();
 				}
+				this.$( '.fea-file-meta' ).removeAttr( 'disabled' );
 
 			},
 
@@ -2556,8 +2538,7 @@
 				).done(
 					function(response){
 						if (response.success) {
-							self.$file().val( 'true' );
-							self.files = [file];
+							self.$id().val( response.data.id );
 							$.updateNumberTo( '100','%',progPrc );
 							progBar.animate( {'width': '100%'}, 'slow' );
 							form.find( 'button.fea-submit-button' ).removeClass( 'disabled' );
@@ -2675,9 +2656,6 @@
 			$img: function(){
 				return this.$( '.file-icon > img' );
 			},
-			$file: function () {
-				return this.$( 'input[data-name="file"]' );
-			},
 			$id: function () {
 				return this.$( 'input[data-name="id"]' );
 			},
@@ -2700,7 +2678,7 @@
 				if ( this.$( '.edit-modal' ).find( 'img' ).length == '0' ) {
 					$fileData.prepend( this.$img().clone() ).show();
 				}
-
+				this.$( '.file-meta-data' ).removeAttr( 'disabled' );
 			},
 			getRelatedType: function () {
 				// vars
@@ -2746,6 +2724,91 @@
 				imagePreview  = true;
 				reader.readAsDataURL( file );
 			},
+			validateAttachment: function (attachment) {
+				// defaults
+				attachment = attachment || {}; // WP attachment
+		  
+				if (attachment.id !== undefined) {
+				  attachment = attachment.attributes;
+				} // args
+		  
+		  
+				attachment = acf.parseArgs(attachment, {
+				  url: '',
+				  alt: '',
+				  title: '',
+				  filename: '',
+				  filesizeHumanReadable: '',
+				  icon: '/wp-includes/images/media/default.png'
+				}); // return
+		  
+				return attachment;
+			  },
+			  render: function (attachment) {
+				// vars
+				attachment = this.validateAttachment(attachment); // update image
+		  
+				this.$('img').attr({
+				  src: attachment.icon,
+				  alt: attachment.alt,
+				  title: attachment.title
+				}); // update elements
+		  
+				this.$('[data-name="title"]').text(attachment.title);
+				this.$('[data-name="filename"]').text(attachment.filename).attr('href', attachment.url);
+				this.$('[data-name="filesize"]').text(attachment.filesizeHumanReadable); // vars
+		  
+				var val = attachment.id || ''; // update val
+		  
+				acf.val(this.$input(), val); // update class
+		  
+				if (val) {
+				  this.$control().addClass('has-value');
+				} else {
+				  this.$control().removeClass('has-value');
+				}
+			  },
+			  selectAttachment: function () {
+				// vars
+				var parent = this.parent();
+				var multiple = parent && parent.get('type') === 'repeater'; // new frame
+		  
+				var frame = acf.newMediaPopup({
+				  mode: 'select',
+				  title: acf.__('Select File'),
+				  field: this.get('key'),
+				  multiple: multiple,
+				  library: this.get('library'),
+				  allowedTypes: this.get('mime_types'),
+				  select: $.proxy(function (attachment, i) {
+					if (i > 0) {
+					  this.append(attachment, parent);
+					} else {
+					  this.render(attachment);
+					}
+				  }, this)
+				});
+			  },
+			  editAttachment: function () {
+				// vars
+				var val = this.val(); // bail early if no val
+		  
+				if (!val) {
+				  return false;
+				} // popup
+		  
+		  
+				var frame = acf.newMediaPopup({
+				  mode: 'edit',
+				  title: acf.__('Edit File'),
+				  button: acf.__('Update File'),
+				  attachment: val,
+				  field: this.get('key'),
+				  select: $.proxy(function (attachment, i) {
+					this.render(attachment);
+				  }, this)
+				});
+			  }
 
 		}
 	);
@@ -4113,6 +4176,8 @@ acf.add_filter(
 			},
 
 			select2Args: function(options, $select, data, field, instance) {
+				if( ! field ) return options;
+
 				if (field.get( 'closeOnSelect' )) {
 					options.closeOnSelect = false;
 				};
@@ -4206,35 +4271,6 @@ acf.add_filter(
 		}
 	);
 
-	function feaExtend(destination, source) {
-		for (var property in source) {
-			destination[property] = source[property];
-		}
-		return destination;
-	}
-
-	acf.add_filter(
-		'time_picker_args',
-		function( args, $field ){
-			var custom_args = {
-				regional: "he"
-			};
-			args            = feaExtend( args, custom_args )
-			return args;
-		}
-	);
-	acf.add_filter(
-		'date_picker_args',
-		function( args, $field ){
-			var custom_args = {
-				minDate:	0,
-				regional: "he"
-			};
-			args            = feaExtend( args, custom_args )
-			return args;
-		}
-	);
-
 	var Field = acf.Field.extend(
 		{
 
@@ -4245,8 +4281,13 @@ acf.add_filter(
 			wait: 'load',
 
 			events: {
-				'click .add-plan': 'addPlan',
-				'click .edit-plan': 'editPlan'
+				'click .add-plan': 'addEditPlan',
+				'click .edit-plan': 'addEditPlan',
+				'click .delete-plan': 'deletePlan'
+			},
+
+			actions: {
+				'frontend_form_success': 'showPlan',	
 			},
 
 			$input: function(){
@@ -4264,16 +4305,75 @@ acf.add_filter(
 				
 			},
 
-			addPlan: function( e, $el ){
+			addEditPlan: function( e, $el ){
 				acf.getForm( $el, 'plans' );
 			},
 
-			editPlan: function( e, $el, $duplicate ){
-				if ( this.select2 ) {
-					$duplicate.find( '.select2-container' ).remove();
-					$duplicate.find( 'select' ).removeClass( 'select2-hidden-accessible' );
+			deleteObject: function($el) {
+				var plan = $el.parents('.fea-single-plan');
+				plan.append( '<span class="acf-loading"></span>' );
+				var ajaxData = {
+					action:	'frontend_admin/plans/delete',
+					plan: plan.data('plan')		
+				};
+				$.ajax(
+					{
+						url: acf.get( 'ajaxurl' ),
+						type: 'post',
+						data: acf.prepareForAjax( ajaxData ),
+						cache: false,
+						success: function(response){
+							if (response.success) {
+								plan.remove();
+							} else {
+								console.log( response );
+								plan.find('.acf-loading').remove();
+								$el.removeClass( 'disabled' )
+							}
+						}
+					}
+				);
+			},
+
+			showPlan: function( response ){
+				if( response.success ){
+					var data = response.data;
+					if( data.new ){
+						var plan = this.$('.fea-single-plan.clone').clone().removeClass('acf-hidden clone').data('plan', data.plan.id).attr('data-plan',data.plan.id);
+						plan.find('input').val(data.plan.id).removeAttr('disabled');
+						this.$('.fea-plans').append(plan);
+					}else{
+						var plan = this.$('[data-plan='+data.plan.id+']');
+					}
+					plan.find('.fea-plan-title').text(data.plan.title);
 				}
-			}
+			},
+
+			deletePlan: function( e, $el ){
+				if ( $el.hasClass( 'disabled' ) ) {
+					return;
+				}
+
+				$el.addClass( 'disabled' )
+
+				var field = this;
+
+				var tooltip = acf.newTooltip(
+					{
+						confirm: true,
+						text: $el.data( 'confirm' ),
+						target: $el,
+						context: $el.parents( 'acf-field' ),
+						confirm: function () {
+							field.deleteObject( $el );
+						},
+						cancel: function () {
+							$el.removeClass( 'disabled' );
+						}
+					}
+				);
+			},
+
 		}
 	);
 

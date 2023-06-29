@@ -4,7 +4,7 @@ namespace Frontend_Admin\Actions;
 use Frontend_Admin\Plugin;
 use Frontend_Admin;
 use Frontend_Admin\Classes\ActionBase;
-use Frontend_Admin\Widgets;
+use Frontend_Admin\Forms\Actions;
 use Elementor\Controls_Manager;
 
 
@@ -353,46 +353,15 @@ if ( ! class_exists( 'ActionUser' ) ) :
 				);
 			}
 
-			$condition['save_to_user'] = array( 'new_user', 'edit_user' );
-
-			$widget->add_control(
-				'user_manager',
-				array(
-					'label'       => __( 'Managing User', 'acf-frontend-form-element' ),
-					'type'        => \Elementor\Controls_Manager::SELECT,
-					'default'     => 'none',
-					'options'     => array(
-						'none'         => __( 'No Manager', 'acf-frontend-form-element' ),
-						'current_user' => __( 'Current User', 'acf-frontend-form-element' ),
-						// 'current_author' => __( 'Current Post Author','acf-frontend-form-element' ),
-						'select_user'  => __( 'Specific User', 'acf-frontend-form-element' ),
-					),
-					'description' => __( 'Who will be in charge of editing this user\'s data?', 'acf-frontend-form-element' ),
-					'condition'   => $condition,
-				)
-			);
-			$condition['user_manager'] = 'select_user';
-			$widget->add_control(
-				'manager_select',
-				array(
-					'label'       => __( 'User', 'acf-frontend-form-element' ),
-					'type'        => Controls_Manager::TEXT,
-					'placeholder' => __( '18', 'acf-frontend-form-element' ),
-					'default'     => get_current_user_id(),
-					'description' => __( 'Enter user id', 'acf-frontend-form-element' ),
-					'condition'   => $condition,
-				)
-			);
-
 		}
 
 		public function run( $form, $step = false ) {
 			$record = $form['record'];
-			if ( empty( $record['_acf_user'] ) || empty( $record['fields']['user'] ) ) {
+			if ( empty( $record['user'] ) || empty( $record['fields']['user'] ) ) {
 				return $form;
 			}
 
-			$user_id = sanitize_text_field( $record['_acf_user'] );
+			$user_id = $record['user'];
 
 			// allow for custom save
 			$user_id = apply_filters( 'acf/pre_save_user', $user_id, $form );
@@ -414,10 +383,14 @@ if ( ! class_exists( 'ActionUser' ) ) :
 					if ( ! isset( $_field['key'] ) ) {
 						continue;
 					}
-					$field = acf_get_field( $_field['key'] );
+					$field = acf_maybe_get_field( $_field['key'] );
 
 					if ( ! $field ) {
-						continue;
+						if( isset( $form['fields'][$_field['key']] ) ){
+							$field = $form['fields'][$_field['key']];
+						}else{
+							continue;
+						}
 					}
 
 					$field_type      = $field['type'];
@@ -474,6 +447,10 @@ if ( ! class_exists( 'ActionUser' ) ) :
 				if ( is_wp_error( $user_id ) ) {
 					return $form;
 				}
+
+				$GLOBALS['admin_form']['record']['user'] = $user_id;
+				$form['record']['user'] = $user_id;
+
 				if ( isset( $form['hide_admin_bar'] ) ) {
 					update_user_meta( $user_id, 'hide_admin_area', $form['hide_admin_bar'] );
 				}

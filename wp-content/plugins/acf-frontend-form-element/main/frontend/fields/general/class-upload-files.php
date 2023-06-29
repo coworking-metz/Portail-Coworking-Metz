@@ -49,7 +49,7 @@ if ( ! class_exists( 'upload_files' ) ) :
 			add_action( 'wp_ajax_nopriv_acf/fields/gallery/get_sort_order', array( $this, 'ajax_get_sort_order' ) );
 
 			// add_filter
-			add_filter( 'frontend_admin/prepare_field/type=gallery', array( $this, 'prepare_gallery_field' ), 5 );
+			add_filter( 'acf/prepare_field/type=gallery', array( $this, 'prepare_gallery_field' ), 5 );
 
 			$multiple_files = array( 'gallery', 'upload_files', 'product_images' );
 			foreach ( $multiple_files as $type ) {
@@ -61,6 +61,9 @@ if ( ! class_exists( 'upload_files' ) ) :
 		}
 
 		function prepare_gallery_field( $field ) {
+			if( empty( $GLOBALS['admin_form'] ) ){
+				return $field;
+			}
 			$uploader = acf_get_setting( 'uploader' );
 			// enqueue
 			if ( $uploader == 'basic' || ! empty( $field['button_text'] ) ) {
@@ -142,38 +145,33 @@ if ( ! class_exists( 'upload_files' ) ) :
 				}
 			}
 			$new_value = array();
+			global $fea_form;
 			foreach ( $value as $index => $attachment ) {
-				if ( ! empty( $attachment['id'] ) ) {
-					$attach_id = $attachment['id'];
-
-					if ( ! empty( $attachment['meta'] ) ) {
-						if ( isset( $attachment['alt'] ) ) {
-							update_post_meta( $attach_id, '_wp_attachment_image_alt', $attachment['alt'] );
-						}
-
-						   $edit = array( 'ID' => $attach_id );
-						if ( ! empty( $attachment['title'] ) ) {
-							$edit['post_title'] = $attachment['title'];
-						}
-
-						if ( isset( $attachment['description'] ) ) {
-							$edit['post_content'] = $attachment['description'];
-						}
-						if ( isset( $attachment['capt'] ) ) {
-							$edit['post_excerpt'] = $attachment['capt'];
-						}
-
-						wp_update_post( $edit );
+				if ( ! empty( $fea_form['record']['fields']['file_data'][$field['name']][$index] ) ) {
+					$meta = $fea_form['record']['fields']['file_data'][$field['name']][$index];
+					if ( isset( $meta['alt'] ) ) {
+						update_post_meta( $attachment, '_wp_attachment_image_alt', $meta['alt'] );
 					}
-					$attachment = $attach_id;
+
+					$edit = array( 'ID' => $attachment );
+					if ( ! empty( $meta['title'] ) ) {
+						$edit['post_title'] = $meta['title'];
+					}
+
+					if ( isset( $meta['description'] ) ) {
+						$edit['post_content'] = $meta['description'];
+					}
+					if ( isset( $meta['capt'] ) ) {
+						$edit['post_excerpt'] = $meta['capt'];
+					}
+
+					wp_update_post( $edit );
 				}
 				$attachment = (int) $attachment;
 				acf_connect_attachment_to_post( $attachment, $post_id );
-				delete_post_meta( $attachment, 'hide_from_lib' );
-				$new_value[] = $attachment;
 			}
 
-			return $new_value;
+			return $value;
 		}
 
 		/*
@@ -619,7 +617,7 @@ if ( ! class_exists( 'upload_files' ) ) :
 					<?php
 					acf_hidden_input(
 						array(
-							'name'  => $field['name'] . '[' . $a['id'] . '][id]',
+							'name'  => $field['name'] . '[' . $a['id'] . ']',
 							'value' => $a['id'],
 						)
 					);
@@ -636,7 +634,7 @@ if ( ! class_exists( 'upload_files' ) ) :
 									<a class="acf-icon -cancel dark fea-uploads-remove" href="#" data-id="<?php esc_attr_e( $a['id'] ); ?>" title="<?php esc_attr_e( 'Remove', 'acf-frontend-form-element' ); ?>"></a>
 								</div>
 					<?php
-					$prefix = $field['prefix'] . '[' . $field['key'] . '][' . $a['id'] . ']';
+					$prefix = 'acff[file_data][' . $field['key'] . '][' . $i . ']';
 					fea_instance()->form_display->render_meta_fields( $prefix, $a, false );
 					?>
 							</div>
@@ -661,7 +659,7 @@ if ( ! class_exists( 'upload_files' ) ) :
 				</div>
 
 				<?php
-				$prefix = $field['prefix'] . '[' . $field['key'] . '][{file-index}]';
+				$prefix = 'acff[file_data][' . $field['key'] . '][{file-index}]';
 				fea_instance()->form_display->render_meta_fields( $prefix, 'clone', false );
 				?>
 				

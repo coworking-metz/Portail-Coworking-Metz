@@ -12,7 +12,7 @@ if ( ! class_exists( 'Frontend' ) ) :
 		/** @var array Contains an array of field type instances */
 		var $field_types = array();
 
-		public function fea_extra_field_setting( $field ) {
+		public function extra_field_setting( $field ) {
 			global $post;
 			if ( isset( $post->post_type ) && $post->post_type == 'acf-field-group' ) {
 				acf_render_field_setting(
@@ -76,6 +76,44 @@ if ( ! class_exists( 'Frontend' ) ) :
 					'rows'         => 3,
 				),
 				true
+			);
+		}
+
+		public function extra_field_group_setting( $group ) {
+			global $post;
+			$short_key = str_replace( 'group_', '', $group['key'] );
+			if( empty( $group['no_values_message'] ) ){
+				$group['no_values_message'] = '';
+			}
+			$icon_path = '<span class="dashicons dashicons-admin-page"></span>';
+			acf_render_field_wrap(
+				array(
+					'label'        => __( 'Group Shortcode', 'acf-frontend-form-element' ),
+					'instructions' => '',
+					'message'      => '<code>[frontend_admin group=' . $short_key . ' edit=false]</code>' . sprintf(
+						'<button type="button" class="copy-shortcode" data-prefix="frontend_admin group" data-value="%1$s">%2$s %3$s</button>',
+						$short_key,
+						$icon_path,
+						__( 'Copy Code', 'acf-frontend-form-element' )
+					),
+					'type'         => 'message',
+					'name'         => 'shortcode_message',
+				),
+				'div',
+				'field'
+			);
+			acf_render_field_wrap(
+				array(
+					'label'        => __( 'No Value Messge', 'acf-frontend-form-element' ),
+					'instructions' => __( 'Appears in shortcode when field returns no value. If left blank nothing will show. Each individual field has this setting as well and that will overwrite this.', 'acf-frontend-form-element' ),
+					'type'         => 'textarea',
+					'name'         => 'no_values_message',
+					'rows'         => 3,	
+					'prefix'       => 'acf_field_group',
+					'value'        => $group['no_values_message'],
+				),
+				'div',
+				'field'
 			);
 		}
 
@@ -231,7 +269,7 @@ if ( ! class_exists( 'Frontend' ) ) :
 			return $field;
 		}
 
-		public function prepare_field_frontend( $field ) {
+		public function prepare_field_backend( $field ) {
 			// bail early if no 'admin_only' setting
 			if ( empty( $field['only_front'] ) ) {
 				return $field;
@@ -242,9 +280,7 @@ if ( ! class_exists( 'Frontend' ) ) :
 			if ( is_admin() && ! wp_doing_ajax() ) {
 				$render = false;
 			}
-			if ( feadmin_edit_mode() ) {
-				$render = true;
-			}
+			
 
 			if ( ! $render ) {
 				return false;
@@ -439,9 +475,11 @@ if ( ! class_exists( 'Frontend' ) ) :
 					'time',
 					'date',
 					'datetime-input',
+					'color',
 					'related-terms',
 					'plans',
 					'text-editor',
+					'blocks-editor',
 					'custom-terms',
 					'delete-object',
 					'upload-file',
@@ -517,11 +555,12 @@ if ( ! class_exists( 'Frontend' ) ) :
 			add_action( 'admin_footer', array( $this, 'hide_field_name_setting' ) );
 
 			add_filter( 'acf/prepare_field', array( $this, 'prepare_field_display' ), 3 );
-			add_filter( 'acf/prepare_field', array( $this, 'prepare_field_frontend' ), 3 );
+			add_filter( 'acf/prepare_field', array( $this, 'prepare_field_backend' ), 3 );
 
 			add_action( 'acf/render_field', array( $this, 'echo_after_input' ) );
 			// Add field settings by type
-			add_action( 'acf/render_field_settings', array( $this, 'fea_extra_field_setting' ), 15 );
+			add_action( 'acf/render_field_settings', array( $this, 'extra_field_setting' ), 15 );
+			add_action( 'acf/render_field_group_settings', array( $this, 'extra_field_group_setting' ), 15 );
 
 			add_filter( 'acf/get_field_types', array( $this, 'hide_frontend_admin_fields' ) );
 

@@ -88,15 +88,18 @@ if ( ! class_exists( 'Submissions_List' ) ) :
 					return $state;
 				case 'form':
 					$form = fea_instance()->form_display->get_form( $item[ $column_name ] );
-
-					if ( isset( $form['title'] ) ) {
-						if ( isset( $form['ID'] ) ) {
-							$permalink = get_the_permalink( $form['ID'] );
-							return '<a target="_blank" href="' . $permalink . '">' . $form['title'] . '</a>';
+					
+					if ( isset( $form['ID'] ) ) {
+						$form_title = get_post_field( 'post_title', $form['ID'] );
+						if ( isset( $form['elementor_widget'] ) && ! empty( $form['title'] ) ) {
+							$form_title .= ' ' . $form['title'];
 						}
 
-						return $form['title'];
+						$permalink = get_the_permalink( $form['ID'] );
+						return '<a target="_blank" href="' . $permalink . '">' . $form_title . '</a>';
 					}
+						
+
 					return $item[ $column_name ];
 
 				default:

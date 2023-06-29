@@ -22,7 +22,7 @@ function ctl_gutenberg_scripts() {
 		'',
 		filemtime( plugin_dir_path(__FILE__) . $stylePath )
 	);
-	wp_localize_script( 'ctl-block-js', 'ctlUrl', array(COOL_TIMELINE_PLUGIN_URL) );
+	wp_localize_script( 'ctl-block-js', 'ctlUrl', array(CTL_PLUGIN_URL) );
 
 }
 
@@ -52,6 +52,10 @@ add_action( 'plugins_loaded', function () {
 						'type'	=> 'string',
 						'default' => 10,
 					),
+					'slideToShow'=> array(
+						'type' => 'string',
+						'default' => 4
+					),
 					'animation'	 => array(
 						'type' => 'string',
 						'default' =>'none',
@@ -80,10 +84,11 @@ add_action( 'plugins_loaded', function () {
 function ctl_block_callback( $attr ) {
 	extract( $attr );
 	if ( isset( $layout ) ) {
+		$showpost=$layout=='horizontal'?$slideToShow:$postperpage;
 		$shortcode_string = '[cool-timeline layout="%s" skin="%s"
 		show-posts="%s" date-format="%s" icons="%s" animation="%s" order="%s" story-content="%s"]';
 		 $shortcode= sprintf( $shortcode_string, $layout, $skin, 
-		$postperpage,$dateformat,$icons,$animation,$order,$storycontent);
+		$showpost,$dateformat,$icons,$animation,$order,$storycontent);
 		return $shortcode;
 	}
 }

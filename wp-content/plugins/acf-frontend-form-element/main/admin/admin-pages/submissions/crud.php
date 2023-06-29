@@ -29,8 +29,13 @@ if ( ! class_exists( 'Submissions_Crud' ) ) :
 
 		public function insert_submission( $args ) {
 			global $wpdb;
+
+			if( empty( $args['created_at'] ) ){
+				$args['created_at'] = current_time( 'mysql' );
+			}
+	
 			if ( empty( $args['title'] ) ) {
-				$args['title'] = '';
+				$args['title'] = '(no name)';
 			}
 			$wpdb->insert( $wpdb->prefix . 'fea_submissions', $args );
 
@@ -239,6 +244,7 @@ if ( ! class_exists( 'Submissions_Crud' ) ) :
 					if ( $action == 'edit' ) {
 						$form                = $this->get_submission_form( $submission, array(), true );
 						$form['wp_uploader'] = 1;
+
 						fea_instance()->form_display->render_form( $form );
 
 						if ( ! empty( $form['record']['emails_to_verify'] ) ) {
@@ -299,7 +305,7 @@ if ( ! class_exists( 'Submissions_Crud' ) ) :
 
 			if ( empty( $form ) ) {
 				$form = fea_instance()->form_display->get_form( $submission->form );
-
+				
 				$current_user = wp_get_current_user();
 				if ( $current_user && $current_user->ID == $submission->user ) {
 					$form['display'] = true;

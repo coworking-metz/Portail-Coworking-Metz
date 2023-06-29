@@ -180,7 +180,7 @@ if ( ! class_exists( 'text' ) ) :
 		 */
 		function validate_value( $valid, $value, $field, $input ) {
 			// Check maxlength
-			if ( $field['maxlength'] && ( acf_strlen( $value ) > $field['maxlength'] ) ) {
+			if ( ! empty( $field['maxlength'] ) && ( acf_strlen( $value ) > $field['maxlength'] ) ) {
 				return sprintf( __( 'Value must not exceed %d characters', 'acf-frontend-form-element' ), $field['maxlength'] );
 			}
 

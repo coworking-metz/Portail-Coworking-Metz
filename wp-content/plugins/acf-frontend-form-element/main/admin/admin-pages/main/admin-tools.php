@@ -199,7 +199,7 @@ if ( ! class_exists( 'fea_admin_tools' ) ) :
 			}
 
 			// view
-			acf_get_view( 'html-admin-tools', $view );
+			acf_get_view( 'tools/tools', $view );
 
 		}
 

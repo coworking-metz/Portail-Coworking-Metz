@@ -22,7 +22,7 @@ class CoolTimelineShortcodeFree
 		// custom excerpt length filter for story content
 		add_filter('excerpt_length', array($ctl_shortcode, 'ctl_excerpt_length'), 999);
 
-		require COOL_TIMELINE_PLUGIN_DIR . 'includes/class-ctl-styles.php';
+		require CTL_PLUGIN_DIR . 'includes/class-ctl-styles.php';
 		$ctl_styles= CTL_styles::register();
 
     }
@@ -187,7 +187,7 @@ class CoolTimelineShortcodeFree
 			    $posted_date = CTL_functions::ctlfree_get_story_date($p_id,$date_format);
 			
 				// grabing stories content according to the  dynamic settings 
-				if($story_desc_type=='full'){
+				if($story_desc_type=='full' || $layout == "horizontal"){
 					$post_content = apply_filters( 'the_content', get_the_content() );
 					$post_content = apply_filters('cool_timeline_story_content',$post_content);
 				}else{
@@ -305,7 +305,7 @@ class CoolTimelineShortcodeFree
 						$story_main_date=$posted_date;
 					}
 					if( $display_readmore=="yes"){
-						$horizontal_html.='<a ref="prettyPhoto" href="#ctl-story-'.esc_attr($p_id).'">';
+						$horizontal_html.='<a class="horizontal_glightbox" href="#ctl-story-'.esc_attr($p_id).'">';
 					}
 					$horizontal_html.='<div class="ctl-story-year"><span class="rm_year">'.esc_html($story_main_date).'</span></div>';
 					$horizontal_html.='<div class="ctl-story-title"><p class="story_title">';
@@ -340,7 +340,7 @@ class CoolTimelineShortcodeFree
 		*/
 
 		$timeline_id="ctl-free-one";	
-		$output .='<! ========= Cool Timeline Free '. COOL_TIMELINE_CURRENT_VERSION.' =========>';
+		$output .='<! ========= Cool Timeline Free '. CTL_V.' =========>';
 		$main_wrp_cls=array();
 
 		// Generating Wrapper for Vertical timeline
@@ -384,7 +384,7 @@ class CoolTimelineShortcodeFree
 			$theme_cls='';
 
 			// Horizontal timeline Wrapper		
-			$output .='<div class="ctl-preloader-loader" style="text-align:center;"><img alt="loading" src="'.COOL_TIMELINE_PLUGIN_URL.'/assets/images/preloader.gif"></div>
+			$output .='<div class="ctl-preloader-loader" style="width: 100%; min-height: 300px; display: flex; justify-content: center; align-items: center;"><img alt="loading" src="'.CTL_PLUGIN_URL.'/assets/images/clt-preloader.gif"  style="width: 100px; height: 100px;"></div>
 				<style>
 					.cool_timeline_horizontal{
 						opacity:0;
@@ -471,7 +471,7 @@ class CoolTimelineShortcodeFree
 	    $imgAlt = get_post_meta(get_post_thumbnail_id($post_id),'_wp_attachment_image_alt', true); 
 	    $alt_text=$imgAlt?$imgAlt:get_the_title($post_id);
 		$img_f_url = wp_get_attachment_url(get_post_thumbnail_id($post_id));
-		$story_img_link = '<a title="' . esc_attr(get_the_title($post_id)). '"  href="' .esc_url($img_f_url). '" class="ctl_prettyPhoto">';
+		$story_img_link = '<a data-glightbox="' . esc_attr(get_the_title($post_id)). '" href="' .esc_url($img_f_url). '" class="glightbox">';
 
 	    if ( has_post_thumbnail($post_id) ) {
 		    if ($img_cont_size == "small"){

@@ -127,13 +127,7 @@ if ( ! class_exists( 'upload_image' ) ) :
 			// vars
 			$uploader = acf_get_setting( 'uploader' );
 
-			$_value = $field['value'];
-			if ( isset( $_value['id'] ) ) {
-				$value = $_value['id'];
-			} else {
-				$value = $_value;
-			}
-
+			$value = $field['value'];
 			// enqueue
 			if ( $uploader == 'wp' && ! feadmin_edit_mode() ) {
 				acf_enqueue_uploader();
@@ -184,22 +178,7 @@ if ( ! class_exists( 'upload_image' ) ) :
 			?>
 <div <?php acf_esc_attr_e( $div ); ?>>
 			<?php
-			if ( $uploader == 'basic' ) {
-				acf_hidden_input(
-					array(
-						'data-name' => 'id',
-						'name'      => $field['name'] . '[id]',
-						'value'     => $value,
-					)
-				);
-				acf_hidden_input(
-					array(
-						'data-name' => 'file',
-						'name'      => $field['name'] . '[file]',
-						'value'     => '',
-					)
-				);
-			} else {
+		
 				acf_hidden_input(
 					array(
 						'data-name' => 'id',
@@ -207,7 +186,6 @@ if ( ! class_exists( 'upload_image' ) ) :
 						'value'     => $value,
 					)
 				);
-			}
 			?>
 	<div class="show-if-value image-wrap" 
 			<?php
@@ -266,8 +244,8 @@ if ( ! class_exists( 'upload_image' ) ) :
 				</div>
 			</label>
 				<?php
-				$prefix = $field['prefix'] . '[' . $field['key'] . ']';
-				fea_instance()->form_display->render_meta_fields( $prefix, $_value );
+				$prefix = 'acff[file_data][' . $field['key'] . ']';
+				fea_instance()->form_display->render_meta_fields( $prefix, $value );
 				?>
 	<?php else : ?>
 			<p><?php echo esc_html_e( $empty_text ); ?> <a data-name="add" class="acf-button button" href="#"><?php esc_html_e( $button_text ); ?></a></p>

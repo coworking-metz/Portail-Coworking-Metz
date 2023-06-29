@@ -44,18 +44,28 @@ if ( ! class_exists( 'upload_file' ) ) :
 			add_action( 'wp_ajax_acf/fields/upload_file/add_attachment', array( $this, 'ajax_add_attachment' ) );
 			add_action( 'wp_ajax_nopriv_acf/fields/upload_file/add_attachment', array( $this, 'ajax_add_attachment' ) );
 
+			add_action( 'pre_get_posts', [ $this, 'hide_uploads_media_list_view' ] );
+			add_filter( 'ajax_query_attachments_args', [ $this, 'hide_uploads_media_overlay_view' ] );
+
+
 			$file_fields = array( 'file', 'image', 'upload_file', 'upload_image', 'featured_image', 'main_image', 'site_logo' );
 			foreach ( $file_fields as $type ) {
-				add_filter( 'frontend_admin/prepare_field/type=' . $type, array( $this, 'prepare_image_or_file_field' ), 5 );
+				add_filter( 'acf/prepare_field/type=' . $type, array( $this, 'prepare_image_or_file_field' ), 5 );
 				add_filter( 'acf/update_value/type=' . $type, array( $this, 'update_file_value' ), 8, 3 );
 				add_filter( 'acf/validate_value/type=' . $type, array( $this, 'validate_file_value' ), 5, 4 );
 				add_action( 'acf/render_field_settings/type=' . $type, array( $this, 'upload_button_text_setting' ) );
+				add_action( 'acf/render_field_settings/type=' . $type, array( $this, 'extra_file_settings' ) );
+			}
+
+			$file_fields = array_merge( $file_fields, array( 'gallery', 'product_images', 'upload_files' ) );
+			foreach ( $file_fields as $type ) {
+				add_action( 'acf/render_field_settings/type=' . $type, array( $this, 'extra_file_settings' ) );
+				add_filter( 'acf/update_value/type=' . $type, array( $this, 'move_folders' ), 9, 3 );
 			}
 
 			if ( defined( 'HAPPYFILES_VERSION' ) ) {
-				$file_fields = array( 'image', 'file', 'gallery', 'featured_image', 'main_image', 'product_images', 'upload_file', 'upload_image' );
 				foreach ( $file_fields as $type ) {
-					add_action( 'acf/render_field_settings/type=' . $type, array( $this, 'file_folders_setting' ) );
+					add_action( 'acf/render_field_settings/type=' . $type, array( $this, 'happy_folders_setting' ) );
 				}
 				add_filter( 'ajax_query_attachments_args', array( $this, 'happy_files_folder' ) );
 			}
@@ -63,7 +73,124 @@ if ( ! class_exists( 'upload_file' ) ) :
 		}
 
 
-		function file_folders_setting( $field ) {
+		/**
+		 * Hide attachment files from the Media Library's overlay (modal) view
+		 * if they have a certain meta key set.
+		 * 
+		 * @param array $args An array of query variables.
+		 */
+		function hide_uploads_media_overlay_view( $args ) {
+			// Bail if this is not the admin area.
+			if ( ! is_admin() ) {
+				return $args;
+			}
+
+			// Modify the query.
+			$args['meta_query'] = [
+				[
+					'key'     => '_hide_from_library',
+					'compare' => 'NOT EXISTS',
+				]
+			];
+		
+			return $args;
+		}
+		/**
+		 * Hide attachment files from the Media Library's list view
+		 * if they have a certain meta key set.
+		 * 
+		 * @param WP_Query $query The WP_Query instance (passed by reference).
+		 */
+		function hide_uploads_media_list_view( $query ) {
+			// Bail if this is not the admin area.
+			if ( ! is_admin() ) {
+				return;
+			}
+
+			// Bail if this is not the main query.
+			if ( ! $query->is_main_query() ) {
+				return;
+			}
+
+			// Only proceed if this the attachment upload screen.
+			$screen = get_current_screen();
+			if ( ! $screen || 'upload' !== $screen->id || 'attachment' !== $screen->post_type ) {
+				return;
+			}
+			
+			// Modify the query.
+			$query->set( 'meta_query', [
+				[
+					'key'     => '_hide_from_library',
+					'compare' => 'NOT EXISTS',
+				]
+			]   );
+
+			return;
+		}
+
+		function extra_file_settings( $field ) {
+			acf_render_field_setting(
+				$field,
+				array(
+					'label'        => __( 'Custom Directory', 'acf-frontend-form-element' ),
+					'name'         => 'custom_directory',
+					'type'         => 'true_false',
+					'ui'           => 1,
+					'instructions' => __( "Save files in a custom directory under the wp-content/uploads directory", 'acf-frontend-form-element' ),
+				)
+			);
+			acf_render_field_setting(
+				$field,
+				array(
+					'label'         => __( 'Folder Name', 'acf-frontend-form-element' ),
+					'placeholder'   => '[post:type]',
+					'type'          => 'text',
+					'dynamic_value_choices' => 1,
+					'name'          => 'custom_directory_name',
+					'conditions' => array(
+						array(
+							array(
+								'field'    => 'custom_directory',
+								'operator' => '==',
+								'value'    => 1,
+							),
+						),
+					),
+				)
+			);
+			acf_render_field_setting(
+				$field,
+				array(
+					'label'        => __( 'Secure Directory', 'acf-frontend-form-element' ),
+					'name'         => 'secure_directory',
+					'type'         => 'true_false',
+					'ui'           => 1,
+					'instructions' => __( "Block external access to this directory. (Takes affect when file is added. Requires .htaccess support)", 'acf-frontend-form-element' ),
+					'conditions' => array(
+						array(
+							array(
+								'field'    => 'custom_directory',
+								'operator' => '==',
+								'value'    => 1,
+							),
+						),
+					),
+				)
+			);
+			acf_render_field_setting(
+				$field,
+				array(
+					'label'        => __( 'Hide from library', 'acf-frontend-form-element' ),
+					'name'         => 'hide_from_library',
+					'type'         => 'true_false',
+					'ui'           => 1,
+					'instructions' => __( "Files will not appear in the WP library", 'acf-frontend-form-element' ),
+				)
+			);
+		}
+
+		function happy_folders_setting( $field ) {
 			acf_render_field_setting(
 				$field,
 				array(
@@ -169,11 +296,72 @@ if ( ! class_exists( 'upload_file' ) ) :
 				wp_send_json_error( $data );
 			}
 
-			wp_send_json_success();
+			$wp_filetype = wp_check_filetype( basename( $file['name'] ), null );
+
+			$wp_upload_dir = wp_upload_dir();
+
+			$submissions_dir = $this->maybe_mkdir( $wp_upload_dir['basedir'] . '/fea-submissions', true );				
+			move_uploaded_file( $file['tmp_name'], $submissions_dir . '/' . $file['name'] );	
+
+			$attachment = array(
+				'guid'           => $submissions_dir . '/' . $file['name'],
+				'post_mime_type' => $wp_filetype['type'],
+				'post_status'    => 'inherit',
+				'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $file['name'] ) ),
+			);
+
+			$attach_id = wp_insert_attachment( $attachment, $submissions_dir . '/' . $file['name'] );
+			update_post_meta( $attach_id, '_hide_from_library', true );
+
+			if( $attach_id instanceof WP_Error ){
+				wp_send_json_error( $attach_id->get_error_message() );
+			}
+
+			if ( ! empty( $value['alt'] ) ) {
+				update_post_meta( $attach_id, '_wp_attachment_image_alt', $value['alt'] );
+			}
+
+			$attach_data = wp_generate_attachment_metadata( $attach_id, $submissions_dir . '/' . $file['name'] );
+			wp_update_attachment_metadata( $attach_id, $attach_data );
+
+			wp_send_json_success( [ 'id' => $attach_id ] );
+		}
+
+		function maybe_mkdir( $submissions_dir, $secure = false ){
+			if ( ! is_dir( $submissions_dir ) ) {
+				mkdir( $submissions_dir );
+				$_htaccess = $submissions_dir . '/.htaccess';			
+				if( $secure ){
+					// Protect uploads directory for the servers that support .htaccess
+					if ( ! file_exists( $_htaccess ) ) {
+						file_put_contents( $_htaccess, "<IfModule mod_rewrite.c>
+						RewriteEngine on 
+						RewriteCond %{HTTP_REFERER} !^http://(www\.)?localhost [NC] 
+						RewriteCond %{HTTP_REFERER} !^http://(www\.)?localhost.*$ [NC] 
+						RewriteRule \.(png|jpg|pdf|doc|docx|odt)$ - [F]
+						</IfModule>" ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
+					} 
+				
+					if ( ! file_exists( $submissions_dir . '/index.php' ) ) {
+						touch( $submissions_dir . '/index.php' );
+					}
+				}else{
+					if ( file_exists( $_htaccess ) ) {
+						unlink( $_htaccess );
+					}
+					if ( file_exists( $submissions_dir . '/index.php' ) ) {
+						unlink( $submissions_dir . '/index.php' );
+					}
+				}
+			}
+			return $submissions_dir;
 		}
 
 
 		function prepare_image_or_file_field( $field ) {
+			if( empty( $GLOBALS['admin_form'] ) ){
+				return $field;
+			}
 			if ( in_array( $field['type'], array( 'image', 'featured_image', 'main_image', 'site_logo' ) ) ) {
 				$field['type'] = 'upload_image';
 			}else{
@@ -277,13 +465,8 @@ if ( ! class_exists( 'upload_file' ) ) :
 				$field['destination'] = '';
 			}
 
-			$_value = $field['value'];
-			if ( isset( $_value['id'] ) ) {
-				$value = $_value['id'];
-			} else {
-				$value = $_value;
-			}
-
+			$value = $field['value'];
+	
 			// vars
 			$uploader = acf_get_setting( 'uploader' );
 
@@ -332,7 +515,7 @@ if ( ! class_exists( 'upload_file' ) ) :
 
 					// update
 					$o['icon']     = $attachment['icon'];
-					$o['title']    = $attachment['title'];
+					$o['title']    =  $attachment['title'];
 					$o['url']      = $attachment['url'];
 					$o['filename'] = $attachment['filename'];
 					if ( $attachment['filesize'] ) {
@@ -343,31 +526,14 @@ if ( ! class_exists( 'upload_file' ) ) :
 
 			?>
 <div <?php acf_esc_attr_e( $div ); ?>>
-			<?php
-			if ( $uploader == 'basic' ) {
-				acf_hidden_input(
-					array(
-						'data-name' => 'id',
-						'name'      => $field['name'] . '[id]',
-						'value'     => $value,
-					)
-				);
-				acf_hidden_input(
-					array(
-						'data-name' => 'file',
-						'name'      => $field['name'] . '[file]',
-						'value'     => '',
-					)
-				);
-			} else {
-				acf_hidden_input(
-					array(
-						'data-name' => 'id',
-						'name'      => $field['name'],
-						'value'     => $value,
-					)
-				);
-			}
+			<?php		
+			acf_hidden_input(
+				array(
+					'data-name' => 'id',
+					'name'      => $field['name'],
+					'value'     => $value,
+				)
+			);
 			?>
 <div class="show-if-value file-wrap">
 			<?php
@@ -437,8 +603,8 @@ if ( ! class_exists( 'upload_file' ) ) :
 			</div>
 		</label>
 				<?php
-				$prefix = $field['prefix'] . '[' . $field['key'] . ']';
-				fea_instance()->form_display->render_meta_fields( $prefix, $_value );
+				$prefix = 'acff[file_data][' . $field['key'] . ']';
+				fea_instance()->form_display->render_meta_fields( $prefix, $value );
 				?>
    <?php else : ?>
 		<p><?php echo esc_html( $empty_text ); ?> <a data-name="add" class="acf-button button" href="#"><?php echo esc_html( $button_text ); ?></a></p>
@@ -474,36 +640,98 @@ if ( ! class_exists( 'upload_file' ) ) :
 
 		}
 
+		function move_folders( $value, $post_id = false, $field = false ) {
+			if( ! $value ) return $value;
 
-		function update_file_value( $value, $post_id = false, $field = false ) {
-			if ( isset( $value['id'] ) ) {
-				if ( ! $value['id'] ) {
-					return '';
-				}
-				$attach_id = $value['id'];
-
-				if ( ! empty( $value['meta'] ) ) {
-					if ( isset( $value['alt'] ) ) {
-						update_post_meta( $attach_id, '_wp_attachment_image_alt', $value['alt'] );
+			$uploads = wp_upload_dir();
+			if( ! empty( $field['custom_directory'] ) && ! empty( $field['custom_directory_name'] ) ){
+				$dir_name = $field['custom_directory_name'];
+				$dir_name = fea_instance()->dynamic_values->get_dynamic_values( $dir_name );
+								
+				$create_directory = wp_mkdir_p( $uploads['basedir'] . '/' . $dir_name );
+			
+				if( $create_directory ){
+					$upload_dir = $uploads['basedir'] . '/' . $dir_name;
+					$_htaccess = $upload_dir . '/.htaccess';			
+			
+					if( ! empty ( $field['secure_directory'] ) ){
+						// Protect uploads directory for the servers that support .htaccess
+						if ( ! file_exists( $_htaccess ) ) {
+							file_put_contents( $_htaccess, "<IfModule mod_rewrite.c>
+							RewriteEngine on 
+							RewriteCond %{HTTP_REFERER} !^http://(www\.)?localhost [NC] 
+							RewriteCond %{HTTP_REFERER} !^http://(www\.)?localhost.*$ [NC] 
+							RewriteRule \.(png|jpg|pdf|doc|docx|odt)$ - [F]
+							</IfModule>" ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
+						} 
+					
+						if ( ! file_exists( $upload_dir . '/index.php' ) ) {
+							touch( $upload_dir . '/index.php' );
+						}
+					}else{
+						if ( file_exists( $_htaccess ) ) {
+							unlink( $_htaccess );
+						}
+						if ( file_exists( $upload_dir . '/index.php' ) ) {
+							unlink( $upload_dir . '/index.php' );
+						}
 					}
-
-					$attachment = array( 'ID' => $attach_id );
-					if ( ! empty( $value['title'] ) ) {
-						$attachment['post_title'] = $value['title'];
-					}
-
-					if ( isset( $value['description'] ) ) {
-						$attachment['post_content'] = $value['description'];
-					}
-					if ( isset( $value['capt'] ) ) {
-						$attachment['post_excerpt'] = $value['capt'];
-					}
-
-					wp_update_post( $attachment );
-				}
-				$value = $attach_id;
+				}		
 			}
 
+			if( empty( $upload_dir ) ){
+				$upload_dir = $uploads['path'];
+			}				
+
+			//$upload_dir = apply_filters( 'frontend_admin/files/folder_path', $upload_dir, $field );
+
+			if( is_array( $value ) ){
+				foreach( $value as $attachment ){
+					$attachment = (int) $attachment;        
+					$this->move_file( $attachment, $upload_dir, $field );
+				}
+			}else{	
+				$value = (int) $value;        			
+				$this->move_file( $value, $upload_dir, $field );
+			}
+			return $value;
+		}
+
+		function move_file( $attachment, $upload_dir, $field ){
+			if( ! empty( $field['hide_from_library'] ) ){
+				update_post_meta( $attachment, '_hide_from_library', true );
+			}else{
+				delete_post_meta( $attachment, '_hide_from_library' );
+			}			
+
+			$path = get_attached_file( $attachment );
+			if( $path ){
+
+				$file_base = basename( $path );
+				$new_path = $upload_dir . '/' . $file_base;
+				$moved = rename( $path, $new_path );
+				if( $moved ){
+					update_attached_file( $attachment, $new_path );
+
+					$attach_data = wp_get_attachment_metadata( $attachment, $new_path );
+					 if( wp_attachment_is_image( $attachment ) ){
+						if( $attach_data['sizes'] ){
+							foreach ( $attach_data['sizes'] as $image_size ) {
+								// get the path for this size
+								$size_path = str_replace( $file_base, $image_size['file'], $path );
+								$moved = rename( $size_path, $upload_dir . '/' . $image_size['file'] );						
+
+							}
+						}
+					} 
+					$attach_data['file'] = $upload_dir . '/' . $file_base;
+					wp_update_attachment_metadata( $attachment, $attach_data );
+				}
+
+			}
+		}
+
+		function update_file_value( $value, $post_id = false, $field = false ) {
 			if ( is_numeric( $post_id ) ) {
 				remove_filter( 'acf/update_value/type=' . $field['type'], array( $this, 'update_file_value' ), 8, 3 );
 				$value = (int) $value;
@@ -511,11 +739,35 @@ if ( ! class_exists( 'upload_file' ) ) :
 				if ( wp_is_post_revision( $post ) ) {
 					$post_id = $post->post_parent;
 				}
+
+				global $fea_form;
+
+				if ( ! empty( $fea_form['record']['fields']['file_data'][$field['name']] ) ) {
+					$meta = $fea_form['record']['fields']['file_data'][$field['name']];
+					if ( isset( $meta['alt'] ) ) {
+						update_post_meta( $value, '_wp_attachment_image_alt', sanitize_text_field( $meta['alt'] ) );
+					}
+
+					$edit = array( 'ID' => $value );
+					if ( ! empty( $meta['title'] ) ) {
+						$edit['post_title'] = sanitize_text_field( $meta['title'] );
+					}
+
+					if ( isset( $meta['description'] ) ) {
+						$edit['post_content'] = sanitize_textarea_field( $meta['description'] );
+					}
+					if ( isset( $meta['capt'] ) ) {
+						$edit['post_excerpt'] = sanitize_textarea_field( $meta['capt'] );
+					}
+
+					wp_update_post( $edit );
+				}
+
 				acf_connect_attachment_to_post( $value, $post_id );
 
 				add_filter( 'acf/update_value/type=' . $field['type'], array( $this, 'update_file_value' ), 8, 3 );
+
 			}
-			delete_post_meta( $value, 'hide_from_lib' );
 			return $value;
 		}
 

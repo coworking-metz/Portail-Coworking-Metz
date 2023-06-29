@@ -70,6 +70,9 @@ if ( ! class_exists( 'fields_select' ) ) :
 
 		function load_field( $field ) {	
 			global $post;	
+			if( ! empty( $field['key'] ) ){
+				$field['name'] = $field['key'];
+			}		
 			if ( isset( $post->post_type ) && 
 				$post->post_type == 'admin_form' && 
 				isset($_GET['action']) && 
@@ -150,13 +153,8 @@ if ( ! class_exists( 'fields_select' ) ) :
 			foreach ( $field['fields_select'] as $selector ) {
 				// Field Group selector.
 				if ( acf_is_field_group_key( $selector ) ) {
+					$field_group_fields = acf_get_fields( $selector );
 
-					$field_group = acf_get_field_group( $selector );
-					if ( ! $field_group ) {
-						continue;
-					}
-
-					$field_group_fields = acf_get_fields( $field_group );
 					if ( ! $field_group_fields ) {
 						continue;
 					}
@@ -194,12 +192,20 @@ if ( ! class_exists( 'fields_select' ) ) :
 
 			$sub_fields = $field['fields_select'];
 
-			acf_hidden_input( array( 'name' => $field['name'] ) );
+			if( is_string( $sub_fields[0] ) ){
+				$sub_fields =  $this->get_selected_fields( $field );
+			}
+
+			//acf_hidden_input( array( 'name' => $field['name'] ) );
 
 			$sub_fields = apply_filters( 'frontend_admin/pre_render_fields', $sub_fields );
 
 			// load values
 			foreach ( $sub_fields as $index => $sub_field ) {
+				if( is_string( $sub_field ) ){
+					$sub_field = acf_maybe_get_field( $sub_field );
+					if( ! $sub_field ) continue;
+				}
 				// add value
 				if ( ! empty( $field['value'] ) && isset( $field['value'][ $sub_field['key'] ] ) ) {
 					// this is a normal value
