@@ -23,12 +23,17 @@ add_action(
 
                 // Check if authentication succeeded
                 if (!is_wp_error($user)) {
-                    $response = array('user' => [
-                        'login' => $user->user_login,
-                        'id' => $user->ID
-                    ]);
+
+                    if (user_can($user, 'administrator') || in_array('coworker', (array) $user->roles)) {
+                        $response = array('user' => [
+                            'login' => $user->user_login,
+                            'id' => $user->ID
+                        ]);
+                    } else {
+                        return new WP_Error('authorization_failed', 'Accès interdit', array('status' => 401));
+                    }
                 } else {
-                    return new WP_Error('authorization_failed', 'Invalid credentials ', array('status' => 401));
+                    return new WP_Error('authorization_failed', 'Mauvais identifiant ou mot de passe ', array('status' => 401));
                 }
 
                 return rest_ensure_response($response);
