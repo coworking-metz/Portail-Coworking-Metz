@@ -24,10 +24,14 @@ add_action(
                 // Check if authentication succeeded
                 if (!is_wp_error($user)) {
 
-                    if (user_can($user, 'administrator') || in_array('coworker', (array) $user->roles)) {
+                    if (user_can($user, 'administrator') || in_array('customer', (array) $user->roles)) {
+                        // Generate and store the session ID
+
+
                         $response = array('user' => [
-                            'login' => $user->user_login,
-                            'id' => $user->ID
+                            'login' => $user->user_email,
+                            'id' => $user->ID,
+                            'session_id' => coworking_app_session_id($user->ID, true)
                         ]);
                     } else {
                         return new WP_Error('authorization_failed', 'Accès interdit', array('status' => 401));

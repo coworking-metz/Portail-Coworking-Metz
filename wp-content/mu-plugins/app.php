@@ -1,6 +1,15 @@
 <?php
 
-
+function coworking_app_session_id($uid, $generer_nouveau = false)
+{
+    if ($generer_nouveau) {
+        $session_id = wp_generate_password(20, false);
+        update_user_meta($uid, 'session_id', $session_id);
+    } else {
+        $session_id = get_user_meta($uid, 'session_id')[0]??false;
+    }
+    return $session_id;
+}
 function coworking_app_droits($user_id)
 {
 
@@ -52,7 +61,15 @@ function coworking_app_check($request)
 
     if ($authorization_header != APP_AUTH_TOKEN) {
         http_response_code(403);
-        exit('Invalid authorization header');
+        exit('{"message":"Invalid authorization header"}');
         // return new WP_Error('authorization_failed', 'Invalid authorization header ', array('status' => 401));
+    }
+
+
+    if ($request['session'] ?? false) {
+        $sid = coworking_app_session_id($request['user_id']);
+        if ($request['session'] == $sid) {
+            return $sid;
+        }
     }
 }
