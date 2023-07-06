@@ -1,12 +1,26 @@
 <?php
 
+function coworking_app_settings()
+{
+
+    $settings = get_transient('coworking-app-settings');
+    if (!$settings) {
+        $url = 'https://tickets.coworking-metz.fr/api/current-users?key=' . API_KEY_TICKET . '&delay=15';
+        $data = file_get_contents($url);
+        $presences = json_decode($data, true);
+
+        $settings = ['occupation' => ['total' => 29, 'presents' => count($presences)]];
+        set_transient('coworking', $settings, 60 * 5);
+    }
+    return $settings;
+}
 function coworking_app_session_id($uid, $generer_nouveau = false)
 {
     if ($generer_nouveau) {
         $session_id = wp_generate_password(20, false);
         update_user_meta($uid, 'session_id', $session_id);
     } else {
-        $session_id = get_user_meta($uid, 'session_id')[0]??false;
+        $session_id = get_user_meta($uid, 'session_id')[0] ?? false;
     }
     return $session_id;
 }

