@@ -32,9 +32,20 @@ function coworking_app_droits($user_id)
 
     $bloquer_ouvrir_portail = get_field('bloquer_ouvrir_portail', 'user_' . $user_id);
 
-    return array(
-        'ouvrir_portail' => $bloquer_ouvrir_portail ? false : true,
-    );
+
+    if (user_can($user_id, 'administrator')) {
+        $admin = true;
+    } else {
+        $admin = false;
+    }
+
+    return [
+        'admin' => $admin,
+        'settings' => coworking_app_settings(),
+        'droits' => [
+            'ouvrir_portail' => $bloquer_ouvrir_portail ? false : true,
+        ]
+    ];
 }
 function coworking_app_origins()
 {

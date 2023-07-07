@@ -14,15 +14,7 @@ add_action(
 
 
                 if ($droits) {
-
-
-
-                    if (user_can($uid, 'administrator')) {
-                        $admin = true;
-                    } else {
-                        $admin = false;
-                    }
-                    $response = array('droits' => $droits, 'admin' => $admin, 'settings' => coworking_app_settings());
+                    $response = $droits;
                 } else {
                     return new WP_Error('rest_user_invalid_id', 'Invalid user ID ', array('status' => 404));
                 }

@@ -33,11 +33,14 @@ add_action(
                         // Generate and store the session ID
 
 
-                        $response = array('user' => [
-                            'login' => $user->user_email,
-                            'id' => $user->ID,
-                            'session_id' => coworking_app_session_id($user->ID, true)
-                        ]);
+                        $response = [
+                            'user' => [
+                                'login' => $user->user_email,
+                                'id' => $user->ID,
+                                'session_id' => coworking_app_session_id($user->ID, true),
+                            ],
+                            'reglages' => coworking_app_droits($user->ID)
+                        ];
                     } else {
                         return new WP_Error('authorization_failed', 'Accès interdit', array('status' => 401));
                     }
