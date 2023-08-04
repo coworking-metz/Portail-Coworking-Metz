@@ -11,6 +11,8 @@ services:
       - WORDPRESS_DB_HOST=db
       - WORDPRESS_DB_USER=root
       - WORDPRESS_DB_PASSWORD=password
+      - JWT_AUTH_SECRET_KEY="cp!Xbu]~~neV^i_>[E}VCiq~l T<7G:7q-|8mZ{,8m.6p`{9rTod5oJf?KfI60rv"
+      - API_KEY_TICKET=bupNanriCit1
     depends_on:
       - db
       - phpmyadmin

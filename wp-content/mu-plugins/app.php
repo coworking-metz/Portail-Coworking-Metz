@@ -1,5 +1,18 @@
 <?php
 
+// In order to whitelist endpoints, I rolled back the changes from
+// this commit https://github.com/usefulteam/jwt-auth/commit/84087733a6ed087df2ca53e6b4be767854754eb5
+// The added code to `class-auth.php` should be removed once the cowo/v1 endpoints are removed.
+add_filter(
+	'jwt_auth_whitelist',
+	function ( $endpoints ) {
+		$your_endpoints = array(
+            '/api-json-wp/cowo/v1/*',
+        );
+        return array_unique( array_merge( $endpoints, $your_endpoints ) );
+	}
+);
+
 function coworking_app_settings()
 {
 
