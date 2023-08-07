@@ -37,7 +37,7 @@ add_action(
                             'user' => [
                                 'login' => $user->user_email,
                                 'id' => $user->ID,
-                                'session_id' => coworking_app_session_id($user->ID, true),
+                                'session_id' => coworking_app_gen_session_id($user->ID),
                             ],
                             'reglages' => coworking_app_droits($user->ID)
                         ];

@@ -14,16 +14,65 @@ function coworking_app_settings()
     }
     return $settings;
 }
-function coworking_app_session_id($uid, $generer_nouveau = false)
+
+function coworking_app_gen_session_id($uid, $expiry_in_days = 30)
 {
-    if ($generer_nouveau) {
-        $session_id = wp_generate_password(20, false);
-        update_user_meta($uid, 'session_id', $session_id);
-    } else {
-        $session_id = get_user_meta($uid, 'session_id')[0] ?? false;
-    }
+    $sessions = coworking_app_get_sessions($uid);
+    $session_id = wp_generate_password(30, false);
+
+    // Calculate expiry date
+    $expiry_date = date('Y-m-d H:i:s', strtotime("+$expiry_in_days days"));
+
+    // Save session id with its expiry date
+    $sessions[$session_id] = $expiry_date;
+
+    update_user_meta($uid, 'sessions', json_encode($sessions));
     return $session_id;
 }
+
+function coworking_app_get_sessions($uid)
+{
+
+    if (!$uid) return;
+    $sessions = get_user_meta($uid, 'sessions', true);
+    if (empty($sessions)) {
+        $sessions = [];
+    } else {
+        $sessions = json_decode($sessions, true);
+
+        // Check if $sessions is a numerically indexed array (not associative)
+        if (array_values($sessions) === $sessions) {
+            $sessions = [];  // Reset to empty array
+        } else {
+            $current_time = time();
+            foreach ($sessions as $session_id => $expiry_time) {
+                // If the session has expired, remove it from the array
+                if (strtotime($expiry_time) <= $current_time) {
+                    unset($sessions[$session_id]);
+                }
+            }
+        }
+    }
+
+    return $sessions;
+}
+
+
+function coworking_app_get_valid_sessions($uid)
+{
+    $sessions = coworking_app_get_sessions($uid);
+
+    // Iterate over sessions and only keep the ones that have not expired
+    $valid_sessions = [];
+    foreach ($sessions as $session_id => $expiry_time) {
+        if (strtotime($expiry_time) > time()) {
+            $valid_sessions[] = $session_id;
+        }
+    }
+    return $valid_sessions;
+
+}
+
 function coworking_app_droits($user_id)
 {
 
@@ -41,8 +90,10 @@ function coworking_app_droits($user_id)
 
     return [
         'admin' => $admin,
+        // 'sessions'=>coworking_app_get_sessions($user_id),
         'settings' => coworking_app_settings(),
         'droits' => [
+            'admin' => $admin,
             'ouvrir_portail' => $bloquer_ouvrir_portail ? false : true,
         ]
     ];
@@ -50,6 +101,7 @@ function coworking_app_droits($user_id)
 function coworking_app_origins()
 {
     return array(
+        '',
         'http://127.0.0.1:5173',
         'https://melodious-entremet-ad9165.netlify.app',
         'https://app.coworking-metz.fr'
@@ -92,9 +144,30 @@ function coworking_app_check($request)
 
 
     if ($request['session'] ?? false) {
-        $sid = coworking_app_session_id($request['user_id']);
-        if ($request['session'] == $sid) {
-            return $sid;
-        }
+        return coworking_app_check_session_id($request['session'], $request['user_id']);
     }
+}
+
+function coworking_app_check_session_id($sid, $uid)
+{
+    $sessions = coworking_app_get_valid_sessions($uid);
+
+
+    if (in_array($sid, $sessions)) {
+        return $sid;
+    } else {
+        return false;
+    }
+}
+
+function coworking_app_delete_session_id($sid, $uid)
+{
+    $sessions = coworking_app_get_sessions($uid);
+
+    // If the session id exists, remove it from the sessions array
+    unset($sessions[$sid]);
+
+    // Save the updated sessions array back to the user meta data
+    update_user_meta($uid, 'sessions', json_encode($sessions));
+    return true;
 }
