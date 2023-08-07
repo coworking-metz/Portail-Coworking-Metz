@@ -50,6 +50,16 @@ class Auth {
 	private $rest_api_slug = 'wp-json';
 
 	/**
+	 * Retrieve the refresh_token
+	 * either from cookies or from the body
+	 */
+	private function get_refresh_token( WP_REST_Request $request ) {
+		if (isset($_COOKIE['refresh_token'])) return $_COOKIE['refresh_token'];
+		if ($request->get_param('refresh_token')) return $request->get_param('refresh_token');
+		return null;
+	}
+
+	/**
 	 * Setup action & filter hooks.
 	 */
 	public function __construct() {
@@ -162,9 +172,9 @@ class Auth {
 			);
 		}
 
-		if ( isset( $_COOKIE['refresh_token'] ) ) {
+		if ( $this->get_refresh_token($request) != null ) {
 			$device  = $request->get_param( 'device' ) ?: '';
-			$user_id = $this->validate_refresh_token( $_COOKIE['refresh_token'], $device );
+			$user_id = $this->validate_refresh_token( $this->get_refresh_token($request), $device );
 
 			// If we receive a REST response, then validation failed.
 			if ( $user_id instanceof WP_REST_Response ) {
@@ -513,7 +523,7 @@ class Auth {
 	 * @return WP_REST_Response Returns WP_REST_Response.
 	 */
 	public function refresh_token( WP_REST_Request $request ) {
-		if ( ! isset( $_COOKIE['refresh_token'] ) ) {
+		if ( !$this->get_refresh_token($request) ) {
 			return new WP_REST_Response(
 				array(
 					'success'    => false,
@@ -526,7 +536,7 @@ class Auth {
 		}
 		$device = $request->get_param( 'device' ) ?: '';
 
-		$user_id = $this->validate_refresh_token( $_COOKIE['refresh_token'], $device );
+		$user_id = $this->validate_refresh_token( $this->get_refresh_token($request), $device );
 		if ( $user_id instanceof WP_REST_Response ) {
 			return $user_id;
 		}

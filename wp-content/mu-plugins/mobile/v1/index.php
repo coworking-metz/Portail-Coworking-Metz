@@ -22,6 +22,6 @@ add_filter(
 	2
 );
 
-include 'intercom.php';
-include 'presence.php';
+include 'mobile-intercom.php';
+include 'mobile-presence.php';
 include 'mobile-profile.php';
