@@ -29,3 +29,6 @@ wp-content/uploads
 
 # End of https://www.toptal.com/developers/gitignore/api/wordpress
 
+wp-content/plugins/yith-woocommerce-customize-myaccount-page/LICENSE.txt
+wp-content/plugins/yith-woocommerce-customize-myaccount-page/README.txt
+wp-content/plugins/yith-woocommerce-customize-myaccount-page/plugin-fw/license.txt
