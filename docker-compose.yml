@@ -29,7 +29,8 @@ services:
       - MYSQL_PASSWORD=password
       - MYSQL_DATABASE=wordpress
     restart: always
-
+    ports:
+      - 3306:3306
   phpmyadmin:
     depends_on:
       - db
