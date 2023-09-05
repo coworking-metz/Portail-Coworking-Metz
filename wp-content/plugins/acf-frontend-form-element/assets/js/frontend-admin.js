@@ -956,9 +956,8 @@
 				form_action: $form_action,
 			};
 
-			var formData = $clicked.siblings( '.form-data' );
-			if (formData.length > 0) {
-				ajaxData.form = formData.val();
+			if ($el.data( 'form' )) {
+				ajaxData.form = $el.data( 'form' );
 			}
 			// get HTML
 			$.ajax(
@@ -1151,8 +1150,12 @@
 			acf.doAction( 'frontend_form_success', response );
 			
 			var data = response.data;
-			if ( data.redirect ) {
-				var url = data.redirect.replace(/&amp;/g, "&");
+			if( ! data ) {
+				window.location.reload();
+			}
+
+			if ( data?.redirect ) {
+				var url = data?.redirect.replace(/&amp;/g, "&");
 				window.location = decodeURIComponent(url);
 			} else {
 				acf.unlockForm( $form );

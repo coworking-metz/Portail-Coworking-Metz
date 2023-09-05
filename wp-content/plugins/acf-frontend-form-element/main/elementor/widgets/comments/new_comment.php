@@ -10,7 +10,7 @@ namespace Frontend_Admin\Elementor\Widgets;
  *
  * @since 1.0.0
  */
-class New_Comment_Widget extends Frontend_Form {
+class New_Comment_Widget extends ACF_Form {
 
 
 	/**

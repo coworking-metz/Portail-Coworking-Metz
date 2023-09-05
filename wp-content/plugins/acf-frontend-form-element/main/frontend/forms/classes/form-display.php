@@ -174,7 +174,6 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 					'saved_drafts'          => array(),
 					'saved_revisions'       => array(),
 					'save_progress'         => '',
-					'show_delete_button'    => false,
 					'message_location'      => 'other',
 					'hidden_fields'         => array(),
 					'submit_value'          => __( 'Update', 'acf-frontend-form-element' ),
@@ -333,6 +332,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 			// Render setting.
 			$this->render_field_wrap( $setting, 'tr', 'label' );
 		}
+
 
 		public function render_field_wrap( $field, $element = 'div', $instruction = 'label' ) {
 			if ( is_string( $field ) ) {
@@ -618,7 +618,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 			if ( $defaults ) {
 				$fields = apply_filters( 'frontend_admin/pre_render_fields', $fields, $form );
 				foreach ( $fields as $field ) {
-					$GLOBALS['form_fields'][$field['type']] = $field['key'];
+					if( isset( $field['type'] ) ) $GLOBALS['form_fields'][$field['type']] = $field['key'];
 				}
 			}
 
@@ -629,6 +629,10 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 
 				$open_columns = 0;
 				foreach ( $fields as $field ) {
+					if ( ! $field ) {
+						continue;
+					}
+
 					if ( isset( $field['_input'] ) ) {
 						$field['value'] = $field['_input'];
 						if ( is_string( $field['value'] ) ) {
@@ -1112,7 +1116,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 				$attrs = array(
 					'class'     => 'modal-button render-form',
 					'data-name' => 'admin_form',
-					'data-form' => $form['id'],
+					'data-form' => fea_encrypt( json_encode( $form ) ),
 				);
 				if ( isset( $form['modal_width'] ) ) {
 					$attrs['data-form_width'] = $form['modal_width'];
@@ -1128,13 +1132,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 				}
 
 				echo '<button ' . acf_esc_attrs( $attrs ) . ' >' . esc_html( $button_text ) . '</button>';
-				acf_hidden_input(
-					array(
-						'class' => 'form-data',
-						'name'  => 'form_' . $form['id'],
-						'value' => fea_encrypt( json_encode( $form ) ),
-					)
-				);
+				
 				return;
 			}
 
@@ -1536,6 +1534,8 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Display_Form' ) ) :
 				'new_post_status'       => 'publish',
 				'save_to_' . $type      => $edit_post ? 'edit_' . $type : 'new_' . $type,
 				'custom_fields_save'    => $type,
+				'honeypot'              => false,
+				'fields' 				=> array(),
 				'default_submit_button' => 1,
 				'form_conditions'       => array(
 					array(

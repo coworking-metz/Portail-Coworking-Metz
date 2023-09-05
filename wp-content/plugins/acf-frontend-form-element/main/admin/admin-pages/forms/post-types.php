@@ -109,7 +109,7 @@ if ( function_exists( 'register_post_type' ) ) :
 		'hierarchical'          => false,
 		'public'                => false,
 		'show_ui'               => true,
-		'show_in_menu'          => FEA_PRE.'-settings',
+		'show_in_menu'          => 'frontend-admin-settings',
 		'menu_position'         => 80,
 		'show_in_admin_bar'     => false,
 		'can_export'            => true,

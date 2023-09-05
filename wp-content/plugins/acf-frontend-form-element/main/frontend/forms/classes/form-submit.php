@@ -239,7 +239,6 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 				}
 					
 			}
-			//error_log( print_r( $form, true ) );
 
 			if ( ! empty( $form['dynamic_title'] ) ) {
 				$form['submission_title'] = fea_instance()->dynamic_values->get_dynamic_values( $form['submission_title'], $form );
@@ -320,6 +319,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 			}
 
 			if ( $field ) {
+				$input = apply_filters( 'frontend_admin/submissions/add_value/type=' . $field['type'], $input, $field );
 
 				$input_key = 'acff[' . $group . '][' . $key . ']';
 
@@ -521,6 +521,19 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 				$response['form_element']    = $form['id'];
 			}
 
+			$save = get_option( 'frontend_admin_save_submissions' );
+			if ( isset( $form['save_form_submissions'] ) ) {
+				$save = $form['save_form_submissions'];
+			}
+			if ( isset( $form['no_record'] ) ) {
+				$save = false;
+			}
+
+			$save = apply_filters( 'frontend_admin/save_submission', $save, $form );
+
+			if ( $save ) {
+				$form = $this->save_record( $form, $form['submission_status'] );
+			}
 			if ( ! empty( $form['ajax_submit'] ) ) {
 				$response['location'] = 'current';
 			
@@ -572,8 +585,9 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 					}
 				}
 			} else {
-				$form                 = $this->get_redirect_url( $form );
-				$response['location'] = $form['message_location'];
+				$form['return'] = $this->get_redirect_url( $form );
+
+				$response['location'] = 'current' == $form['redirect'] ?'current' : 'other';
 				if ( ! empty( $form['_in_modal'] ) || ! empty( $form['show_in_modal'] ) ) {
 					$response['location'] = 'other';
 				}
@@ -605,20 +619,6 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 					setcookie( 'admin_form_success', json_encode( $response ), $expiration_time, '/' );
 					unset($response['frontend-form-nonce']);
 				}
-			}
-
-			$save = get_option( 'frontend_admin_save_submissions' );
-			if ( isset( $form['save_form_submissions'] ) ) {
-				$save = $form['save_form_submissions'];
-			}
-			if ( isset( $form['no_record'] ) ) {
-				$save = false;
-			}
-
-			$save = apply_filters( 'frontend_admin/save_submission', $save, $form );
-
-			if ( $save ) {
-				$form = $this->save_record( $form, $form['submission_status'] );
 			}
 
 			if ( isset( $submission_form ) ) {
@@ -658,7 +658,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 			fea_instance()->form_display->render_form( $form );
 			$json = [ 'reload_form' => ob_get_contents() ];
 			ob_end_clean(); */
-			$form                        = $this->get_redirect_url( $form );
+			$form['return'] = $this->get_redirect_url( $form );
 			$json                        = array(
 				'location'     => 'current',
 				'redirect'     => $form['return'] . '?submission=' . $form['submission'] . '&edit=1',
@@ -743,7 +743,7 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 
 		public function get_redirect_url( $form ) {
 			if ( ! empty( $form['return'] ) ) {
-				return $form;
+				return $form['return'];
 			}
 
 			$redirect_url             = '';
@@ -763,124 +763,13 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 					$redirect_url = '%post_url%';
 					break;
 				default:
-					global $wp;
 					$redirect_url = $form['current_url'];
-					// $form_args['reload_current'] = true;
-					$form['message_location'] = 'current';
 			}
-			$form['return'] = $redirect_url;
-
-			return $form;
+			
+			return apply_filters( 'frontend_admin/forms/redirect_url', $redirect_url, $form );
 		}
 
-		public function delete_object() {
-			if ( ! feadmin_verify_nonce( 'fea_form' ) ) {
-				wp_send_json_error( __( 'Nonce Error', 'acf-frontend-form-element' ) );
-			}
-			// bail ealry if form not submit
-			if ( empty( $_POST['_acf_form'] ) ) {
-				wp_send_json_error( __( 'No Form Data', 'acf-frontend-form-element' ) );
-			}
-			// load form
-			$form = json_decode( fea_decrypt( $_POST['_acf_form'] ), true );
-
-			$form = wp_kses_post_deep( $form );			
-
-			// bail ealry if form is corrupt
-			if ( empty( $form ) ) {
-				wp_send_json_error( __( 'No Form Data', 'acf-frontend-form-element' ) );
-			}
-
-			if ( empty( $_POST['field'] ) ) {
-				wp_send_json_error( __( 'Delete Button Key Not Found', 'acf-frontend-form-element' ) );
-			}
-
-			$key = sanitize_key( $_POST['field'] );
-
-			$field = acf_get_field( $key );
-			if ( ! $field && ! empty( $form['fields'][ $key ] ) ) {
-				$field = $form['fields'][ $key ];
-			}
-
-			if ( ! $field ) {                                      
-				wp_send_json_error( __( 'Invalid Delete Button', 'acf-frontend-form-element' ) );
-			}
-
-			// add global for backwards compatibility
-			$GLOBALS['admin_form'] = $form;
-
-			if ( isset( $field['redirect'] ) ) {
-				$form['redirect'] = $field['redirect'];
-			}
-			if ( isset( $field['custom_url'] ) ) {
-				$form['custom_url'] = $field['custom_url'];
-			}
-			$form                     = $this->get_redirect_url( $form );
-			$form['message_location'] = 'other';
-
-
-			if ( $field['show_delete_message'] ) {
-				if ( ! empty( $field['delete_message'] ) ) {
-					$message = $field['delete_message'];
-				} else {
-					$message = $form['success_message'];
-				}
-				if ( strpos( $message, '[' ) !== 'false' ) {
-					$message = fea_instance()->dynamic_values->get_dynamic_values( $message, $form );
-				}
-				$redirect_args['form_element']        = $form['id'];
-				$redirect_args['success_message']     = $message;
-				$redirect_args['location']            = $form['message_location'];
-				$redirect_args['frontend-form-nonce'] = wp_create_nonce( 'frontend-form' );
-			}
-
-			switch ( $field['type'] ) {
-				case 'delete_post':
-					if ( ! empty( $_POST['_acf_post'] ) ) {
-						$post_id = intval( $_POST['_acf_post'] );
-						if ( empty( $field['force_delete'] ) ) {
-							$deleted = wp_trash_post( $post_id );
-						} else {
-							$deleted = wp_delete_post( $post_id, true );
-						}
-						$form['record']['post'] = $post_id;
-					}
-					break;
-				case 'delete_product':
-					if ( ! empty( $_POST['_acf_product'] ) ) {
-						$product_id = intval( $_POST['_acf_product'] );
-						if ( empty( $field['force_delete'] ) ) {
-							$deleted = wp_trash_post( $product_id );
-						} else {
-							$deleted = wp_delete_post( $product_id, true );
-						}
-						$form['record']['product'] = $product_id;
-					}
-					break;
-				case 'delete_term':
-					if ( ! empty( $_POST['_acf_term'] ) ) {
-						$term_id                = intval( $_POST['_acf_term'] );
-						$deleted                = wp_delete_term( $term_id, sanitize_title( $_POST['_acf_taxonomy_type'] ) );
-						$form['record']['term'] = $term_id;
-					}
-					break;
-				case 'delete_user':
-					if ( ! empty( $_POST['_acf_user'] ) ) {
-						$user_id                = intval( $_POST['_acf_user'] );
-						$deleted                = wp_delete_user( $user_id, $field['reassign_posts'] );
-						$form['record']['user'] = $user_id;
-					}
-					break;
-				default:
-					wp_send_json_error( __( 'No object found to delete' ) );
-			}
-
-			$expiration_time = time() + 600;
-			setcookie( 'admin_form_success', json_encode( $redirect_args ), $expiration_time, '/' );
-
-			wp_send_json_success( $redirect_args );
-		}
-
+		
 
 		public function verify_email_address() {
 			if ( isset( $_GET['submission'] ) && isset( $_GET['email-address'] ) && isset( $_GET['token'] ) ) {
@@ -962,8 +851,6 @@ if ( ! class_exists( 'Frontend_Admin\Classes\Submit_Form' ) ) :
 			add_action( 'wp_ajax_frontend_admin/forms/update_field', array( $this, 'check_inline_field' ) );
 			add_action( 'wp_ajax_nopriv_frontend_admin/forms/update_field', array( $this, 'check_inline_field' ) );
 
-			add_action( 'wp_ajax_frontend_admin/delete_object', array( $this, 'delete_object' ) );
-			add_action( 'wp_ajax_nopriv_frontend_admin/delete_object', array( $this, 'delete_object' ) );
 
 			add_action( 'init', array( $this, 'verify_email_address' ) );
 		}

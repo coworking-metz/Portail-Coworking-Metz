@@ -767,8 +767,13 @@ if ( ! class_exists( 'Dynamic_Values' ) ) :
 
 			switch ( $field['type'] ) {
 				case 'signature':
-				case 'form_signature':
-					$return .= $value;
+				case 'form_signature':			
+					if( ! empty( $value['id'] ) ){		
+						$upload     = wp_upload_dir();
+						$upload_dir = $upload['baseurl'];
+						$signature_path = $upload_dir . '/signatures/' . $value['id'] . '.png';
+						$return .= '<img width="200" src="' . $signature_path . '" alt="' . $field['label'] . '" />';
+					}
 					break;
 				case 'fields_select':
 					if ( $field['fields_select'] ) {

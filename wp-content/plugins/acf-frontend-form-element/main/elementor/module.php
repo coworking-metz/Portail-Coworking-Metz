@@ -35,8 +35,8 @@ if ( ! class_exists( 'Frontend_Admin\Elementor' ) ) :
 		public function widgets() {
 			 $widget_list      = array(
 				 'general' => array(
-					 'frontend-form' => 'Frontend_Form',
-					 'edit_button'   => 'Edit_Button_Widget',
+					'acf-form' => 'ACF_Form',
+					'edit_button'   => 'Edit_Button_Widget',
 				 ),
 			 );
 
@@ -73,10 +73,18 @@ if ( ! class_exists( 'Frontend_Admin\Elementor' ) ) :
 					 $elementor->widgets_manager->register( new $classname() );
 				 }
 			 }
+		
 
 			 do_action( 'frontend_admin/widget_loaded' );
 
 		}
+
+		public function documents(){
+			$elementor = $this->get_elementor_instance();
+
+			include_once __DIR__ . '/widgets/general/form-container.php';
+			$elementor->documents->register_document_type( 'form_container', 'Frontend_Admin\Elementor\Widgets\FormContainer' );
+		} 
 
 
 		public function widget_categories( $elements_manager ) {
@@ -331,8 +339,7 @@ if ( ! class_exists( 'Frontend_Admin\Elementor' ) ) :
 								}
 							}
 						}
-					}
-					if( 'ACF_field_groups' == $form_field['field_type'] ){
+					}elseif( 'ACF_field_groups' == $form_field['field_type'] ){
 						if( $form_field['field_groups_select'] ){
 							if( empty( $form_field['fields_select_exclude'] ) ){
 								$form_field['fields_select_exclude'] = [];
@@ -537,6 +544,7 @@ if ( ! class_exists( 'Frontend_Admin\Elementor' ) ) :
 
 			add_action( 'elementor/elements/categories_registered', array( $this, 'widget_categories' ) );
 			add_action( 'elementor/widgets/register', array( $this, 'widgets' ) );
+			//add_action( 'elementor/documents/register', array( $this, 'documents' ) );
 
 			add_action( 'elementor/dynamic_tags/register', array( $this, 'dynamic_tags' ) );
 

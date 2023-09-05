@@ -120,7 +120,6 @@ if ( ! class_exists( 'acf_field_post_object' ) ) :
 				// update vars
 				$args['s'] = $s;
 				$is_search = true;
-
 			}
 
 			// post_type
@@ -159,7 +158,6 @@ if ( ! class_exists( 'acf_field_post_object' ) ) :
 			$args = apply_filters( 'acf/fields/post_object/query', $args, $field, $options['post_id'] );
 			$args = apply_filters( 'acf/fields/post_object/query/name=' . $field['name'], $args, $field, $options['post_id'] );
 			$args = apply_filters( 'acf/fields/post_object/query/key=' . $field['key'], $args, $field, $options['post_id'] );
-
 			// get posts grouped by post type
 			$groups = acf_get_grouped_posts( $args );
 
@@ -217,7 +215,6 @@ if ( ! class_exists( 'acf_field_post_object' ) ) :
 				'results' => $results,
 				'limit'   => $args['posts_per_page'],
 			);
-
 			// return
 			return $response;
 
@@ -352,10 +349,7 @@ if ( ! class_exists( 'acf_field_post_object' ) ) :
 		*
 		*  @param   $field  - an array holding all the field's data
 		*/
-
 		function render_field_settings( $field ) {
-
-			// default_value
 			acf_render_field_setting(
 				$field,
 				array(
@@ -371,7 +365,6 @@ if ( ! class_exists( 'acf_field_post_object' ) ) :
 				)
 			);
 
-			// default_value
 			acf_render_field_setting(
 				$field,
 				array(
@@ -387,31 +380,6 @@ if ( ! class_exists( 'acf_field_post_object' ) ) :
 				)
 			);
 
-			// allow_null
-			acf_render_field_setting(
-				$field,
-				array(
-					'label'        => __( 'Allow Null?', 'acf' ),
-					'instructions' => '',
-					'name'         => 'allow_null',
-					'type'         => 'true_false',
-					'ui'           => 1,
-				)
-			);
-
-			// multiple
-			acf_render_field_setting(
-				$field,
-				array(
-					'label'        => __( 'Select multiple values?', 'acf' ),
-					'instructions' => '',
-					'name'         => 'multiple',
-					'type'         => 'true_false',
-					'ui'           => 1,
-				)
-			);
-
-			// return_format
 			acf_render_field_setting(
 				$field,
 				array(
@@ -427,8 +395,39 @@ if ( ! class_exists( 'acf_field_post_object' ) ) :
 				)
 			);
 
+			acf_render_field_setting(
+				$field,
+				array(
+					'label'        => __( 'Select multiple values?', 'acf' ),
+					'instructions' => '',
+					'name'         => 'multiple',
+					'type'         => 'true_false',
+					'ui'           => 1,
+				)
+			);
+
 		}
 
+		/**
+		 * Renders the field settings used in the "Validation" tab.
+		 *
+		 * @since 6.0
+		 *
+		 * @param array $field The field settings array.
+		 * @return void
+		 */
+		function render_field_validation_settings( $field ) {
+			acf_render_field_setting(
+				$field,
+				array(
+					'label'        => __( 'Allow Null?', 'acf' ),
+					'instructions' => '',
+					'name'         => 'allow_null',
+					'type'         => 'true_false',
+					'ui'           => 1,
+				)
+			);
+		}
 
 		/*
 		*  load_value()

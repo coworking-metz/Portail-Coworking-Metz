@@ -180,7 +180,7 @@ if( ! class_exists( 'Frontend_Admin\Admin\Plans_Crud' ) ) :
 		}
         public function plans_list(){
             global $fa_plans_page;
-            $fa_plans_page = add_submenu_page( FEA_PRE.'-settings', __( 'Plans', 'acf-frontend-form-element' ), __( 'Plans', 'acf-frontend-form-element' ), 'manage_options', 'frontend-admin-plans', [ $this, 'admin_plans_page'], 82 );
+            $fa_plans_page = add_submenu_page( 'fea-settings', __( 'Plans', 'acf-frontend-form-element' ), __( 'Plans', 'acf-frontend-form-element' ), 'manage_options', 'frontend-admin-plans', [ $this, 'admin_plans_page'], 82 );
             add_action( "load-$fa_plans_page", array( $this, 'plans_page_options' ) );
         }
 

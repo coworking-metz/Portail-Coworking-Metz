@@ -32,6 +32,7 @@ if ( ! class_exists( 'delete_post' ) ) :
 				'field_label_hide'  => 1,
 				'force_delete'      => 0,
 				'redirect'          => 'current',
+				'show_delete_message' => 1,
 				'delete_message'    => __( 'Your post has been deleted' ),
 			);
 

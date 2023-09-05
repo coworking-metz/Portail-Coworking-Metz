@@ -256,6 +256,25 @@ if ( ! class_exists( 'upload_file' ) ) :
 			return $query;
 		}
 
+		public function upload_file( $path, $filename, $secure = false){
+            $pos = strrpos($filename, '.');
+            $ext = substr($filename, $pos);           
+        
+            $newname = substr($filename, 0, $pos);
+			if( $secure ){
+				$newname .= '-' . uniqid() . '';
+			}
+			$newpath = $path.'/'.$newname . $ext;
+            $counter = 1;
+
+            while (file_exists($newpath)) {
+                $newname = $newname .'-'. $counter;
+                $newpath = $path.'/'.$newname . $ext;
+                $counter++;
+            }
+
+            return $newpath;
+        }
 
 		function ajax_add_attachment() {
 			$args = acf_parse_args(
@@ -300,17 +319,18 @@ if ( ! class_exists( 'upload_file' ) ) :
 
 			$wp_upload_dir = wp_upload_dir();
 
-			$submissions_dir = $this->maybe_mkdir( $wp_upload_dir['basedir'] . '/fea-submissions', true );				
-			move_uploaded_file( $file['tmp_name'], $submissions_dir . '/' . $file['name'] );	
+			$submissions_dir = $this->maybe_mkdir( $wp_upload_dir['basedir'] . '/fea-submissions', true );	
+			$url = $this->upload_file($submissions_dir,$file['name'], true);			
+			move_uploaded_file( $file['tmp_name'], $url );	
 
 			$attachment = array(
-				'guid'           => $submissions_dir . '/' . $file['name'],
+				'guid'           => $url,
 				'post_mime_type' => $wp_filetype['type'],
 				'post_status'    => 'inherit',
 				'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $file['name'] ) ),
 			);
 
-			$attach_id = wp_insert_attachment( $attachment, $submissions_dir . '/' . $file['name'] );
+			$attach_id = wp_insert_attachment( $attachment, $url );
 			update_post_meta( $attach_id, '_hide_from_library', true );
 
 			if( $attach_id instanceof WP_Error ){
@@ -321,7 +341,7 @@ if ( ! class_exists( 'upload_file' ) ) :
 				update_post_meta( $attach_id, '_wp_attachment_image_alt', $value['alt'] );
 			}
 
-			$attach_data = wp_generate_attachment_metadata( $attach_id, $submissions_dir . '/' . $file['name'] );
+			$attach_data = wp_generate_attachment_metadata( $attach_id, $url );
 			wp_update_attachment_metadata( $attach_id, $attach_data );
 
 			wp_send_json_success( [ 'id' => $attach_id ] );
@@ -330,30 +350,25 @@ if ( ! class_exists( 'upload_file' ) ) :
 		function maybe_mkdir( $submissions_dir, $secure = false ){
 			if ( ! is_dir( $submissions_dir ) ) {
 				mkdir( $submissions_dir );
-				$_htaccess = $submissions_dir . '/.htaccess';			
-				if( $secure ){
-					// Protect uploads directory for the servers that support .htaccess
-					if ( ! file_exists( $_htaccess ) ) {
-						file_put_contents( $_htaccess, "<IfModule mod_rewrite.c>
-						RewriteEngine on 
-						RewriteCond %{HTTP_REFERER} !^http://(www\.)?localhost [NC] 
-						RewriteCond %{HTTP_REFERER} !^http://(www\.)?localhost.*$ [NC] 
-						RewriteRule \.(png|jpg|pdf|doc|docx|odt)$ - [F]
-						</IfModule>" ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
-					} 
-				
+				//add index.php file to prevent directory listing
+				if( $secure ){				
 					if ( ! file_exists( $submissions_dir . '/index.php' ) ) {
 						touch( $submissions_dir . '/index.php' );
 					}
 				}else{
-					if ( file_exists( $_htaccess ) ) {
-						unlink( $_htaccess );
-					}
+					
 					if ( file_exists( $submissions_dir . '/index.php' ) ) {
 						unlink( $submissions_dir . '/index.php' );
 					}
 				}
 			}
+
+			$_htaccess = $submissions_dir . '/.htaccess';
+				//delete legacy fea-submissions .htaccess file	
+			if ( file_exists( $_htaccess ) ) {
+				unlink( $_htaccess );
+			}		
+
 			return $submissions_dir;
 		}
 
@@ -704,11 +719,17 @@ if ( ! class_exists( 'upload_file' ) ) :
 				delete_post_meta( $attachment, '_hide_from_library' );
 			}			
 
+			$reached_dest = get_post_meta( $attachment, '_reached_dest', true );
+
+			if( $reached_dest ) return;
+
 			$path = get_attached_file( $attachment );
+			
 			if( $path ){
 
 				$file_base = basename( $path );
-				$new_path = $upload_dir . '/' . $file_base;
+				$new_path = $this->upload_file( $upload_dir, $file_base );
+
 				$moved = rename( $path, $new_path );
 				if( $moved ){
 					update_attached_file( $attachment, $new_path );
@@ -716,16 +737,22 @@ if ( ! class_exists( 'upload_file' ) ) :
 					$attach_data = wp_get_attachment_metadata( $attachment, $new_path );
 					 if( wp_attachment_is_image( $attachment ) ){
 						if( $attach_data['sizes'] ){
-							foreach ( $attach_data['sizes'] as $image_size ) {
+							foreach ( $attach_data['sizes'] as $key => $image_size ) {
 								// get the path for this size
 								$size_path = str_replace( $file_base, $image_size['file'], $path );
-								$moved = rename( $size_path, $upload_dir . '/' . $image_size['file'] );						
-
+						
+								if( ! file_exists( $size_path ) ) continue;
+								//remove unique id surrounded by double square brackets
+								$new_path = $this->upload_file( $upload_dir, $image_size['file'] );
+								rename( $size_path, $new_path );						
+								$attach_data['sizes'][$key]['file'] = basename( $new_path );
 							}
 						}
 					} 
 					$attach_data['file'] = $upload_dir . '/' . $file_base;
 					wp_update_attachment_metadata( $attachment, $attach_data );
+
+					update_post_meta( $attachment, '_reached_dest', true );
 				}
 
 			}

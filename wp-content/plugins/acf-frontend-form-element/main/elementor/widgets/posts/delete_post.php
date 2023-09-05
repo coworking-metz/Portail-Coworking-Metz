@@ -278,9 +278,8 @@ class Delete_Post_Widget extends Widget_Base {
 	public function get_settings_to_pass( $form_args, $settings ) {
 		 $settings_to_pass = array( 'who_can_see', 'by_role', 'by_user_id', 'dynamic', 'dynamic_manager', 'not_allowed', 'not_allowed_message', 'not_allowed_content', 'save_all_data' );
 
-		$types = array( 'post', 'user', 'term', 'product' );
+		$types = array( 'post' );
 		foreach ( $types as $type ) {
-			$settings_to_pass[] = "save_to_{$type}";
 			$settings_to_pass[] = "{$type}_to_edit";
 			$settings_to_pass[] = "url_query_{$type}";
 			$settings_to_pass[] = "{$type}_select";
@@ -291,6 +290,8 @@ class Delete_Post_Widget extends Widget_Base {
 				$form_args[ $setting ] = $settings[ $setting ];
 			}
 		}
+
+		$form_args['save_to_post'] = 'edit_post';
 
 		return $form_args;
 	}

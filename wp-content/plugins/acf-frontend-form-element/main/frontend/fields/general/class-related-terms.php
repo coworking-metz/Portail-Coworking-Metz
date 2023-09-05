@@ -27,11 +27,11 @@ if ( ! class_exists( 'related_terms' ) ) :
 			// vars
 			$this->name     = 'related_terms';
 			$this->label    = __( 'Related Terms', 'acf-frontend-form-element' );
-			$this->public   = false;
 			$this->category = 'relational';
 			$this->defaults = array(
 				'taxonomy'      => 'category',
 				'field_type'    => 'checkbox',
+				'hierarchical'  => 0,
 				'multiple'      => 0,
 				'allow_null'    => 0,
 				'return_format' => 'id',
@@ -547,6 +547,7 @@ if ( ! class_exists( 'related_terms' ) ) :
 				'class'           => 'acf-related-terms-field',
 				'data-save'       => $field['save_terms'],
 				'data-ftype'      => $field['field_type'],
+				//'data-hierarchical' => $field['hierarchical'],
 				'data-taxonomy'   => $field['taxonomy'],
 				'data-allow_null' => $field['allow_null'],
 			);
@@ -731,6 +732,7 @@ if ( ! class_exists( 'related_terms' ) ) :
 				)
 			);
 
+
 			// field_type
 			acf_render_field_setting(
 				$field,
@@ -752,6 +754,23 @@ if ( ! class_exists( 'related_terms' ) ) :
 					),
 				)
 			);
+
+			//Show Hierarchical taxonomies in multiple select boxes
+			/* acf_render_field_setting(
+				$field,
+				array(
+					'label'        => __( 'Hierarchical Taxonomy' ),
+					'instructions' => __( 'Show Hierarchical taxonomies in multiple select boxes', 'acf-frontend-form-element' ),
+					'name'         => 'hierarchical',
+					'type'         => 'true_false',
+					'ui'           => 1,
+					'conditions'   => array(
+						'field'    => 'field_type',
+						'operator' => '==',
+						'value'    => 'select',
+					),
+				)
+			); */
 
 			// allow_null
 			acf_render_field_setting(

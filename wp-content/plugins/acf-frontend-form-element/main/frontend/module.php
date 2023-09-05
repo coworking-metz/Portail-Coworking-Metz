@@ -38,13 +38,13 @@ if ( ! class_exists( 'Frontend' ) ) :
 
 			acf_render_field_setting( $field, array(
 				'label'			=> __('Display Mode'),
-				'instructions'	=> __( 'Lets you show the editable field or display the value only. You may also hide the field, which is useful if you need to pass hidden data', FEA_NS ),
+				'instructions'	=> __( 'Lets you show the editable field or display the value only. You may also hide the field, which is useful if you need to pass hidden data', 'acf-frontend-form-element' ),
 				'name'			=> 'frontend_admin_display_mode',
 				'type'			=> 'select',
 				'choices'		=> array(
-					'edit'	=> __( 'Edit', FEA_NS ),
-					'read_only'	=> __( 'Read Only', FEA_NS ),
-					'hidden'	=> __( 'Hidden', FEA_NS ),
+					'edit'	=> __( 'Edit', 'acf-frontend-form-element' ),
+					'read_only'	=> __( 'Read Only', 'acf-frontend-form-element' ),
+					'hidden'	=> __( 'Hidden', 'acf-frontend-form-element' ),
 				)
 			), true );
 

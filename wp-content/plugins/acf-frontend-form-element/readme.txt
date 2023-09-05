@@ -2,8 +2,8 @@
 Contributors: shabti
 Tags: elementor, acf, acf form, frontend editing, frontend posting, acf frontend
 Requires at least: 4.6
-Tested up to: 6.1.1
-Stable tag: 3.16.7
+Tested up to: 6.2.2
+Stable tag: 3.18.2
 Donate link: https://paypal.me/KaplanWebDev
 Requires PHP: 5.6.0
 License: GPLv2 or later
@@ -132,6 +132,34 @@ Yes. Simply add a taxonomy field and set the taxonomy type to Category
 
 
 == Changelog ==
+= 3.18.2 - 20-08-2023 =
+ * Fixed uploaded images not showing
+
+= 3.18.0 - 17-08-2023 =
+ * Fixed bug with frontend block editor
+ * Fixed issue with invisble image uploads when admin approval is required
+ * Fixed issue with "Add and Edit Posts" in relationship field
+
+= 3.17.2 - 11-07-2023 =
+ * Fixed delete buttons not redirecting properly
+ * Fixed Elementor widget "ACF Fields" showing red button
+
+= 3.17.1 - 30-06-2023 =
+ * Fixed assets url error
+
+= 3.17.0 - 29-06-2023 =
+ * Added PDF generator for submissions
+ * Fixed signature not showing
+
+= 3.16.11 - 08-06-2023 =
+ * Added pdf logic to core plugin
+
+= 3.16.10 - 02-06-2023 =
+ * Fixed payments not submitting form when "submit form" checked
+
+= 3.16.9 - 12-05-2023 = 
+ * Fixed issue with payments plugin
+
 = 3.16.7 - 05-05-2023 = 
  * Fixed file name error
 

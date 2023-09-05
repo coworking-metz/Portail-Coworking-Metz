@@ -12,7 +12,7 @@ wp-config.php
 wp-content/uploads
 # Log files
 *.log
-
+wp-content/plugins/tmp
 # htaccess
 /.htaccess
 

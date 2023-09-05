@@ -138,7 +138,7 @@ if( ! class_exists( 'Frontend_Admin\Admin\Subscriptions_Crud' ) ) :
 		}
         public function subscriptions_list(){
             global $fa_subscriptions_page;
-            $fa_subscriptions_page = add_submenu_page( FEA_PRE.'-settings', __( 'Subscriptions', 'acf-frontend-form-element' ), __( 'Subscriptions', 'acf-frontend-form-element' ), 'manage_options', 'frontend-admin-subscriptions', [ $this, 'admin_subscriptions_page'], 82 );
+            $fa_subscriptions_page = add_submenu_page( 'fea-settings', __( 'Subscriptions', 'acf-frontend-form-element' ), __( 'Subscriptions', 'acf-frontend-form-element' ), 'manage_options', 'frontend-admin-subscriptions', [ $this, 'admin_subscriptions_page'], 82 );
             add_action( "load-$fa_subscriptions_page", array( $this, 'subscriptions_page_options' ) );
         }
 

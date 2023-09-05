@@ -379,26 +379,31 @@ if ( ! class_exists( 'ActionPost' ) ) :
 			}else{
 				$type = 'edit_post';
 			}
-			$args = array(
-				'label'   => __( 'Post', 'acf-frontend-form-element' ),
-				'type'    => Controls_Manager::SELECT,
-				'options' => array(
-					'edit_post'      => __( 'Edit Post', 'acf-frontend-form-element' ),
-					'new_post'       => __( 'New Post', 'acf-frontend-form-element' ),
-					'duplicate_post' => __( 'Duplicate Post', 'acf-frontend-form-element' ),
-				),
-				'default' => $type,
-			);
+
 			$condition = array();			
 
-			$widget->add_control( 'save_to_post', $args );
+			if( 'delete_post' !== $widget->get_name() ){
+				$args = array(
+					'label'   => __( 'Post', 'acf-frontend-form-element' ),
+					'type'    => Controls_Manager::SELECT,
+					'options' => array(
+						'edit_post'      => __( 'Edit Post', 'acf-frontend-form-element' ),
+						'new_post'       => __( 'New Post', 'acf-frontend-form-element' ),
+						'duplicate_post' => __( 'Duplicate Post', 'acf-frontend-form-element' ),
+					),
+					'default' => $type,
+				);
+				
+				$condition['save_to_post'] = array( 'edit_post', 'delete_post', 'duplicate_post' );
+
+				$widget->add_control( 'save_to_post', $args );
+			}
 
 			// add option to determine when the post will be save: 1. on form submit
 			// 2. when user confirms email  3. when admin approves submission
 			// 4. on woocommerce purchase
 
-			$condition['save_to_post'] = array( 'edit_post', 'delete_post', 'duplicate_post' );
-
+			
 			$widget->add_control(
 				'post_to_edit',
 				array(

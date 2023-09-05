@@ -106,13 +106,16 @@ if ( ! class_exists( 'Admin_Settings' ) ) :
 		}
 
 		public function addon_form( $addon ) {
-			$addon_slug = "frontend-$addon/frontend-$addon.php";
 			?>
 				<form style="margin:20px 5px;" class="frontend-admin-addon-form" method="post" action="">
 			<?php
-			if ( fea_is_plugin_installed( 'frontend-admin-' . $addon ) ) {
+			if ( fea_is_plugin_installed( $addon ) ) {
 				echo '<input type="hidden" name="action" value="frontend_admin_activate_plugin"/>';
-				$submit_value = "Activate $addon module";
+				if( ! fea_is_plugin_active( $addon ) ){
+					$submit_value = "Activate $addon module";
+				}else{
+					$submit_value = "Deactivate $addon module";
+				}
 			} else {
 				echo '<input type="hidden" name="action" value="fea_install_plugin"/>';
 				$submit_value = "Install $addon module";
@@ -148,10 +151,9 @@ if ( ! class_exists( 'Admin_Settings' ) ) :
 				esc_html_e( 'Nonce error', 'acf-frontend-form-element' );
 			}
 
-			if ( $addon == 'payments' ) {
-				$addon_zip = 'https://www.dynamiapps.com/wp-content/uploads/2022/12/frontend-payments.zip';
-			}
+			$addon_zip = 'https://www.dynamiapps.com/wp-content/uploads/frontend-'.$addon.'.zip';
 
+			
 			$installed = fea_install_plugin( $addon_zip );
 			if ( $installed ) {
 				$addon_slug = fea_addon_slug( 'frontend-admin-' . $addon );
@@ -190,8 +192,13 @@ if ( ! class_exists( 'Admin_Settings' ) ) :
 
 			$addon_slug = fea_addon_slug( 'frontend-admin-' . $args['addon'] );
 
+			error_log( $addon_slug );
 			if ( $addon_slug ) {
-				activate_plugin( $addon_slug );
+				if( ! fea_is_plugin_active( $args['addon'] ) ){
+					activate_plugin( $addon_slug );
+				}else{
+					deactivate_plugins( $addon_slug );
+				}
 			} else {
 				esc_html_e( 'Addon Not Found', 'acf-frontend-form-element' );
 			}
@@ -209,9 +216,22 @@ if ( ! class_exists( 'Admin_Settings' ) ) :
 
 		public function settings_sections() {
 			include_once __DIR__ . '/admin-pages/submissions/crud.php';
+
+			if( class_exists( 'Frontend_Admin_Payments' ) ){
+				if( FEAP_VERSION < '3.1.2' )
+					add_action( 'admin_notices', function(){
+						?>
+						<div class="notice notice-error">
+							<p><?php _e( 'Please update Frontend Admin Payments to the latest version to use the new payment settings.', 'acf-frontend-form-element' ); ?></p>
+						</div>
+						<?php
+					} );	
+				else			
+					require_once( __DIR__ . '/admin-pages/payments/settings.php');
+			}
 			
-			//include_once __DIR__ . '/admin-pages/plans/crud.php';
-			//include_once __DIR__ . '/admin-pages/subscriptions/crud.php'; 
+			include_once __DIR__ . '/admin-pages/plans/crud.php';
+			include_once __DIR__ . '/admin-pages/subscriptions/crud.php'; 
 
 			foreach ( $this->tabs as $tab => $label ) {
 				if ( ! in_array( $tab, array( 'welcome', 'payments', 'pdf', 'tools', 'license' ) ) ) {

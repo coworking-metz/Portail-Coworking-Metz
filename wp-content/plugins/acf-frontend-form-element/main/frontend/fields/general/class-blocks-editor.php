@@ -154,6 +154,26 @@ if ( ! class_exists( 'blocks_editor' ) ) :
 				// Restrict tinymce buttons
 				add_filter( 'tiny_mce_before_init', [ $this, 'tiny_mce_before_init' ] );
 
+						// Keep Jetpack out of things
+				add_filter(
+					'jetpack_blocks_variation',
+					function() {
+						return 'no-post-editor';
+					}
+				);
+
+						// Only call the editor assets if we are not dynamically loading.
+				if ( ! defined( '__EXPERIMENTAL_DYNAMIC_LOAD' ) ) {
+					wp_tinymce_inline_scripts();
+
+					wp_enqueue_editor();
+
+					do_action( 'enqueue_block_editor_assets' );
+
+					add_action( 'wp_print_footer_scripts', array( '_WP_Editors', 'print_default_editor_scripts' ), 45 );
+				}
+
+
 				// Gutenberg scripts
 				wp_enqueue_script( 'wp-block-library' );
 				wp_enqueue_script( 'wp-format-library' );

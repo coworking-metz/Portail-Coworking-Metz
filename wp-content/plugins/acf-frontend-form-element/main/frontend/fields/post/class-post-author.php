@@ -50,7 +50,7 @@ if ( ! class_exists( 'post_author' ) ) :
 		 */
 		function ajax_query() {
 			if ( ! acf_verify_ajax() ) {
-				wp_send_json_error( __( 'Invalid nonce.', FEA_NS ) );
+				wp_send_json_error( __( 'Invalid nonce.', 'acf-frontend-form-element' ) );
 			}
 			 // Modify Request args.
 			if ( isset( $_REQUEST['s'] ) ) {

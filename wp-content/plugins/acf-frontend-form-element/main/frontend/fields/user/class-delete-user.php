@@ -32,6 +32,7 @@ if ( ! class_exists( 'delete_user' ) ) :
 				'field_label_hide'  => 1,
 				'reassign_posts'    => 0,
 				'redirect'          => 'current',
+				'show_delete_message' => 1,
 				'delete_message'    => __( 'Your profile has been deleted' ),
 			);
 

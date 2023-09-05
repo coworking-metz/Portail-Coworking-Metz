@@ -31,6 +31,7 @@ if ( ! class_exists( 'delete_term' ) ) :
 				'confirmation_text' => __( 'Are you sure you want to delete this term?', 'acf-frontend-form-element' ),
 				'field_label_hide'  => 1,
 				'redirect'          => 'current',
+				'show_delete_message' => 1,
 				'delete_message'    => __( 'Your term has been deleted' ),
 			);
 

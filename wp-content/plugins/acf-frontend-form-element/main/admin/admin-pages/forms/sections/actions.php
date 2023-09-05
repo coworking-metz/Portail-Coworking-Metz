@@ -3,6 +3,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+$redirect_options = array(
+	'current'    => __( 'Reload Current Page', 'acf-frontend-form-element' ),
+	'custom_url' => __( 'Custom URL', 'acf-frontend-form-element' ),
+	'referer'    => __( 'Referer', 'acf-frontend-form-element' ),
+	'post_url'   => __( 'Post URL', 'acf-frontend-form-element' ),
+);
+
+$redirect_options = apply_filters( 'frontend_admin/forms/redirect_options', $redirect_options );
+
 $fields = array(
 	array(
 		'key'           => 'redirect',
@@ -15,12 +24,7 @@ $fields = array(
 			'class' => '',
 			'id'    => '',
 		),
-		'choices'       => array(
-			'current'    => __( 'Reload Current Page', 'acf-frontend-form-element' ),
-			'custom_url' => __( 'Custom URL', 'acf-frontend-form-element' ),
-			'referer'    => __( 'Referer', 'acf-frontend-form-element' ),
-			'post_url'   => __( 'Post URL', 'acf-frontend-form-element' ),
-		),
+		'choices'       => $redirect_options,
 		'allow_null'    => 0,
 		'multiple'      => 0,
 		'ui'            => 0,

@@ -21,6 +21,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 	 */
 	final class Plugin {
 
+
 		/**
 		 * Minimum PHP Version
 		 *
@@ -49,11 +50,32 @@ if ( ! class_exists( 'Plugin' ) ) {
 				array(
 					'pro_version'  => false,
 					'requires_acf' => true,
+					'basename'     => '',
+					'plugin_dir'   => '',
+					'plugin_url'   => '',
+					'plugin'	   => '',
 				)
 			);
 
+			if( defined( 'FEA_VERSION' ) ) {
+				return;
+			}
+
+			define( 'FEA_NAME', $data['basename'] );
+			define( 'FEA_URL', $data['plugin_url'] );
+			define( 'FEA_DIR', $data['plugin_dir'] );
+			define( 'FEA_PLUGIN', $data['plugin'] );
+			define( 'FEA_VERSION', '3.18.2' );
+
 			do_action( 'front_end_admin_loaded' );
 
+			// Add tutorial videos to plugin item on plugins page
+			add_filter(
+				'plugin_row_meta',
+				array( $this, 'plugin_row_meta' ),
+				10,
+				2
+			);
 
 			// Check for required PHP version
 			if ( version_compare( PHP_VERSION, self::MINIMUM_PHP_VERSION, '<' ) ) {
@@ -76,14 +98,6 @@ if ( ! class_exists( 'Plugin' ) ) {
 			// Prompt user to rate plugin after several submississions
 			add_action( 'admin_notices', array( $this, 'admin_notice_review_plugin' ) );
 			add_action( 'wp_ajax_acff-rate-plugin', array( $this, 'ajax_rate_the_plugin' ) );
-
-			// Add tutorial videos to plugin item on plugins page
-			add_filter(
-				'plugin_row_meta',
-				array( $this, 'frontend_admin_row_meta' ),
-				10,
-				2
-			);
 
 			add_action( 'after_setup_theme', array( $this, 'plugin_includes' ), 12 );
 		}
@@ -175,7 +189,8 @@ if ( ! class_exists( 'Plugin' ) ) {
 			if ( get_option( 'frontend_admin_submissions_all_time', 0 ) < 150 ) {
 				return;
 			}
-			$image_path = FEA_URL . 'assets/icon.png';
+			global $frontend_admin;
+			$image_path = $this->plugin_url . 'assets/icon.png';
 
 			?>
 
@@ -338,12 +353,16 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *
 		 * @access public
 		 */
-		public function frontend_admin_row_meta( $links, $file ) {
-
+		public function plugin_row_meta( $links, $file ) {
 			if ( FEA_NAME == $file ) {
 				$row_meta = array(
 					'video' => '<a href="' . esc_url( 'https://www.youtube.com/channel/UC8ykyD--K6pJmGmFcYsaD-w/playlists' ) . '" target="_blank" aria-label="' . esc_attr__( 'Video Tutorials', 'acf-frontend-form-element' ) . '" >' . esc_html__( 'Video Tutorials', 'acf-frontend-form-element' ) . '</a>',
 				);
+
+				if( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ){
+					$row_meta['version'] = '<strong>' . FEA_PLUGIN . '</strong>';
+				}
+
 				return array_merge( $links, $row_meta );
 			}
 

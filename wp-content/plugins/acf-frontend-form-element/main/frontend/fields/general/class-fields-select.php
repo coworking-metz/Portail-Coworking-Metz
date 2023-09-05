@@ -103,7 +103,7 @@ if ( ! class_exists( 'fields_select' ) ) :
 				$field,
 				array(
 					'label'        => __( 'Fields or Field Groups', 'acf' ),
-					'instructions' => __( 'Select one or more fields or field groups', FEA_NS ),
+					'instructions' => __( 'Select one or more fields or field groups', 'acf-frontend-form-element' ),
 					'type'         => 'select',
 					'name'         => 'fields_select',
 					'multiple'     => 1,
@@ -120,7 +120,7 @@ if ( ! class_exists( 'fields_select' ) ) :
 				$field,
 				array(
 					'label'        => __( 'Exlude Fields from Field Groups', 'acf' ),
-					'instructions' => __( 'Select one or more fields from the field groups to exclude', FEA_NS ),
+					'instructions' => __( 'Select one or more fields from the field groups to exclude', 'acf-frontend-form-element' ),
 					'type'         => 'select',
 					'name'         => 'fields_exclude',
 					'multiple'     => 1,
