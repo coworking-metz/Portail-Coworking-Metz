@@ -50,9 +50,9 @@ function picture_user_presence()
     //Images trombi
     foreach ($json as $key => $value) {
         $i = 0;
-        $url_image = get_user_meta($value['wpUserId'], $key = 'url_image_trombinoscope', $single = true);
-        $image_array = wp_get_attachment_image_src($url_image);
-        $image_url = $image_array[0];
+        // $url_image = get_user_meta($value['wpUserId'], $key = 'url_image_trombinoscope', $single = true);
+        // $image_array = wp_get_attachment_image_src($url_image);
+        // $image_url = $image_array[0];
         $user_balance = $value['balance'];
         $membership_Ok = $value['membershipOk'];
 
@@ -63,14 +63,16 @@ function picture_user_presence()
         $wanted_membership = $membership_Ok ? '' : ' wanted';
         $wanted_tickets = $user_balance >= 0 ? '' : ' wanted';
 
-        if (!$image_url) {
-            $imgPath = '/images/pola-poule-vide.jpg';
-            $code = '<img src="' . $imgPath . '" />';
-            $name = trim(($value['firstName'] ?? '') . ' ' . ($value['lastName'] ?? ''));
-            $code .= '<span>' . $name . '</span>';
-        } else {
-            $code = '<img src="' . $image_url . '" />';
-        }
+        // if (!$image_url) {
+        //     $imgPath = '/images/pola-poule-vide.jpg';
+        //     $code = '<img src="' . $imgPath . '" />';
+        //     $name = trim(($value['firstName'] ?? '') . ' ' . ($value['lastName'] ?? ''));
+        //     $code .= '<span>' . $name . '</span>';
+        // } else {
+        //     $code = '<img src="' . $image_url . '" />';
+        // }
+        $code = '<img src="/polaroid/' . $value['wpUserId'] . '.jpg" />';
+
         echo '<div class="animated-image' . $wanted_membership . $wanted_tickets . '" style="transform: rotate(' . $random_1 . 'deg); animation-delay: ' . $random_2 . 'ms;">';
         //      echo '<div class="test">' . $membership_Ok . '</div>';
         echo $code;
