@@ -46,13 +46,13 @@
 }
 
 
-.polaroid__generateur:not([data-saisie]) #saisie-polaroid {
+/* .polaroid__generateur:not([data-saisie]) #saisie-polaroid {
     display: none;
 }
 
 .polaroid__generateur[data-saisie] [data-action="saisie-polaroid"] {
     display: none;
-}
+} */
 
 @media screen and (min-width: 992px) {
     .polaroid__generateur {

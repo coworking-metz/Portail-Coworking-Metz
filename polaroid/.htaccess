@@ -1,3 +1,13 @@
 RewriteEngine on
 
+RewriteBase /polaroid/
+
+#RewriteCond %{DOCUMENT_ROOT}/polaroid/gen/$0 -f
+#RewriteRule ^(.*)$ /polaroid/gen/$0
+
+
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteRule ([0-9]+)-hd\.jpg index.php?uid=$1&hd=true [L,QSA]
+
+RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteRule ([0-9]+)\.jpg index.php?uid=$1 [L,QSA]

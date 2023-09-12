@@ -22,13 +22,17 @@ window.addEventListener('load', e => {
     document.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', e => {
         let action = e.target.closest('[data-action]').dataset.action;
         if (!action) retun;
-        if (action == 'saisie-polaroid') {
-            document.querySelector('.polaroid__generateur').dataset.saisie = true;
-            polaroid_apercu();
-        }
+        // if (action == 'saisie-polaroid') {
+        //     document.querySelector('.polaroid__generateur').dataset.saisie = true;
+        //     polaroid_apercu();
+        // }
     }))
+    polaroid_apercu();
+
 
     function polaroid_apercu() {
+        let apercu = document.querySelector('.polaroid__apercu')
+        if(!apercu) return;
         let queryString = [Math.random()];
         let formElements = formPola.elements;
         let bouton = document.querySelector('[name="valider-polaroid"]');
@@ -41,7 +45,6 @@ window.addEventListener('load', e => {
         }
 
         queryString = queryString.join('&');
-        let apercu = document.querySelector('.polaroid__apercu')
         apercu.dataset.loading = true;
         bouton.disabled = true;
         apercu.innerHTML = '';

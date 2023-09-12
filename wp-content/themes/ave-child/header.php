@@ -24,7 +24,7 @@
 
 	<div id="wrap">
 
-		<?php
+		<?php 
 			liquid_action( 'before_header' );
 			liquid_action( 'header' );
 			liquid_action( 'after_header' );

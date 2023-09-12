@@ -4,10 +4,23 @@
 add_action('profile_update', function ($uid, $old_user_data) {
     @unlink(polaroid_tmpphoto($uid));
     @unlink(polaroid_gen_file($uid));
+    @unlink(str_replace('.jpg','-hd.jpg',polaroid_gen_file($uid)));
+
+    CF::purgeUrls(["/polaroid/$uid.jpg", "/polaroid/$uid-hd.jpg"]);
 }, 10, 2);
 
 
+function polaroid_output($file) {
+    $expires = 86400; // 60 seconds * 60 minutes * 24 hours = 1 day
+    header('Cache-Control: max-age=' . $expires . ', must-revalidate');
+    header('Pragma: cache');
+    header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $expires) . ' GMT');
 
+    header('Content-Type: image/jpeg');
+    echo file_get_contents($file);
+    exit;
+
+}
 
 // add_filter('acf/load_field/name=polaroid_nom', function ($field) {
 //     $user = wp_get_current_user();
@@ -24,7 +37,7 @@ function polaroid_gen_file($uid = null)
         $uid = $user->ID;
     }
 
-    return ABSPATH . '/polaroid/gen/' . $uid . '.jpg';
+    return ABSPATH . '/polaroid/' . $uid . '.jpg';
 }
 function polaroid_url($uid = null)
 {
@@ -105,7 +118,7 @@ function polaroid_get($uid = null, $defaults = true)
     $file = get_attached_file($photo);
 
     if (!$file && $defaults) {
-        $file = ABSPATH . '/polaroid/default.jpg';
+        $file = ABSPATH . '/polaroid/images/default.jpg';
     }
     return ['photo' => $file, 'nom' => $nom, 'description' => $description, 'complement' => $complement];
 }
@@ -117,13 +130,21 @@ function polaroid_tmpphoto($uid = null)
         $uid = $user->ID;
     }
 
+    $tmpdir = polaroid_tmpdir();
+    $tmp_photo = $tmpdir . '/photo_' . $uid;
+    return $tmp_photo;
+}
+function polaroid_tmpfile() {
+    return polaroid_tmpdir().'/'.md5(rand());
+}
+function polaroid_tmpdir()
+{
     $upload_dir = wp_upload_dir();
     $tmpdir = $upload_dir['basedir'] . '/tmp';
     if (!is_dir($tmpdir)) {
         mkdir($tmpdir, 0775);
     }
-    $tmp_photo = $tmpdir . '/photo_' . $uid;
-    return $tmp_photo;
+    return $tmpdir;
 }
 function polaroid_upload()
 {

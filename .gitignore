@@ -17,6 +17,7 @@ wp-content/plugins/tmp
 /.htaccess
 
 /polaroid/gen
+/polaroid/*.jpg
 # All plugins
 # Note: If you wish to whitelist plugins,
 # uncomment the next line

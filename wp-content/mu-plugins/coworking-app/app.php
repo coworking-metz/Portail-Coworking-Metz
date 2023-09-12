@@ -9,7 +9,7 @@ function coworking_app_settings()
         $data = file_get_contents($url);
         $presences = json_decode($data, true);
 
-        $settings = ['occupation' => ['total' => 29, 'presents' => count($presences)]];
+        $settings = ['occupation' => ['total' => 28, 'presents' => count($presences)]];
         set_transient('coworking', $settings, 60 * 5);
     }
     return $settings;

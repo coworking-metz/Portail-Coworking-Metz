@@ -1,7 +1,7 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 'On');
+// error_reporting(E_ALL);
+// ini_set('display_errors', 'On');
 
 
 $user = wp_get_current_user();
@@ -33,7 +33,7 @@ if (isset($_POST['valider-polaroid'])) {
     update_field('polaroid_description', $polaroid['description'], $key);
     update_field('polaroid_complement', $polaroid['complement'], $key);
 
-    $aid = upload_image_to_wp_media(polaroid_tmpphoto(), 'Photo ' . $uid . ' ' . $user->display_name);
+    $aid = insert_attachment_from_file(polaroid_tmpphoto(), ['post_title' => 'Photo ' . $uid . ' ' . $user->display_name]);
 
     update_field('votre_photo', $aid, $key);
 
@@ -56,14 +56,13 @@ if (isset($_POST['valider-polaroid'])) {
         $polaroid['nom'] = $user->display_name;
     }
 ?>
+    <h3>Aperçu de votre polaroïd</h3>
     <div class="polaroid__generateur">
         <div>
-            <h3>Aperçu de votre photo</h3>
             <div class="polaroid__apercu">
                 <img src="<?= $content; ?>">
             </div>
 
-            <button class="button" type="button" data-action="saisie-polaroid">Continuer avec cette photo</button>
             <p><a href="/mon-compte/polaroid/?changer">Changer de photo</a></p>
 
         </div>
@@ -71,11 +70,11 @@ if (isset($_POST['valider-polaroid'])) {
             <form method="post" action="/mon-compte/polaroid/" id="saisie-polaroid" class="woocommerce-EditAccountForm">
                 <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
                     <label for="polaroid_nom">Nom affiché</label>
-                    <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="polaroid[nom]" id="polaroid_nom" value="<?= htmlspecialchars($polaroid['nom']); ?>" maxlength="40">
+                    <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" required pattern=".*\S+.*" name="polaroid[nom]" id="polaroid_nom" value="<?= htmlspecialchars($polaroid['nom']); ?>" maxlength="40">
                 </p>
                 <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
                     <label for="polaroid_description">Description</label>
-                    <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="polaroid[description]" id="polaroid_description" value="<?= htmlspecialchars($polaroid['description']); ?>" maxlength="40">
+                    <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" required pattern=".*\S+.*" name="polaroid[description]" id="polaroid_description" value="<?= htmlspecialchars($polaroid['description']); ?>" maxlength="40">
                     <small>Pour décrire votre métier, votre intitulé de poste, etc.</small>
                 </p>
                 <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
@@ -92,7 +91,7 @@ if (isset($_POST['valider-polaroid'])) {
 <?php } else { ?>
 
     <?php if (!$changer && polaroid_existe()) { ?>
-        <div class="polaroid__definitif"><img src="<?= polaroid_url(); ?>"></div>
+        <div class="polaroid__definitif"><img src="<?= polaroid_url() . '?' . rand(); ?>"></div>
         <a class="button" href="?modifier">Modifier</a>
     <?php } else { ?>
         <p>Utilisez l'outil ci-dessous pour choisir la photo qui sera affichée sur l'écran du coworking sous forme d'un polaroïd aux couleurs du Poulailler.</p>
