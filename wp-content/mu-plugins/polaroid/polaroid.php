@@ -118,7 +118,7 @@ function polaroid_get($uid = null, $defaults = true)
     $file = get_attached_file($photo);
 
     if (!$file && $defaults) {
-        $file = ABSPATH . '/polaroid/images/default.jpg';
+        $file = ABSPATH . 'polaroid/images/default.jpg';
     }
     return ['photo' => $file, 'nom' => $nom, 'description' => $description, 'complement' => $complement];
 }

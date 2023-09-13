@@ -6,7 +6,6 @@ $hd = $_GET['hd'] ?? false;
 $uid = $_GET['uid'] ?? false;
 $dynamique = isset($_GET['dynamique']);
 
-
 // if ($uid) {
 //     $target = __DIR__ . '/' . $uid . ($hd ? '-hd' : '') . '.jpg';
 //     if (!$dynamique && file_exists($target)) {
@@ -17,7 +16,7 @@ $dynamique = isset($_GET['dynamique']);
 
 define('WP_USE_THEMES', false); // We don't want to use themes.
 require('../wp-load.php');
-
+require('./lib/utils.php');
 
 
 
@@ -39,32 +38,51 @@ if ($polaroid) {
 list($width, $height) = getimagesize('./images/pola-vide.png');
 $img = imagecreatetruecolor($width, $height);
 
+$bande = $height * 5.3 / 100;
+$frameRatio = 1069 / 1032;
+$frameWidth = $width - 2 * $bande;
+$frameHeight = $frameWidth * $frameRatio;
+
+
+
+/**
+ * Ajout de la photo du coworker
+ */
+
 $tmp = imagecreatefromfile($photo);
 list($tmpWidth, $tmpHeight) = getimagesize($photo);
 
-
 $mode = ($tmpWidth - $tmpHeight) > 100 ? 'landscape' : 'portrait';
 $aspectRatio = $tmpWidth / $tmpHeight;
-$bande = $height * 5.3 / 100;
 
 if ($mode == 'landscape') {
-    $maxHeight = $height * 75 / 100;
-    $newHeight = $maxHeight;
-    $newWidth = $maxHeight * $aspectRatio;
+    $newHeight = $height * 75 / 100;
+    $newWidth = $newHeight * $aspectRatio;
+    if($newWidth < $frameWidth) {
+        $newWidth = $frameWidth;
+        $newHeight = $newWidth * $aspectRatio;
+    }
 } else {
-    // Calculate the new dimensions
-    $maxWidth = $width - ($bande * 2);
-    $newWidth = $maxWidth;
-    $newHeight = $maxWidth / $aspectRatio;
+    $newWidth = $frameWidth;
+    $newHeight = $newWidth / $aspectRatio;
+    if($newHeight < $frameHeight) {
+        $newHeight = $frameHeight;
+        $newWidth = $newHeight * $aspectRatio;
+    }
 }
-if ($newHeight > $height) {
-    $newHeight = $height;
-    $newWidth = $height * $aspectRatio;
-}
+
+// print_r([$newWidth, $newHeight, $tmpWidth, $tmpHeight]);exit;
+// if ($newHeight > $height) {
+//     $newHeight = $height;
+//     $newWidth = $height * $aspectRatio;
+// }
 
 imagecopyresampled($img, $tmp, $bande, $bande + 2, 0, 0, $newWidth, $newHeight, $tmpWidth, $tmpHeight);
 imagedestroy($tmp);
 
+/**
+ * AJout du cadre du pola vide au dessus de la photo 
+ */
 // 4. Open the './images/pola-vide.png' file and place it on top of everything in $img
 $overlay = imagecreatefrompng('./images/pola-vide.png');
 imagecopy($img, $overlay, 0, 0, 0, 0, $width, $height);
