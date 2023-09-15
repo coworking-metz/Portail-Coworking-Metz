@@ -16,8 +16,9 @@
 // Starting The Engine / Load the Liquid Framework ----------------
 include_once( get_template_directory() . '/liquid/liquid-init.php' );
 
-
 // remove_action('template_redirect', 'redirect_canonical');
 // add_action('template_redirect', function() {
 //     return ;
 // }, 1);
+
+

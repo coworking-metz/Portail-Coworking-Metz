@@ -3,15 +3,11 @@
 function coworking_app_settings()
 {
 
-    $settings = get_transient('coworking-app-settings');
-    if (!$settings) {
-        $url = 'https://tickets.coworking-metz.fr/api/current-users?key=' . API_KEY_TICKET . '&delay=15';
-        $data = file_get_contents($url);
-        $presences = json_decode($data, true);
+    $url = 'https://tickets.coworking-metz.fr/api/current-users?key=' . API_KEY_TICKET . '&delay=15';
+    $data = file_get_contents($url);
+    $presences = json_decode($data, true);
 
-        $settings = ['occupation' => ['total' => 28, 'presents' => count($presences)]];
-        set_transient('coworking', $settings, 60 * 5);
-    }
+    $settings = ['occupation' => ['total' => 28, 'presents' => count($presences)]];
     return $settings;
 }
 
@@ -70,7 +66,6 @@ function coworking_app_get_valid_sessions($uid)
         }
     }
     return $valid_sessions;
-
 }
 
 function coworking_app_droits($user_id)
@@ -115,6 +110,7 @@ function coworking_app_check($request)
 
     $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
 
+    header('test-origin:' . $origin);
     if (in_array($origin, coworking_app_origins())) {
         header('Access-Control-Allow-Origin: ' . $origin);
         header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
