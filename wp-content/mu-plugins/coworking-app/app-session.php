@@ -10,8 +10,10 @@ add_action(
             'methods'  => 'POST',
             'callback' => function ($request) {
                 if ($sid = coworking_app_check($request)) {
+                    $uid = $request['user_id']??false;
                     $response = array(
                         'session' => $sid,
+                        'reglages'=>coworking_app_droits($uid),
                         // 'sessions' => coworking_app_get_sessions($request['user_id'])
                     );
                 } else {

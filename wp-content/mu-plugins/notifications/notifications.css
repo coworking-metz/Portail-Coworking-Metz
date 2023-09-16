@@ -1,0 +1,61 @@
+.notification {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 1rem;
+    z-index: 999999;
+    background-color: #eab234;
+    color: black;
+    max-width: 300px;
+    width: calc(100% - 2rem);
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    transition: all .5s ease;
+    transform: translateX(200%);
+    line-height: 1.3;
+    padding: .5rem;
+}
+
+.notification[data-visible="true"] {
+    transform: translateX(0);
+}
+
+.notification>* {
+    margin: 0;
+    padding: 0;
+}
+
+.notification>figure {
+    flex: 0 0 64px;
+}
+
+.notification>figure>img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.notification a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.notification a:hover {
+    text-decoration: none;
+}
+
+.notification>p {
+    display: flex;
+    flex-direction: column;
+}
+
+.notification button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    aspect-ratio: 1;
+    background: none;
+    border: 0;
+}

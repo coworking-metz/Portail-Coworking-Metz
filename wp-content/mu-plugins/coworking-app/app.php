@@ -7,7 +7,13 @@ function coworking_app_settings()
     $data = file_get_contents($url);
     $presences = json_decode($data, true);
 
-    $settings = ['occupation' => ['total' => 28, 'presents' => count($presences)]];
+    $settings = [
+        'polaroid_default' => site_url().'/images/pola-poule-vide.jpg',
+        'occupation' => [
+            'total' => 28,
+            'presents' => count($presences)
+        ]
+    ];
     return $settings;
 }
 
@@ -88,10 +94,19 @@ function coworking_app_droits($user_id)
         // 'sessions'=>coworking_app_get_sessions($user_id),
         'settings' => coworking_app_settings(),
         'droits' => [
+            'polaroid' => polaroid_existe($user_id) ? polaroid_url($user_id, true) : false,
             'admin' => $admin,
             'ouvrir_portail' => $bloquer_ouvrir_portail ? false : true,
         ]
     ];
+}
+function coworking_app_check_origins($origin)
+{
+    
+    if(in_array($origin, coworking_app_origins())) return true;
+
+    if(strstr($origin, '127.0.0.1')) return true;
+    if(strstr($origin, 'localhost')) return true;
 }
 function coworking_app_origins()
 {
@@ -110,8 +125,8 @@ function coworking_app_check($request)
 
     $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
 
-    header('test-origin:' . $origin);
-    if (in_array($origin, coworking_app_origins())) {
+    // header('test-origin:' . $origin);
+    if (coworking_app_check_origins($origin)) {
         header('Access-Control-Allow-Origin: ' . $origin);
         header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
         header('Access-Control-Allow-Headers: Authorization, Content-Type');

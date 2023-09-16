@@ -39,7 +39,7 @@ function polaroid_gen_file($uid = null)
 
     return ABSPATH . '/polaroid/' . $uid . '.jpg';
 }
-function polaroid_url($uid = null)
+function polaroid_url($uid = null, $domain = false)
 {
     if (!$uid) {
         $user = wp_get_current_user();
@@ -52,14 +52,15 @@ function polaroid_url($uid = null)
     if ($image) {
         return $image;
     } else {
-        return '/polaroid/' . $uid . '.jpg';
+        return ($domain ? site_url() : '').'/polaroid/' . $uid . '.jpg';
     }
 }
 
 function polaroid_existe($uid = null)
 {
 
-    return true;
+    $polaroid = polaroid_get($uid, false);
+    return $polaroid['photo'] && $polaroid['nom'];
 
     if (!$uid) {
         $user = wp_get_current_user();
@@ -104,7 +105,6 @@ function polaroid_get($uid = null, $defaults = true)
 
     if (!$uid) return;
 
-    if (!polaroid_existe($uid)) return;
 
     $photo = get_field('votre_photo', 'user_' . $uid);
     $nom = get_field('polaroid_nom', 'user_' . $uid);

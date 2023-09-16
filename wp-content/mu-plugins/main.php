@@ -22,6 +22,7 @@ include plugin_dir_path(__FILE__) . 'coworking-app/app-droits.php';
 include plugin_dir_path(__FILE__) . 'coworking-app/app-session.php';
 
 include plugin_dir_path(__FILE__) . 'polaroid/polaroid.php';
+include plugin_dir_path(__FILE__) . 'notifications/notifications.php';
 
 add_action('init', function () {
     if (!function_exists('acf_get_pro_field_types')) {
