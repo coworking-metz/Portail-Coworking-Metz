@@ -13,6 +13,7 @@ add_action(
                     $uid = $request['user_id']??false;
                     $response = array(
                         'session' => $sid,
+                        'user'=>coworking_app_user($uid),
                         'reglages'=>coworking_app_droits($uid),
                         // 'sessions' => coworking_app_get_sessions($request['user_id'])
                     );

@@ -8,7 +8,7 @@ function coworking_app_settings()
     $presences = json_decode($data, true);
 
     $settings = [
-        'polaroid_default' => site_url().'/images/pola-poule-vide.jpg',
+        'polaroid_default' => site_url() . '/images/pola-poule-vide.jpg',
         'occupation' => [
             'total' => 28,
             'presents' => count($presences)
@@ -73,6 +73,18 @@ function coworking_app_get_valid_sessions($uid)
     }
     return $valid_sessions;
 }
+function coworking_app_user($user)
+{
+    if(is_numeric($user)) {
+        $user = get_user_by('ID', $user);
+    }
+    return [
+        'login' => $user->user_email,
+        'name' => $user->display_name,
+        'id' => $user->ID,
+        'session_id' => coworking_app_gen_session_id($user->ID),
+    ];
+}
 
 function coworking_app_droits($user_id)
 {
@@ -102,11 +114,11 @@ function coworking_app_droits($user_id)
 }
 function coworking_app_check_origins($origin)
 {
-    
-    if(in_array($origin, coworking_app_origins())) return true;
 
-    if(strstr($origin, '127.0.0.1')) return true;
-    if(strstr($origin, 'localhost')) return true;
+    if (in_array($origin, coworking_app_origins())) return true;
+
+    if (strstr($origin, '127.0.0.1')) return true;
+    if (strstr($origin, 'localhost')) return true;
 }
 function coworking_app_origins()
 {

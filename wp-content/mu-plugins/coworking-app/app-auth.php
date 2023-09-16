@@ -34,11 +34,7 @@ add_action(
 
 
                         $response = [
-                            'user' => [
-                                'login' => $user->user_email,
-                                'id' => $user->ID,
-                                'session_id' => coworking_app_gen_session_id($user->ID),
-                            ],
+                            'user' => coworking_app_user($user),
                             'reglages' => coworking_app_droits($user->ID)
                         ];
                     } else {
