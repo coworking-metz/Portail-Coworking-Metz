@@ -1,0 +1,27 @@
+@media screen and (max-width: 480px) {
+    .colonnes {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .colonnes-petite-grande>div:first-of-type {
+        order: 2;
+    }
+    .colonnes-petite-grande>div:last-of-type {
+        order: 1;
+    }
+
+}
+
+@media screen and (min-width: 480px) {
+
+    .colonnes {
+        display: flex;
+        gap: 2rem;
+    }
+
+    .colonnes-petite-grande>div:first-of-type {
+        flex: 0 0 300px;
+    }
+}

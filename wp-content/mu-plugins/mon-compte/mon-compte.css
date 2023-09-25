@@ -1,0 +1,30 @@
+@media screen and (min-width: 480px) {
+    .myaccount-menu .burger {
+        display: none;
+    }
+}
+
+.myaccount-menu .burger {
+    text-align: center !important;
+    box-shadow: none !important;
+    border: 0 !important;
+}
+
+.myaccount-menu .burger:hover {
+    background-color: #f3af10 !important;
+}
+
+.myaccount-menu .burger button {
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    display: flex;
+    gap: 1rem;
+}
+
+@media screen and (max-width: 480px) {
+
+    body:not([data-menu-compte-ouvert="true"]) .myaccount-menu li:not(.burger) {
+        display: none !important;
+    }
+}

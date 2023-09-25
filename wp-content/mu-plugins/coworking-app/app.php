@@ -93,7 +93,9 @@ function coworking_app_droits($user_id)
     if (!$user) return;
 
     $bloquer_ouvrir_portail = get_field('bloquer_ouvrir_portail', 'user_' . $user_id);
+    $ouvrir_parking = get_field('ouvrir_parking', 'user_' . $user_id) || date('Ymd') < '20240101';
 
+    // $ouvrir_parking = user_can($user_id, 'ouvrir_parking');
 
     if (user_can($user_id, 'administrator')) {
         $admin = true;
@@ -108,12 +110,14 @@ function coworking_app_droits($user_id)
         'droits' => [
             'polaroid' => polaroid_existe($user_id) ? polaroid_url($user_id, true) : false,
             'admin' => $admin,
+            'ouvrir_parking'=>$ouvrir_parking,
             'ouvrir_portail' => $bloquer_ouvrir_portail ? false : true,
         ]
     ];
 }
 function coworking_app_check_origins($origin)
 {
+    return true;
 
     if (in_array($origin, coworking_app_origins())) return true;
 
@@ -137,7 +141,7 @@ function coworking_app_check($request)
 
     $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
 
-    // header('test-origin:' . $origin);
+    header('test-origin:' . $origin);
     if (coworking_app_check_origins($origin)) {
         header('Access-Control-Allow-Origin: ' . $origin);
         header('Access-Control-Allow-Methods: GET, POST, OPTIONS');

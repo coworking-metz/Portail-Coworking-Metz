@@ -21,6 +21,8 @@ include plugin_dir_path(__FILE__) . 'coworking-app/app-auth.php';
 include plugin_dir_path(__FILE__) . 'coworking-app/app-droits.php';
 include plugin_dir_path(__FILE__) . 'coworking-app/app-session.php';
 
+include plugin_dir_path(__FILE__) . 'colonnes/colonnes.php';
+include plugin_dir_path(__FILE__) . 'mon-compte/mon-compte.php';
 include plugin_dir_path(__FILE__) . 'polaroid/polaroid.php';
 include plugin_dir_path(__FILE__) . 'notifications/notifications.php';
 
