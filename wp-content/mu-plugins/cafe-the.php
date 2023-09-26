@@ -7,6 +7,8 @@ add_action('wp_footer', function () {
 
     if (is_checkout() || is_cart()) {
 
+        if (commande_recente(PRODUIT_CAFE_THE)) return;
+
         if (!is_product_in_cart(PRODUIT_CAFE_THE)) {
             echo generateNotification([
                 'titre' => 'Vous consommez du café ou du thé ?',
