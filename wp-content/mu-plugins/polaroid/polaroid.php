@@ -9,6 +9,14 @@ add_action('profile_update', function ($uid, $old_user_data) {
     CF::purgeUrls(["/polaroid/$uid.jpg", "/polaroid/$uid-hd.jpg"]);
 }, 10, 2);
 
+add_action('wp_footer', function () {
+    if (is_user_logged_in()) {
+        $uid = get_current_user_id();
+        if (!polaroid_get($uid, false)) {
+            echo generateNotification(['titre'=>'Nouveau polaroïd disponible !', 'texte'=>'<a href="/mon-compte/polaroid/?modifier">Ajoutez une photo pour profiter du nouveau format de polaroïd</a>.', 'image'=>'images/pola-poule-vide.jpg']);
+        }
+    }
+});
 
 function polaroid_output($file) {
     $expires = 86400; // 60 seconds * 60 minutes * 24 hours = 1 day

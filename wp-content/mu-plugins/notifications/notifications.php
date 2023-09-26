@@ -10,20 +10,23 @@ add_action('init', function () {
     wp_enqueue_script('notifications', '/wp-content/mu-plugins/notifications/notifications.js', array(), $t, false);
 });
 
-add_action('wp_footer', function () {
-    if (is_user_logged_in()) {
-        $uid = get_current_user_id();
-        if (!polaroid_get($uid, false)) {
-            echo generateNotification(['titre'=>'Nouveau polaroïd disponible !', 'texte'=>'<a href="/mon-compte/polaroid/?modifier">Ajoutez une photo pour profiter du nouveau format de polaroïd</a>.', 'image'=>'images/pola-poule-vide.jpg']);
-        }
-    }
-});
+
 
 function generateNotification($data): string
 {
+
+    $cta = '';
+    if ($data['cta']) {
+        $cta = '<span><a href="' . $data['cta']['url'] . '" class="button">' . $data['cta']['caption'] . '</a></span>';
+    }
     return '<div class="notification" role="alert">
+    <div>
+    <div>
     <figure><img src="' . $data['image'] . '"></figure>
     <p><b>' . $data['titre'] . '</b><span>' . $data['texte'] . '</span></p>
+    </div>
+    ' . $cta . '
+    </div>
     <button>&#x2716;</button>
   </div>';
 }

@@ -147,30 +147,7 @@ function filter_woocommerce_account_menu_items( $items ) {
 // add the filter 
 add_filter( 'woocommerce_account_menu_items', 'filter_woocommerce_account_menu_items', 10, 1 ); 
 
-/**
- * Automatically add product to cart on visit (café / thé)
- */
-add_action( 'template_redirect', 'add_product_to_cart' );
-function add_product_to_cart() {
-    if ( ! is_admin()  && !is_cart() && !is_checkout()) {
-        $product_id = 20367; //café-thé
-        $found = false;
-        //check if product already in cart
-        if ( sizeof( WC()->cart->get_cart() ) > 0 ) {
-            foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-                $_product = $values['data'];
-                if ( $_product->get_id() == $product_id )
-                    $found = true;
-            }
-            // if product not found, add it
-            if ( ! $found )
-                WC()->cart->add_to_cart( $product_id );
-        } else {
-            // if no products in cart, add it
-            WC()->cart->add_to_cart( $product_id );
-        }
-    }
-}
+
 
 //******************** END WOOCOMMERCE ********************
 
