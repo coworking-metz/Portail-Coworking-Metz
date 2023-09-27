@@ -15,6 +15,28 @@ if (wp_get_environment_type() != 'local') {
   });
 }
 
+/**
+ * AJouter des données dans la sortie oauth
+ */
+add_filter('wo_me_resource_return', function ($data, $token) {
+  $capabilities = $data['capabilities'];
+  unset($data['capabilities']);
+  unset($data['user_status']);
+  $user_id = $data['ID'];
+  $bloquer_ouvrir_portail = get_field('bloquer_ouvrir_portail', 'user_' . $user_id);
+  $ouvrir_parking = get_field('ouvrir_parking', 'user_' . $user_id) || date('Ymd') < '20240101';
+  if (user_can($user_id, 'administrator')) {
+    $data['admin'] = true;
+  }
+  $data['polaroid'] = polaroid_existe($user_id) ? polaroid_url($user_id, true) : false;
+  $data['droits'] = [
+    'ouvrir_portail' => $bloquer_ouvrir_portail ? false : true,
+    'ouvrir_parking' => $ouvrir_parking ? true : false
+  ];
+
+  // print_r([$data, $token]);
+  return $data;
+}, 10, 2);
 
 /**
  * Ajouter le grant refresh_token dans tous les clients du plugin oauth-server
