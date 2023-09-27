@@ -55,6 +55,22 @@ docker-compose up -d
 
 Then the website will be available at http://www.coworking-metz.local/.
 
+### OAuth2
+
+**DISCLAIMER**
+This server use a plugin called `oauth2-provider` to serve as OAuth2 provider.
+As the plugin is somewhat non free and requires a license to be fully functionnal,
+the following code was commented in `TokenController.php#190`
+to let any client ask for a new refresh token.
+```php
+/**
+ * Validate the client can use the requested grant type
+ */
+// if ( ! $this->clientStorage->checkRestrictedGrantType( $clientId, $grantTypeIdentifier ) ) {
+// 	$response->setError( 400, 'unauthorized_client', 'The grant type is unauthorized for this client_id' );
+// 	return false;
+// }
+```
 
 ### Troubleshoot
 
