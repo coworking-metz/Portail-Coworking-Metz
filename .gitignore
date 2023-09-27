@@ -16,6 +16,7 @@ wp-content/plugins/tmp
 # htaccess
 /.htaccess
 
+/polaroid/vendor
 /polaroid/gen
 /polaroid/*.jpg
 # All plugins
