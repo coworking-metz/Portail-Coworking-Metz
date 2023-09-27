@@ -189,11 +189,11 @@ class TokenController implements TokenControllerInterface {
 		/**
 		 * Validate the client can use the requested grant type
 		 */
-		// if ( ! $this->clientStorage->checkRestrictedGrantType( $clientId, $grantTypeIdentifier ) ) {
-		// 	$response->setError( 400, 'unauthorized_client', 'The grant type is unauthorized for this client_id' );
+		if ( ! $this->clientStorage->checkRestrictedGrantType( $clientId, $grantTypeIdentifier ) ) {
+			$response->setError( 400, 'unauthorized_client', 'The grant type is unauthorized for this client_id' );
 
-		// 	return false;
-		// }
+			return false;
+		}
 
 		/**
 		 * Validate the scope of the token

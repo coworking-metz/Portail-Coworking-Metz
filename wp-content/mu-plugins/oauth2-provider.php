@@ -14,3 +14,4 @@ if (wp_get_environment_type() != 'local') {
     }, PHP_INT_MAX);
   });
 }
+
