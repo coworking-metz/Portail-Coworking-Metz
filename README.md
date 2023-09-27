@@ -60,8 +60,8 @@ Then the website will be available at http://www.coworking-metz.local/.
 **DISCLAIMER**
 This server use a plugin called `oauth2-provider` to serve as OAuth2 provider.
 As the plugin is somewhat non free and requires a license to be fully functionnal,
-the following code was commented in `TokenController.php#190`
-to let any client ask for a new refresh token.
+you have 2 options to bypass restrictions on `grant_types`:
+- comment the following code in `TokenController.php#190` to let any client ask for a new refresh token.
 ```php
 /**
  * Validate the client can use the requested grant type
@@ -70,6 +70,10 @@ to let any client ask for a new refresh token.
 // 	$response->setError( 400, 'unauthorized_client', 'The grant type is unauthorized for this client_id' );
 // 	return false;
 // }
+```
+- or edit the client details directly in the database
+```sql
+UPDATE `prfxcrwkng_postmeta` SET `meta_value` = 'a:3:{i:0;s:18:\"authorization_code\";i:1;s:8:\"implicit\";i:2;s:13:\"refresh_token\";}' WHERE `prfxcrwkng_postmeta`.`meta_id` = 386442;
 ```
 
 ### Troubleshoot
