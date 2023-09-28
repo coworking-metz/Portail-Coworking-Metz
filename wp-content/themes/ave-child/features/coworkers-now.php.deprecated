@@ -4,6 +4,7 @@
  * coworkers_now_tv();
  * Get the number of people connected
  */
+
 function coworkers_now_tv() {
 
     $hour_now = date('H');

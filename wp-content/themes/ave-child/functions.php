@@ -10,11 +10,11 @@ function liquid_child_theme_style(){
 }
 
 //features
-include get_stylesheet_directory() . '/features/polaroid.php';
-include get_stylesheet_directory() . '/features/gender.php';
-include get_stylesheet_directory() . '/features/coworkers-now.php';
-include get_stylesheet_directory() . '/features/test.php';
-include get_stylesheet_directory() . '/features/top-challenge.php';
+// include get_stylesheet_directory() . '/features/polaroid.php';
+// include get_stylesheet_directory() . '/features/gender.php';
+// include get_stylesheet_directory() . '/features/coworkers-now.php';
+// include get_stylesheet_directory() . '/features/test.php';
+// include get_stylesheet_directory() . '/features/top-challenge.php';
 include get_stylesheet_directory() . '/features/chart-day-month.php';
 //include get_stylesheet_directory() . '/money.php';
 
@@ -24,7 +24,8 @@ include get_stylesheet_directory() . '/features/coworker-account/user-presences.
 include get_stylesheet_directory() . '/features/coworker-account/user-subscription.php';
 
 //app functions
-include get_stylesheet_directory() . '/features/app/app-user-balance.php';
+// cf https://www.coworking-metz.fr/wp-admin/post.php?post=27149&action=edit&classic-editor
+// include get_stylesheet_directory() . '/features/app/app-user-balance.php';
 
 /* Allow SVG files */
 function wpc_mime_types($mimes) {
@@ -154,7 +155,8 @@ add_filter( 'woocommerce_account_menu_items', 'filter_woocommerce_account_menu_i
 /**
  * Page of users presence
  */
-
+/*
+DEPRECATED
 if(is_admin()){
     add_action( 'admin_menu', 'coworking_user_presences_add_plugin_page' );
 }
@@ -201,6 +203,7 @@ function coworking_user_presences_create_admin_page() {
         </div>
     </div>
 <?php }
+*/
 
 // Disable Gutenberg
 add_filter( 'use_block_editor_for_post', '__return_false' );

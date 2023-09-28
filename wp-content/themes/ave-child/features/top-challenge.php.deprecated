@@ -3,6 +3,7 @@
  * api_top_twenty();
  * Get the top twenty list of presences from the ticket service
  */
+/* DEPRECATED 
 function api_top_twenty_challenge() {
 
     $curl = curl_init();
@@ -99,4 +100,4 @@ function api_top_twenty_challenge() {
 
     echo $html;
 
-}
+} */

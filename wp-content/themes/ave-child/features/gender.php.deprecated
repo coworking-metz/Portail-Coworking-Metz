@@ -1,6 +1,8 @@
 <?php
 
 // Chart presence by gender
+/*
+DEPRECATED
 function chart_gender() {
 
     $hour_now = date('H');
@@ -203,3 +205,4 @@ var optionPoulet;
 
 <?php
 }
+*/

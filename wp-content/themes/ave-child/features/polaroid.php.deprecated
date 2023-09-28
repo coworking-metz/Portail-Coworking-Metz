@@ -5,6 +5,7 @@
  * Get the picture coworker
  */
 
+ /* DEPRECATED
 function picture_user_presence()
 {
 
@@ -32,12 +33,10 @@ function picture_user_presence()
 
         .img-legend {
             position: relative;
-            /*top: -50px;*/
 
         }
 
         .header-page {
-            /*max-height: 125px;*/
         }
 
         .highlight-text {
@@ -57,12 +56,7 @@ function picture_user_presence()
 
         .grid-images .animated-image {
             position: relative;
-            /* animation-name: zoomIn;
-            animation-duration: 1.8s;
-            animation-iteration-count: 1;
-            animation-timing-function: ease-out;
-            animation-fill-mode: both;
-            animation-direction: both; */
+          
             z-index: 1;
             width: 10.5%;
             margin: 10px;
@@ -82,12 +76,10 @@ function picture_user_presence()
             content: '';
             position: absolute;
             inset: 0;
-            /* background: url('/wp-content/themes/ave-child/img/wanted.png') no-repeat 0 0/contain; */
             z-index: 2;
         }
 
 
-        /* animation */
 
         @-webkit-keyframes zoomIn {
             from {
@@ -131,7 +123,6 @@ function picture_user_presence()
         }
 
         .vc_custom_1634288937073 {
-            /* background: none !important; */
             position: relative;
         }
 
@@ -141,7 +132,6 @@ function picture_user_presence()
             inset: 0;
             content:"";
             background-size: cover;
-            /* background-image: url(https://www.coworking-metz.fr/wp-content/uploads/2023/09/slide-poulailler1.jpg) !important; */
         }
     </style>
     <?php
@@ -209,3 +199,4 @@ function picture_user_presence()
     echo '<div class="legend" style="position:fixed;left:20px;bottom:20px;font-size:20px">Choisissez votre polaroïd sur le site du coworking, dans le menu "Mon compte"</div>';
     // echo '<div class="legend"><img class="img-legend" src="https://www.coworking-metz.fr/wp-content/themes/ave-child/img/ninja.png" _width="128px"/> : Adhésion ou solde de tickets négatif. </div>';
 }
+*/
