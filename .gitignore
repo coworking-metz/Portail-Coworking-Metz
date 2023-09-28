@@ -16,6 +16,8 @@ wp-content/plugins/tmp
 # htaccess
 /.htaccess
 
+/wp-content/themes/old
+oldfunctions.php
 /polaroid/vendor
 /polaroid/gen
 /polaroid/*.jpg
