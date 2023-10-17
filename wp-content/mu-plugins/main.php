@@ -17,9 +17,6 @@ define('ONE_MONTH', ONE_DAY * 31);
 
 
 include plugin_dir_path(__FILE__) . 'coworking-app/app.php';
-include plugin_dir_path(__FILE__) . 'coworking-app/app-auth.php';
-include plugin_dir_path(__FILE__) . 'coworking-app/app-droits.php';
-include plugin_dir_path(__FILE__) . 'coworking-app/app-session.php';
 
 include plugin_dir_path(__FILE__) . 'colonnes/colonnes.php';
 include plugin_dir_path(__FILE__) . 'mon-compte/mon-compte.php';

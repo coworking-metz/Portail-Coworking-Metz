@@ -1,5 +1,12 @@
 <?php
 
+include __DIR__ . '/app-auth.php';
+include __DIR__ . '/app-droits.php';
+include __DIR__ . '/app-session.php';
+include __DIR__ . '/app-user-exists.php';
+include __DIR__ . '/app-nouvelle-visite.php';
+
+
 function coworking_app_settings()
 {
     $url = 'https://tickets.coworking-metz.fr/api/current-users?key=' . API_KEY_TICKET . '&delay=15';
@@ -74,7 +81,7 @@ function coworking_app_get_valid_sessions($uid)
 }
 function coworking_app_user($user)
 {
-    if(is_numeric($user)) {
+    if (is_numeric($user)) {
         $user = get_user_by('ID', $user);
     }
     return [
@@ -109,7 +116,7 @@ function coworking_app_droits($user_id)
         'droits' => [
             'polaroid' => polaroid_existe($user_id) ? polaroid_url($user_id, true) : false,
             'admin' => $admin,
-            'ouvrir_parking'=>$ouvrir_parking,
+            'ouvrir_parking' => $ouvrir_parking,
             'ouvrir_portail' => $bloquer_ouvrir_portail ? false : true,
         ]
     ];
@@ -196,4 +203,81 @@ function coworking_app_delete_session_id($sid, $uid)
     // Save the updated sessions array back to the user meta data
     update_user_meta($uid, 'sessions', json_encode($sessions));
     return true;
+}
+
+
+function addEventToCalendar($event)
+{
+    // cf https://ifttt.com/applets/vD4gcHhx/edit
+    $webhook = 'https://maker.ifttt.com/trigger/nouvelle-visite/with/key/mVGGKzi6RS8B-x5ohxM4q8SuZgm6s-OdjbidwgUYvvV';
+    $payload = ['value1' => $event['name'], 'value2' => $event['start'], 'value3' => $event['end']];
+
+    $ch = curl_init($webhook);
+
+    // Création du payload JSON
+    $data = json_encode($payload);
+
+    // Configuration des options cURL
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    // Exécution de la requête
+    $response = curl_exec($ch);
+
+    // Fermeture de la connexion
+    curl_close($ch);
+
+    return $payload;
+}
+
+/**
+ * Crée un nouvel utilisateur WordPress si l'email n'existe pas déjà
+ *
+ * @param array $user Informations de base de l'utilisateur
+ * @param array $meta Métadonnées supplémentaires pour l'utilisateur
+ */
+function create_wp_user_if_not_exists($user, $meta = [])
+{
+    // Désactive l'envoi de mail temporairement
+    remove_action('register_new_user', 'wp_send_new_user_notifications');
+
+    // Récupération des données utilisateur
+    $nom = $user['nom'];
+    $prenom = $user['prenom'];
+    $email = $user['email'];
+    $password = $user['password'];
+
+    $user_id = email_exists($email);
+    // Vérifie si l'utilisateur existe déjà
+    if (!$user_id) {
+        // Crée l'utilisateur
+        $user_id = wp_create_user($email, $password, $email);
+
+        // Met à jour les informations supplémentaires
+        wp_update_user([
+            'ID'         => $user_id,
+            'first_name' => $prenom,
+            'last_name'  => $nom,
+            'nickname'   => $prenom . ' ' . $nom,
+            'display_name' => $prenom . ' ' . $nom,
+        ]);
+
+        // Définit le 'user_nicename'
+        wp_update_user([
+            'ID'            => $user_id,
+            'user_nicename' => sanitize_title($prenom . ' ' . $nom)
+        ]);
+
+        // Ajoute les métadonnées utilisateur
+        foreach ($meta as $key => $value) {
+            update_user_meta($user_id, $key, $value);
+        }
+    }
+
+    // Réactive l'envoi de mail
+    add_action('register_new_user', 'wp_send_new_user_notifications');
+
+    return $user_id;
 }

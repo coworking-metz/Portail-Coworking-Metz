@@ -21,12 +21,13 @@ if (isset($_GET['export-users'])) {
             $email = $user_data->user_email;
             $display_name = $user_data->display_name;
             $registration_date = $user_data->user_registered;
+            $visite = get_user_meta($id, 'visite', true);
             $last_order_date = get_user_meta($id, '_last_order_date', true);
             $first_order_date = get_user_meta($id, '_first_order_date', true);
             $role = !empty($user_data->roles) ? implode(',', $user_data->roles) : '';
 
             // Écrire la ligne de données pour chaque utilisateur
-            fputcsv($output, [$id, $email, $display_name, $registration_date, $last_order_date, $first_order_date, $role]);
+            fputcsv($output, [$id, $email, $display_name, $registration_date, $visite, $last_order_date, $first_order_date, $role]);
         }
 
         fclose($output);
@@ -108,6 +109,7 @@ if (isset($_GET['_first_order_date'])) {
 
 
 add_filter('manage_users_sortable_columns', function ($columns) {
+    $columns['visite'] = 'visite';
     $columns['user_registered'] = 'user_registered';
     $columns['first_order_date'] = 'first_order_date';
     $columns['last_order_date'] = 'last_order_date';
@@ -117,6 +119,7 @@ add_filter('manage_users_sortable_columns', function ($columns) {
 add_filter('manage_users_columns', function ($columns) {
 
     $columns['votre_photo'] = 'Photo';
+    $columns['visite'] = 'Visite';
     $columns['user_registered'] = 'Inscription';
     $columns['first_order_date'] = 'Première commande';
     $columns['last_order_date'] = 'Dernière commande';
@@ -137,9 +140,12 @@ add_filter(
         if ('user_registered' === $column_name) {
             $user = get_userdata($user_id);
             $value = date_francais($user->user_registered);
-        } else       
+        } else
         if ('first_order_date' === $column_name) {
             $value = date_francais(get_user_meta($user_id, '_first_order_date', true));
+        } else
+        if ('visite' === $column_name) {
+            $value = date_francais(get_user_meta($user_id, 'visite', true), true);
         } else       
           if ('last_order_date' === $column_name) {
             $value = date_francais(get_user_meta($user_id, '_last_order_date', true));
@@ -195,7 +201,10 @@ add_action('pre_get_users', function ($query) {
     if ('users.php' !== $pagenow) return;
 
 
-    if ($orderby == 'last_order_date') {
+    if ($orderby == 'visite') {
+        $query->set('meta_key', 'visite');
+        $query->set('orderby', 'meta_value');
+    } else if ($orderby == 'last_order_date') {
         $query->set('meta_key', '_last_order_date');
         $query->set('orderby', 'meta_value');
     } else if ($orderby == 'first_order_date') {
