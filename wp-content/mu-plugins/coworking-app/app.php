@@ -5,6 +5,7 @@ include __DIR__ . '/app-droits.php';
 include __DIR__ . '/app-session.php';
 include __DIR__ . '/app-user-exists.php';
 include __DIR__ . '/app-nouvelle-visite.php';
+include __DIR__ . '/app-visite-ics.php';
 
 
 function coworking_app_settings()
@@ -308,17 +309,17 @@ function envoyerMailVisite($user_id, $visite)
     $message = '
 Bonjour !
 
-Nous vous confirmons que votre visite du coworking aura lieu le ' . date_francais($visite, true) . '.
+Nous vous confirmons que votre visite du coworking aura lieu le <strong>' . date_francais($visite, true) . '</strong>. <a href="'.site_url().'/api-json-wp/cowo/v1/visite-ics?user_id='.$user_id.'">Cliquez ici pour ajouter ce rendez-vous à votre agenda</a>.
 
 Vous avez rendez-vous au coworking, basé <a href="https://www.bliiida.fr/infos-pratiques/">au sein du tiers-lieu Bliiida</a>, au 7, avenue de Blida, 57000 Metz</a>.
 
-Le jour de vote visite, utilisez l\'application du coworking pour ouvrir le portail piéton et entrer dans Bliiida. 
-Si besoin, vous pourrez aussi utiliser l\'application pour avoir accès au parking de Bliiida. 
-<a href="https://app.coworking-metz.fr/?visite=' . $user_id . '&check=' . $check . '">Ouvrir l\'application du coworking</a>
+<strong>Le jour de vote visite, utilisez l\'application du coworking pour ouvrir le portail piéton et entrer dans Bliiida.</strong> 
+Si besoin, vous pourrez aussi utiliser l\'application pour <strong>avoir accès au parking de Bliiida</strong> pour la journée. 
+<a href="https://app.coworking-metz.fr/visite?visite=' . $user_id . '&check=' . $check . '">Ouvrir l\'application du coworking</a>
 
 
 À Bientôt !
-<img width=100 src="https://www.coworking-metz.fr/wp-content/uploads/2020/06/logo-lepoulailler-mobile.png">
+<img width=100 src="'.site_url().'/wp-content/uploads/2020/06/logo-lepoulailler-mobile.png">
 Coworking Metz
 https://coworking-metz.fr
 ';
