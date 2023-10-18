@@ -93,34 +93,47 @@ function coworking_app_user($user)
     ];
 }
 
-function coworking_app_droits($user_id)
+function coworking_app_droits($user_id, $options = [])
 {
 
+    $guest = $options['guest'] ?? false;
     $user = get_user_by('ID', $user_id);
     if (!$user) return;
 
-    $bloquer_ouvrir_portail = get_field('bloquer_ouvrir_portail', 'user_' . $user_id);
-    $ouvrir_parking = get_field('ouvrir_parking', 'user_' . $user_id) || date('Ymd') < '20240101';
-
-    // $ouvrir_parking = user_can($user_id, 'ouvrir_parking');
-
-    if (user_can($user_id, 'administrator')) {
-        $admin = true;
+    if ($guest) {
+        return [
+            'guest' => true,
+            'settings' => coworking_app_settings(),
+            'droits' => [
+                'ouvrir_parking' => true,
+                'ouvrir_portail' => true,
+            ]
+        ];
     } else {
-        $admin = false;
-    }
 
-    return [
-        'admin' => $admin,
-        // 'sessions'=>coworking_app_get_sessions($user_id),
-        'settings' => coworking_app_settings(),
-        'droits' => [
-            'polaroid' => polaroid_existe($user_id) ? polaroid_url($user_id, true) : false,
+        $bloquer_ouvrir_portail = get_field('bloquer_ouvrir_portail', 'user_' . $user_id);
+        $ouvrir_parking = get_field('ouvrir_parking', 'user_' . $user_id) || date('Ymd') < '20240101';
+
+        // $ouvrir_parking = user_can($user_id, 'ouvrir_parking');
+
+        if (user_can($user_id, 'administrator')) {
+            $admin = true;
+        } else {
+            $admin = false;
+        }
+
+        return [
             'admin' => $admin,
-            'ouvrir_parking' => $ouvrir_parking,
-            'ouvrir_portail' => $bloquer_ouvrir_portail ? false : true,
-        ]
-    ];
+            // 'sessions'=>coworking_app_get_sessions($user_id),
+            'settings' => coworking_app_settings(),
+            'droits' => [
+                'polaroid' => polaroid_existe($user_id) ? polaroid_url($user_id, true) : false,
+                'admin' => $admin,
+                'ouvrir_parking' => $ouvrir_parking,
+                'ouvrir_portail' => $bloquer_ouvrir_portail ? false : true,
+            ]
+        ];
+    }
 }
 function coworking_app_check_origins($origin)
 {
@@ -148,7 +161,7 @@ function coworking_app_check($request)
 
     $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
 
-    header('test-origin:' . $origin);
+    // header('test-origin:' . $origin);
     if (coworking_app_check_origins($origin)) {
         header('Access-Control-Allow-Origin: ' . $origin);
         header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
@@ -293,7 +306,11 @@ function create_wp_user_if_not_exists($user, $meta = [])
     return $user_id;
 }
 
-
+function app_login_link($user_id)
+{
+    $check = sha1($user_id . APP_AUTH_TOKEN);
+    return 'https://app.coworking-metz.fr/visite?visite=' . $user_id . '&check=' . $check;
+}
 function envoyerMailVisite($user_id, $visite)
 {
 
@@ -305,21 +322,20 @@ function envoyerMailVisite($user_id, $visite)
     update_user_meta($user_id, $key, true);
 
 
-    $check = sha1($user_id . APP_AUTH_TOKEN);
     $message = '
 Bonjour !
 
-Nous vous confirmons que votre visite du coworking aura lieu le <strong>' . date_francais($visite, true) . '</strong>. <a href="'.site_url().'/api-json-wp/cowo/v1/visite-ics?user_id='.$user_id.'">Cliquez ici pour ajouter ce rendez-vous à votre agenda</a>.
+Nous vous confirmons que votre visite du coworking aura lieu le <strong>' . date_francais($visite, true) . '</strong>. <a href="' . site_url() . '/api-json-wp/cowo/v1/visite-ics?user_id=' . $user_id . '">Cliquez ici pour ajouter ce rendez-vous à votre agenda</a>.
 
 Vous avez rendez-vous au coworking, basé <a href="https://www.bliiida.fr/infos-pratiques/">au sein du tiers-lieu Bliiida</a>, au 7, avenue de Blida, 57000 Metz</a>.
 
 <strong>Le jour de vote visite, utilisez l\'application du coworking pour ouvrir le portail piéton et entrer dans Bliiida.</strong> 
 Si besoin, vous pourrez aussi utiliser l\'application pour <strong>avoir accès au parking de Bliiida</strong> pour la journée. 
-<a href="https://app.coworking-metz.fr/visite?visite=' . $user_id . '&check=' . $check . '">Ouvrir l\'application du coworking</a>
+<a href="' . app_login_link($user_id) . '">Ouvrir l\'application du coworking</a>
 
 
 À Bientôt !
-<img width=100 src="'.site_url().'/wp-content/uploads/2020/06/logo-lepoulailler-mobile.png">
+<img width=100 src="' . site_url() . '/wp-content/uploads/2020/06/logo-lepoulailler-mobile.png">
 Coworking Metz
 https://coworking-metz.fr
 ';
