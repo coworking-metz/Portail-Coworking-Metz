@@ -22,13 +22,15 @@ add_action('rest_api_init', function () {
             $event = ['name' => 'Visite pour ' . $nom, 'start' => $start, 'end' => $end];
 
             $user_id = create_wp_user_if_not_exists($user, ['visite' => date_maline($start)]);
-            $response = addEventToCalendar($user_id, $event);
+            if ($user_id) {
+                addEventToCalendar($user_id, $event);
 
-            envoyerMailVisite($user_id, $params['visite']);
+                envoyerMailVisite($user_id, $params['visite']);
 
-            //			$success = WC_Shortcode_My_Account::retrieve_password(); envoyer le mail de setup
+                //			$success = WC_Shortcode_My_Account::retrieve_password(); envoyer le mail de setup
 
-            return rest_ensure_response(['event' => $event, 'response' => $response]);
+                return rest_ensure_response(['event' => $event]);
+            }
         },
     ]);
 });
