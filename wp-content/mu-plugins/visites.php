@@ -9,15 +9,6 @@ function getNbVisites()
 // Obtenir et stocker les utilisateurs avec des visites futures dans un transitoire
 function fetch_users_with_future_visite()
 {
-    $transient_key = 'users_with_future_visite';
-
-    // Vérifier si les données sont déjà en cache
-    $cached_users = get_transient($transient_key);
-
-    if ($cached_users !== false) {
-        return $cached_users;
-    }
-
     $args = array(
         'meta_key'     => 'visite',
         'meta_compare' => '>',
@@ -26,9 +17,6 @@ function fetch_users_with_future_visite()
     );
 
     $users_with_future_visite = get_users($args);
-
-    // Stocker dans un transitoire qui expire après 2 heures
-    set_transient($transient_key, $users_with_future_visite, 2 * HOUR_IN_SECONDS);
 
     return $users_with_future_visite;
 }

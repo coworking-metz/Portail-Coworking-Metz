@@ -206,9 +206,16 @@ function coworking_app_delete_session_id($sid, $uid)
 }
 
 
-function addEventToCalendar($event)
+function addEventToCalendar($user_id, $event)
 {
-    // cf https://ifttt.com/applets/vD4gcHhx/edit
+
+    if (!$user_id) return;
+    $key = 'ajout-calendrier-' . $event['start'];
+    if (get_user_meta($user_id, $key, true)) return;
+    update_user_meta($user_id, $key, true);
+
+
+    // Editer la task sur IFTTT à cette adresse:  https://ifttt.com/applets/vD4gcHhx
     $webhook = 'https://maker.ifttt.com/trigger/nouvelle-visite/with/key/mVGGKzi6RS8B-x5ohxM4q8SuZgm6s-OdjbidwgUYvvV';
     $payload = ['value1' => $event['name'], 'value2' => $event['start'], 'value3' => $event['end']];
 
@@ -248,6 +255,9 @@ function create_wp_user_if_not_exists($user, $meta = [])
     $prenom = $user['prenom'];
     $email = $user['email'];
     $password = $user['password'];
+    if (!$password) {
+        $password = sha1(time());
+    }
 
     $user_id = email_exists($email);
     // Vérifie si l'utilisateur existe déjà
@@ -280,4 +290,40 @@ function create_wp_user_if_not_exists($user, $meta = [])
     add_action('register_new_user', 'wp_send_new_user_notifications');
 
     return $user_id;
+}
+
+
+function envoyerMailVisite($user_id, $visite)
+{
+
+    $user = get_userdata($user_id);
+    if (!$user) return;
+
+    $key = 'email-visite-' . $visite;
+    if (get_user_meta($user_id, $key, true)) return;
+    update_user_meta($user_id, $key, true);
+
+
+    $check = sha1($user_id . APP_AUTH_TOKEN);
+    $message = '
+Bonjour !
+
+Nous vous confirmons que votre visite du coworking aura lieu le ' . date_francais($visite, true) . '.
+
+Vous avez rendez-vous au coworking, basé <a href="https://www.bliiida.fr/infos-pratiques/">au sein du tiers-lieu Bliiida</a>, au 7, avenue de Blida, 57000 Metz</a>.
+
+Le jour de vote visite, utilisez l\'application du coworking pour ouvrir le portail piéton et entrer dans Bliiida. 
+Si besoin, vous pourrez aussi utiliser l\'application pour avoir accès au parking de Bliiida. 
+<a href="https://app.coworking-metz.fr/?visite=' . $user_id . '&check=' . $check . '">Ouvrir l\'application du coworking</a>
+
+
+À Bientôt !
+<img width=100 src="https://www.coworking-metz.fr/wp-content/uploads/2020/06/logo-lepoulailler-mobile.png">
+Coworking Metz
+https://coworking-metz.fr
+';
+
+    $message = nl2br($message);
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+    return wp_mail($user->user_email, 'Votre visite au Coworking', $message, $headers);
 }
