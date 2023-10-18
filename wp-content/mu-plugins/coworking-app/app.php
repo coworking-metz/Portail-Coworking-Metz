@@ -66,7 +66,12 @@ function coworking_app_get_sessions($uid)
     return $sessions;
 }
 
-
+function can_use_app($user)
+{
+    if (is_visiteur($user)) return true;
+    if (user_can($user, 'administrator')) return true;
+    if (in_array('customer', (array) $user->roles)) return true;
+}
 function coworking_app_get_valid_sessions($uid)
 {
     $sessions = coworking_app_get_sessions($uid);
@@ -85,6 +90,9 @@ function coworking_app_user($user)
     if (is_numeric($user)) {
         $user = get_user_by('ID', $user);
     }
+
+    if (!can_use_app($user)) return;
+    
     return [
         'login' => $user->user_email,
         'name' => $user->display_name,
@@ -92,17 +100,44 @@ function coworking_app_user($user)
         'session_id' => coworking_app_gen_session_id($user->ID),
     ];
 }
+function date_de_visite($user)
+{
+    $user_id = get_user_id($user);
+    $visite_date = get_user_meta($user_id, 'visite', true);
+    return $visite_date;
+}
+function is_visiteur($user)
+{
+    $user_id = $user->ID;
+    if (!in_array('subscriber', (array) $user->roles)) return;
 
+    $visite_date = date_de_visite($user_id);
+    if (!$visite_date) return;
+
+    if (isPast($visite_date) && !istoday($visite_date)) return;
+
+    $dateTimeZone = new DateTimeZone('Europe/Paris');
+
+    $dateToCheck = new DateTime($visite_date, $dateTimeZone);
+    $dateToCheck->setTime(0, 0); // Reset time to midnight to only compare date
+
+    $today = new DateTime('now', $dateTimeZone);
+    $today->setTime(0, 0); // Reset time to midnight
+
+    $isToday = $dateToCheck == $today;
+
+    return $isToday;
+}
 function coworking_app_droits($user_id, $options = [])
 {
 
-    $guest = $options['guest'] ?? false;
     $user = get_user_by('ID', $user_id);
     if (!$user) return;
 
-    if ($guest) {
+    if (is_visiteur($user)) {
         return [
             'guest' => true,
+            'visite' => date_francais(date_de_visite($user), true),
             'settings' => coworking_app_settings(),
             'droits' => [
                 'ouvrir_parking' => true,

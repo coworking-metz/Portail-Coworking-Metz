@@ -22,21 +22,8 @@ add_action(
                         return new WP_Error('authorization_failed', 'Accès interdit - user non trouvé', array('status' => 401));
 
 
-                    $visite_date = get_user_meta($user_id, 'visite', true);
-                    if (!$visite_date)
-                        return new WP_Error('authorization_failed', 'Accès interdit - pas de visite planifiée', array('status' => 401));
-
-                    $dateTimeZone = new DateTimeZone('Europe/Paris');
-
-                    $dateToCheck = new DateTime($visite_date, $dateTimeZone);
-                    $dateToCheck->setTime(0, 0); // Reset time to midnight to only compare date
-
-                    $today = new DateTime('now', $dateTimeZone);
-                    $today->setTime(0, 0); // Reset time to midnight
-
-                    $isToday = $dateToCheck == $today;
-                    if (!$isToday) {
-                        return new WP_Error('authorization_failed', 'Cet accès n\'est valide qu\'à la date du ' . $visite_date, array('status' => 401));
+                    if (!is_visiteur($user)) {
+                        return new WP_Error('authorization_failed', 'Ce compte n\'a pas de visite planifiée aujourd\'hui', array('status' => 401));
                     }
                     $is_guest = true;
                 }
@@ -60,13 +47,13 @@ add_action(
             // Check if authentication succeeded
             if (!is_wp_error($user)) {
 
-                if ($is_guest || user_can($user, 'administrator') || in_array('customer', (array) $user->roles)) {
+                if ($is_guest || can_use_app($user)) {
                     // Generate and store the session ID
 
 
                     $response = [
                         'user' => coworking_app_user($user),
-                        'reglages' => coworking_app_droits($user->ID, ['guest' => $is_guest])
+                        'reglages' => coworking_app_droits($user->ID)
                     ];
                 } else {
                     return new WP_Error('authorization_failed', 'Accès interdit - Droits insufisants', array('status' => 401));

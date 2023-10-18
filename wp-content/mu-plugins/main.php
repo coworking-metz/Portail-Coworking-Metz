@@ -23,6 +23,12 @@ include plugin_dir_path(__FILE__) . 'mon-compte/mon-compte.php';
 include plugin_dir_path(__FILE__) . 'polaroid/polaroid.php';
 include plugin_dir_path(__FILE__) . 'notifications/notifications.php';
 
+// Récupérer tous les fichiers .inc.php dans le dossier ./includes en utilisant __DIR__
+foreach (glob(__DIR__ . "/includes/*.inc.php") as $filename) {
+    include $filename;
+}
+
+
 add_action('init', function () {
     if (!function_exists('acf_get_pro_field_types')) {
         function acf_get_pro_field_types()

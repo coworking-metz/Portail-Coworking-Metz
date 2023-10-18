@@ -1,4 +1,36 @@
 <?php
+/**
+ * Vérifie si la date est dans le passé
+ *
+ * @param string $date Date au format 'Y-m-d'
+ * @return bool
+ */
+function isPast($date) {
+    $currentDate = date('Y-m-d');
+    return ($date < $currentDate);
+}
+
+
+/**
+ * Vérifie si la date est dans le futur
+ *
+ * @param string $date Date au format 'Y-m-d'
+ * @return bool
+ */
+function isFuture($date) {
+    $currentDate = date('Y-m-d');
+    return ($date > $currentDate);
+}
+/**
+ * Vérifie si la date correspond à aujourd'hui
+ *
+ * @param string $date Date au format 'Y-m-d'
+ * @return bool
+ */
+function isToday($date) {
+    $currentDate = date('Y-m-d');
+    return ($date === $currentDate);
+}
 
 function date_maline($t)
 {
