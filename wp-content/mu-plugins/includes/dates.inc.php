@@ -1,4 +1,44 @@
 <?php
+function fetch_holidays() {
+    // Vérification du transient
+    if ( false === ($holidays = get_transient('dates-vacances-zone-b')) ) {
+        $url = 'https://fr.ftp.opendatasoft.com/openscol/fr-en-calendrier-scolaire/Zone-B.ics';
+        $response = wp_remote_get($url);
+
+        // Vérification de l'état de la réponse
+        if ( is_wp_error($response) || wp_remote_retrieve_response_code($response) !== 200 ) {
+            return [];
+        }
+
+        $ics_data = wp_remote_retrieve_body($response);
+        preg_match_all('/DTSTART;VALUE=DATE:(\d+)\r\nDTEND;VALUE=DATE:(\d+)/', $ics_data, $matches);
+        $holidays = [];
+        $today = new DateTime();
+        $six_months_later = (clone $today)->modify('+6 months');
+
+        foreach($matches[1] as $index => $start) {
+            $end_date = DateTime::createFromFormat('Ymd', $matches[2][$index]);
+            
+            // Filtrage des dates passées et au-delà de 6 mois
+            if ($end_date >= $today && $end_date <= $six_months_later) {
+                $formatted_start = DateTime::createFromFormat('Ymd', $start)->format('d/m/Y');
+                $formatted_end = $end_date->format('d/m/Y');
+                $holidays[] = "$formatted_start > $formatted_end";
+            }
+        }
+
+        // Sauvegarde du résultat dans un transient pendant un mois
+        set_transient('dates-vacances-zone-b', $holidays, 30 * DAY_IN_SECONDS);
+    }
+
+    return $holidays;
+}
+
+
+
+
+
+
 /**
  * Vérifie si la date est dans le passé
  *

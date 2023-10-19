@@ -2,6 +2,7 @@
 
 include __DIR__ . '/app-auth.php';
 include __DIR__ . '/app-droits.php';
+include __DIR__ . '/app-settings.php';
 include __DIR__ . '/app-session.php';
 include __DIR__ . '/app-user-exists.php';
 include __DIR__ . '/app-nouvelle-visite.php';
@@ -13,8 +14,22 @@ function coworking_app_settings()
     $url = 'https://tickets.coworking-metz.fr/api/current-users?key=' . API_KEY_TICKET . '&delay=15';
     $data = file_get_contents($url);
     $presences = json_decode($data, true);
-
+    $fermer_vacances = get_field('fermer_vacances', 'option');
+    if ($fermer_vacances) {
+        $exclude = extractDatesExcludePast(get_field('empecher_visites', 'option'), fetch_holidays());
+    } else {
+        $exclude = extractDatesExcludePast(get_field('empecher_visites', 'option'));
+    }
+    $visites = [
+        'jours_de_visites' => array_map('intval', get_field('jours_de_visites', 'option')),
+        'horaire' => trim(get_field('horaire', 'option')),
+        'limite_mois' => intval(get_field('limite_mois', 'option')),
+        'fermer_vacances' => $fermer_vacances,
+        'fermer_visites' => get_field('fermer_visites', 'option'),
+        'empecher_visites' => $exclude
+    ];
     $settings = [
+        'visites' => $visites,
         'polaroid_default' => site_url() . '/images/pola-poule-vide.jpg',
         'occupation' => [
             'total' => 28,
@@ -92,7 +107,7 @@ function coworking_app_user($user)
     }
 
     if (!can_use_app($user)) return;
-    
+
     return [
         'login' => $user->user_email,
         'name' => $user->display_name,
@@ -116,7 +131,9 @@ function is_visiteur($user)
 
     if (isPast($visite_date) && !istoday($visite_date)) return;
 
-    $dateTimeZone = new DateTimeZone('Europe/Paris');
+    return true;
+
+    /*    $dateTimeZone = new DateTimeZone('Europe/Paris');
 
     $dateToCheck = new DateTime($visite_date, $dateTimeZone);
     $dateToCheck->setTime(0, 0); // Reset time to midnight to only compare date
@@ -126,7 +143,7 @@ function is_visiteur($user)
 
     $isToday = $dateToCheck == $today;
 
-    return $isToday;
+    return $isToday;*/
 }
 function coworking_app_droits($user_id, $options = [])
 {
@@ -135,9 +152,14 @@ function coworking_app_droits($user_id, $options = [])
     if (!$user) return;
 
     if (is_visiteur($user)) {
+        $date = date_de_visite($user);
         return [
             'guest' => true,
-            'visite' => date_francais(date_de_visite($user), true),
+            'visite' => [
+                'date' => $date,
+                'dateFr' => date_francais($date, true),
+                'isToday' => isToday($date)
+            ],
             'settings' => coworking_app_settings(),
             'droits' => [
                 'ouvrir_parking' => true,

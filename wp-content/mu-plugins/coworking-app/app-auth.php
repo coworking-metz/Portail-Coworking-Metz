@@ -19,11 +19,11 @@ add_action(
                 if ($check == sha1($user_id . APP_AUTH_TOKEN)) {
                     $user = get_user_by('ID', $user_id);
                     if (is_wp_error($user))
-                        return new WP_Error('authorization_failed', 'Accès interdit - user non trouvé', array('status' => 401));
+                        return new WP_Error('authorization_failed', 'Compte non trouvé', array('status' => 401));
 
 
                     if (!is_visiteur($user)) {
-                        return new WP_Error('authorization_failed', 'Ce compte n\'a pas de visite planifiée aujourd\'hui', array('status' => 401));
+                        return new WP_Error('authorization_failed', 'Ce compte n\'a pas de visite en attente', array('status' => 401));
                     }
                     $is_guest = true;
                 }
@@ -55,14 +55,13 @@ add_action(
                         'user' => coworking_app_user($user),
                         'reglages' => coworking_app_droits($user->ID)
                     ];
+                    return rest_ensure_response($response);
                 } else {
-                    return new WP_Error('authorization_failed', 'Accès interdit - Droits insufisants', array('status' => 401));
+                    return new WP_Error('authorization_failed', 'Accès interdit - Droits insufisants!', array('status' => 401));
                 }
             } else {
                 return new WP_Error('authorization_failed', 'Mauvais identifiant ou mot de passe ', array('status' => 401));
             }
-
-            return rest_ensure_response($response);
         }
         register_rest_route('cowo/v1', '/app-auth', array(
             'methods'  => 'POST',

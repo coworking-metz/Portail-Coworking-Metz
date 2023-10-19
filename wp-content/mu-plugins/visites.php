@@ -23,7 +23,7 @@ function fetch_users_with_future_visite()
 
 
 
-
+https: //back.new.sofoot.com/wp-admin/admin.php?page=acf-reglages-visites
 // Ajouter un lien dans le menu admin WP
 add_action('admin_menu', function () {
     add_menu_page(
