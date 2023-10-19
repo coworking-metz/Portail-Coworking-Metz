@@ -1,34 +1,43 @@
 <?php
-function fetch_holidays() {
+function fetch_holidays()
+{
     // Vérification du transient
-    if ( false === ($holidays = get_transient('dates-vacances-zone-b')) ) {
-        $url = 'https://fr.ftp.opendatasoft.com/openscol/fr-en-calendrier-scolaire/Zone-B.ics';
-        $response = wp_remote_get($url);
-
-        // Vérification de l'état de la réponse
-        if ( is_wp_error($response) || wp_remote_retrieve_response_code($response) !== 200 ) {
-            return [];
-        }
-
-        $ics_data = wp_remote_retrieve_body($response);
-        preg_match_all('/DTSTART;VALUE=DATE:(\d+)\r\nDTEND;VALUE=DATE:(\d+)/', $ics_data, $matches);
+    $key = 'dates-vacances';
+    $holidays = get_transient($key);
+    // $holidays = false;
+    if (!$holidays) {
         $holidays = [];
-        $today = new DateTime();
-        $six_months_later = (clone $today)->modify('+6 months');
 
-        foreach($matches[1] as $index => $start) {
-            $end_date = DateTime::createFromFormat('Ymd', $matches[2][$index]);
-            
-            // Filtrage des dates passées et au-delà de 6 mois
-            if ($end_date >= $today && $end_date <= $six_months_later) {
-                $formatted_start = DateTime::createFromFormat('Ymd', $start)->format('d/m/Y');
-                $formatted_end = $end_date->format('d/m/Y');
-                $holidays[] = "$formatted_start > $formatted_end";
+        $urls = [
+            'https://fr.ftp.opendatasoft.com/openscol/fr-en-calendrier-scolaire/Zone-B.ics', 
+            // 'https://etalab.github.io/jours-feries-france-data/ics/jours_feries_metropole.ics'
+        ];
+        foreach ($urls as $url) {
+            $response = wp_remote_get($url);
+
+            // Vérification de l'état de la réponse
+            if (is_wp_error($response) || wp_remote_retrieve_response_code($response) !== 200) {
+                return [];
+            }
+
+            $ics_data = wp_remote_retrieve_body($response);
+            preg_match_all('/DTSTART;VALUE=DATE:(\d+)\r\nDTEND;VALUE=DATE:(\d+)/', $ics_data, $matches);
+            $today = new DateTime();
+            $six_months_later = (clone $today)->modify('+6 months');
+
+            foreach ($matches[1] as $index => $start) {
+                $end_date = DateTime::createFromFormat('Ymd', $matches[2][$index]);
+
+                // Filtrage des dates passées et au-delà de 6 mois
+                if ($end_date >= $today && $end_date <= $six_months_later) {
+                    $formatted_start = DateTime::createFromFormat('Ymd', $start)->format('d/m/Y');
+                    $formatted_end = $end_date->format('d/m/Y');
+                    $holidays[] = "$formatted_start > $formatted_end";
+                }
             }
         }
-
         // Sauvegarde du résultat dans un transient pendant un mois
-        set_transient('dates-vacances-zone-b', $holidays, 30 * DAY_IN_SECONDS);
+        set_transient($key, $holidays, 30 * DAY_IN_SECONDS);
     }
 
     return $holidays;
@@ -45,7 +54,8 @@ function fetch_holidays() {
  * @param string $date Date au format 'Y-m-d'
  * @return bool
  */
-function isPast($date) {
+function isPast($date)
+{
     $currentDate = date('Y-m-d');
     return ($date < $currentDate);
 }
@@ -57,7 +67,8 @@ function isPast($date) {
  * @param string $date Date au format 'Y-m-d'
  * @return bool
  */
-function isFuture($date) {
+function isFuture($date)
+{
     $currentDate = date('Y-m-d');
     return ($date > $currentDate);
 }
@@ -67,7 +78,8 @@ function isFuture($date) {
  * @param string $date Date au format 'Y-m-d'
  * @return bool
  */
-function isToday($date) {
+function isToday($date)
+{
     $currentDate = date('Y-m-d');
     return ($date === $currentDate);
 }
@@ -118,7 +130,7 @@ function date_francais($timestamp, $heure = false)
         return $timestamp;
     }
 
-/*
+    /*
     $french_date = strftime('%A %d %B %Y %H:%M:%S', $date->getTimestamp());
 
     if (!is_numeric($timestamp)) $timestamp = strtotime($timestamp);
