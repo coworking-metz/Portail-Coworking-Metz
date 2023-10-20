@@ -9,3 +9,17 @@ function add_custom_shortcodes_to_template($shortcodes)
         }, 10, 3);
     }
 }
+
+
+
+function charger_template_mail($template_id, $codes = [])
+{
+    add_custom_shortcodes_to_template($codes);
+
+    $template = new VIWEC_Render_Email_Template(['template_id' => $template_id]);
+    ob_start();
+    $template->get_content();
+    $message = ob_get_contents();
+    ob_end_clean();
+    return ['message'=>$message,'subject'=>$template->get_subject()];
+}

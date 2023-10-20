@@ -23,9 +23,10 @@ add_action('rest_api_init', function () {
 
             $user_id = create_wp_user_if_not_exists($user, ['visite' => date_maline($start)]);
             if ($user_id) {
-                addEventToCalendar($user_id, $event);
+                // addEventToCalendar($user_id, $event);
 
                 envoyerMailVisite($user_id, $params['visite']);
+                envoyerMailAlerte($user_id);
 
                 //			$success = WC_Shortcode_My_Account::retrieve_password(); envoyer le mail de setup
 

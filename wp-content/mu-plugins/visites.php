@@ -21,6 +21,44 @@ function fetch_users_with_future_visite()
     return $users_with_future_visite;
 }
 
+if (isset($_GET['visites-ics'])) {
+    add_action('init', function () {
+        $args = [
+            'meta_key' => 'visite'
+        ];
+        $users = get_users($args);
+
+        // Initialiser le fichier ICS
+        header('Content-Type: text/calendar; charset=utf-8');
+        header('Content-Disposition: attachment; filename=visites-'.date('Y-m-d-h-i-s').'.ics');
+
+        echo "BEGIN:VCALENDAR\r\n";
+        echo "VERSION:2.0\r\n";
+        echo "PRODID:-//Coworking Metz//Visites//EN\r\n";
+
+        // Pour chaque utilisateur, créer un événement ICS
+        foreach ($users as $user) {
+            $visite_date = get_user_meta($user->ID, 'visite', true);  // Récupérer la date de visite
+            $formatted_start_date = date('Ymd\THis', strtotime($visite_date));
+            $formatted_end_date = date('Ymd\THis', strtotime("+30 minutes", strtotime($visite_date)));
+
+            $admin_url = get_admin_url() . "user-edit.php?user_id=" . $user->ID;
+
+            // Créer un événement ICS pour cette visite
+            echo "BEGIN:VEVENT\r\n";
+            echo "UID:" . uniqid() . "\r\n";
+            echo "DTSTAMP:" . gmdate('Ymd\THis\Z') . "\r\n";
+            echo "DTSTART;TZID=Europe/Paris:" . $formatted_start_date . "\r\n";
+            echo "DTEND;TZID=Europe/Paris:" . $formatted_end_date . "\r\n";
+            echo "SUMMARY:Visite de " . $user->display_name . " (" . $user->user_email . ")\r\n";
+            echo "DESCRIPTION:Fiche: " . $admin_url . "\r\n";
+            echo "END:VEVENT\r\n";
+        }
+
+        echo "END:VCALENDAR\r\n";
+        exit;
+    });
+}
 
 
 add_action('init', function () {
@@ -55,23 +93,23 @@ add_action('admin_footer', function () {
                 const selectFields = document.querySelectorAll('[data-name*="email_"][data-type="select"] select');
                 selectFields.forEach(function(select) {
                     console.log(select);
-                        const link = document.createElement('a');
-                        link.target = '_blank';
-                        link.innerText = 'Voir ce template';
-                        select.parentNode.appendChild(link);
+                    const link = document.createElement('a');
+                    link.target = '_blank';
+                    link.innerText = 'Voir ce template';
+                    select.parentNode.appendChild(link);
 
-                        function updateLink() {
-                            const value = this.value;
-                            link.href = `post.php?post=${value}&action=edit&classic-editor`;
-                        }
+                    function updateLink() {
+                        const value = this.value;
+                        link.href = `post.php?post=${value}&action=edit&classic-editor`;
+                    }
 
-                        // Lien initial
-                        updateLink.call(select);
+                    // Lien initial
+                    updateLink.call(select);
 
-                        select.addEventListener('change', function() {
-                            // Mettre à jour le lien lors du changement de sélection
-                            updateLink.call(this);
-                        });
+                    select.addEventListener('change', function() {
+                        // Mettre à jour le lien lors du changement de sélection
+                        updateLink.call(this);
+                    });
                 });
             });
         </script>
