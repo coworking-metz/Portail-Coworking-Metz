@@ -13,7 +13,6 @@ add_action('rest_api_init', function () {
                 return new WP_Error('no_user', 'user not found', ['status' => 404]);
             }
 
-            // Récupération de la métadonnée "visite"
             $visite_date = get_user_meta($user_id, 'visite', true);
 
             if ($visite_date) {
@@ -26,6 +25,9 @@ add_action('rest_api_init', function () {
 
                 $ics_content = "BEGIN:VCALENDAR\r\n";
                 $ics_content .= "VERSION:2.0\r\n";
+                $ics_content .= "X-WR-CALNAME:Coworking Metz - Visite\r\n"; // Ajout de X-WR-CALNAME
+                $ics_content .= "X-WR-TIMEZONE:Europe/Paris\r\n"; // Ajout de X-WR-TIMEZONE
+                $ics_content .= "X-WR-CALDESC:Date et heure de votre visite\r\n"; // Ajout de X-WR-CALDESC
                 $ics_content .= "BEGIN:VEVENT\r\n";
                 $ics_content .= "DTSTART:$dtstart\r\n";
                 $ics_content .= "DTEND:$dtend\r\n";
@@ -33,7 +35,6 @@ add_action('rest_api_init', function () {
                 $ics_content .= "END:VEVENT\r\n";
                 $ics_content .= "END:VCALENDAR\r\n";
 
-                // Déclenchement du téléchargement
                 header('Content-Type: text/calendar; charset=utf-8');
                 header('Content-Disposition: attachment; filename="visite.ics"');
                 echo $ics_content;

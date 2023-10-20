@@ -368,36 +368,3 @@ function app_login_link($user_id)
     $check = sha1($user_id . APP_AUTH_TOKEN);
     return 'https://app.coworking-metz.fr/visite?visite=' . $user_id . '&check=' . $check;
 }
-function envoyerMailVisite($user_id, $visite)
-{
-
-    $user = get_userdata($user_id);
-    if (!$user) return;
-
-    $key = 'email-visite-' . $visite;
-    if (get_user_meta($user_id, $key, true)) return;
-    update_user_meta($user_id, $key, true);
-
-
-    $message = '
-Bonjour !
-
-Nous vous confirmons que votre visite du coworking aura lieu le <strong>' . date_francais($visite, true) . '</strong>. <a href="' . site_url() . '/api-json-wp/cowo/v1/visite-ics?user_id=' . $user_id . '">Cliquez ici pour ajouter ce rendez-vous à votre agenda</a>.
-
-Vous avez rendez-vous au coworking, basé <a href="https://www.bliiida.fr/infos-pratiques/">au sein du tiers-lieu Bliiida</a>, au 7, avenue de Blida, 57000 Metz</a>.
-
-<strong>Le jour de vote visite, utilisez l\'application du coworking pour ouvrir le portail piéton et entrer dans Bliiida.</strong> 
-Si besoin, vous pourrez aussi utiliser l\'application pour <strong>avoir accès au parking de Bliiida</strong> pour la journée. 
-<a href="' . app_login_link($user_id) . '">Ouvrir l\'application du coworking</a>
-
-
-À Bientôt !
-<img width=100 src="' . site_url() . '/wp-content/uploads/2020/06/logo-lepoulailler-mobile.png">
-Coworking Metz
-https://coworking-metz.fr
-';
-
-    $message = nl2br($message);
-    $headers = array('Content-Type: text/html; charset=UTF-8');
-    return wp_mail($user->user_email, 'Votre visite au Coworking', $message, $headers);
-}

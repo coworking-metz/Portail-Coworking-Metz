@@ -1,8 +1,15 @@
 <?php
 
 if (isset($_GET['test'])) {
+    $_GET['debug'] = true;
     add_action('init', function () {
-        CF::purgeUrls(['/wp-content/uploads/2020/05/20200524_120331.jpg']);
+
+
+        var_dump(envoyerMailVisite(879));
+
+        // $template = new VIWEC_Render_Email_Template(['template_id' => 28637]);
+
+        // print_r($template->get_content());
 
         exit;
     });
