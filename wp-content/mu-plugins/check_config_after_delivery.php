@@ -1,6 +1,9 @@
 <?php
 
-/* vérification de la configuration wordpress (en cas de migration) */
+/* 
+vérification de la configuration wordpress (en cas de migration) 
+apeller /wp-adsmin/?config=force pour mettre à jour l'url du site en base de données
+*/
 function check_current_config(){
   wp_cache_init();
   $config = isset($_GET['config']) ? $_GET['config'] : false;

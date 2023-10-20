@@ -3,6 +3,12 @@
 class CF
 {
 
+    /**
+     * Configure les en-têtes de cache pour la réponse HTTP.
+     *
+     * @param int|null $max_age Durée maximale de mise en cache en secondes. Par défaut, c'est 3600.
+     */
+
     static function cacheHeaders($max_age = null)
     {
         if (is_null($max_age)) {
@@ -16,10 +22,12 @@ class CF
         header('Cache-Control: public, max-age=60, s-maxage=' . $max_age . '');
     }
     /**
-     * Purger les urls passées en paramètres dans CF
-     * @param mixed $urls
-     * @return bool
+     * Purge une liste d'URLs dans Cloudflare (CF) par lots de 5 urls.
+     *
+     * @param mixed $urls Liste d'URLs à purger.
+     * @return void
      */
+
     static function purgeUrls($urls)
     {
 
@@ -28,6 +36,12 @@ class CF
         }
     }
 
+    /**
+     * Exécute la purge d'URLs dans Cloudflare en utilisant l'API.
+     *
+     * @param array|string $urls Liste d'URLs à purger.
+     * @return bool|void True si la purge a réussi, sinon false.
+     */
     static function doPurgeUrls($urls)
     {
 
@@ -37,7 +51,7 @@ class CF
         $head[] = 'Content-Type: application/json';
         $head[] = 'Authorization: Bearer ' . CF_KEY;
         $head[] = 'cache-control: no-cache';
-        $zoneId='39b23ee772403400e6b2e1805be4ef55';
+        $zoneId = '39b23ee772403400e6b2e1805be4ef55';
 
         $url = "https://api.cloudflare.com/client/v4/zones/$zoneId/purge_cache";
         $purge = ['files' => $files];
@@ -60,4 +74,3 @@ class CF
         }
     }
 }
-

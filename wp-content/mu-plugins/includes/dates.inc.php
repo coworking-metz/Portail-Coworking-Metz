@@ -1,4 +1,20 @@
 <?php
+define('ONE_MINUTE', 60);
+define('FIVE_MINUTES', 5 * ONE_MINUTE);
+define('ONE_HOUR', ONE_MINUTE * 60);
+define('HALF_HOUR', ONE_HOUR / 2);
+define('ONE_DAY', ONE_HOUR * 24);
+define('ONE_WEEK', ONE_DAY * 7);
+define('ONE_MONTH', ONE_DAY * 31);
+
+
+/**
+ * Récupère les jours fériés et les vacances scolaires.
+ *
+ * Utilise des URL externes pour obtenir les données au format ICS. Le résultat est sauvegardé dans un transient pour améliorer les performances.
+ *
+ * @return array Les jours fériés et les vacances sous forme de tableau. Chaque élément est une chaîne formatée comme "d/m/Y > d/m/Y".
+ */
 function fetch_holidays()
 {
     // Vérification du transient
@@ -46,13 +62,11 @@ function fetch_holidays()
 
 
 
-
-
 /**
- * Vérifie si la date est dans le passé
+ * Vérifie si une date donnée est dans le passé.
  *
- * @param string $date Date au format 'Y-m-d'
- * @return bool
+ * @param string $date La date à vérifier, au format 'Y-m-d'.
+ * @return bool True si la date est dans le passé, sinon false.
  */
 function isPast($date)
 {
@@ -84,6 +98,12 @@ function isToday($date)
     return ($date === $currentDate);
 }
 
+/**
+ * Convertit un timestamp en date et heure formatées selon la locale française.
+ *
+ * @param string $t Le timestamp à convertir.
+ * @return string La date formatée.
+ */
 function date_maline($t)
 {
 
@@ -100,6 +120,14 @@ function date_maline($t)
     $formatter->setPattern("yyyy-MM-dd HH:mm");
     return $formatter->format($date);
 }
+
+/**
+ * Convertit un timestamp en date formatée selon la locale française, avec ou sans l'heure.
+ *
+ * @param string $timestamp Le timestamp à convertir.
+ * @param bool $heure Indique si l'heure doit être incluse dans la date formatée.
+ * @return string|null La date formatée, ou null en cas d'erreur.
+ */
 function date_francais($timestamp, $heure = false)
 {
     try {

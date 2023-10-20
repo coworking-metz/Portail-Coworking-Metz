@@ -1,17 +1,54 @@
 <?php
 
-/*
-{url_fiche_user}
-{user_name}
-{date_visite}
-{url_finaliser_compte_coworker_user} // role cowo + envoi mail
-*/
-function envoyerMailAlerte($user_id) {
+/**
+ * Obtenir le nombre de visites
+ * 
+ * @return int Retourne le nombre de visites
+ */
+function getNbVisites()
+{
+    return count(fetch_users_with_future_visite());
+}
+
+/**
+ * Obtenir et stocker les utilisateurs avec des visites futures dans un transitoire
+ *
+ * @return array Retourne une liste des utilisateurs avec des visites futures
+ */
+function fetch_users_with_future_visite()
+{
+    $args = array(
+        'meta_key'     => 'visite',
+        'meta_compare' => '>',
+        'meta_value'   => current_time('mysql'),
+        'meta_type'    => 'DATETIME',
+    );
+
+    $users_with_future_visite = get_users($args);
+
+    return $users_with_future_visite;
+}
+
+/**
+ * Envoyer un mail d'alerte à un utilisateur
+ * le mail ne peut pas etre envoyé plusieurs fois à un même 
+ * user, même si la fonction est apellée plusieurs fois 
+ *
+ * @param int $user_id ID de l'utilisateur
+ * @return bool Retourne true si le mail est envoyé, false sinon
+ */
+function envoyerMailAlerte($user_id)
+{
 
     $data = get_userdata($user_id);
-    if(!$data) return;
+    if (!$data) return;
     $template_id = get_field('email_alerte_cowo', 'option');
     $visite = get_user_meta($user_id, 'visite', true);
+
+    $key = 'email-alerte-' . $user_id;
+    if (get_user_meta($user_id, $key, true)) return;
+    update_user_meta($user_id, $key, true);
+
 
     $codes = [
         ['{user_name}' => $data->display_name],
@@ -25,11 +62,20 @@ function envoyerMailAlerte($user_id) {
 
     $mail = charger_template_mail($template_id, $codes);
     // echo $mail['message'];exit;
-    $to  = get_field('destinataire_alerte','option');
+    $to  = get_field('destinataire_alerte', 'option');
     $headers = array('Content-Type: text/html; charset=UTF-8');
     return wp_mail($to, $mail['subject'], $mail['message'], $headers);
 }
 
+/**
+ * Envoyer un mail de confirmation de visite. 
+ * le mail ne peut pas etre envoyé plusieurs fois à un même 
+ * user, même si la fonction est apellée plusieurs fois 
+ *
+ * @param int $user_id ID de l'utilisateur
+ * @param string|null $visite La date de la visite
+ * @return bool Retourne true si le mail est envoyé, false sinon
+ */
 function envoyerMailVisite($user_id, $visite = null)
 {
     $user = get_userdata($user_id);
@@ -40,8 +86,8 @@ function envoyerMailVisite($user_id, $visite = null)
         $visite = get_user_meta($user_id, 'visite', true);
     }
 
-    $key = 'email-visite-' . $visite;
-    // if (get_user_meta($user_id, $key, true)) return;
+    $key = 'email-visite-' . $user_id;
+    if (get_user_meta($user_id, $key, true)) return;
     update_user_meta($user_id, $key, true);
 
 

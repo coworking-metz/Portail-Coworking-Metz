@@ -1,6 +1,10 @@
 <?php
 
-
+/**
+ * Extrait les dates et exclut celles qui sont passées
+ *
+ * @return array Retourne les dates futures
+ */
 function extractDatesExcludePast()
 {
     $args = func_get_args();
@@ -44,7 +48,12 @@ function extractDatesExcludePast()
     sort($dates);
     return $dates;
 }
-
+/**
+ * Convertit une URL en chemin absolu du fichier
+ *
+ * @param string $url L'URL du fichier
+ * @return string|false Retourne le chemin absolu ou false si non trouvable
+ */
 function urlToPath($url)
 {
     $siteUrl = site_url();
@@ -58,7 +67,12 @@ function urlToPath($url)
 
     return false;
 }
-
+/**
+ * Récupère le contenu d'une URL
+ *
+ * @param string $url L'URL à récupérer
+ * @return mixed Retourne le contenu de l'URL ou false en cas d'échec
+ */
 function url_get_contents($url)
 {
     // initialize curl session
@@ -90,7 +104,13 @@ function url_get_contents($url)
     // return the output
     return $output;
 }
-
+/**
+ * Obtient l'URL du site actuel
+ *
+ * @param bool|string $host Le nom d'hôte
+ * @param bool $request Inclure la chaîne de requête ou non
+ * @return string Retourne l'URL complète
+ */
 function current_site_url($host = false, $request = false)
 {
     $host = $host ? $host : $_SERVER['HTTP_HOST'];
@@ -109,7 +129,13 @@ function current_site_url($host = false, $request = false)
     return $url;
 }
 
-
+/**
+ * Divise un tableau en sous-tableaux de longueur spécifiée
+ *
+ * @param array $array Le tableau à diviser
+ * @param int $length La longueur des sous-tableaux
+ * @return array Retourne un tableau de sous-tableaux
+ */
 function splitArrayByLength($array, $length = 5)
 {
     if (!$array) return [];
@@ -128,7 +154,7 @@ function splitArrayByLength($array, $length = 5)
 }
 
 /**
- * retourne une valeur de data si l'index `$keys` existe
+ * retourne une valeur de data si l'index `$keys` existe. Fonctionne aussi bien avec un tableau qu'un objet
  *
  * @param  mixed $data La donnée à analyser
  * @param  mixed $keys Liste des champs à rechercher dans $data. Le premier trouvé sera retourné
@@ -173,4 +199,36 @@ function tableau($data)
     }
 
     return array_filter($data);
+}
+
+
+
+/**
+ * Crée une ressource d'image à partir d'un fichier.
+ *
+ * @param string $filepath Chemin d'accès au fichier image.
+ *
+ * @return resource|false Ressource d'image ou false en cas d'échec.
+ */
+function imagecreatefromfile($filepath)
+{
+    // Check if the file exists
+    if (!file_exists($filepath)) {
+        return false;
+    }
+
+    // Determine the type of image
+    $type = exif_imagetype($filepath);
+
+    switch ($type) {
+        case IMAGETYPE_JPEG:
+            return imagecreatefromjpeg($filepath);
+        case IMAGETYPE_PNG:
+            return imagecreatefrompng($filepath);
+        case IMAGETYPE_WEBP:
+            return imagecreatefromwebp($filepath);
+            // Add more cases as needed, like for GIF, BMP, etc.
+        default:
+            return false; // Or throw an exception, based on your needs.
+    }
 }

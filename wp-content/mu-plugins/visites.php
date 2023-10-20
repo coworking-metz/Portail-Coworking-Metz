@@ -1,26 +1,10 @@
 <?php
 
-// Obtenir le nombre de visites
-function getNbVisites()
-{
-    return count(fetch_users_with_future_visite());
-}
 
-// Obtenir et stocker les utilisateurs avec des visites futures dans un transitoire
-function fetch_users_with_future_visite()
-{
-    $args = array(
-        'meta_key'     => 'visite',
-        'meta_compare' => '>',
-        'meta_value'   => current_time('mysql'),
-        'meta_type'    => 'DATETIME',
-    );
 
-    $users_with_future_visite = get_users($args);
-
-    return $users_with_future_visite;
-}
-
+/**
+ * Flux ics des visites via l'url /wp-admin/?visites-ics
+ */
 if (isset($_GET['visites-ics'])) {
     add_action('init', function () {
         $args = [
@@ -61,6 +45,9 @@ if (isset($_GET['visites-ics'])) {
 }
 
 
+/**
+ * Remplir les champs de choix des templates dans la page des reglages des visites avec la liste des templates d'emails
+ */
 add_action('init', function () {
     $args = array(
         'post_type' => 'viwec_template',
@@ -84,6 +71,9 @@ add_action('init', function () {
     }
 });
 
+/**
+ * gestion des liens voir / Modifier ce template dans la page de reglages des visites
+ */
 add_action('admin_footer', function () {
     $screen = get_current_screen();
     if ($screen->base == 'toplevel_page_reglages-visites') {
@@ -93,22 +83,41 @@ add_action('admin_footer', function () {
                 const selectFields = document.querySelectorAll('[data-name*="email_"][data-type="select"] select');
                 selectFields.forEach(function(select) {
                     console.log(select);
-                    const link = document.createElement('a');
-                    link.target = '_blank';
-                    link.innerText = 'Voir ce template';
-                    select.parentNode.appendChild(link);
 
-                    function updateLink() {
+                    const linkVoir = document.createElement('a');
+                    linkVoir.target = '_blank';
+                    linkVoir.innerText = 'Voir ce template';
+                    select.parentNode.appendChild(linkVoir);
+
+                    function updateLinkVoir() {
                         const value = this.value;
-                        link.href = `post.php?post=${value}&action=edit&classic-editor`;
+                        linkVoir.href = `/wp-admin/?template_preview=${value}`;
                     }
 
                     // Lien initial
-                    updateLink.call(select);
+                    updateLinkVoir.call(select);
+
+                    const span = document.createElement('span');
+                    span.innerText = ' - ';
+                    select.parentNode.appendChild(span);
+
+                    const linkModifier = document.createElement('a');
+                    linkModifier.target = '_blank';
+                    linkModifier.innerText = 'Modifier ce template';
+                    select.parentNode.appendChild(linkModifier);
+
+                    function updateLinkModifier() {
+                        const value = this.value;
+                        linkModifier.href = `post.php?post=${value}&action=edit&classic-editor`;
+                    }
+
+                    // Lien initial
+                    updateLinkModifier.call(select);
 
                     select.addEventListener('change', function() {
                         // Mettre à jour le lien lors du changement de sélection
-                        updateLink.call(this);
+                        updateLinkVoir.call(this);
+                        updateLinkModifier.call(this);
                     });
                 });
             });
@@ -118,6 +127,9 @@ add_action('admin_footer', function () {
 });
 
 
+/**
+ * Ajouter un lien vers la plateforme d'oboarding dans la menu bar de la page des reglages de visites
+ */
 add_action('admin_bar_menu', function ($admin_bar) {
     if (is_admin()) {
         $screen = get_current_screen();
@@ -135,7 +147,7 @@ add_action('admin_bar_menu', function ($admin_bar) {
     }
 }, 100);
 
-// Ajouter un lien dans le menu admin WP
+// Creation du menu "Visites" le menu admin de WP
 add_action('admin_menu', function () {
     add_menu_page(
         'Visites',
@@ -149,7 +161,7 @@ add_action('admin_menu', function () {
 });
 
 
-// Ajouter un lien dans le menu admin WP
+// Ajouter une puce rouge avec le nombre de visites à venir
 add_action('admin_menu', function () {
     global $menu;
 

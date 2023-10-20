@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Headers envoyés à Cloudflare pour l'aider à savoir combien de temps cacher certaines ressources
+ * Inactif pour l'instant car le cache CF  n'est pas actife sur le site
+ */
 add_action('send_headers', function () {
 
     if (is_admin()) return;

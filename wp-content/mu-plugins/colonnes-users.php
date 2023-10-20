@@ -1,113 +1,12 @@
 <?php
 
-if (isset($_GET['export-users'])) {
-    add_action('admin_init', function () {
-
-        header('Content-Type: text/csv; charset=utf-8');
-        header('Content-Disposition: attachment; filename=users-' . date('Y-m-d-H-i-s') . '.csv');
-
-        $output = fopen('php://output', 'w');
-
-        // Écrire les en-têtes de colonnes
-        fputcsv($output, ['ID', 'Email', 'Display Name', 'Registration Date', '_last_order_date', '_first_order_date', 'Role']);
-
-        $args = ['fields' => ['ID']];
-        $users = get_users($args);
-
-        foreach ($users as $user) {
-            $user_data = get_userdata($user->ID);
-
-            $id = $user_data->ID;
-            $email = $user_data->user_email;
-            $display_name = $user_data->display_name;
-            $registration_date = $user_data->user_registered;
-            $visite = get_user_meta($id, 'visite', true);
-            $last_order_date = get_user_meta($id, '_last_order_date', true);
-            $first_order_date = get_user_meta($id, '_first_order_date', true);
-            $role = !empty($user_data->roles) ? implode(',', $user_data->roles) : '';
-
-            // Écrire la ligne de données pour chaque utilisateur
-            fputcsv($output, [$id, $email, $display_name, $registration_date, $visite, $last_order_date, $first_order_date, $role]);
-        }
-
-        fclose($output);
-        exit;
-    });
-}
-
-
-
-if (isset($_GET['_last_order_date'])) {
-    add_action('admin_init', function () {
-        // Get all users
-        $args = [
-            'fields' => 'ID',  // Only need ID field for performance
-        ];
-        $users = get_users($args);
-        foreach ($users as $user_id) {
-            // Check if user already has _last_order_date meta
-            // if (!get_user_meta($user_id, '_last_order_date', true)) {
-
-            // Get user's last order
-            $customer_orders = wc_get_orders([
-                'customer' => $user_id,
-                'limit'    => 1,
-                'orderby'  => 'date',
-                'order'    => 'DESC',
-            ]);
-
-            // If there's an order, update _last_order_date meta
-            if (!empty($customer_orders)) {
-                $order = $customer_orders[0];
-                $order_date = $order->get_date_created();
-                // $t = $order_date->getTimestamp();
-                $t = $order_date->date('Y-m-d H:i:s');
-                update_user_meta($user_id, '_last_order_date', $t);
-                echo $user_id . ' - ' . $t . '<hr>';
-            }
-            // }
-
-        }
-        exit;
-    });
-}
-if (isset($_GET['_first_order_date'])) {
-    add_action('admin_init', function () {
-        // Get all users
-        $args = [
-            'fields' => 'ID',  // Only need ID field for performance
-        ];
-        $users = get_users($args);
-        foreach ($users as $user_id) {
-            // Check if user already has _first_order_date meta
-            // if (!get_user_meta($user_id, '_first_order_date', true)) {
-
-            // Get user's first order
-            $customer_orders = wc_get_orders([
-                'customer' => $user_id,
-                'limit'    => 1,
-                'orderby'  => 'date',
-                'order'    => 'ASC',
-            ]);
-
-            // If there's an order, update _first_order_date meta
-            if (!empty($customer_orders)) {
-                $order = $customer_orders[0];
-                $order_date = $order->get_date_created();
-                // $t = $order_date->getTimestamp();
-                $t = $order_date->date('Y-m-d H:i:s');
-                update_user_meta($user_id, '_first_order_date', $t);
-                echo $user_id . ' - ' . $t . '<hr>';
-            }
-            // }
-
-        }
-        exit;
-    });
-}
-
-
-
+/**
+ * Ajoute des colonnes triables dans l'interface utilisateur du tableau des utilisateurs.
+ * Date de la visite innitiale du coworking
+ * Date d'inscription
+ * Date de la première commande
+ * Date de la dernière commande en date
+ */
 add_filter('manage_users_sortable_columns', function ($columns) {
     $columns['visite'] = 'visite';
     $columns['user_registered'] = 'user_registered';
@@ -116,6 +15,15 @@ add_filter('manage_users_sortable_columns', function ($columns) {
     return $columns;
 });
 
+/**
+ * Ajoute des colonnes supplémentaires dans l'interface utilisateur du tableau des utilisateurs.
+ * Photo du pola
+ * Date de la visite innitiale du coworking
+ * Date d'inscription
+ * Date de la première commande
+ * Date de la dernière commande en date
+ * Details de la derniere commande + lien vers les commandes
+ */
 add_filter('manage_users_columns', function ($columns) {
 
     $columns['votre_photo'] = 'Photo';
@@ -127,6 +35,9 @@ add_filter('manage_users_columns', function ($columns) {
     return $columns;
 });
 
+/**
+ * Remplir les nouvelles colonnes du tableau des utilisateurs avec des données.
+ */
 add_filter(
     'manage_users_custom_column',
     function ($value, $column_name, $user_id) {
@@ -190,7 +101,9 @@ add_filter(
 
 
 
-// Modify the user query to sort by last order date
+/**
+ * Modifie la requête utilisateur pour trier les colonnes supplémentaires
+ */
 add_action('pre_get_users', function ($query) {
     global $pagenow;
 
@@ -213,7 +126,9 @@ add_action('pre_get_users', function ($query) {
     }
 });
 
-// Update last order date when an order is completed
+/**
+ * Met à jour les métadonnées "_last_order_date" et "_first_order_date" lorsqu'une commande est complétée.
+ */
 add_action('woocommerce_order_status_completed', function ($order_id) {
     $order = wc_get_order($order_id);
     $user_id = $order->get_user_id();
@@ -225,3 +140,85 @@ add_action('woocommerce_order_status_completed', function ($order_id) {
         update_user_meta($user_id, '_first_order_date', $order_date);
     }
 }, 10, 1);
+
+
+
+
+/**
+ * Met à jour le méta "_last_order_date" pour tous les utilisateurs.
+ * S'exécute lorsque le paramètre GET "_last_order_date" est défini.
+ */
+if (isset($_GET['_last_order_date'])) {
+    add_action('admin_init', function () {
+        // Get all users
+        $args = [
+            'fields' => 'ID',  // Only need ID field for performance
+        ];
+        $users = get_users($args);
+        foreach ($users as $user_id) {
+            // Check if user already has _last_order_date meta
+            // if (!get_user_meta($user_id, '_last_order_date', true)) {
+
+            // Get user's last order
+            $customer_orders = wc_get_orders([
+                'customer' => $user_id,
+                'limit'    => 1,
+                'orderby'  => 'date',
+                'order'    => 'DESC',
+            ]);
+
+            // If there's an order, update _last_order_date meta
+            if (!empty($customer_orders)) {
+                $order = $customer_orders[0];
+                $order_date = $order->get_date_created();
+                // $t = $order_date->getTimestamp();
+                $t = $order_date->date('Y-m-d H:i:s');
+                update_user_meta($user_id, '_last_order_date', $t);
+                echo $user_id . ' - ' . $t . '<hr>';
+            }
+            // }
+
+        }
+        exit;
+    });
+}
+
+/**
+ * Met à jour le méta "_first_order_date" pour tous les utilisateurs.
+ * S'exécute lorsque le paramètre GET "_first_order_date" est défini.
+ */
+if (isset($_GET['_first_order_date'])) {
+    add_action('admin_init', function () {
+        // Get all users
+        $args = [
+            'fields' => 'ID',  // Only need ID field for performance
+        ];
+        $users = get_users($args);
+        foreach ($users as $user_id) {
+            // Check if user already has _first_order_date meta
+            // if (!get_user_meta($user_id, '_first_order_date', true)) {
+
+            // Get user's first order
+            $customer_orders = wc_get_orders([
+                'customer' => $user_id,
+                'limit'    => 1,
+                'orderby'  => 'date',
+                'order'    => 'ASC',
+            ]);
+
+            // If there's an order, update _first_order_date meta
+            if (!empty($customer_orders)) {
+                $order = $customer_orders[0];
+                $order_date = $order->get_date_created();
+                // $t = $order_date->getTimestamp();
+                $t = $order_date->date('Y-m-d H:i:s');
+                update_user_meta($user_id, '_first_order_date', $t);
+                echo $user_id . ' - ' . $t . '<hr>';
+            }
+            // }
+
+        }
+        exit;
+    });
+}
+
