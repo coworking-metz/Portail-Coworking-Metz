@@ -33,3 +33,12 @@ function charger_template_mail($template_id, $codes = [])
 
     return ['message' => $message, 'subject' => $template->get_subject()];
 }
+
+
+
+function envoyer_email_creation_compte($user)
+{
+
+    $success = retrieve_password($user->user_email);
+    return $success ? true : false;
+}

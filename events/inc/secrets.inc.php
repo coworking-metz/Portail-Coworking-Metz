@@ -1,0 +1,5 @@
+<?php
+
+define('SUPABASE_API_URL', 'https://iwfofiezuglmrpkiilru.supabase.co');
+define('SUPABASE_API_KEY', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3Zm9maWV6dWdsbXJwa2lpbHJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTgxMzc4NTQsImV4cCI6MjAxMzcxMzg1NH0.vSwl2CFyUH9zKeclO_xpgu_dzOW4X2gV9v1uJ41QM_8');
+

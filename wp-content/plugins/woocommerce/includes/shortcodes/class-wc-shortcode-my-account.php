@@ -332,7 +332,6 @@ class WC_Shortcode_My_Account {
 
 			return false;
 		}
-
 		// Get password reset key (function introduced in WordPress 4.4).
 		$key = get_password_reset_key( $user_data );
 

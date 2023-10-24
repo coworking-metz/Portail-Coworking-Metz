@@ -1,6 +1,32 @@
 <?php
 
 /**
+ * Ajoute un fichier JavaScript à la queue des scripts de WordPress.
+ *
+ * La fonction vérifie d'abord l'existence du fichier dans le répertoire spécifié.
+ * Si le fichier existe, il est ajouté à la queue avec les dépendances fournies.
+ * Sinon, un message d'erreur est affiché.
+ *
+ * @param string $w           Nom du fichier JavaScript (sans l'extension .js).
+ * @param array  $dependances Liste des dépendances du script. Par défaut, jQuery est la seule dépendance.
+ *
+ * @return void
+ * 
+ * @throws Exception Si le fichier n'existe pas.
+ */
+function ajouter_js($w, $dependances = ['jquery'])
+{
+	$file = WPMU_PLUGIN_DIR . '/js/' . $w . '.js';
+	if (!file_exists($file)) {
+		die($file . ' n\'existe pas');
+	}
+	$url = '/wp-content/' . explode('wp-content/', $file)[1];
+	$v = filemtime($file);
+	return wp_enqueue_script('js-' . $w,  $url, $dependances, $v);
+}
+
+
+/**
  * Extrait les dates et exclut celles qui sont passées
  *
  * @return array Retourne les dates futures

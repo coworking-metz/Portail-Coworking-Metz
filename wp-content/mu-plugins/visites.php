@@ -14,7 +14,7 @@ if (isset($_GET['visites-ics'])) {
 
         // Initialiser le fichier ICS
         header('Content-Type: text/calendar; charset=utf-8');
-        header('Content-Disposition: attachment; filename=visites-'.date('Y-m-d-h-i-s').'.ics');
+        header('Content-Disposition: attachment; filename=visites-' . date('Y-m-d-h-i-s') . '.ics');
 
         echo "BEGIN:VCALENDAR\r\n";
         echo "VERSION:2.0\r\n";
@@ -56,7 +56,7 @@ add_action('init', function () {
     );
     $posts = get_posts($args);
 
-    foreach (['email_alerte_cowo', 'email_confirmation_de_visite'] as $nom_champ) {
+    foreach (['email_alerte_cowo', 'email_confirmation_de_visite', 'email_finalisation_compte'] as $nom_champ) {
         add_filter('acf/load_field/name=' . $nom_champ, function ($field) use ($posts) {
 
             $field['choices'] = [''];
@@ -80,6 +80,8 @@ add_action('admin_footer', function () {
 ?>
         <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', function() {
+
+                document.querySelector('[data-name="email_finalisation_compte"] select').disabled=true;
                 const selectFields = document.querySelectorAll('[data-name*="email_"][data-type="select"] select');
                 selectFields.forEach(function(select) {
                     console.log(select);
@@ -91,14 +93,19 @@ add_action('admin_footer', function () {
 
                     function updateLinkVoir() {
                         const value = this.value;
-                        linkVoir.href = `/wp-admin/?template_preview=${value}`;
+                        if (this.value>0) {
+                            linkVoir.classList.remove('hidden')
+                            linkVoir.href = `/wp-admin/?template_preview=${value}`;
+                        } else {
+                            linkVoir.classList.add('hidden')
+                        }
                     }
 
                     // Lien initial
                     updateLinkVoir.call(select);
 
                     const span = document.createElement('span');
-                    span.innerText = ' - ';
+                    span.innerHTML = ' &nbsp; ';
                     select.parentNode.appendChild(span);
 
                     const linkModifier = document.createElement('a');
@@ -108,7 +115,13 @@ add_action('admin_footer', function () {
 
                     function updateLinkModifier() {
                         const value = this.value;
-                        linkModifier.href = `post.php?post=${value}&action=edit&classic-editor`;
+                        if (this.value>0) {
+                            linkModifier.classList.remove('hidden')
+                            linkModifier.href = `post.php?post=${value}&action=edit&classic-editor`;
+                        } else {
+                            linkModifier.classList.add('hidden')
+                        }
+
                     }
 
                     // Lien initial
