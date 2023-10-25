@@ -9,6 +9,7 @@
  */
 add_filter('manage_users_sortable_columns', function ($columns) {
     $columns['visite'] = 'visite';
+    $columns['first_login_date'] = 'first_login_date';
     $columns['user_registered'] = 'user_registered';
     $columns['first_order_date'] = 'first_order_date';
     $columns['last_order_date'] = 'last_order_date';
@@ -28,10 +29,12 @@ add_filter('manage_users_columns', function ($columns) {
 
     $columns['votre_photo'] = 'Photo';
     $columns['visite'] = 'Visite';
+    $columns['first_login_date'] = 'Premier login';
     $columns['user_registered'] = 'Inscription';
     $columns['first_order_date'] = 'Première commande';
     $columns['last_order_date'] = 'Dernière commande';
     $columns['user_orders'] = 'Commandes';
+    unset($columns['posts']);
     return $columns;
 });
 
@@ -51,6 +54,9 @@ add_filter(
         if ('user_registered' === $column_name) {
             $user = get_userdata($user_id);
             $value = date_francais($user->user_registered);
+        } else
+        if ('first_login_date' === $column_name) {
+            $value = date_francais(get_user_meta($user_id, '_first_login_date', true));
         } else
         if ('first_order_date' === $column_name) {
             $value = date_francais(get_user_meta($user_id, '_first_order_date', true));
@@ -122,6 +128,9 @@ add_action('pre_get_users', function ($query) {
         $query->set('orderby', 'meta_value');
     } else if ($orderby == 'first_order_date') {
         $query->set('meta_key', '_first_order_date');
+        $query->set('orderby', 'meta_value');
+    } else if ($orderby == 'first_login_date') {
+        $query->set('meta_key', '_first_login_date');
         $query->set('orderby', 'meta_value');
     }
 });
@@ -222,3 +231,28 @@ if (isset($_GET['_first_order_date'])) {
     });
 }
 
+
+
+
+/**
+ * Met à jour le méta "_first_login_date" pour tous les utilisateurs.
+ * S'exécute lorsque le paramètre GET "_first_login_date" est défini.
+ */
+if (isset($_GET['_first_login_date'])) {
+    add_action('admin_init', function () {
+        // Get all users
+        $args = [
+            'fields' => 'ID',  // Only need ID field for performance
+        ];
+        $users = get_users($args);
+        foreach ($users as $user_id) {
+            if(get_user_meta($user_id, '_first_login_date', true)) continue;
+            $user = get_userdata($user_id);
+            $t = $user->user_registered;
+
+            update_user_meta($user_id, '_first_login_date', $t);
+            echo $user_id . ' - ' . $t . '<hr>';
+        }
+        exit;
+    });
+}

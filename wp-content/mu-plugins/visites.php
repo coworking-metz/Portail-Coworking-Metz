@@ -81,7 +81,7 @@ add_action('admin_footer', function () {
         <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', function() {
 
-                document.querySelector('[data-name="email_finalisation_compte"] select').disabled=true;
+                document.querySelector('[data-name="email_finalisation_compte"] select').disabled = true;
                 const selectFields = document.querySelectorAll('[data-name*="email_"][data-type="select"] select');
                 selectFields.forEach(function(select) {
                     console.log(select);
@@ -93,7 +93,7 @@ add_action('admin_footer', function () {
 
                     function updateLinkVoir() {
                         const value = this.value;
-                        if (this.value>0) {
+                        if (this.value > 0) {
                             linkVoir.classList.remove('hidden')
                             linkVoir.href = `/wp-admin/?template_preview=${value}`;
                         } else {
@@ -115,7 +115,7 @@ add_action('admin_footer', function () {
 
                     function updateLinkModifier() {
                         const value = this.value;
-                        if (this.value>0) {
+                        if (this.value > 0) {
                             linkModifier.classList.remove('hidden')
                             linkModifier.href = `post.php?post=${value}&action=edit&classic-editor`;
                         } else {
@@ -138,6 +138,31 @@ add_action('admin_footer', function () {
 <?php
     }
 });
+
+
+/**
+ * Ajouter un lien vers la plateforme d'oboarding dans la menu bar de la page des reglages de visites
+ */
+add_action('admin_bar_menu', function ($admin_bar) {
+    if (!is_admin()) return;
+    $screen = get_current_screen();
+    if ($screen->base != 'user-edit') return;
+    $user_id = $_GET['user_id'] ?? false;
+    if (!$user_id) return;
+    $user_info = get_userdata($user_id);
+    $roles = $user_info->roles;
+    if (!in_array('subscriber', $roles) && !in_array('bookmify-customer', $roles)) return;
+
+    $admin_bar->add_menu(array(
+        'id'    => 'finaliser',
+        'title' => 'Finaliser le compte',
+        'href'  => admin_url('user-edit.php?finaliser&user_id=' . $user_id),
+        'meta'  => array(
+            'onclick'=>'return confirm("Faire de ce compte un compte coworker ? Il passera au rôle Coworker et recevra le mail de création de compte.")',
+            'title' => __('Faire de ce compte un compte coworker. Une confirmation vous sera demandée'),
+        ),
+    ));
+}, 100);
 
 
 /**
