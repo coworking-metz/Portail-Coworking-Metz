@@ -3,9 +3,12 @@ include __DIR__ . '/inc/main.inc.php';
 
 if ($id = $_POST['id'] ?? false) {
     $email = $_POST['email'] ?? false;
+    if (!$email) {
+        $email = sha1(time());
+    }
     $participe = $_POST['participe'] ?? false;
     $participation = upsertParticipation($id, ['email' => $email, 'participe' => $participe, 'id_evenement' => $id]);
-    rediriger(urlEvenement($id).'?email='.urlencode($email));
+    rediriger(urlEvenement($id) . '?email=' . urlencode($email));
 }
 
 $id = $_GET['id'] ?? false;
@@ -18,7 +21,7 @@ $participation = getParticipation($email, $id);
 $participe = $participation['participe'] ?? false;
 
 
-$titre = htmlspecialchars($evenement['evenement'] . ' - Participation');
+$titre = htmlspecialchars($evenement['evenement'] . ' - Participez à cet évenement !');
 $description = descriptionEvenement($evenement);
 
 ?>
@@ -59,14 +62,14 @@ $description = descriptionEvenement($evenement);
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:description" content="<?= $description; ?>">
-    <meta name="twitter:image" content="https://coworking-metz.fr/favicon/social.jpg">
+    <meta name="twitter:image" content="<?=$evenement['image_url'];?>">
 
     <meta property="og:description" content="<?= $description; ?>">
-    <meta property="og:image" content="https://coworking-metz.fr/favicon/social.jpg">
+    <meta property="og:image" content="<?=$evenement['image_url'];?>">
     <meta property="og:image:alt" content="<?= $titre; ?>">
-    <meta property="og:image:secure_url" content="https://coworking-metz.fr/favicon/social.jpg">
+    <meta property="og:image:secure_url" content="<?=$evenement['image_url'];?>">
     <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:url" content="https://coworking-metz.fr/favicon/social.jpg">
+    <meta property="og:image:url" content="<?=$evenement['image_url'];?>">
     <meta property="og:locale" content="fr_FR">
     <meta property="og:site_name" content="<?= $titre; ?>">
     <meta property="og:title" content="<?= $titre; ?>">
@@ -91,10 +94,10 @@ $description = descriptionEvenement($evenement);
                 <hgroup>
                     <h1><?= htmlspecialchars($evenement['evenement']); ?></h1>
                     <p>Le <?= formatDateToFrench($evenement['date']); ?>
-                    <?php if ($evenement['heure']) { ?>à <?= formatTimeToHHMM($evenement['heure']); ?><?php } ?>
+                        <?php if ($evenement['heure']) { ?>à <?= formatTimeToHHMM($evenement['heure']); ?><?php } ?>
                         <?php if ($evenement['lieu']) { ?><br>Lieu: <?= htmlspecialchars($evenement['lieu']); ?><?php } ?>
 
-                        <br><small><b><?= participationEvenement($evenement) ?></b></small>
+                            <br><small><b><?= participationEvenement($evenement) ?></b></small>
                     </p>
                     <h2>Votre réponse: <b><?= texteParticipation($participation); ?></b></h2>
                 </hgroup>
@@ -106,13 +109,13 @@ $description = descriptionEvenement($evenement);
                         <?php } else { ?>
                             <b>Vous participez ?</b>
                         <?php } ?>
-                        <input type="email" name="email" placeholder="Votre email" required value="<?= htmlspecialchars($email) ?>" />
+                        <input type="<?=empty($email) || strstr($email,'@') ? 'email' : 'hidden';?>" name="email" placeholder="Votre email" value="<?= htmlspecialchars($email) ?>" />
                     </label>
                     <?php if ($participe != 'ok') { ?>
                         <button type="submit" name="participe" value="ok">Je participe</button>
                     <?php } ?>
                     <?php if ($participe != 'maybe') { ?>
-                        <button type="submit" name="participe" value="maybe" class="contrast">je vais peut-être participer</button>
+                        <button type="submit" name="participe" value="maybe" class="contrast">Je vais peut-être participer</button>
                     <?php } ?>
                     <?php if ($participe != 'ko') { ?>
                         <button type="submit" name="participe" value="ko" class="outline contrast">Je ne participe pas</button>

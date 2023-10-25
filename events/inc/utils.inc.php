@@ -10,7 +10,7 @@ function participationEvenement($evenement, $details = false)
 
     }
     if ($evenement['maybe']) {
-        $ret .= ' et ' . $evenement['maybe'] . ' indéci(s)';
+        $ret .= ' et ' . $evenement['maybe'] . ' indécis';
     }
 
 
@@ -43,10 +43,12 @@ function urlEvenement($evenement)
         $evenement = getEvenement($evenement);
     }
     $heure = substr($evenement['heure'], 0, 5);
-    $base = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]/events/";
-    return $base . slugify($evenement['evenement'] . '-' . $evenement['date'] . '-' . $heure) . '/' . $evenement['id'];
+    return baseUrl() . slugify($evenement['evenement'] . '-' . $evenement['date'] . '-' . $heure) . '/' . $evenement['id'];
 }
 
+function baseUrl() {
+    return (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]/events/";
+}
 function rediriger($url = null)
 {
     if (is_null($url)) {

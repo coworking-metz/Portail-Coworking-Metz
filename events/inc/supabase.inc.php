@@ -28,7 +28,31 @@ function getEvenement($id)
 {
     if(!$id) return;
     $criteria = ['id' => $id];
-    return supabase()->read('evenements', $criteria)[0] ?? false;
+    return prepareEvenement(supabase()->read('evenements', $criteria)[0] ?? false);
+}
+
+function prepareEvenement($evenement) {
+    if ($evenement['image_url']) {
+        $hash = sha1($evenement['image_url']);
+        $file = __DIR__ . '/../tmp/' . $hash . '.jpg';
+        if (!file_exists($file)) {
+            $c = file_get_contents($evenement['image_url']);
+
+            // Resize and compress image
+            $original = imagecreatefromstring($c);
+            $width = imagesx($original);
+            $height = imagesy($original);
+            $new_width = 1200;
+            $new_height = intval($new_width * ($height / $width));
+            $new_image = imagecreatetruecolor($new_width, $new_height);
+            imagecopyresampled($new_image, $original, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+            imagejpeg($new_image, $file, 50);
+            imagedestroy($original);
+            imagedestroy($new_image);
+        }
+        $evenement['image_url'] = baseUrl() . 'tmp/' . $hash . '.jpg';
+    }
+    return $evenement;
 }
 function getEvenements()
 {
