@@ -1,6 +1,19 @@
 <?php
 
 
+/**
+ * Filtrer la page des visites pour ne garder que les users ayant une viiste future (et on met aussi toutes les visites du mois passé)
+ */
+if (isset($_GET['visitesOnly'])) {
+    add_action('pre_get_users', function ($query) {
+        if (is_admin()) {
+            $query->set('meta_key', 'visite');
+            $query->set('meta_value', date('Y-m-d H:i:s', strtotime('-1 month')));
+            $query->set('meta_compare', '>');
+        }
+    });
+}
+
 
 /**
  * Flux ics des visites via l'url /wp-admin/?visites-ics
@@ -158,7 +171,7 @@ add_action('admin_bar_menu', function ($admin_bar) {
         'title' => 'Finaliser le compte',
         'href'  => admin_url('user-edit.php?finaliser&user_id=' . $user_id),
         'meta'  => array(
-            'onclick'=>'return confirm("Faire de ce compte un compte coworker ? Il passera au rôle Coworker et recevra le mail de création de compte.")',
+            'onclick' => 'return confirm("Faire de ce compte un compte coworker ? Il passera au rôle Coworker et recevra le mail de création de compte.")',
             'title' => __('Faire de ce compte un compte coworker. Une confirmation vous sera demandée'),
         ),
     ));

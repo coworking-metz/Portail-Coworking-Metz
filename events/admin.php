@@ -9,11 +9,11 @@ if ($form) {
     rediriger('admin.php?id=' . $evenement['id']);
 }
 $evenements = getEvenements();
-
 $new = isset($_GET['new']);
 
 $id = $_GET['id'] ?? false;
 if ($evenement = getEvenement($id)) {
+    $participations = getParticipations($id);
     $titre = $evenement['evenement'];
 } else {
     $titre = 'Nouvel évenement';
@@ -73,6 +73,12 @@ if ($evenement = getEvenement($id)) {
             display: block;
             object-fit: cover;
         }
+
+        .participations {
+            font-size: small;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
     </style>
 </head>
 
@@ -83,7 +89,9 @@ if ($evenement = getEvenement($id)) {
                 <article>
                     <form method="post">
                         <input type="hidden" name="form[id]" required value="<?= htmlspecialchars($evenement['id'] ?? ''); ?>">
-                        <h1><?= htmlspecialchars($titre); ?></h1>
+                        <h1><?= htmlspecialchars($titre); ?>
+                            <br><small><?= participationEvenement($evenement) ?></small>
+                        </h1>
                         <?php if ($evenement['id'] ?? false) { ?>
                             <div>
                                 <label>Url à partager pour que les gens indiquent leur participation</label>
@@ -125,11 +133,31 @@ if ($evenement = getEvenement($id)) {
                 </article>
             <?php } ?>
             <div>
+                <?php if ($evenement['id'] ?? false) { ?>
+                    <article>
+                        <b>Participations</b>
+                        <div class="participations">
+                            <?php if ($participations) { ?>
+                                <?php foreach ($participations as $participation) { ?>
+                                    <div>
+                                        <?= $participation['participe'] == 'ok' ? '👍' : '' ?>
+                                        <?= $participation['participe'] == 'ko' ? '🚫' : '' ?>
+                                        <?= $participation['participe'] == 'maybe' ? '🤔' : '' ?>
+                                        <b><?= strstr($participation['email'], '@') ? $participation['email'] : '<i>Anonyme</i>'; ?></b>
+                                    </div>
+                                <?php } ?>
+                            <?php } else { ?>
+                                Pas de réponses pour l'instant
+                            <?php } ?>
+                        </div>
+                    </article>
+                <?php } ?>
+
                 <article>
                     <a role="button" href="admin.php?new">Créer un évenement</a>
                 </article>
                 <?php foreach ($evenements as $e) { ?>
-                    <article class="<?=$e['id'] == $id;?>">
+                    <article class="<?= $e['id'] == $id; ?>">
                         <?= descriptionEvenement($e); ?>
                         <br><small><?= participationEvenement($e, true) ?></small>
                         <div><a href="admin.php?id=<?= $e['id']; ?>">✏️</a> <a href="<?= urlEvenement($e['id']); ?>">👀</a></div>

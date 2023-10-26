@@ -31,6 +31,7 @@ add_action('rest_api_init', function () {
                 $ics_content .= "BEGIN:VEVENT\r\n";
                 $ics_content .= "DTSTART:$dtstart\r\n";
                 $ics_content .= "DTEND:$dtend\r\n";
+                $ics_content .= "LOCATION:7, avenue de Blida, 57000 Metz\r\n"; // Ajout de l'adresse
                 $ics_content .= "SUMMARY:Votre visite du coworking\r\n";
                 $ics_content .= "END:VEVENT\r\n";
                 $ics_content .= "END:VCALENDAR\r\n";

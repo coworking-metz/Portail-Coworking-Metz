@@ -25,7 +25,7 @@ function coworking_app_settings()
         'horaire' => trim(get_field('horaire', 'option')),
         'limite_mois' => intval(get_field('limite_mois', 'option')),
         'fermer_vacances' => $fermer_vacances,
-        'fermer_visites' => get_field('fermer_visites', 'option'),
+        'fermer_visites' => visites_fermees(),
         'empecher_visites' => $exclude
     ];
     $settings = [

@@ -12,16 +12,11 @@ function supabase()
     return $GLOBALS['supabase'];
 }
 
-function getParticipations($data)
+function getParticipations($id_evenement)
 {
-    $hash = hashEvenement($data);
-    $criteria = ['hash' => $hash];
+    $criteria = ['id_evenement' => $id_evenement];
     $liste =  supabase()->read('participations', $criteria);
-    $out = ['ok' => 0, 'ko' => 0, 'maybe' => 0];
-    foreach ($liste as $item) {
-        $out[$item['participe']]++;
-    }
-    return $out;
+    return $liste;
 }
 
 function getEvenement($id)

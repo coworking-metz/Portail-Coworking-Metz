@@ -14,6 +14,11 @@ if ($id = $_POST['id'] ?? false) {
 $id = $_GET['id'] ?? false;
 $email = $_GET['email'] ?? '';
 
+
+if($participe = $_GET['p']??false) {
+    $participation = upsertParticipation($id, ['email' => $email, 'participe' => $participe, 'id_evenement' => $id]);
+    rediriger(urlEvenement($id) . '?email=' . urlencode($email));
+}
 $evenement = getEvenement($id);
 
 $participation = getParticipation($email, $id);

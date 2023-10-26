@@ -1,6 +1,44 @@
 <?php
 
 /**
+ * Indique si les visites sont fermées
+ * */
+function visites_fermees()
+{
+    return get_field('fermer_visites', 'option');
+}
+
+/**
+ * Forme une phrase expliquant les jours et heures de visites
+ * Exemple : Les visites ont lieu les mardis et jeudis à 10:00
+ * */
+function recapJoursDeVisites()
+{
+    if (visites_fermees()) return 'Les visites sont fermées temporairement';
+
+    $visites = [
+        'jours_de_visites' => array_map('intval', get_field('jours_de_visites', 'option')),
+        'horaire' => trim(get_field('horaire', 'option')),
+    ];
+
+    $jours = ['dimanches', 'lundis', 'mardis', 'mercredis', 'jeudis', 'vendredis', 'samedis'];
+
+    $total = count($visites['jours_de_visites']);
+    $mention = '';
+    foreach ($visites['jours_de_visites'] as $key => $jour) {
+        if ($mention) {
+            if ($key == $total - 1) {
+                $mention .= ' et ';
+            } else {
+                $mention .= ', ';
+            }
+        }
+        $mention .= $jours[$jour];
+    }
+
+    return 'Les visites ont lieu les ' . $mention . ' à ' . $visites['horaire'];
+}
+/**
  * Obtenir le nombre de visites
  * 
  * @return int Retourne le nombre de visites

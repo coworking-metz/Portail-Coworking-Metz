@@ -28,8 +28,6 @@ add_action('rest_api_init', function () {
                 envoyerMailVisite($user_id, $params['visite']);
                 envoyerMailAlerte($user_id);
 
-                //			$success = WC_Shortcode_My_Account::retrieve_password(); envoyer le mail de setup
-
                 return rest_ensure_response(['event' => $event]);
             }
         },
