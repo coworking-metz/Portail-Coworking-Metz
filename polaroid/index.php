@@ -21,18 +21,25 @@ require('./lib/utils.php');
 
 
 // print_r($_GET);
-$polaroid = $_GET['polaroid'] ?? false;
-if ($polaroid) {
-    $photo = polaroid_tmpphoto();
-} else {
-    $polaroid = polaroid_get($uid);
-    if ($image = get_user_meta($uid, 'url_image_trombinoscope', true)) {
-        $url = wp_get_attachment_url($image);
-        if ($url) {
-            polaroid_output(urlToPath($url));
-        }
-    }
+
+if ($_GET['custom'] ?? false) {
+    $polaroid = $_GET['polaroid'] ?? false;
     $photo = $polaroid['photo'];
+    $hd = true;
+} else {
+    $polaroid = $_GET['polaroid'] ?? false;
+    if ($polaroid) {
+        $photo = polaroid_tmpphoto();
+    } else {
+        $polaroid = polaroid_get($uid);
+        if ($image = get_user_meta($uid, 'url_image_trombinoscope', true)) {
+            $url = wp_get_attachment_url($image);
+            if ($url) {
+                polaroid_output(urlToPath($url));
+            }
+        }
+        $photo = $polaroid['photo'];
+    }
 }
 
 list($width, $height) = getimagesize('./images/pola-vide.png');
@@ -48,7 +55,6 @@ $frameHeight = $frameWidth * $frameRatio;
 /**
  * Ajout de la photo du coworker
  */
-
 $tmp = imagecreatefromfile($photo);
 list($tmpWidth, $tmpHeight) = getimagesize($photo);
 
@@ -58,14 +64,14 @@ $aspectRatio = $tmpWidth / $tmpHeight;
 if ($mode == 'landscape') {
     $newHeight = $height * 75 / 100;
     $newWidth = $newHeight * $aspectRatio;
-    if($newWidth < $frameWidth) {
+    if ($newWidth < $frameWidth) {
         $newWidth = $frameWidth;
         $newHeight = $newWidth * $aspectRatio;
     }
 } else {
     $newWidth = $frameWidth;
     $newHeight = $newWidth / $aspectRatio;
-    if($newHeight < $frameHeight) {
+    if ($newHeight < $frameHeight) {
         $newHeight = $frameHeight;
         $newWidth = $newHeight * $aspectRatio;
     }
@@ -90,7 +96,7 @@ imagedestroy($overlay);
 
 
 // Text to be added
-$text = $polaroid['nom'];
+$text = stripslashes($polaroid['nom']);
 $fontFile = './EvelethClean.ttf'; // This is the path to your font file
 $fontSize = 40; // This is the font size, adjust as needed
 $fontColor = imagecolorallocate($img, 0, 0, 0); // Black color for the font
@@ -115,7 +121,7 @@ if ($polaroid['description'] && $polaroid['complement']) {
 }
 $fontFile = './EvelethCleanThin.ttf';
 
-if ($text = $polaroid['description']) {
+if ($text = stripslashes($polaroid['description'])) {
 
     // Get bounding box of the text
     $textBox = imagettfbbox($fontSize, 0, $fontFile, $text);
@@ -129,7 +135,7 @@ if ($text = $polaroid['description']) {
     imagettftext($img, $fontSize, 0, $x, $y, $fontColor, $fontFile, $text);
 }
 
-if ($text = $polaroid['complement']) {
+if ($text = stripslashes($polaroid['complement'])) {
 
     // Get bounding box of the text
     $textBox = imagettfbbox($fontSize, 0, $fontFile, $text);

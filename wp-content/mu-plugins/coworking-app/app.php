@@ -1,12 +1,41 @@
 <?php
 
+include __DIR__ . '/app-auth.php';
+include __DIR__ . '/app-droits.php';
+include __DIR__ . '/app-settings.php';
+include __DIR__ . '/app-session.php';
+include __DIR__ . '/app-user-exists.php';
+include __DIR__ . '/app-nouvelle-visite.php';
+include __DIR__ . '/app-visite-ics.php';
+
+
 function coworking_app_settings()
 {
     $url = 'https://tickets.coworking-metz.fr/api/current-users?key=' . API_KEY_TICKET . '&delay=15';
     $data = file_get_contents($url);
     $presences = json_decode($data, true);
+    $fermer_vacances = get_field('fermer_vacances', 'option');
+    if ($fermer_vacances) {
+        $exclude = extractDatesExcludePast(get_field('empecher_visites', 'option'), fetch_holidays());
+    } else {
+        $exclude = extractDatesExcludePast(get_field('empecher_visites', 'option'));
+    }
 
+    $mentions = [
+        'visite' => get_field_raw('mentions-page-visite','option'),
+        'infos' => get_field_raw('mentions-page-infos','option')
+    ];
+    $visites = [
+        'jours_de_visites' => array_map('intval', get_field('jours_de_visites', 'option')),
+        'horaire' => trim(get_field('horaire', 'option')),
+        'limite_mois' => intval(get_field('limite_mois', 'option')),
+        'fermer_vacances' => $fermer_vacances,
+        'fermer_visites' => visites_fermees(),
+        'empecher_visites' => $exclude,
+    ];
     $settings = [
+        'mentions'=> $mentions,
+        'visites' => $visites,
         'polaroid_default' => site_url() . '/images/pola-poule-vide.jpg',
         'occupation' => [
             'total' => 28,
@@ -58,7 +87,12 @@ function coworking_app_get_sessions($uid)
     return $sessions;
 }
 
-
+function can_use_app($user)
+{
+    if (is_visiteur($user)) return true;
+    if (user_can($user, 'administrator')) return true;
+    if (in_array('customer', (array) $user->roles)) return true;
+}
 function coworking_app_get_valid_sessions($uid)
 {
     $sessions = coworking_app_get_sessions($uid);
@@ -74,9 +108,12 @@ function coworking_app_get_valid_sessions($uid)
 }
 function coworking_app_user($user)
 {
-    if(is_numeric($user)) {
+    if (is_numeric($user)) {
         $user = get_user_by('ID', $user);
     }
+
+    if (!can_use_app($user)) return;
+
     return [
         'login' => $user->user_email,
         'name' => $user->display_name,
@@ -84,35 +121,82 @@ function coworking_app_user($user)
         'session_id' => coworking_app_gen_session_id($user->ID),
     ];
 }
+function date_de_visite($user)
+{
+    $user_id = get_user_id($user);
+    $visite_date = get_user_meta($user_id, 'visite', true);
+    return $visite_date;
+}
+function is_visiteur($user)
+{
+    $user_id = $user->ID;
+    if (!in_array('subscriber', (array) $user->roles)) return;
 
-function coworking_app_droits($user_id)
+    $visite_date = date_de_visite($user_id);
+    if (!$visite_date) return;
+
+    if (isPast($visite_date) && !istoday($visite_date)) return;
+
+    return true;
+
+    /*    $dateTimeZone = new DateTimeZone('Europe/Paris');
+
+    $dateToCheck = new DateTime($visite_date, $dateTimeZone);
+    $dateToCheck->setTime(0, 0); // Reset time to midnight to only compare date
+
+    $today = new DateTime('now', $dateTimeZone);
+    $today->setTime(0, 0); // Reset time to midnight
+
+    $isToday = $dateToCheck == $today;
+
+    return $isToday;*/
+}
+function coworking_app_droits($user_id, $options = [])
 {
 
     $user = get_user_by('ID', $user_id);
     if (!$user) return;
 
-    $bloquer_ouvrir_portail = get_field('bloquer_ouvrir_portail', 'user_' . $user_id);
-    $ouvrir_parking = get_field('ouvrir_parking', 'user_' . $user_id) || date('Ymd') < '20240101';
-
-    // $ouvrir_parking = user_can($user_id, 'ouvrir_parking');
-
-    if (user_can($user_id, 'administrator')) {
-        $admin = true;
+    if (is_visiteur($user)) {
+        $date = date_de_visite($user);
+        return [
+            'guest' => true,
+            'visite' => [
+                'date' => $date,
+                'dateFr' => date_francais($date, true),
+                'isToday' => isToday($date)
+            ],
+            'settings' => coworking_app_settings(),
+            'droits' => [
+                'ouvrir_parking' => true,
+                'ouvrir_portail' => true,
+            ]
+        ];
     } else {
-        $admin = false;
-    }
 
-    return [
-        'admin' => $admin,
-        // 'sessions'=>coworking_app_get_sessions($user_id),
-        'settings' => coworking_app_settings(),
-        'droits' => [
-            'polaroid' => polaroid_existe($user_id) ? polaroid_url($user_id, true) : false,
+        $bloquer_ouvrir_portail = get_field('bloquer_ouvrir_portail', 'user_' . $user_id);
+        $ouvrir_parking = get_field('ouvrir_parking', 'user_' . $user_id) || date('Ymd') < '20240101';
+
+        // $ouvrir_parking = user_can($user_id, 'ouvrir_parking');
+
+        if (user_can($user_id, 'administrator')) {
+            $admin = true;
+        } else {
+            $admin = false;
+        }
+
+        return [
             'admin' => $admin,
-            'ouvrir_parking'=>$ouvrir_parking,
-            'ouvrir_portail' => $bloquer_ouvrir_portail ? false : true,
-        ]
-    ];
+            // 'sessions'=>coworking_app_get_sessions($user_id),
+            'settings' => coworking_app_settings(),
+            'droits' => [
+                'polaroid' => polaroid_existe($user_id) ? polaroid_url($user_id, true) : false,
+                'admin' => $admin,
+                'ouvrir_parking' => $ouvrir_parking,
+                'ouvrir_portail' => $bloquer_ouvrir_portail ? false : true,
+            ]
+        ];
+    }
 }
 function coworking_app_check_origins($origin)
 {
@@ -140,7 +224,7 @@ function coworking_app_check($request)
 
     $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
 
-    header('test-origin:' . $origin);
+    // header('test-origin:' . $origin);
     if (coworking_app_check_origins($origin)) {
         header('Access-Control-Allow-Origin: ' . $origin);
         header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
@@ -196,4 +280,97 @@ function coworking_app_delete_session_id($sid, $uid)
     // Save the updated sessions array back to the user meta data
     update_user_meta($uid, 'sessions', json_encode($sessions));
     return true;
+}
+
+
+function addEventToCalendar($user_id, $event)
+{
+
+    if (!$user_id) return;
+    $key = 'ajout-calendrier-' . $event['start'];
+    if (get_user_meta($user_id, $key, true)) return;
+    update_user_meta($user_id, $key, true);
+
+
+    // Editer la task sur IFTTT à cette adresse:  https://ifttt.com/applets/vD4gcHhx
+    $webhook = 'https://maker.ifttt.com/trigger/nouvelle-visite/with/key/mVGGKzi6RS8B-x5ohxM4q8SuZgm6s-OdjbidwgUYvvV';
+    $payload = ['value1' => $event['name'], 'value2' => $event['start'], 'value3' => $event['end']];
+
+    $ch = curl_init($webhook);
+
+    // Création du payload JSON
+    $data = json_encode($payload);
+
+    // Configuration des options cURL
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    // Exécution de la requête
+    $response = curl_exec($ch);
+
+    // Fermeture de la connexion
+    curl_close($ch);
+
+    return $payload;
+}
+
+/**
+ * Crée un nouvel utilisateur WordPress si l'email n'existe pas déjà
+ *
+ * @param array $user Informations de base de l'utilisateur
+ * @param array $meta Métadonnées supplémentaires pour l'utilisateur
+ */
+function create_wp_user_if_not_exists($user, $meta = [])
+{
+    // Désactive l'envoi de mail temporairement
+    remove_action('register_new_user', 'wp_send_new_user_notifications');
+
+    // Récupération des données utilisateur
+    $nom = $user['nom'];
+    $prenom = $user['prenom'];
+    $email = $user['email'];
+    $password = $user['password'];
+    if (!$password) {
+        $password = sha1(time());
+    }
+
+    $user_id = email_exists($email);
+    // Vérifie si l'utilisateur existe déjà
+    if (!$user_id) {
+        // Crée l'utilisateur
+        $user_id = wp_create_user($email, $password, $email);
+
+        // Met à jour les informations supplémentaires
+        wp_update_user([
+            'ID'         => $user_id,
+            'first_name' => $prenom,
+            'last_name'  => $nom,
+            'nickname'   => $prenom . ' ' . $nom,
+            'display_name' => $prenom . ' ' . $nom,
+        ]);
+
+        // Définit le 'user_nicename'
+        wp_update_user([
+            'ID'            => $user_id,
+            'user_nicename' => sanitize_title($prenom . ' ' . $nom)
+        ]);
+
+        // Ajoute les métadonnées utilisateur
+        foreach ($meta as $key => $value) {
+            update_user_meta($user_id, $key, $value);
+        }
+    }
+
+    // Réactive l'envoi de mail
+    add_action('register_new_user', 'wp_send_new_user_notifications');
+
+    return $user_id;
+}
+
+function app_login_link($user_id)
+{
+    $check = sha1($user_id . APP_AUTH_TOKEN);
+    return 'https://app.coworking-metz.fr/visite?visite=' . $user_id . '&check=' . $check;
 }

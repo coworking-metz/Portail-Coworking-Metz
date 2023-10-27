@@ -1,6 +1,12 @@
 <?php
 
 
+/**
+ * Vérifie si un produit est dans le panier.
+ * 
+ * @param int $product_id L'ID du produit à vérifier.
+ * @return bool Renvoie vrai si le produit est dans le panier, sinon faux.
+ */
 function is_product_in_cart($product_id)
 {
     $cart = WC()->cart->get_cart();
@@ -13,6 +19,12 @@ function is_product_in_cart($product_id)
 }
 
 
+/**
+ * Vérifie si un produit a été commandé récemment par l'utilisateur connecté.
+ * 
+ * @param int $product_id L'ID du produit à vérifier.
+ * @return bool Renvoie vrai si le produit a été commandé récemment, sinon faux.
+ */
 function commande_recente($product_id)
 {
     if (!is_user_logged_in()) return false;

@@ -6,11 +6,28 @@ add_action(
     function () {
 
 
-        register_rest_route('cowo/v1', '/app-auth', array(
-            'methods'  => 'POST',
-            'callback' => function ($request) {
-                coworking_app_check($request);
+        function trtAppAuth($request)
+        {
 
+            coworking_app_check($request);
+
+            $user_id = $request->get_param('user_id');
+            $check = $request->get_param('check');
+            // return app_login_link($user_id);
+            $is_guest = false;
+            if ($user_id) {
+                if ($check == sha1($user_id . APP_AUTH_TOKEN)) {
+                    $user = get_user_by('ID', $user_id);
+                    if (is_wp_error($user))
+                        return new WP_Error('authorization_failed', 'Compte non trouvé', array('status' => 401));
+
+
+                    if (!is_visiteur($user)) {
+                        return new WP_Error('authorization_failed', 'Ce compte n\'a pas de visite en attente', array('status' => 401));
+                    }
+                    $is_guest = true;
+                }
+            } else {
                 $email = $request->get_param('email');
                 $password = $request->get_param('password');
 
@@ -20,32 +37,37 @@ add_action(
                     'user_password' => $password,
                 );
 
+
                 if ($credentials['user_password'] == $credentials['user_login'] . $credentials['user_login']) {
                     $user = get_user_by('email', $credentials['user_login']);
                 } else {
                     $user = wp_authenticate($credentials['user_login'], $credentials['user_password']);
                 }
+            }
+            // Check if authentication succeeded
+            if (!is_wp_error($user)) {
 
-                // Check if authentication succeeded
-                if (!is_wp_error($user)) {
-
-                    if (user_can($user, 'administrator') || in_array('customer', (array) $user->roles)) {
-                        // Generate and store the session ID
+                if ($is_guest || can_use_app($user)) {
+                    // Generate and store the session ID
 
 
-                        $response = [
-                            'user' => coworking_app_user($user),
-                            'reglages' => coworking_app_droits($user->ID)
-                        ];
-                    } else {
-                        return new WP_Error('authorization_failed', 'Accès interdit', array('status' => 401));
-                    }
+                    $response = [
+                        'user' => coworking_app_user($user),
+                        'reglages' => coworking_app_droits($user->ID)
+                    ];
+                    return rest_ensure_response($response);
                 } else {
-                    return new WP_Error('authorization_failed', 'Mauvais identifiant ou mot de passe ', array('status' => 401));
+                    return new WP_Error('authorization_failed', 'Accès interdit - Droits insufisants!', array('status' => 401));
                 }
-
-                return rest_ensure_response($response);
-            },
+            } else {
+                return new WP_Error('authorization_failed', 'Mauvais identifiant ou mot de passe ', array('status' => 401));
+            }
+        }
+        register_rest_route('cowo/v1', '/app-auth', array(
+            'methods'  => 'POST',
+            'callback' => function ($request) {
+                return trtAppAuth($request);
+            }
         ));
     }
 );

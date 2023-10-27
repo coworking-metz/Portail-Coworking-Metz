@@ -10,17 +10,19 @@ add_action(
             'methods'  => 'POST',
             'callback' => function ($request) {
                 if ($sid = coworking_app_check($request)) {
-                    $uid = $request['user_id']??false;
-                    $response = array(
-                        'session' => $sid,
-                        'user'=>coworking_app_user($uid),
-                        'reglages'=>coworking_app_droits($uid),
-                        // 'sessions' => coworking_app_get_sessions($request['user_id'])
-                    );
-                } else {
-                    return new WP_Error('session_error', 'Invalid session', array('status' => 401));
+                    $uid = $request['user_id'] ?? false;
+                    $user = coworking_app_user($uid);
+                    if ($user) {
+                        $response = array(
+                            'session' => $sid,
+                            'user' => $user,
+                            'reglages' => coworking_app_droits($uid),
+                            // 'sessions' => coworking_app_get_sessions($request['user_id'])
+                        );
+                        return rest_ensure_response($response);
+                    }
                 }
-                return rest_ensure_response($response);
+                return new WP_Error('session_error', 'Invalid session', array('status' => 401));
             },
         ));
     }

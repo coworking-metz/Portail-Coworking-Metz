@@ -95,7 +95,7 @@ if (isset($_POST['valider-polaroid'])) {
         <a class="button" href="?modifier">Modifier</a>
     <?php } else { ?>
         <p>Utilisez l'outil ci-dessous pour choisir la photo qui sera affichée sur l'écran du coworking sous forme d'un polaroïd aux couleurs du Poulailler.</p>
-        <p>Ce polaroïd sera <strong><span style="text-decoration: underline;">uniquement</span></strong> utilisé pour un affichage sur la télévision lorsque vous êtes présent au Poulailler. Merci pour votre participation !</p>
+        <p>Ce polaroïd sera <strong><span style="text-decoration: underline;">uniquement</span></strong> utilisé pour un affichage sur la télévision lorsque vous êtes présent au Poulailler. Il pourra aussi faire l'objet par la suite d'une impression en format papier pour être affiché sur le tableau d'honneur des coworkers de la salle de pause. Merci pour votre participation !</p>
         <form id="polaroid" method="post" enctype="multipart/form-data">
             <div class="file-upload">
                 <input type=file name="photo">

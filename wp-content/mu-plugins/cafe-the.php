@@ -2,6 +2,9 @@
 
 define('PRODUIT_CAFE_THE', 20367);
 
+/**
+ * Afficher une notif lors du checkout pour inviter les gens a ajouter le café dans leur panier s'il n'y est pas déja
+ */
 add_action('wp_footer', function () {
     if (is_order_received_page()) return;
 
@@ -27,7 +30,7 @@ add_action('wp_footer', function () {
 
 if (isset($_GET['cafe'])) {
     /**
-     * Automatically add product to cart on visit (café / thé)
+     * Ajouter le café au panier
      */
     add_action(
         'template_redirect',
