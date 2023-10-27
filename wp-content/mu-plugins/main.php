@@ -21,15 +21,18 @@ foreach (glob(__DIR__ . "/includes/*.inc.php") as $filename) {
     include $filename;
 }
 
-// Ajouter les fichiers js
-foreach (glob(__DIR__ . "/js/*.js") as $filename) {
-    ajouter_js(explode('.',basename($filename))[0]);
-}
+add_action('admin_init',function() {
 
-// Ajouter les fichiers css
-foreach (glob(__DIR__ . "/css/*.css") as $filename) {
-    ajouter_css(explode('.',basename($filename))[0]);
-}
+    // Ajouter les fichiers js
+    foreach (glob(__DIR__ . "/js/*.js") as $filename) {
+        ajouter_js(explode('.',basename($filename))[0]);
+    }
+    
+    // Ajouter les fichiers css
+    foreach (glob(__DIR__ . "/css/*.css") as $filename) {
+        ajouter_css(explode('.',basename($filename))[0]);
+    }
+});
 
 /*
 nromalement ca ne sert plus

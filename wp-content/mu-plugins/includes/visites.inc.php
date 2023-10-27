@@ -1,5 +1,18 @@
 <?php
 
+function boutonVisites()
+{
+    if (visites_fermees()) return;
+?>
+    <a href="https://rejoindre.coworking-metz.fr/" title="Prendre rendez-vous" target="_self" class="btn btn-solid btn-xlg semi-round btn-bordered border-thin ld_button_653a54d4ec23e lqd-unit-animation-done" style="">
+        <span>
+
+            <span class="btn-txt">Je prends rendez-vous !</span>
+
+        </span>
+    </a>
+<?php
+}
 /**
  * Indique si les visites sont fermées
  * */

@@ -20,15 +20,21 @@ function coworking_app_settings()
     } else {
         $exclude = extractDatesExcludePast(get_field('empecher_visites', 'option'));
     }
+
+    $mentions = [
+        'visite' => get_field_raw('mentions-page-visite','option'),
+        'infos' => get_field_raw('mentions-page-infos','option')
+    ];
     $visites = [
         'jours_de_visites' => array_map('intval', get_field('jours_de_visites', 'option')),
         'horaire' => trim(get_field('horaire', 'option')),
         'limite_mois' => intval(get_field('limite_mois', 'option')),
         'fermer_vacances' => $fermer_vacances,
         'fermer_visites' => visites_fermees(),
-        'empecher_visites' => $exclude
+        'empecher_visites' => $exclude,
     ];
     $settings = [
+        'mentions'=> $mentions,
         'visites' => $visites,
         'polaroid_default' => site_url() . '/images/pola-poule-vide.jpg',
         'occupation' => [

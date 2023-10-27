@@ -519,7 +519,7 @@ class wsMenuEditorExtras {
 			src="<?php echo esc_attr($item['file']); ?>"
 			style="<?php echo esc_attr($style_attr); ?>>"
 			id="ws-framed-page"
-			frameborder="0"
+			frameborder="0" allowtransparency="true"
 			<?php
 			if ( $is_scrolling_disabled ) {
 				echo ' scrolling="no" ';

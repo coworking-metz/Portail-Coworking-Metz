@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Filtrer la page des visites pour ne garder que les users ayant une viiste future (et on met aussi toutes les visites du mois passé)
  */
