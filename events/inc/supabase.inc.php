@@ -95,9 +95,9 @@ function hashEvenement($data)
 function texteParticipation($participation)
 {
     if (empty($participation['participe'])) return 'Vous n\'avez pas encore répondu';
-    if ($participation['participe'] == 'ok') return 'Vous avez confirmé votre participation';
-    if ($participation['participe'] == 'ko') return 'Vous ne participatez pas';
-    if ($participation['participe'] == 'maybe') return 'Vous allez peut-être participer';
+    if ($participation['participe'] == 'ok') return 'Vous avez confirmé votre participation 👍';
+    if ($participation['participe'] == 'ko') return 'Vous ne participatez pas 👎';
+    if ($participation['participe'] == 'maybe') return 'Vous allez peut-être participer 🤔';
 }
 /*
 function getAbonnementByStripeId($stripe_id)

@@ -21,6 +21,7 @@ require('./lib/utils.php');
 
 
 // print_r($_GET);
+$image_fond_pola = false;
 
 if ($_GET['custom'] ?? false) {
     $polaroid = $_GET['polaroid'] ?? false;
@@ -31,6 +32,9 @@ if ($_GET['custom'] ?? false) {
     if ($polaroid) {
         $photo = polaroid_tmpphoto();
     } else {
+
+        $image_fond_pola = get_image_fond_pola();
+
         $polaroid = polaroid_get($uid);
         if ($image = get_user_meta($uid, 'url_image_trombinoscope', true)) {
             $url = wp_get_attachment_url($image);
@@ -39,8 +43,13 @@ if ($_GET['custom'] ?? false) {
             }
         }
         $photo = $polaroid['photo'];
+        if ($image_fond_pola) {
+            $photo = $polaroid['alpha'] ?? $photo;
+        }
     }
 }
+
+// if (!isset($_GET['debug'])) $image_fond_pola = false;
 
 list($width, $height) = getimagesize('./images/pola-vide.png');
 $img = imagecreatetruecolor($width, $height);
@@ -51,11 +60,33 @@ $frameWidth = $width - 2 * $bande;
 $frameHeight = $frameWidth * $frameRatio;
 
 
+// Code to overlay $image_fond_pola onto $img
+if ($image_fond_pola) {
+    $fond = imagecreatefromfile($image_fond_pola);
+
+    // Obtient les dimensions de $image_fond_pola
+    list($polaWidth, $polaHeight) = getimagesize($image_fond_pola);
+
+    // Calcule les nouvelles dimensions tout en gardant le ratio
+    $newHeight = ($width / $polaWidth) * $polaHeight;
+
+    // Redimensionne $image_fond_pola
+    $resizedPola = imagecreatetruecolor($width, $newHeight);
+    imagecopyresampled($resizedPola, $fond, 0, 0, 0, 0, $width, $newHeight, $polaWidth, $polaHeight);
+
+    // Place $resizedPola en haut à gauche de $img
+    imagecopy($img, $resizedPola, 0, 0, 0, 0, $width, $newHeight);
+
+    // Libère la mémoire
+    imagedestroy($resizedPola);
+}
+
 
 /**
  * Ajout de la photo du coworker
  */
 $tmp = imagecreatefromfile($photo);
+
 list($tmpWidth, $tmpHeight) = getimagesize($photo);
 
 $mode = ($tmpWidth - $tmpHeight) > 100 ? 'landscape' : 'portrait';
@@ -76,6 +107,8 @@ if ($mode == 'landscape') {
         $newWidth = $newHeight * $aspectRatio;
     }
 }
+
+
 
 // print_r([$newWidth, $newHeight, $tmpWidth, $tmpHeight]);exit;
 // if ($newHeight > $height) {

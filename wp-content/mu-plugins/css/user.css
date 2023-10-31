@@ -1,10 +1,13 @@
 .user-rich-editing-wrap,
 .user-admin-color-wrap,
-.user-comment-shortcuts-wrap, .user-url-wrap, .user-description-wrap, .user-profile-picture, #application-passwords-section,
+.user-comment-shortcuts-wrap,
+.user-url-wrap,
+.user-description-wrap,
+.user-profile-picture,
+#application-passwords-section,
 .form-table tr[data-name="profession"],
 .form-table tr[data-name="url_image_trombinoscope"],
-.override-author-setting 
-{
+.override-author-setting,
+[data-name="votre_photo_alpha"] {
     display: none !important;
 }
-

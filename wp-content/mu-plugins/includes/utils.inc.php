@@ -1,5 +1,7 @@
 <?php
-
+function pathTourl($path) {
+    return str_replace(ABSPATH,site_url().'/', $path);
+}
 /**
  * Ajoute un fichier JavaScript à la queue des scripts de WordPress.
  *
@@ -259,7 +261,7 @@ function tableau($data)
  *
  * @param string $filepath Chemin d'accès au fichier image.
  *
- * @return resource|false Ressource d'image ou false en cas d'échec.
+ * @return GDImage|resource|false Ressource d'image ou false en cas d'échec.
  */
 function imagecreatefromfile($filepath)
 {

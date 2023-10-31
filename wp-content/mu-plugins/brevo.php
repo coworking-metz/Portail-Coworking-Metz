@@ -1,4 +1,42 @@
 <?php
+/*
+if (isset($_GET['sync-brevo'])) {
+    add_action('admin_init', function () {
+
+
+        // Fetch all users
+        $users = get_users(array('fields' => 'user_email'));
+
+        // Convert emails to the format expected by SendinBlue
+        $data = array(
+            'emails' => $users
+        );
+
+        // SendinBlue API endpoint and your API key
+        $url = 'https://api.brevo.com/v3/contacts';
+        $api_key = BREVO_KEY;
+
+        // API request setup
+        $args = array(
+            'method' => 'POST',
+            'headers' => array(
+                'api-key' => $api_key,
+                'Content-Type' => 'application/json',
+            ),
+            'body' => json_encode($data),
+        );
+
+        // Make the API call
+        $response = wp_remote_request($url, $args);
+
+        // Check for errors
+        if (is_wp_error($response)) {
+            // Handle error
+            error_log($response->get_error_message());
+        }
+    });
+}
+*/
 /**
  * Ajout du script brevo pour le chat sur les pages du site
  */

@@ -21,9 +21,12 @@ function coworking_app_settings()
         $exclude = extractDatesExcludePast(get_field('empecher_visites', 'option'));
     }
 
+    $mentions  = get_field_raw('mentions', 'option');
+
     $mentions = [
-        'visite' => get_field_raw('mentions-page-visite','option'),
-        'infos' => get_field_raw('mentions-page-infos','option')
+        'visite' => $mentions['mentions-page-visite'],
+        'recap' => $mentions['mentions-page-recap'],
+        'infos' => $mentions['mentions-page-infos']
     ];
     $visites = [
         'jours_de_visites' => array_map('intval', get_field('jours_de_visites', 'option')),
@@ -34,7 +37,7 @@ function coworking_app_settings()
         'empecher_visites' => $exclude,
     ];
     $settings = [
-        'mentions'=> $mentions,
+        'mentions' => $mentions,
         'visites' => $visites,
         'polaroid_default' => site_url() . '/images/pola-poule-vide.jpg',
         'occupation' => [
