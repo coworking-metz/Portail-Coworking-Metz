@@ -1,42 +1,21 @@
 <?php
-/*
-if (isset($_GET['sync-brevo'])) {
-    add_action('admin_init', function () {
 
 
-        // Fetch all users
-        $users = get_users(array('fields' => 'user_email'));
 
-        // Convert emails to the format expected by SendinBlue
-        $data = array(
-            'emails' => $users
-        );
+if (isset($_GET['brevo-notify'])) {
 
-        // SendinBlue API endpoint and your API key
-        $url = 'https://api.brevo.com/v3/contacts';
-        $api_key = BREVO_KEY;
+    add_action('init', function () {
+        $action = $_GET['brevo-action'] ?? false;
+        if ($action == 'unsubscribed') {
 
-        // API request setup
-        $args = array(
-            'method' => 'POST',
-            'headers' => array(
-                'api-key' => $api_key,
-                'Content-Type' => 'application/json',
-            ),
-            'body' => json_encode($data),
-        );
-
-        // Make the API call
-        $response = wp_remote_request($url, $args);
-
-        // Check for errors
-        if (is_wp_error($response)) {
-            // Handle error
-            error_log($response->get_error_message());
+            $url = $_POST['url'] ?? $_GET['url'] ?? false;
+            $emails = mailchimp_unsubscribe_from_csv($url);
         }
+        // apeller cette url pour le debug
+        file_get_contents("https://eojss26rcl22wc9.m.pipedream.net?url=" . $url."&nb=".count($emails));
+        exit;
     });
 }
-*/
 /**
  * Ajout du script brevo pour le chat sur les pages du site
  */

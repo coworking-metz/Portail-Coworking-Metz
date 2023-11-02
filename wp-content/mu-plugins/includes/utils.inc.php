@@ -1,4 +1,26 @@
 <?php
+
+
+/**
+ * Diviser un tableau en sous-tableaux de taille fixe.
+ *
+ * @param array $input_array Le tableau à diviser.
+ * @param int $size La taille de chaque sous-tableau.
+ * @return array Un tableau de sous-tableaux.
+ */
+function slice_array_to_chunks($input_array, $size = 100) {
+    $output_array = [];
+    $array_length = count($input_array);
+
+    for ($i = 0; $i < $array_length; $i += $size) {
+        $output_array[] = array_slice($input_array, $i, $size);
+    }
+
+    return $output_array;
+}
+
+
+
 function pathTourl($path) {
     return str_replace(ABSPATH,site_url().'/', $path);
 }
