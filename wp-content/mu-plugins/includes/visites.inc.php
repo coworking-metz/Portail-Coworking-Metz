@@ -62,6 +62,37 @@ function getNbVisites()
 }
 
 /**
+ * Obtenir le nombre de visites
+ * 
+ * @return int Retourne le nombre de visites
+ */
+function getNbVisitesToday()
+{
+    return count(fetch_users_with_visite_today());
+}
+
+/**
+ * Obtenir et stocker les utilisateurs avec des visites aujourd'hui
+ *
+ * @return array Retourne une liste des utilisateurs avec des visites ce jour
+ */
+function fetch_users_with_visite_today()
+{
+    $today = date('Y-m-d'); // Format today's date
+
+    $users = fetch_users_with_future_visite();
+    $out = [];
+    foreach ($users as $user) {
+        $visite = get_field('visite', $user);
+        if (strstr($visite, $today)) {
+            $out[] = $user;
+        }
+    }
+    return $out;
+}
+
+
+/**
  * Obtenir et stocker les utilisateurs avec des visites futures dans un transitoire
  *
  * @return array Retourne une liste des utilisateurs avec des visites futures

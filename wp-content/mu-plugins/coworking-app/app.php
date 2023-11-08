@@ -42,6 +42,7 @@ function coworking_app_settings()
         'polaroid_default' => site_url() . '/images/pola-poule-vide.jpg',
         'occupation' => [
             'total' => 28,
+            'visites'=>getNbVisitesToday(),
             'presents' => count($presences)
         ]
     ];
