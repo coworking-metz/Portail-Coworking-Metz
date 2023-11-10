@@ -51,7 +51,7 @@ if ($_GET['custom'] ?? false) {
 
 // if (!isset($_GET['debug'])) $image_fond_pola = false;
 
-list($width, $height) = getimagesize('./images/pola-vide.png');
+list($width, $height) = getimagesize('./images/pola-vide-raw.png');
 $img = imagecreatetruecolor($width, $height);
 
 $bande = $height * 5.3 / 100;
@@ -123,7 +123,7 @@ imagedestroy($tmp);
  * AJout du cadre du pola vide au dessus de la photo 
  */
 // 4. Open the './images/pola-vide.png' file and place it on top of everything in $img
-$overlay = imagecreatefrompng('./images/pola-vide.png');
+$overlay = imagecreatefrompng('./images/pola-vide-raw.png');
 imagecopy($img, $overlay, 0, 0, 0, 0, $width, $height);
 imagedestroy($overlay);
 
