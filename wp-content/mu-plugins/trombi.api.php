@@ -13,6 +13,8 @@ add_action(
                 if (get_field('activer_avent', 'option')) {
                     $response['avent'] = get_field('avent', 'option');
                 }
+                $response['polaroids'] = get_field('polaroids', 'option');
+                $response['divers'] = get_field('divers', 'option');
                 return rest_ensure_response($response);
             },
         ));

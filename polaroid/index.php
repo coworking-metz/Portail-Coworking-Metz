@@ -1,11 +1,25 @@
 <?php
 
 
-$quality = 60;
+$quality = 90;
 $hd = $_GET['hd'] ?? false;
 $uid = $_GET['uid'] ?? false;
 $dynamique = isset($_GET['dynamique']);
+$anniversaire = !empty($_GET['anniversaire']);
 
+define('WP_USE_THEMES', false); // We don't want to use themes.
+require('../wp-load.php');
+require('./lib/utils.php');
+
+$options = get_field('polaroids', 'option');
+
+if ($anniversaire) {
+    $pola_source = $options['cadre_anniversaire'];
+} else {
+    $pola_source = $options['cadre'];
+}
+
+$pola_source = urlToPath($pola_source);
 // if ($uid) {
 //     $target = __DIR__ . '/' . $uid . ($hd ? '-hd' : '') . '.jpg';
 //     if (!$dynamique && file_exists($target)) {
@@ -13,10 +27,6 @@ $dynamique = isset($_GET['dynamique']);
 //     };
 // }
 
-
-define('WP_USE_THEMES', false); // We don't want to use themes.
-require('../wp-load.php');
-require('./lib/utils.php');
 
 
 
@@ -51,7 +61,7 @@ if ($_GET['custom'] ?? false) {
 
 // if (!isset($_GET['debug'])) $image_fond_pola = false;
 
-list($width, $height) = getimagesize('./images/pola-vide-raw.png');
+list($width, $height) = getimagesize($pola_source);
 $img = imagecreatetruecolor($width, $height);
 
 $bande = $height * 5.3 / 100;
@@ -123,7 +133,7 @@ imagedestroy($tmp);
  * AJout du cadre du pola vide au dessus de la photo 
  */
 // 4. Open the './images/pola-vide.png' file and place it on top of everything in $img
-$overlay = imagecreatefrompng('./images/pola-vide-raw.png');
+$overlay = imagecreatefrompng($pola_source);
 imagecopy($img, $overlay, 0, 0, 0, 0, $width, $height);
 imagedestroy($overlay);
 

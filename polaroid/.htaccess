@@ -7,7 +7,10 @@ RewriteBase /polaroid/
 
 
 RewriteCond %{SCRIPT_FILENAME} !-f
-RewriteRule ([0-9]+)-hd\.jpg index.php?uid=$1&hd=true [L,QSA]
+RewriteRule ([0-9]+)-hd\.jpg $1.jpg?hd=true [L,QSA]
+
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteRule ([0-9]+)-anniversaire\.jpg $1.jpg?anniversaire=true [L,QSA]
 
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteRule ([0-9]+)\.jpg index.php?uid=$1 [L,QSA]
