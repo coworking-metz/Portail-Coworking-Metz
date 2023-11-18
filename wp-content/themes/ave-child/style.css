@@ -7,15 +7,18 @@ Text Domain: ave
 a.acf-icon.-pencil.dark {
     display: none;
 }
+
 /* account coworker */
 .alerte {
     color: #D0342C;
 }
 
 /* WooCommerce */
-.woocommerce-additional-fields, .about_paypal {
+.woocommerce-additional-fields,
+.about_paypal {
     display: none;
 }
+
 .tickets-status {
     border: 1px solid #e0e1e0;
     background: #FFF;
@@ -23,6 +26,7 @@ a.acf-icon.-pencil.dark {
     border-radius: 8px;
     margin-bottom: 10px;
 }
+
 .tickets-status em {
     font-style: normal;
     color: #fff;
@@ -32,30 +36,37 @@ a.acf-icon.-pencil.dark {
     font-weight: bold;
     border-radius: 4px;
     margin: 0px 4px;
-    box-shadow: 1px 1px 2px rgba(0,0,0,.3);
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, .3);
 }
+
 .breadcrumbs {
     display: none !important;
 }
+
 /* Produit pour faire un don */
 .postid-22879 .ld-product-quantity {
     display: none !important;
 }
+
 table.variations.payyourprice_customize_class label {
     display: none !important;
 }
-.postid-22879 table, .postid-22879 tr {
+
+.postid-22879 table,
+.postid-22879 tr {
     border: 0px !important;
 }
 
-.page-id-23608 .ajax_add_to_cart{
+.page-id-23608 .ajax_add_to_cart {
     display: none !important;
 }
 
 .postid-3023 .ld-product-quantity {
     display: none !important;
 }
-.postid-3023 .woocommerce-tabs, .postid-3023a.added_to_cart.wc-forward {
+
+.postid-3023 .woocommerce-tabs,
+.postid-3023a.added_to_cart.wc-forward {
     display: none !important;
 }
 
@@ -65,9 +76,11 @@ table.variations.payyourprice_customize_class label {
 .chosen_holder {
     display: none;
 }
+
 .item_row.input_row.input_message.bookmify_fe_moving_input {
     display: none;
 }
+
 .item_row.just_info {
     display: none;
 }
@@ -78,15 +91,19 @@ table.variations.payyourprice_customize_class label {
     margin-top: 15px !important;
 }
 
-select.ui-datepicker-month, select.ui-datepicker-year{
-    color:#000000;
+select.ui-datepicker-month,
+select.ui-datepicker-year {
+    color: #000000;
 }
+
 label.wppb-rc-value {
     display: inline !important;
 }
-#wppb-edit-user label{
+
+#wppb-edit-user label {
     font-weight: 400 !important;
 }
+
 /* .woocommerce-form__label.woocommerce-form__label-for-checkbox.checkbox {
     display: none !important;
   } */
@@ -96,30 +113,51 @@ button.woocommerce-Button.button.digits_login_via_otp.dig_wc_mobileLogin {
     font-size: 24px !important;
     margin-bottom: 2em !important;
 }
-.woocommerce-form-login__rememberme{
+
+.woocommerce-form-login__rememberme {
     display: none !important;
 }
+
 #dig_man_resend_otp_btn {
     z-index: -1;
     float: right;
     font-size: 16px;
     font-weight: 700;
 }
-.dig_resendotp{
+
+.dig_resendotp {
     margin-top: -10px !important;
 }
+
 span.digor {
     display: none;
 }
 
 /* Remove content for mobile products */
 @media screen and (max-width: 991px) {
-    .titlebar-inner, a.woocommerce-product-gallery__trigger, .woocommerce-product-details__short-description, 
-    section.up-sells.upsells.products, section.related.products {
+
+    .titlebar-inner,
+    a.woocommerce-product-gallery__trigger,
+    .woocommerce-product-details__short-description,
+    section.up-sells.upsells.products,
+    section.related.products {
         display: none !important;
     }
+
     .woocommerce div.product div.images .woocommerce-product-gallery__wrapper {
         width: 33% !important;
         margin-bottom: 10px;
     }
-    }
+}
+
+
+body:not([data-edit-password="true"]) fieldset:has(.password-input) >p {
+    display: none;
+}
+
+body:not([data-edit-password="true"]) fieldset:has(.password-input):after {
+    cursor: pointer;
+    display: block;
+    text-decoration: underline;
+    content: 'Cliquez ici pour modifier votre mot de passer';
+}

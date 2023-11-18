@@ -9,6 +9,7 @@
  */
 add_filter('manage_users_sortable_columns', function ($columns) {
     $columns['visite'] = 'visite';
+    $columns['date_naissance'] = 'date_naissance';
     $columns['first_login_date'] = 'first_login_date';
     $columns['user_registered'] = 'user_registered';
     $columns['first_order_date'] = 'first_order_date';
@@ -28,6 +29,7 @@ add_filter('manage_users_sortable_columns', function ($columns) {
 add_filter('manage_users_columns', function ($columns) {
 
     $columns['votre_photo'] = 'Photo';
+    $columns['date_naissance'] = 'Anniversaire';
     $columns['visite'] = 'Visite';
     $columns['first_login_date'] = 'Premier login';
     $columns['user_registered'] = 'Inscription';
@@ -50,6 +52,9 @@ add_filter(
             if ($url) {
                 $value = '<a href="/polaroid/pdf.php?id=' . $user_id . '" target="_blank"><img src="' . $url . '" style="width:32px;height:32px;object-fit:cover;"></a>';
             }
+        } else
+        if ('date_naissance' === $column_name) {
+            $value = get_field('date_naissance', 'user_'.$user_id);
         } else
         if ('user_registered' === $column_name) {
             $user = get_userdata($user_id);
@@ -122,6 +127,9 @@ add_action('pre_get_users', function ($query) {
 
     if ($orderby == 'visite') {
         $query->set('meta_key', 'visite');
+        $query->set('orderby', 'meta_value');
+    } else if ($orderby == 'date_naissance') {
+        $query->set('meta_key', 'date_naissance');
         $query->set('orderby', 'meta_value');
     } else if ($orderby == 'last_order_date') {
         $query->set('meta_key', '_last_order_date');
