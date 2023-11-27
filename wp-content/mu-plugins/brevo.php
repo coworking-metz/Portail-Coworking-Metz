@@ -16,6 +16,7 @@ if (isset($_GET['brevo-notify'])) {
         exit;
     });
 }
+
 /**
  * Ajout du script brevo pour le chat sur les pages du site
  */

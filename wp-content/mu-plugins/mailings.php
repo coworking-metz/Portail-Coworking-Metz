@@ -44,7 +44,7 @@ function sync_unsubscribed_from_brevo_to_mailchimp() {
     Possibilité de suivre les appels à l'url de notify via ce request bin 
     https://eojss26rcl22wc9.m.pipedream.net (se connecter avec le gmail du cowo)
     */
-    print_r(brevo_start_unsubscribed()); 
+    brevo_start_unsubscribed(); 
 }
 function setup_daily_unsubscribes_brevo_to_mailchimp() {
     if (!wp_next_scheduled('sync_unsubscribed_from_brevo_to_mailchimp')) {
