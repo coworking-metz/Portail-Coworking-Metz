@@ -7,11 +7,14 @@ if ($id = $_POST['id'] ?? false) {
         $email = sha1(time());
     }
     $participe = $_POST['participe'] ?? false;
-    $participation = upsertParticipation($id, ['email' => $email, 'participe' => $participe, 'id_evenement' => $id]);
+    $nb = isset($_POST['nb']) ? $_POST['nb']+1 : 1;
+
+    $participation = upsertParticipation($id, ['email' => $email, 'participe' => $participe, 'id_evenement' => $id, 'nb' => $nb]);
     rediriger(urlEvenement($id) . '?email=' . urlencode($email));
 }
 
 $id = $_GET['id'] ?? false;
+$setNb = isset($_GET['set-nb']);
 $changer = isset($_GET['changer']);
 $email = $_GET['email'] ?? '';
 
@@ -29,9 +32,13 @@ $participe = $changer ? false : ($participation['participe'] ?? false);
 $titre = htmlspecialchars($evenement['evenement'] . ' - Participez à cet évenement !');
 $description = descriptionEvenement($evenement);
 $href = urlEvenement($id) . '?email=' . urlencode($email);
+
+$classes = [];
+
+if ($setNb) {
+    $classes[] = 'set-nb';
+}
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -86,11 +93,12 @@ $href = urlEvenement($id) . '?email=' . urlencode($email);
     <!-- Pico.css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
 
+    <script src="js/scripts.js"></script>
     <!-- Custom styles for this example -->
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
-<body>
+<body class="<?= implode(' ', $classes); ?>">
 
     <!-- Main -->
     <main class="container">
@@ -106,13 +114,17 @@ $href = urlEvenement($id) . '?email=' . urlencode($email);
                     </p>
                 </hgroup>
                 <?php if (!$changer) { ?>
-                <h2><b><?= texteParticipation($participation); ?></b></h2>
+                    <h2><b><?= texteParticipation($participation); ?></b></h2>
                 <?php } ?>
                 <form method="post">
                     <input type="hidden" name="id" value="<?= htmlspecialchars($id); ?>">
                     <?php if ($participe) { ?>
-                        <a href="<?= $href; ?>&changer" role="button">Modifier ma réponse</a>
-
+                        <?php if ($participe == 'ok' && $participation['nb'] == 1) { ?>
+                            <p>Vous venez à plusieurs ? <a href="<?= $href; ?>&changer&set-nb">Renseignez le nombre de personnes qui vont vous accompagner&hellip;</a></p>
+                        <?php } ?>
+                        <p>Changement de programme ?
+                            <a href="<?= $href; ?>&changer" _role="button">Modifiez votre réponse</a>
+                        </p>
                     <?php } else { ?>
                         <label>
                             <?php if ($participation) { ?>
@@ -121,6 +133,11 @@ $href = urlEvenement($id) . '?email=' . urlencode($email);
                                 <b>Vous participez ?</b>
                             <?php } ?>
                             <input type="<?= empty($email) || strstr($email, '@') ? 'email' : 'hidden'; ?>" name="email" placeholder="Votre email" value="<?= htmlspecialchars($email) ?>" />
+                            <small><a href="#set-nb" class="if-not-set-nb">Je viendrai accompagné&hellip;</a></small>
+                        </label>
+                        <label class="if-set-nb">
+                            <b>Combien de personnes vous accompagnent ?</b>
+                            <input type="number" name="nb" value="<?= $participation['nb']-1 ?>" />
                         </label>
                         <?php if ($participe != 'ok') { ?>
                             <button type="submit" name="participe" value="ok">Je participe</button>

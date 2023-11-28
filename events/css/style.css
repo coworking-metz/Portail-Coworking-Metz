@@ -125,3 +125,11 @@ article div:nth-of-type(2)>img {
 body>footer {
     padding: 1rem 0;
 }
+
+
+body:not(.set-nb) .if-set-nb {
+    display: none;
+}
+body.set-nb .if-not-set-nb {
+    display: none;
+}

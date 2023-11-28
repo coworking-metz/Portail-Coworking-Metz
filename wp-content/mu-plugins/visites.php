@@ -90,6 +90,17 @@ add_action('admin_bar_menu', function ($admin_bar) {
     $roles = $user_info->roles;
     if (!in_array('subscriber', $roles) && !in_array('bookmify-customer', $roles)) return;
 
+    
+
+    $admin_bar->add_menu(array(
+        'id'    => 'app_login_link',
+        'title' => 'Se connecter dans l\'app en tant que',
+        'href'  => app_login_link($user_id),
+        'meta'  => array(
+            'target' => '_blank',
+        ),
+    ));
+
     $admin_bar->add_menu(array(
         'id'    => 'finaliser',
         'title' => 'Finaliser le compte',

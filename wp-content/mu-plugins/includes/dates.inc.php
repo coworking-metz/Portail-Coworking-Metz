@@ -114,6 +114,7 @@ function isFuture($date)
  */
 function isToday($date)
 {
+    $date = date('Y-m-d', strtotime($date));
     $currentDate = date('Y-m-d');
     return ($date === $currentDate);
 }
