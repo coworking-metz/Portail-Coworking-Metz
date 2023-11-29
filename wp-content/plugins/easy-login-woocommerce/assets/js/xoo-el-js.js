@@ -224,16 +224,32 @@ jQuery(document).ready(function($){
 		}
 
 		openViaHash(){
+
 	  		var hash = $(location).attr('hash');
-	  		if( hash === '#login' ){
+
+	  		if( hash === '#login' || hash === '#register' ){
+
 	  			this.toggle('show');
+
+	  			//Clear hash
+	  			var uri = window.location.toString(),
+	  		 		clean_uri = uri.substring( 0, uri.indexOf("#") );
+	 
+	            window.history.replaceState(
+	            	{},
+	            	document.title, clean_uri
+	            );
+	  		}
+
+	  		if( hash === '#login' ){
 	  			this.$popup.find('.xoo-el-login-tgr').trigger('click');
 	  		}
 	  		else if( hash === '#register' ){
-	  			this.toggle('show');
 	  			this.$popup.find('.xoo-el-reg-tgr').trigger('click');
 	  		}
+    
 		}
+
 		
 	}
 

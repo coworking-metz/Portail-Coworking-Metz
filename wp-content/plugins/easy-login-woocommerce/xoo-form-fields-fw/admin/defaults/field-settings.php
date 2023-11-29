@@ -187,8 +187,6 @@ $field_settings = array(
 	'xoo_aff_password' => array(
 		'active',
 		'required',
-		'strength_meter',
-		'strength_meter_pass',
 		'show_label',
 		'label',
 		'cols',
@@ -196,6 +194,9 @@ $field_settings = array(
 		'placeholder',
 		'minlength',
 		'maxlength',
+		'strength_meter',
+		'strength_meter_pass',
+		'password_visibility',
 		'unique_id',
 		'class'
 	)

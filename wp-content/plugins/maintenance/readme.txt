@@ -2,8 +2,8 @@
 Contributors: WebFactory
 Tags: maintenance, maintenance mode, maintenance page, coming soon, coming soon page, under construction, under construction page, bunny fonts
 Requires at least: 4.0
-Tested up to: 6.1
-Stable tag: 4.07
+Tested up to: 6.4
+Stable tag: 4.08
 Requires PHP: 5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -91,9 +91,14 @@ Please post the question on the <a href="http://wordpress.org/support/plugin/mai
 
 
 == Changelog ==
+= v4.08 =
+- 2023/08/31
+- fixed reset password URL changed if Maintenance is off
+
 = v4.07 =
 - 2022/05/06
 - replaced Google Fonts with the privacy-oriented and GDPR compliant Bunny Fonts
+- minor fix for image field
 
 = v4.06 =
 - 2022/05/06

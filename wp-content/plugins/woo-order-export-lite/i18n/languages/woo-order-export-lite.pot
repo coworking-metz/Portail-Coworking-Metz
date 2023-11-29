@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced Order Export For WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-01 07:48+0000\n"
+"POT-Creation-Date: 2023-11-24 11:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -13,17 +13,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.3; wp-6.1.1\n"
+"X-Loco-Version: 2.6.6; wp-6.4.1\n"
 "X-Domain: woo-order-export-lite"
 
-#: classes/class-wc-order-export-admin.php:607
+#: classes/class-wc-order-export-admin.php:601
 #, php-format
 msgid "%s order marked."
 msgid_plural "%s orders marked."
 msgstr[0] ""
 msgstr[1] ""
 
-#: classes/class-wc-order-export-admin.php:616
+#: classes/class-wc-order-export-admin.php:610
 #, php-format
 msgid "%s order unmarked."
 msgid_plural "%s orders unmarked."
@@ -43,37 +43,36 @@ msgstr ""
 msgid "0 - auto scale"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:329
+#: classes/class-wc-order-export-admin.php:321
 msgid "1st row only"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor.php:1924
-#: classes/core/class-wc-order-export-data-extractor.php:1921
+#: classes/core/trait-woe-core-extractor.php:1147
 msgid "[Rest of the World]"
 msgstr ""
 
-#: view/settings-form.php:1640 view/settings-form.php:1654
+#: view/settings-form.php:1644 view/settings-form.php:1659
 msgid "Actions"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:324
+#: classes/class-wc-order-export-admin.php:316
 msgid "Add"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:317
+#: classes/class-wc-order-export-admin.php:309
 #, php-format
 msgid "Add %s fields"
 msgstr ""
 
-#: view/settings-form.php:1649
+#: view/settings-form.php:1653
 msgid "Add calculated field"
 msgstr ""
 
-#: view/settings-form.php:1657
+#: view/settings-form.php:1662
 msgid "Add fee"
 msgstr ""
 
-#: view/settings-form.php:1643
+#: view/settings-form.php:1647
 msgid "Add field"
 msgstr ""
 
@@ -81,45 +80,39 @@ msgstr ""
 msgid "Add links to images"
 msgstr ""
 
-#: view/settings-form.php:1660
+#: view/settings-form.php:1665
 msgid "Add shipping"
 msgstr ""
 
-#: view/settings-form.php:1646
+#: view/settings-form.php:1650
 msgid "Add static field"
 msgstr ""
 
-#: view/settings-form.php:1663
+#: view/settings-form.php:1668
 msgid "Add tax"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:868
-#: classes/core/class-wc-order-export-data-extractor-ui.php:868
+#: classes/core/trait-woe-core-extractor-ui.php:768
 msgid "Address 1 (Billing)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:958
-#: classes/core/class-wc-order-export-data-extractor-ui.php:958
+#: classes/core/trait-woe-core-extractor-ui.php:863
 msgid "Address 1 (Shipping)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:863
-#: classes/core/class-wc-order-export-data-extractor-ui.php:863
+#: classes/core/trait-woe-core-extractor-ui.php:763
 msgid "Address 1&2 (Billing)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:953
-#: classes/core/class-wc-order-export-data-extractor-ui.php:953
+#: classes/core/trait-woe-core-extractor-ui.php:858
 msgid "Address 1&2 (Shipping)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:873
-#: classes/core/class-wc-order-export-data-extractor-ui.php:873
+#: classes/core/trait-woe-core-extractor-ui.php:773
 msgid "Address 2 (Billing)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:963
-#: classes/core/class-wc-order-export-data-extractor-ui.php:963
+#: classes/core/trait-woe-core-extractor-ui.php:868
 msgid "Address 2 (Shipping)"
 msgstr ""
 
@@ -127,7 +120,7 @@ msgstr ""
 msgid "Advanced Order Export For WooCommerce"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:220
+#: classes/class-wc-order-export-admin.php:211
 msgid ""
 "Advanced Order Export For WooCommerce is available <a href=\"admin.php?"
 "page=wc-order-export\">on this page</a>."
@@ -141,11 +134,11 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:328
+#: classes/class-wc-order-export-admin.php:320
 msgid "all rows"
 msgstr ""
 
-#: view/settings-form.php:1371
+#: view/settings-form.php:1375
 msgid "Any coupon used"
 msgstr ""
 
@@ -157,7 +150,7 @@ msgstr ""
 msgid "Are you sure to continue?"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:325
+#: classes/class-wc-order-export-admin.php:317
 msgid "as"
 msgstr ""
 
@@ -169,14 +162,12 @@ msgstr ""
 msgid "Auto column width"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1390
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1414
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1390
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1414
+#: classes/core/trait-woe-core-extractor-ui.php:1300
+#: classes/core/trait-woe-core-extractor-ui.php:1324
 msgid "Billing Address"
 msgstr ""
 
-#: view/settings-form.php:1397
+#: view/settings-form.php:1401
 msgid "Billing locations"
 msgstr ""
 
@@ -203,45 +194,41 @@ msgstr ""
 msgid "Can't create temporary file"
 msgstr ""
 
-#: classes/admin/tabs/ajax/trait-wc-order-export-ajax-helpers.php:121
-msgid "Can't find exported file"
+#: classes/admin/tabs/ajax/trait-wc-order-export-ajax-helpers.php:129
+msgid ""
+"Can't find exported file. Try button \"Export [w/o progressbar]\" or contact "
+"to export support."
 msgstr ""
 
-#: view/settings-form.php:1700 view/settings-form.php:1721
-#: view/settings-form.php:1757 view/settings-form.php:1797
-#: view/settings-form.php:1819 view/settings-form.php:1850
-#: view/settings-form.php:1872 view/settings-form.php:1898
-#: view/settings-form.php:1921 view/settings-form.php:1943
-#: view/settings-form.php:1965 view/settings-form.php:1987
-#: view/settings-form.php:2017 view/settings-form.php:2047
-#: view/settings-form.php:2077
+#: view/settings-form.php:1705 view/settings-form.php:1726
+#: view/settings-form.php:1762 view/settings-form.php:1802
+#: view/settings-form.php:1824 view/settings-form.php:1855
+#: view/settings-form.php:1877 view/settings-form.php:1903
+#: view/settings-form.php:1926 view/settings-form.php:1948
+#: view/settings-form.php:1970 view/settings-form.php:1992
+#: view/settings-form.php:2022 view/settings-form.php:2052
+#: view/settings-form.php:2082
 msgid "Cancel"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1396
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1421
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1396
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1421
+#: classes/core/trait-woe-core-extractor-ui.php:1306
+#: classes/core/trait-woe-core-extractor-ui.php:1331
 msgid "Cart"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1219
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1219
+#: classes/core/trait-woe-core-extractor-ui.php:1129
 msgid "Cart Discount Amount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1224
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1224
+#: classes/core/trait-woe-core-extractor-ui.php:1134
 msgid "Cart Discount Amount Tax"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1254
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1254
+#: classes/core/trait-woe-core-extractor-ui.php:1164
 msgid "Cart Tax Amount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:418
-#: classes/core/class-wc-order-export-data-extractor-ui.php:418
+#: classes/core/trait-woe-core-extractor-ui.php:318
 msgid "Category"
 msgstr ""
 
@@ -257,37 +244,31 @@ msgstr ""
 msgid "Character encoding"
 msgstr ""
 
-#: view/settings-form.php:1401 view/settings-form.php:1451
+#: view/settings-form.php:1405 view/settings-form.php:1455
 msgid "City"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:878
-#: classes/core/class-wc-order-export-data-extractor-ui.php:878
+#: classes/core/trait-woe-core-extractor-ui.php:778
 msgid "City (Billing)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:968
-#: classes/core/class-wc-order-export-data-extractor-ui.php:968
+#: classes/core/trait-woe-core-extractor-ui.php:873
 msgid "City (Shipping)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:893
-#: classes/core/class-wc-order-export-data-extractor-ui.php:893
+#: classes/core/trait-woe-core-extractor-ui.php:793
 msgid "City, State Zip (Billing)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:983
-#: classes/core/class-wc-order-export-data-extractor-ui.php:983
+#: classes/core/trait-woe-core-extractor-ui.php:888
 msgid "City, State Zip (Shipping)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:888
-#: classes/core/class-wc-order-export-data-extractor-ui.php:888
+#: classes/core/trait-woe-core-extractor-ui.php:788
 msgid "City, State, Zip (Billing)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:978
-#: classes/core/class-wc-order-export-data-extractor-ui.php:978
+#: classes/core/trait-woe-core-extractor-ui.php:883
 msgid "City, State, Zip (Shipping)"
 msgstr ""
 
@@ -295,7 +276,7 @@ msgstr ""
 msgid "Cleanup phone (export only digits)"
 msgstr ""
 
-#: view/settings-form.php:2167
+#: view/settings-form.php:2172
 msgid "Click here to download"
 msgstr ""
 
@@ -303,16 +284,16 @@ msgstr ""
 msgid "code snippets"
 msgstr ""
 
-#: view/settings-form.php:1690 view/settings-form.php:1706
-#: view/settings-form.php:1747 view/settings-form.php:1789
-#: view/settings-form.php:1803 view/settings-form.php:1842
-#: view/settings-form.php:1856 view/settings-form.php:1889
-#: view/settings-form.php:1904 view/settings-form.php:1933
-#: view/settings-form.php:1955 view/settings-form.php:1977
+#: view/settings-form.php:1695 view/settings-form.php:1711
+#: view/settings-form.php:1752 view/settings-form.php:1794
+#: view/settings-form.php:1808 view/settings-form.php:1847
+#: view/settings-form.php:1861 view/settings-form.php:1894
+#: view/settings-form.php:1909 view/settings-form.php:1938
+#: view/settings-form.php:1960 view/settings-form.php:1982
 msgid "Column name"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:320
+#: classes/class-wc-order-export-admin.php:312
 msgid "columns"
 msgstr ""
 
@@ -336,37 +317,31 @@ msgstr ""
 msgid "comma separated list"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1388
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1412
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1388
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1412
+#: classes/core/trait-woe-core-extractor-ui.php:1298
+#: classes/core/trait-woe-core-extractor-ui.php:1322
 msgid "Common"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:858
-#: classes/core/class-wc-order-export-data-extractor-ui.php:858
+#: classes/core/trait-woe-core-extractor-ui.php:758
 msgid "Company (Billing)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:948
-#: classes/core/class-wc-order-export-data-extractor-ui.php:948
+#: classes/core/trait-woe-core-extractor-ui.php:853
 msgid "Company (Shipping)"
 msgstr ""
 
-#: view/settings-form.php:167
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:679
-#: classes/core/class-wc-order-export-data-extractor-ui.php:679
+#: view/settings-form.php:167 classes/core/trait-woe-core-extractor-ui.php:579
 msgid "Completed Date"
 msgstr ""
 
-#: view/settings-form.php:1698 view/settings-form.php:1719
-#: view/settings-form.php:1755 view/settings-form.php:1795
-#: view/settings-form.php:1817 view/settings-form.php:1848
-#: view/settings-form.php:1870 view/settings-form.php:1896
-#: view/settings-form.php:1918 view/settings-form.php:1940
-#: view/settings-form.php:1962 view/settings-form.php:1984
-#: view/settings-form.php:2014 view/settings-form.php:2044
-#: view/settings-form.php:2074
+#: view/settings-form.php:1703 view/settings-form.php:1724
+#: view/settings-form.php:1760 view/settings-form.php:1800
+#: view/settings-form.php:1822 view/settings-form.php:1853
+#: view/settings-form.php:1875 view/settings-form.php:1901
+#: view/settings-form.php:1923 view/settings-form.php:1945
+#: view/settings-form.php:1967 view/settings-form.php:1989
+#: view/settings-form.php:2019 view/settings-form.php:2049
+#: view/settings-form.php:2079
 msgid "Confirm"
 msgstr ""
 
@@ -380,42 +355,35 @@ msgid ""
 "install."
 msgstr ""
 
-#: view/settings-form.php:1404 view/settings-form.php:1454
+#: view/settings-form.php:1408 view/settings-form.php:1458
 msgid "Country"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:908
-#: classes/core/class-wc-order-export-data-extractor-ui.php:908
+#: classes/core/trait-woe-core-extractor-ui.php:808
 msgid "Country Code (Billing)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:998
-#: classes/core/class-wc-order-export-data-extractor-ui.php:998
+#: classes/core/trait-woe-core-extractor-ui.php:903
 msgid "Country Code (Shipping)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:913
-#: classes/core/class-wc-order-export-data-extractor-ui.php:913
+#: classes/core/trait-woe-core-extractor-ui.php:813
 msgid "Country Name (Billing)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1003
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1003
+#: classes/core/trait-woe-core-extractor-ui.php:908
 msgid "Country Name (Shipping)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:589
-#: classes/core/class-wc-order-export-data-extractor-ui.php:589
+#: classes/core/trait-woe-core-extractor-ui.php:489
 msgid "Coupon Amount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:560
-#: classes/core/class-wc-order-export-data-extractor-ui.php:560
+#: classes/core/trait-woe-core-extractor-ui.php:460
 msgid "Coupon Code"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:580
-#: classes/core/class-wc-order-export-data-extractor-ui.php:580
+#: classes/core/trait-woe-core-extractor-ui.php:480
 msgid "Coupon Description"
 msgstr ""
 
@@ -423,23 +391,19 @@ msgstr ""
 msgid "Coupon tag"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:584
-#: classes/core/class-wc-order-export-data-extractor-ui.php:584
+#: classes/core/trait-woe-core-extractor-ui.php:484
 msgid "Coupon Type"
 msgstr ""
 
-#: view/settings-form.php:1374
+#: view/settings-form.php:1378
 #: classes/admin/class-wc-order-export-manage.php:742
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1193
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1394
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1419
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1193
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1394
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1419
+#: classes/core/trait-woe-core-extractor-ui.php:1103
+#: classes/core/trait-woe-core-extractor-ui.php:1304
+#: classes/core/trait-woe-core-extractor-ui.php:1329
 msgid "Coupons"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:339
+#: classes/class-wc-order-export-admin.php:331
 msgid "coupons"
 msgstr ""
 
@@ -447,13 +411,11 @@ msgstr ""
 msgid "CSV options"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:669
-#: classes/core/class-wc-order-export-data-extractor-ui.php:669
+#: classes/core/trait-woe-core-extractor-ui.php:569
 msgid "Currency"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:674
-#: classes/core/class-wc-order-export-data-extractor-ui.php:674
+#: classes/core/trait-woe-core-extractor-ui.php:574
 msgid "Currency Symbol"
 msgstr ""
 
@@ -465,7 +427,7 @@ msgstr ""
 msgid "Custom css"
 msgstr ""
 
-#: view/settings-form.php:1011 view/settings-form.php:1322
+#: view/settings-form.php:1012 view/settings-form.php:1325
 msgid "Custom fields"
 msgstr ""
 
@@ -473,85 +435,68 @@ msgstr ""
 msgid "Custom PHP code to modify output"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1389
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1413
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1389
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1413
+#: classes/core/trait-woe-core-extractor-ui.php:1299
+#: classes/core/trait-woe-core-extractor-ui.php:1323
 msgid "Customer"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:768
-#: classes/core/class-wc-order-export-data-extractor-ui.php:768
+#: classes/core/trait-woe-core-extractor-ui.php:668
 msgid "Customer first order date"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:723
-#: classes/core/class-wc-order-export-data-extractor-ui.php:723
+#: classes/core/trait-woe-core-extractor-ui.php:623
 msgid "Customer IP address"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:773
-#: classes/core/class-wc-order-export-data-extractor-ui.php:773
+#: classes/core/trait-woe-core-extractor-ui.php:673
 msgid "Customer last order date"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:694
-#: classes/core/class-wc-order-export-data-extractor-ui.php:694
+#: classes/core/trait-woe-core-extractor-ui.php:594
 msgid "Customer Note"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:758
-#: classes/core/class-wc-order-export-data-extractor-ui.php:758
+#: classes/core/trait-woe-core-extractor-ui.php:658
 msgid "Customer Paid Orders"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:748
-#: classes/core/class-wc-order-export-data-extractor-ui.php:748
+#: classes/core/trait-woe-core-extractor-ui.php:648
 msgid "Customer Role"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:753
-#: classes/core/class-wc-order-export-data-extractor-ui.php:753
+#: classes/core/trait-woe-core-extractor-ui.php:653
 msgid "Customer Total Orders"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:763
-#: classes/core/class-wc-order-export-data-extractor-ui.php:763
+#: classes/core/trait-woe-core-extractor-ui.php:663
 msgid "Customer Total Spent"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:743
-#: classes/core/class-wc-order-export-data-extractor-ui.php:743
+#: classes/core/trait-woe-core-extractor-ui.php:643
 msgid "Customer User Email"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:728
-#: classes/core/class-wc-order-export-data-extractor-ui.php:728
+#: classes/core/trait-woe-core-extractor-ui.php:628
 msgid "Customer User ID"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:733
-#: classes/core/class-wc-order-export-data-extractor-ui.php:733
+#: classes/core/trait-woe-core-extractor-ui.php:633
 msgid "Customer Username"
 msgstr ""
 
-#: view/settings-form.php:750
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1446
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1446
+#: view/settings-form.php:750 classes/core/trait-woe-core-extractor-ui.php:1356
 msgid "Date"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:397
+#: classes/class-wc-order-export-admin.php:390
 msgid "Date From is greater than Date To"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:689
-#: classes/core/class-wc-order-export-data-extractor-ui.php:689
+#: classes/core/trait-woe-core-extractor-ui.php:589
 msgid "Date of first refund"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:654
-#: classes/core/class-wc-order-export-data-extractor-ui.php:654
+#: classes/core/trait-woe-core-extractor-ui.php:554
 msgid "Date of original order"
 msgstr ""
 
@@ -563,27 +508,23 @@ msgstr ""
 msgid "Descending"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:478
-#: classes/core/class-wc-order-export-data-extractor-ui.php:478
+#: classes/core/trait-woe-core-extractor-ui.php:378
 msgid "Description"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:565
-#: classes/core/class-wc-order-export-data-extractor-ui.php:565
+#: classes/core/trait-woe-core-extractor-ui.php:465
 msgid "Discount Amount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:575
-#: classes/core/class-wc-order-export-data-extractor-ui.php:575
+#: classes/core/trait-woe-core-extractor-ui.php:475
 msgid "Discount Amount + Tax"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:570
-#: classes/core/class-wc-order-export-data-extractor-ui.php:570
+#: classes/core/trait-woe-core-extractor-ui.php:470
 msgid "Discount Amount Tax"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:230
+#: classes/class-wc-order-export-admin.php:221
 msgid "Docs"
 msgstr ""
 
@@ -614,49 +555,49 @@ msgstr ""
 msgid "Don't put page break between order lines"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:463
-#: classes/core/class-wc-order-export-data-extractor-ui.php:463
+#: classes/core/trait-woe-core-extractor-ui.php:363
 msgid "Download URL"
 msgstr ""
 
-#: view/settings-form.php:1601
+#: view/settings-form.php:1655
+msgid "Drag a field to list of exported fields"
+msgstr ""
+
+#: view/settings-form.php:1605
 msgid "Drag rows to reorder exported fields"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-order-fields.php:447
-#: classes/core/class-wc-order-export-order-fields.php:431
+#: classes/core-hpos/class-wc-order-export-order-fields.php:475
+#: classes/core/class-wc-order-export-order-fields.php:448
 msgid "Edit order"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:918
-#: classes/core/class-wc-order-export-data-extractor-ui.php:918
+#: classes/core/trait-woe-core-extractor-ui.php:818
 msgid "Email (Billing)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:528
-#: classes/core/class-wc-order-export-data-extractor-ui.php:528
+#: classes/core/trait-woe-core-extractor-ui.php:428
 msgid "Embedded Product Image"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:401
-#: classes/core-hpos/class-wc-order-export-data-extractor.php:317
-#: classes/core/class-wc-order-export-data-extractor.php:316
+#: classes/class-wc-order-export-admin.php:394
+#: classes/core/trait-woe-core-extractor.php:171
 msgid "empty"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:390
+#: classes/class-wc-order-export-admin.php:383
 msgid "empty column name"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:391
+#: classes/class-wc-order-export-admin.php:384
 msgid "empty meta key"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:502
+#: classes/class-wc-order-export-admin.php:495
 msgid "Empty method"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:395
+#: classes/class-wc-order-export-admin.php:388
 msgid "empty value"
 msgstr ""
 
@@ -676,15 +617,15 @@ msgstr ""
 msgid "End tag"
 msgstr ""
 
-#: view/settings-form.php:1271
+#: view/settings-form.php:1274
 msgid "Exclude products"
 msgstr ""
 
-#: view/settings-form.php:2134
+#: view/settings-form.php:2139
 msgid "Export"
 msgstr ""
 
-#: view/settings-form.php:2138
+#: view/settings-form.php:2143
 msgid "Export [w/o progressbar]"
 msgstr ""
 
@@ -692,11 +633,11 @@ msgstr ""
 msgid "Export all order notes"
 msgstr ""
 
-#: view/settings-form.php:1063
+#: view/settings-form.php:1065
 msgid "Export all products from the order"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:552
+#: classes/class-wc-order-export-admin.php:546
 #, php-format
 msgid "Export as %s"
 msgstr ""
@@ -719,14 +660,14 @@ msgstr ""
 msgid "Export now"
 msgstr ""
 
-#: view/settings-form.php:1497
+#: view/settings-form.php:1501
 msgid "Export only matched product items"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:247
-#: classes/class-wc-order-export-admin.php:248
-#: classes/class-wc-order-export-admin.php:253
-#: classes/class-wc-order-export-admin.php:254
+#: classes/class-wc-order-export-admin.php:238
+#: classes/class-wc-order-export-admin.php:239
+#: classes/class-wc-order-export-admin.php:244
+#: classes/class-wc-order-export-admin.php:245
 msgid "Export Orders"
 msgstr ""
 
@@ -746,21 +687,20 @@ msgstr ""
 msgid "Export settings"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:135
+#: classes/class-wc-order-export-admin.php:126
 msgid "Export Status"
 msgstr ""
 
-#: view/settings-form.php:2150
+#: view/settings-form.php:2155
 #, php-format
 msgid "Export total: %s orders"
 msgstr ""
 
-#: view/settings-form.php:995
+#: view/settings-form.php:996
 msgid "Export unmarked orders only"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1172
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1172
+#: classes/core/trait-woe-core-extractor-ui.php:1082
 msgid "Exported items"
 msgstr ""
 
@@ -768,7 +708,7 @@ msgstr ""
 msgid "Express export"
 msgstr ""
 
-#: view/settings-form.php:1927
+#: view/settings-form.php:1932
 msgid "Fee name"
 msgstr ""
 
@@ -780,23 +720,23 @@ msgstr ""
 msgid "Field format"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:327
+#: classes/class-wc-order-export-admin.php:319
 msgid "Fill order columns for"
 msgstr ""
 
-#: view/settings-form.php:1392
+#: view/settings-form.php:1396
 msgid "Filter by billing"
 msgstr ""
 
-#: view/settings-form.php:1365
+#: view/settings-form.php:1369
 msgid "Filter by coupon"
 msgstr ""
 
-#: view/settings-form.php:1292
+#: view/settings-form.php:1295
 msgid "Filter by customer"
 msgstr ""
 
-#: view/settings-form.php:1492
+#: view/settings-form.php:1496
 msgid "Filter by item and metadata"
 msgstr ""
 
@@ -804,11 +744,11 @@ msgstr ""
 msgid "Filter by order"
 msgstr ""
 
-#: view/settings-form.php:1058
+#: view/settings-form.php:1060
 msgid "Filter by product"
 msgstr ""
 
-#: view/settings-form.php:1442
+#: view/settings-form.php:1446
 msgid "Filter by shipping"
 msgstr ""
 
@@ -816,13 +756,11 @@ msgstr ""
 msgid "Filter orders by"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:843
-#: classes/core/class-wc-order-export-data-extractor-ui.php:843
+#: classes/core/trait-woe-core-extractor-ui.php:743
 msgid "First Name (Billing)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:933
-#: classes/core/class-wc-order-export-data-extractor-ui.php:933
+#: classes/core/trait-woe-core-extractor-ui.php:838
 msgid "First Name (Shipping)"
 msgstr ""
 
@@ -866,30 +804,35 @@ msgstr ""
 msgid "Fri"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:853
-#: classes/core/class-wc-order-export-data-extractor-ui.php:853
+#: classes/core/trait-woe-core-extractor-ui.php:918
+msgid "Full Address (Shipping)"
+msgstr ""
+
+#: classes/core/trait-woe-core-extractor-ui.php:828
+msgid "Full Adress (Billing)"
+msgstr ""
+
+#: classes/core/trait-woe-core-extractor-ui.php:753
 msgid "Full Name (Billing)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:943
-#: classes/core/class-wc-order-export-data-extractor-ui.php:943
+#: classes/core/trait-woe-core-extractor-ui.php:848
 msgid "Full Name (Shipping)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:488
-#: classes/core/class-wc-order-export-data-extractor-ui.php:488
+#: classes/core/trait-woe-core-extractor-ui.php:388
 msgid "Full names for categories"
 msgstr ""
 
-#: view/settings-form.php:2172
+#: view/settings-form.php:2177
 msgid "Generating file..."
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:332
+#: classes/class-wc-order-export-admin.php:324
 msgid "Grouping by coupon"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:331
+#: classes/class-wc-order-export-admin.php:323
 msgid "Grouping by product"
 msgstr ""
 
@@ -901,8 +844,7 @@ msgstr ""
 msgid "Header text color"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:438
-#: classes/core/class-wc-order-export-data-extractor-ui.php:438
+#: classes/core/trait-woe-core-extractor-ui.php:338
 msgid "Height"
 msgstr ""
 
@@ -914,9 +856,9 @@ msgstr ""
 msgid "helpdesk system"
 msgstr ""
 
-#: view/settings-form.php:1686 view/settings-form.php:1743
-#: view/settings-form.php:1773 view/settings-form.php:1837
-#: view/settings-form.php:1880
+#: view/settings-form.php:1691 view/settings-form.php:1748
+#: view/settings-form.php:1778 view/settings-form.php:1842
+#: view/settings-form.php:1885
 msgid "Hide unused fields"
 msgstr ""
 
@@ -928,7 +870,7 @@ msgstr ""
 msgid "https://algolplus.com/"
 msgstr ""
 
-#: view/settings-form.php:2114
+#: view/settings-form.php:2119
 #, php-format
 msgid ""
 "If you see this message after page load, user interface won't work correctly!"
@@ -936,13 +878,11 @@ msgid ""
 "it). Probably, it's a conflict with another plugin or active theme."
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1447
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1447
+#: classes/core/trait-woe-core-extractor-ui.php:1357
 msgid "Image"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:468
-#: classes/core/class-wc-order-export-data-extractor-ui.php:468
+#: classes/core/trait-woe-core-extractor-ui.php:368
 msgid "Image URL"
 msgstr ""
 
@@ -964,74 +904,63 @@ msgstr ""
 msgid "Import settings"
 msgstr ""
 
-#: view/settings-form.php:2139
+#: view/settings-form.php:2144
 msgid "It might not work for huge datasets!"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1035
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1035
+#: classes/core/trait-woe-core-extractor-ui.php:945
 msgid "Item #"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1055
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1055
+#: classes/core/trait-woe-core-extractor-ui.php:965
 msgid "Item Cost"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1060
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1060
+#: classes/core/trait-woe-core-extractor-ui.php:970
 msgid "Item Cost (inc. tax)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1065
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1065
+#: classes/core/trait-woe-core-extractor-ui.php:975
 msgid "Item Cost Before Discount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1120
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1120
+#: classes/core/trait-woe-core-extractor-ui.php:1030
 msgid "Item Discount Amount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1145
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1145
+#: classes/core/trait-woe-core-extractor-ui.php:1055
 msgid "Item Discount Amount + Tax"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1140
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1140
+#: classes/core/trait-woe-core-extractor-ui.php:1050
 msgid "Item Discount Tax"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1130
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1130
+#: classes/core/trait-woe-core-extractor-ui.php:1040
 msgid "Item download URL"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1030
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1030
+#: classes/core/trait-woe-core-extractor-ui.php:940
 msgid "Item ID"
 msgstr ""
 
-#: view/settings-form.php:1235
+#: view/settings-form.php:1238
 msgid "Item meta data"
 msgstr ""
 
-#: view/settings-form.php:1534
+#: view/settings-form.php:1538
 msgid "Item metadata"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1040
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1040
+#: classes/core/trait-woe-core-extractor-ui.php:950
 msgid "Item Name"
 msgstr ""
 
-#: view/settings-form.php:1501
+#: view/settings-form.php:1505
 msgid "Item names"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1125
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1125
+#: classes/core/trait-woe-core-extractor-ui.php:1035
 msgid "Item Tax Rate"
 msgstr ""
 
@@ -1051,8 +980,8 @@ msgstr ""
 msgid "L,C or R. Comma separated list"
 msgstr ""
 
-#: view/settings-form.php:2005 view/settings-form.php:2035
-#: view/settings-form.php:2065
+#: view/settings-form.php:2010 view/settings-form.php:2040
+#: view/settings-form.php:2070
 msgid "Label"
 msgstr ""
 
@@ -1060,13 +989,11 @@ msgstr ""
 msgid "Landscape"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:848
-#: classes/core/class-wc-order-export-data-extractor-ui.php:848
+#: classes/core/trait-woe-core-extractor-ui.php:748
 msgid "Last Name (Billing)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:938
-#: classes/core/class-wc-order-export-data-extractor-ui.php:938
+#: classes/core/trait-woe-core-extractor-ui.php:843
 msgid "Last Name (Shipping)"
 msgstr ""
 
@@ -1078,8 +1005,7 @@ msgstr ""
 msgid "Legal"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:433
-#: classes/core/class-wc-order-export-data-extractor-ui.php:433
+#: classes/core/trait-woe-core-extractor-ui.php:333
 msgid "Length"
 msgstr ""
 
@@ -1091,18 +1017,15 @@ msgstr ""
 msgid "Line Break"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:629
-#: classes/core/class-wc-order-export-data-extractor-ui.php:629
+#: classes/core/trait-woe-core-extractor-ui.php:529
 msgid "Line number"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1448
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1448
+#: classes/core/trait-woe-core-extractor-ui.php:1358
 msgid "Link"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:704
-#: classes/core/class-wc-order-export-data-extractor-ui.php:704
+#: classes/core/trait-woe-core-extractor-ui.php:604
 msgid "Link to edit order"
 msgstr ""
 
@@ -1128,21 +1051,21 @@ msgstr ""
 msgid "Main SQL queries are listed below"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:558
+#: classes/class-wc-order-export-admin.php:552
 msgid "Mark exported"
 msgstr ""
 
-#: view/settings-form.php:991
+#: view/settings-form.php:992
 msgid "Mark exported orders"
 msgstr ""
 
-#: view/settings-form.php:1670 view/settings-form.php:1727
-#: view/settings-form.php:1877 view/settings-form.php:1999
-#: view/settings-form.php:2029 view/settings-form.php:2059
+#: view/settings-form.php:1675 view/settings-form.php:1732
+#: view/settings-form.php:1882 view/settings-form.php:2004
+#: view/settings-form.php:2034 view/settings-form.php:2064
 msgid "Meta key"
 msgstr ""
 
-#: view/settings-form.php:2121
+#: view/settings-form.php:2126
 msgid "Might be different from actual export!"
 msgstr ""
 
@@ -1151,8 +1074,7 @@ msgid "Misc settings"
 msgstr ""
 
 #: view/settings-form.php:153 view/settings-form.php:810
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:659
-#: classes/core/class-wc-order-export-data-extractor-ui.php:659
+#: classes/core/trait-woe-core-extractor-ui.php:559
 msgid "Modification Date"
 msgstr ""
 
@@ -1160,8 +1082,7 @@ msgstr ""
 msgid "Mon"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1444
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1444
+#: classes/core/trait-woe-core-extractor-ui.php:1354
 msgid "Money"
 msgstr ""
 
@@ -1178,125 +1099,106 @@ msgstr ""
 msgid "No page numbers"
 msgstr ""
 
-#: classes/formats/class-woe-formatter-pdf.php:177
-#: classes/formats/class-woe-formatter-html.php:152
+#: classes/formats/class-woe-formatter-pdf.php:180
+#: classes/formats/class-woe-formatter-html.php:156
 #: classes/formats/abstract-class-woe-formatter-sv.php:108
-#: classes/formats/class-woe-formatter-xls.php:221
+#: classes/formats/class-woe-formatter-xls.php:232
 msgid "No results"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:493
-#: classes/core/class-wc-order-export-data-extractor-ui.php:493
+#: classes/core/trait-woe-core-extractor-ui.php:393
 msgid "Non variation attributes"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:399
+#: classes/class-wc-order-export-admin.php:392
 #: classes/admin/tabs/ajax/trait-wc-order-export-admin-tab-abstract-ajax-export.php:127
 msgid "Nothing to export. Please, adjust your filters"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1445
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1445
+#: classes/core/trait-woe-core-extractor-ui.php:1355
 msgid "Number"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1214
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1214
+#: classes/core/trait-woe-core-extractor-ui.php:1124
 msgid "Number of coupons used"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:321
+#: classes/class-wc-order-export-admin.php:313
 msgid "one row"
 msgstr ""
 
-#: view/settings-form.php:1776
+#: view/settings-form.php:1781
 msgid "OR"
 msgstr ""
 
-#: view/settings-form.php:1681 view/settings-form.php:1738
-#: view/settings-form.php:1768 view/settings-form.php:1832
-#: view/settings-form.php:1886
+#: view/settings-form.php:1686 view/settings-form.php:1743
+#: view/settings-form.php:1773 view/settings-form.php:1837
+#: view/settings-form.php:1891
 msgid "or type meta key here"
 msgstr ""
 
 #: view/settings-form.php:146 view/settings-form.php:809
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:649
-#: classes/core/class-wc-order-export-data-extractor-ui.php:649
+#: classes/core/trait-woe-core-extractor-ui.php:549
 msgid "Order Date"
 msgstr ""
 
-#: view/settings-form.php:808
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:634
-#: classes/core/class-wc-order-export-data-extractor-ui.php:634
+#: view/settings-form.php:808 classes/core/trait-woe-core-extractor-ui.php:534
 msgid "Order ID"
 msgstr ""
 
-#: view/settings-form.php:1826
+#: view/settings-form.php:1831
 msgid "Order item fields"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1135
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1135
+#: classes/core/trait-woe-core-extractor-ui.php:1045
 msgid "Order Item Metadata"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1070
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1070
+#: classes/core/trait-woe-core-extractor-ui.php:980
 msgid "Order Line (w/o tax)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1090
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1090
+#: classes/core/trait-woe-core-extractor-ui.php:1000
 msgid "Order Line Subtotal"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1095
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1095
+#: classes/core/trait-woe-core-extractor-ui.php:1005
 msgid "Order Line Subtotal Tax"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1075
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1075
+#: classes/core/trait-woe-core-extractor-ui.php:985
 msgid "Order Line Tax"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1085
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1085
+#: classes/core/trait-woe-core-extractor-ui.php:995
 msgid "Order Line Tax (- Refund)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1080
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1080
+#: classes/core/trait-woe-core-extractor-ui.php:990
 msgid "Order Line Tax Refunded"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1100
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1100
+#: classes/core/trait-woe-core-extractor-ui.php:1010
 msgid "Order Line Total"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1115
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1115
+#: classes/core/trait-woe-core-extractor-ui.php:1025
 msgid "Order Line Total (- Refund)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1105
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1105
+#: classes/core/trait-woe-core-extractor-ui.php:1015
 msgid "Order Line Total (include tax)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1110
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1110
+#: classes/core/trait-woe-core-extractor-ui.php:1020
 msgid "Order Line Total Refunded"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:699
-#: classes/core/class-wc-order-export-data-extractor-ui.php:699
+#: classes/core/trait-woe-core-extractor-ui.php:599
 msgid "Order Notes"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:639
-#: classes/core/class-wc-order-export-data-extractor-ui.php:639
+#: classes/core/trait-woe-core-extractor-ui.php:539
 msgid "Order Number"
 msgstr ""
 
@@ -1304,48 +1206,39 @@ msgstr ""
 msgid "Order Refund"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1329
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1329
+#: classes/core/trait-woe-core-extractor-ui.php:1239
 msgid "Order Refund Amount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1289
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1289
+#: classes/core/trait-woe-core-extractor-ui.php:1199
 msgid "Order Shipping + Tax Amount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1284
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1284
+#: classes/core/trait-woe-core-extractor-ui.php:1194
 msgid "Order Shipping Amount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1299
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1299
+#: classes/core/trait-woe-core-extractor-ui.php:1209
 msgid "Order Shipping Amount (- Refund)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1294
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1294
+#: classes/core/trait-woe-core-extractor-ui.php:1204
 msgid "Order Shipping Amount Refunded"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1304
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1304
+#: classes/core/trait-woe-core-extractor-ui.php:1214
 msgid "Order Shipping Tax Amount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1314
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1314
+#: classes/core/trait-woe-core-extractor-ui.php:1224
 msgid "Order Shipping Tax Amount (- Refund)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1309
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1309
+#: classes/core/trait-woe-core-extractor-ui.php:1219
 msgid "Order Shipping Tax Refunded"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:644
-#: classes/core/class-wc-order-export-data-extractor-ui.php:644
+#: classes/core/trait-woe-core-extractor-ui.php:544
 msgid "Order Status"
 msgstr ""
 
@@ -1353,7 +1246,7 @@ msgstr ""
 msgid "Order status"
 msgstr ""
 
-#: view/settings-form.php:997
+#: view/settings-form.php:998
 msgid "Order statuses"
 msgstr ""
 
@@ -1361,28 +1254,23 @@ msgstr ""
 msgid "Order Subscription"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1239
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1239
+#: classes/core/trait-woe-core-extractor-ui.php:1149
 msgid "Order Subtotal - Cart Discount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1229
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1229
+#: classes/core/trait-woe-core-extractor-ui.php:1139
 msgid "Order Subtotal Amount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1249
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1249
+#: classes/core/trait-woe-core-extractor-ui.php:1159
 msgid "Order Subtotal Amount (- Refund)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1234
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1234
+#: classes/core/trait-woe-core-extractor-ui.php:1144
 msgid "Order Subtotal Amount + Cart Tax"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1244
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1244
+#: classes/core/trait-woe-core-extractor-ui.php:1154
 msgid "Order Subtotal Amount Refunded"
 msgstr ""
 
@@ -1390,38 +1278,31 @@ msgstr ""
 msgid "Order tag"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1339
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1339
+#: classes/core/trait-woe-core-extractor-ui.php:1249
 msgid "Order Total Amount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1334
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1334
+#: classes/core/trait-woe-core-extractor-ui.php:1244
 msgid "Order Total Amount (- Refund)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1344
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1344
+#: classes/core/trait-woe-core-extractor-ui.php:1254
 msgid "Order Total Amount without Tax"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1324
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1324
+#: classes/core/trait-woe-core-extractor-ui.php:1234
 msgid "Order Total Fee"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1349
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1349
+#: classes/core/trait-woe-core-extractor-ui.php:1259
 msgid "Order Total Tax Amount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1359
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1359
+#: classes/core/trait-woe-core-extractor-ui.php:1269
 msgid "Order Total Tax Amount (- Refund)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1354
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1354
+#: classes/core/trait-woe-core-extractor-ui.php:1264
 msgid "Order Total Tax Amount Refunded"
 msgstr ""
 
@@ -1430,7 +1311,7 @@ msgid "Order Type"
 msgstr ""
 
 #: classes/admin/class-wc-order-export-manage.php:250
-#: classes/formats/class-woe-formatter-xls.php:356
+#: classes/formats/class-woe-formatter-xls.php:367
 msgid "Orders"
 msgstr ""
 
@@ -1442,17 +1323,13 @@ msgstr ""
 msgid "Orientation"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1395
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1420
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1395
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1420
+#: classes/core/trait-woe-core-extractor-ui.php:1305
+#: classes/core/trait-woe-core-extractor-ui.php:1330
 msgid "Other items"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1399
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1424
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1399
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1424
+#: classes/core/trait-woe-core-extractor-ui.php:1309
+#: classes/core/trait-woe-core-extractor-ui.php:1334
 msgid "Others"
 msgstr ""
 
@@ -1495,9 +1372,7 @@ msgstr ""
 msgid "Page size"
 msgstr ""
 
-#: view/settings-form.php:160
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:684
-#: classes/core/class-wc-order-export-data-extractor-ui.php:684
+#: view/settings-form.php:160 classes/core/trait-woe-core-extractor-ui.php:584
 msgid "Paid Date"
 msgstr ""
 
@@ -1507,17 +1382,15 @@ msgid ""
 "install."
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1209
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1209
+#: classes/core/trait-woe-core-extractor-ui.php:1119
 msgid "Payment Method"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1204
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1204
+#: classes/core/trait-woe-core-extractor-ui.php:1114
 msgid "Payment Method Title"
 msgstr ""
 
-#: view/settings-form.php:1426
+#: view/settings-form.php:1430
 msgid "Payment methods"
 msgstr ""
 
@@ -1525,13 +1398,11 @@ msgstr ""
 msgid "PDF options"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:923
-#: classes/core/class-wc-order-export-data-extractor-ui.php:923
+#: classes/core/trait-woe-core-extractor-ui.php:823
 msgid "Phone (Billing)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1008
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1008
+#: classes/core/trait-woe-core-extractor-ui.php:913
 msgid "Phone (Shipping)"
 msgstr ""
 
@@ -1547,8 +1418,7 @@ msgid ""
 "Order Export For WooCommerce!"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1454
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1454
+#: classes/core/trait-woe-core-extractor-ui.php:1364
 msgid "Please, choose the template"
 msgstr ""
 
@@ -1567,7 +1437,7 @@ msgstr ""
 msgid "Please, review %s at first."
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:398
+#: classes/class-wc-order-export-admin.php:391
 msgid "Please, set up fields to export"
 msgstr ""
 
@@ -1575,17 +1445,15 @@ msgstr ""
 msgid "Portrait"
 msgstr ""
 
-#: view/settings-form.php:1403 view/settings-form.php:1453
+#: view/settings-form.php:1407 view/settings-form.php:1457
 msgid "Postcode"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:903
-#: classes/core/class-wc-order-export-data-extractor-ui.php:903
+#: classes/core/trait-woe-core-extractor-ui.php:803
 msgid "Postcode (Billing)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:993
-#: classes/core/class-wc-order-export-data-extractor-ui.php:993
+#: classes/core/trait-woe-core-extractor-ui.php:898
 msgid "Postcode (Shipping)"
 msgstr ""
 
@@ -1593,15 +1461,15 @@ msgstr ""
 msgid "Prepend XML"
 msgstr ""
 
-#: view/settings-form.php:2166
+#: view/settings-form.php:2171
 msgid "Press 'Esc' to cancel the export"
 msgstr ""
 
-#: view/settings-form.php:2120
+#: view/settings-form.php:2125
 msgid "Preview"
 msgstr ""
 
-#: view/settings-form.php:2152
+#: view/settings-form.php:2157
 msgid "Preview size"
 msgstr ""
 
@@ -1610,40 +1478,35 @@ msgstr ""
 msgid "Pro version"
 msgstr ""
 
-#: view/settings-form.php:1069
+#: view/settings-form.php:1071
 msgid "Product categories"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:408
-#: classes/core/class-wc-order-export-data-extractor-ui.php:408
+#: classes/core/trait-woe-core-extractor-ui.php:308
 msgid "Product Current Price"
 msgstr ""
 
-#: view/settings-form.php:1159
+#: view/settings-form.php:1161
 msgid "Product custom fields"
 msgstr ""
 
-#: view/settings-form.php:1762
+#: view/settings-form.php:1767
 msgid "Product fields"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:378
-#: classes/core/class-wc-order-export-data-extractor-ui.php:378
+#: classes/core/trait-woe-core-extractor-ui.php:278
 msgid "Product Id"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:383
-#: classes/core/class-wc-order-export-data-extractor-ui.php:383
+#: classes/core/trait-woe-core-extractor-ui.php:283
 msgid "Product Name"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:388
-#: classes/core/class-wc-order-export-data-extractor-ui.php:388
+#: classes/core/trait-woe-core-extractor-ui.php:288
 msgid "Product Name (main)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1417
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1417
+#: classes/core/trait-woe-core-extractor-ui.php:1327
 msgid "Product order items"
 msgstr ""
 
@@ -1651,17 +1514,15 @@ msgstr ""
 msgid "Product rows start with a new line"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:403
-#: classes/core/class-wc-order-export-data-extractor-ui.php:403
+#: classes/core/trait-woe-core-extractor-ui.php:303
 msgid "Product Seller"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:473
-#: classes/core/class-wc-order-export-data-extractor-ui.php:473
+#: classes/core/trait-woe-core-extractor-ui.php:373
 msgid "Product Shipping Class"
 msgstr ""
 
-#: view/settings-form.php:1118
+#: view/settings-form.php:1120
 msgid "Product SKU"
 msgstr ""
 
@@ -1669,39 +1530,32 @@ msgstr ""
 msgid "Product tag"
 msgstr ""
 
-#: view/settings-form.php:1124
+#: view/settings-form.php:1126
 msgid "Product taxonomies"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1393
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1418
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1393
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1418
+#: classes/core/trait-woe-core-extractor-ui.php:1303
+#: classes/core/trait-woe-core-extractor-ui.php:1328
 msgid "Product totals"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:458
-#: classes/core/class-wc-order-export-data-extractor-ui.php:458
+#: classes/core/trait-woe-core-extractor-ui.php:358
 msgid "Product URL"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:393
-#: classes/core/class-wc-order-export-data-extractor-ui.php:393
+#: classes/core/trait-woe-core-extractor-ui.php:293
 msgid "Product Variation"
 msgstr ""
 
-#: view/settings-form.php:1103
+#: view/settings-form.php:1105
 #: classes/admin/class-wc-order-export-manage.php:699
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1019
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1392
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1416
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1019
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1392
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1416
+#: classes/core/trait-woe-core-extractor-ui.php:929
+#: classes/core/trait-woe-core-extractor-ui.php:1302
+#: classes/core/trait-woe-core-extractor-ui.php:1326
 msgid "Products"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:338
+#: classes/class-wc-order-export-admin.php:330
 msgid "products"
 msgstr ""
 
@@ -1713,13 +1567,11 @@ msgstr ""
 msgid "Profiles"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1045
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1045
+#: classes/core/trait-woe-core-extractor-ui.php:955
 msgid "Quantity"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1050
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1050
+#: classes/core/trait-woe-core-extractor-ui.php:960
 msgid "Quantity (- Refund)"
 msgstr ""
 
@@ -1727,11 +1579,11 @@ msgstr ""
 msgid "Read how to fix it"
 msgstr ""
 
-#: view/settings-form.php:1607
+#: view/settings-form.php:1611
 msgid "Remove all fields"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:341
+#: classes/class-wc-order-export-admin.php:333
 msgid "Remove all fields?"
 msgstr ""
 
@@ -1755,12 +1607,11 @@ msgstr ""
 msgid "repeat header as last line"
 msgstr ""
 
-#: view/settings-form.php:2146
+#: view/settings-form.php:2151
 msgid "Reset settings"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor.php:1934
-#: classes/core/class-wc-order-export-data-extractor.php:1931
+#: classes/core/trait-woe-core-extractor.php:1157
 msgid "Rest of the World"
 msgstr ""
 
@@ -1781,7 +1632,7 @@ msgstr ""
 msgid "Root tag"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:319
+#: classes/class-wc-order-export-admin.php:311
 msgid "rows"
 msgstr ""
 
@@ -1789,11 +1640,11 @@ msgstr ""
 msgid "Sat"
 msgstr ""
 
-#: view/settings-form.php:2127
+#: view/settings-form.php:2132
 msgid "Save & Exit"
 msgstr ""
 
-#: view/settings-form.php:2124 view/settings-form.php:2129
+#: view/settings-form.php:2129 view/settings-form.php:2134
 msgid "Save settings"
 msgstr ""
 
@@ -1801,7 +1652,7 @@ msgstr ""
 msgid "Scheduled jobs"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:394
+#: classes/class-wc-order-export-admin.php:387
 msgid "select item field"
 msgstr ""
 
@@ -1809,7 +1660,7 @@ msgstr ""
 msgid "Select logo"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:392
+#: classes/class-wc-order-export-admin.php:385
 msgid "select product field or taxonomy"
 msgstr ""
 
@@ -1817,19 +1668,19 @@ msgstr ""
 msgid "Self closing tags"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:337
+#: classes/class-wc-order-export-admin.php:329
 msgid "Set up coupon fields"
 msgstr ""
 
-#: view/settings-form.php:1581
+#: view/settings-form.php:1585
 msgid "Set up fields to export"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:336
+#: classes/class-wc-order-export-admin.php:328
 msgid "Set up product fields"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:229
+#: classes/class-wc-order-export-admin.php:220
 msgid "Settings"
 msgstr ""
 
@@ -1841,21 +1692,17 @@ msgstr ""
 msgid "Settings saved"
 msgstr ""
 
-#: view/settings-form.php:2159 view/tab/tools.php:88
+#: view/settings-form.php:2164 view/tab/tools.php:88
 msgid "Settings were successfully updated!"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1397
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1422
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1397
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1422
+#: classes/core/trait-woe-core-extractor-ui.php:1307
+#: classes/core/trait-woe-core-extractor-ui.php:1332
 msgid "Shipping"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1391
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1415
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1391
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1415
+#: classes/core/trait-woe-core-extractor-ui.php:1301
+#: classes/core/trait-woe-core-extractor-ui.php:1325
 msgid "Shipping Address"
 msgstr ""
 
@@ -1863,58 +1710,51 @@ msgstr ""
 msgid "Shipping fields use billing details (if shipping address is empty)"
 msgstr ""
 
-#: view/settings-form.php:1447
+#: view/settings-form.php:1451
 msgid "Shipping locations"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1269
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1269
+#: classes/core/trait-woe-core-extractor-ui.php:1179
 msgid "Shipping Method"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1274
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1274
+#: classes/core/trait-woe-core-extractor-ui.php:1184
 msgid "Shipping Method (no id)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1264
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1264
+#: classes/core/trait-woe-core-extractor-ui.php:1174
 msgid "Shipping Method Title"
 msgstr ""
 
-#: view/settings-form.php:1476
+#: view/settings-form.php:1480
 msgid "Shipping methods"
 msgstr ""
 
-#: view/settings-form.php:1949
+#: view/settings-form.php:1954
 msgid "Shipping name"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1279
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1279
+#: classes/core/trait-woe-core-extractor-ui.php:1189
 msgid "Shipping Zone"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:483
-#: classes/core/class-wc-order-export-data-extractor-ui.php:483
+#: classes/core/trait-woe-core-extractor-ui.php:383
 msgid "Short Description"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:343
+#: classes/class-wc-order-export-admin.php:335
 msgid "Show total amount for this column"
 msgstr ""
 
-#: view/settings-form.php:1067
+#: view/settings-form.php:1069
 msgid "Skip fully refunded items"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:368
-#: classes/core/class-wc-order-export-data-extractor-ui.php:368
+#: classes/core/trait-woe-core-extractor-ui.php:268
 msgid "SKU"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:373
-#: classes/core/class-wc-order-export-data-extractor-ui.php:373
+#: classes/core/trait-woe-core-extractor-ui.php:273
 msgid "SKU (parent)"
 msgstr ""
 
@@ -1923,7 +1763,7 @@ msgstr ""
 msgid "Sort orders by %s in %s order"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:326
+#: classes/class-wc-order-export-admin.php:318
 msgid "Split values by"
 msgstr ""
 
@@ -1931,27 +1771,23 @@ msgstr ""
 msgid "Start tag"
 msgstr ""
 
-#: view/settings-form.php:1402 view/settings-form.php:1452
+#: view/settings-form.php:1406 view/settings-form.php:1456
 msgid "State"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:883
-#: classes/core/class-wc-order-export-data-extractor-ui.php:883
+#: classes/core/trait-woe-core-extractor-ui.php:783
 msgid "State Code (Billing)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:973
-#: classes/core/class-wc-order-export-data-extractor-ui.php:973
+#: classes/core/trait-woe-core-extractor-ui.php:878
 msgid "State Code (Shipping)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:898
-#: classes/core/class-wc-order-export-data-extractor-ui.php:898
+#: classes/core/trait-woe-core-extractor-ui.php:798
 msgid "State Name (Billing)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:988
-#: classes/core/class-wc-order-export-data-extractor-ui.php:988
+#: classes/core/trait-woe-core-extractor-ui.php:893
 msgid "State Name (Shipping)"
 msgstr ""
 
@@ -1959,18 +1795,15 @@ msgstr ""
 msgid "Status change jobs"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:453
-#: classes/core/class-wc-order-export-data-extractor-ui.php:453
+#: classes/core/trait-woe-core-extractor-ui.php:353
 msgid "Stock Quantity"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:448
-#: classes/core/class-wc-order-export-data-extractor-ui.php:448
+#: classes/core/trait-woe-core-extractor-ui.php:348
 msgid "Stock Status"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1443
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1443
+#: classes/core/trait-woe-core-extractor-ui.php:1353
 msgid "String"
 msgstr ""
 
@@ -1982,9 +1815,12 @@ msgstr ""
 msgid "Strip tags from Product Description/Variation"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:712
-#: classes/core/class-wc-order-export-data-extractor-ui.php:712
+#: classes/core/trait-woe-core-extractor-ui.php:612
 msgid "Subscription Relationship"
+msgstr ""
+
+#: classes/class-wc-order-export-admin.php:336
+msgid "Sum"
 msgstr ""
 
 #: view/settings-form.php:208
@@ -1995,96 +1831,75 @@ msgstr ""
 msgid "Summary Report By Products"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:793
-#: classes/core/class-wc-order-export-data-extractor-ui.php:793
+#: classes/core/trait-woe-core-extractor-ui.php:693
 msgid "Summary Report Sum of Items (Exported)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:508
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:798
-#: classes/core/class-wc-order-export-data-extractor-ui.php:508
-#: classes/core/class-wc-order-export-data-extractor-ui.php:798
+#: classes/core/trait-woe-core-extractor-ui.php:408
+#: classes/core/trait-woe-core-extractor-ui.php:698
 msgid "Summary Report Total Amount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:513
-#: classes/core/class-wc-order-export-data-extractor-ui.php:513
+#: classes/core/trait-woe-core-extractor-ui.php:413
 msgid "Summary Report Total Amount (-Refund)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:518
-#: classes/core/class-wc-order-export-data-extractor-ui.php:518
+#: classes/core/trait-woe-core-extractor-ui.php:418
 msgid "Summary Report Total Amount (inc. tax)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:803
-#: classes/core/class-wc-order-export-data-extractor-ui.php:803
+#: classes/core/trait-woe-core-extractor-ui.php:703
 msgid "Summary Report Total Amount Paid"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:533
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:813
-#: classes/core/class-wc-order-export-data-extractor-ui.php:533
-#: classes/core/class-wc-order-export-data-extractor-ui.php:813
+#: classes/core/trait-woe-core-extractor-ui.php:433
+#: classes/core/trait-woe-core-extractor-ui.php:713
 msgid "Summary Report Total Discount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:833
-#: classes/core/class-wc-order-export-data-extractor-ui.php:833
+#: classes/core/trait-woe-core-extractor-ui.php:733
 msgid "Summary Report Total Fee Amount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:783
-#: classes/core/class-wc-order-export-data-extractor-ui.php:783
+#: classes/core/trait-woe-core-extractor-ui.php:683
 msgid "Summary Report Total Items"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:788
-#: classes/core/class-wc-order-export-data-extractor-ui.php:788
+#: classes/core/trait-woe-core-extractor-ui.php:688
 msgid "Summary Report Total Items (Exported)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:778
-#: classes/core/class-wc-order-export-data-extractor-ui.php:778
+#: classes/core/trait-woe-core-extractor-ui.php:678
 msgid "Summary Report Total Orders"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:498
-#: classes/core/class-wc-order-export-data-extractor-ui.php:498
+#: classes/core/trait-woe-core-extractor-ui.php:398
 msgid "Summary Report Total Quantity"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:503
-#: classes/core/class-wc-order-export-data-extractor-ui.php:503
+#: classes/core/trait-woe-core-extractor-ui.php:403
 msgid "Summary Report Total Quantity (-Refund)"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:543
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:823
-#: classes/core/class-wc-order-export-data-extractor-ui.php:543
-#: classes/core/class-wc-order-export-data-extractor-ui.php:823
+#: classes/core/trait-woe-core-extractor-ui.php:443
+#: classes/core/trait-woe-core-extractor-ui.php:723
 msgid "Summary Report Total Refund Amount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:538
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:818
-#: classes/core/class-wc-order-export-data-extractor-ui.php:538
-#: classes/core/class-wc-order-export-data-extractor-ui.php:818
+#: classes/core/trait-woe-core-extractor-ui.php:438
+#: classes/core/trait-woe-core-extractor-ui.php:718
 msgid "Summary Report Total Refund Count"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:808
-#: classes/core/class-wc-order-export-data-extractor-ui.php:808
+#: classes/core/trait-woe-core-extractor-ui.php:708
 msgid "Summary Report Total Shipping"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:828
-#: classes/core/class-wc-order-export-data-extractor-ui.php:828
+#: classes/core/trait-woe-core-extractor-ui.php:728
 msgid "Summary Report Total Tax Amount"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:523
-#: classes/core/class-wc-order-export-data-extractor-ui.php:523
+#: classes/core/trait-woe-core-extractor-ui.php:423
 msgid "Summary Report Total Weight"
 msgstr ""
 
@@ -2092,7 +1907,7 @@ msgstr ""
 msgid "Sun"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:232
+#: classes/class-wc-order-export-admin.php:223
 msgid "Support"
 msgstr ""
 
@@ -2120,37 +1935,35 @@ msgstr ""
 msgid "Table row text color"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:423
-#: classes/core/class-wc-order-export-data-extractor-ui.php:423
+#: classes/core/trait-woe-core-extractor-ui.php:323
 msgid "Tags"
 msgstr ""
 
-#: view/settings-form.php:1971
+#: view/settings-form.php:1976
 msgid "Tax name"
 msgstr ""
 
-#: view/settings-form.php:1778
+#: view/settings-form.php:1783
 msgid "Taxonomy"
 msgstr ""
 
 #: classes/core/class-wc-order-export-engine.php:395
-#, php-format
 msgid "The code you are trying to save produced a fatal error on line %d:"
 msgstr ""
 
-#: view/settings-form.php:1056
+#: view/settings-form.php:1058
 msgid ""
 "The filters won't work correctly.<br>Another plugin(or theme) has loaded "
 "outdated Select2.js"
 msgstr ""
 
-#: view/settings-form.php:1668 view/settings-form.php:1824
+#: view/settings-form.php:1673 view/settings-form.php:1829
 msgid ""
 "The plugin fetches meta keys from the existing orders. So you should create "
 "fake order if you've added new field just now."
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:342
+#: classes/class-wc-order-export-admin.php:334
 msgid ""
 "This action will reset filters, settings and fields to default state. Are "
 "you sure?"
@@ -2182,11 +1995,11 @@ msgstr ""
 msgid "Time"
 msgstr ""
 
-#: view/settings-form.php:1595
+#: view/settings-form.php:1599
 msgid "Title for summary row"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:396
+#: classes/class-wc-order-export-admin.php:389
 msgid "Title is empty"
 msgstr ""
 
@@ -2198,40 +2011,39 @@ msgstr ""
 msgid "Tools"
 msgstr ""
 
-#: view/settings-form.php:1595
+#: view/settings-form.php:1599
 msgid "Total"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1167
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1167
+#: classes/core/trait-woe-core-extractor-ui.php:1077
 msgid "Total items"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1177
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1177
+#: classes/core/trait-woe-core-extractor-ui.php:1087
 msgid "Total products"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1182
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1182
+#: classes/core/trait-woe-core-extractor-ui.php:1092
 msgid "Total volume"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1162
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1162
+#: classes/core/trait-woe-core-extractor-ui.php:1072
 msgid "Total weight"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1398
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1423
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1398
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1423
+#: classes/core/trait-woe-core-extractor-ui.php:1308
+#: classes/core/trait-woe-core-extractor-ui.php:1333
 msgid "Totals"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:664
-#: classes/core/class-wc-order-export-data-extractor-ui.php:664
+#: classes/core/trait-woe-core-extractor-ui.php:564
 msgid "Transaction ID"
+msgstr ""
+
+#: classes/admin/tabs/ajax/trait-wc-order-export-ajax-helpers.php:127
+msgid ""
+"Transient API is broken. Try to disable \"Transients Manager\" plugin or "
+"contact to export support."
 msgstr ""
 
 #: view/settings-form.php:925
@@ -2246,31 +2058,29 @@ msgstr ""
 msgid "Tue"
 msgstr ""
 
-#: view/settings-form.php:2085
+#: view/settings-form.php:2090
 msgid "Turn off mode Summary report to export order fields"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:413
-#: classes/core/class-wc-order-export-data-extractor-ui.php:413
+#: classes/core/trait-woe-core-extractor-ui.php:313
 msgid "Type"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:513
+#: classes/class-wc-order-export-admin.php:506
 #, php-format
 msgid "Unknown AJAX method %s"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:521
+#: classes/class-wc-order-export-admin.php:514
 #, php-format
 msgid "Unknown tab method %s"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:559
+#: classes/class-wc-order-export-admin.php:553
 msgid "Unmark exported"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1431
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1431
+#: classes/core/trait-woe-core-extractor-ui.php:1341
 msgid "Use \"Add field\" to export specific product attribute"
 msgstr ""
 
@@ -2278,13 +2088,11 @@ msgstr ""
 msgid "Use only unnamed functions!"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1437
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1437
+#: classes/core/trait-woe-core-extractor-ui.php:1347
 msgid "Use section \"Product order item\" to add item meta"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:1430
-#: classes/core/class-wc-order-export-data-extractor-ui.php:1430
+#: classes/core/trait-woe-core-extractor-ui.php:1340
 msgid "Use section \"Product order items\" to add attributes"
 msgstr ""
 
@@ -2296,34 +2104,32 @@ msgstr ""
 msgid "user guide"
 msgstr ""
 
-#: view/settings-form.php:1310
+#: view/settings-form.php:1313
 msgid "User roles"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:738
-#: classes/core/class-wc-order-export-data-extractor-ui.php:738
+#: classes/core/trait-woe-core-extractor-ui.php:638
 msgid "User Website"
 msgstr ""
 
-#: view/settings-form.php:1296
+#: view/settings-form.php:1299
 msgid "Usernames"
 msgstr ""
 
-#: view/settings-form.php:1711 view/settings-form.php:1808
-#: view/settings-form.php:1861 view/settings-form.php:1909
+#: view/settings-form.php:1716 view/settings-form.php:1813
+#: view/settings-form.php:1866 view/settings-form.php:1914
 msgid "Value"
 msgstr ""
 
-#: view/settings-form.php:1200
+#: view/settings-form.php:1203
 msgid "Variable product attributes"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:398
-#: classes/core/class-wc-order-export-data-extractor-ui.php:398
+#: classes/core/trait-woe-core-extractor-ui.php:298
 msgid "Variation Id"
 msgstr ""
 
-#: view/settings-form.php:1087
+#: view/settings-form.php:1089
 msgid "Vendors/creators"
 msgstr ""
 
@@ -2331,17 +2137,15 @@ msgstr ""
 msgid "Wed"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:443
-#: classes/core/class-wc-order-export-data-extractor-ui.php:443
+#: classes/core/trait-woe-core-extractor-ui.php:343
 msgid "Weight"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-data-extractor-ui.php:428
-#: classes/core/class-wc-order-export-data-extractor-ui.php:428
+#: classes/core/trait-woe-core-extractor-ui.php:328
 msgid "Width"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:525
+#: classes/class-wc-order-export-admin.php:518
 msgid "Wrong nonce"
 msgstr ""
 
@@ -2357,12 +2161,12 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:498
+#: classes/class-wc-order-export-admin.php:491
 msgid "You can not do it"
 msgstr ""
 
-#: view/settings-form.php:1994 view/settings-form.php:2024
-#: view/settings-form.php:2054
+#: view/settings-form.php:1999 view/settings-form.php:2029
+#: view/settings-form.php:2059
 msgid "You should add code to section \"Misc Settings\". Read the guide"
 msgstr ""
 

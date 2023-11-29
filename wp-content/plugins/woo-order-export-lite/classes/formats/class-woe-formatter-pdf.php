@@ -24,6 +24,9 @@ class WOE_Formatter_PDF extends WOE_Formatter_Plain_Format {
 	private $font_size = 5;
 	private $repeat_header = false;
 
+	protected $image_format_fields;
+	protected $link_format_fields;
+
 	/**
 	 * @var WOE_Formatter_Storage
 	 */
@@ -380,6 +383,7 @@ class WOE_Formatter_PDF extends WOE_Formatter_Plain_Format {
 						$item = array(
 							'type' => 'link',
 							'link' => $source,
+							'label' => apply_filters("woe_pdf_link_label",$source,$key,$row),
 						);
 					}
 

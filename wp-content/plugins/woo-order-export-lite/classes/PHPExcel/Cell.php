@@ -837,20 +837,20 @@ class PHPExcel_Cell
         //        though it's additional memory overhead
         static $_indexCache = array();
 
-        if (!isset($_indexCache[$pColumnIndex])) {
+        if (!isset($_indexCache[(int)$pColumnIndex])) {
             // Determine column string
             if ($pColumnIndex < 26) {
-                $_indexCache[$pColumnIndex] = chr(65 + $pColumnIndex);
+                $_indexCache[(int)$pColumnIndex] = chr(65 + $pColumnIndex);
             } elseif ($pColumnIndex < 702) {
-                $_indexCache[$pColumnIndex] = chr(64 + ($pColumnIndex / 26)) .
-                                              chr(65 + $pColumnIndex % 26);
+                $_indexCache[(int)$pColumnIndex] = chr(64 + (int)((int)$pColumnIndex / 26)) .
+                                              chr(65 + (int)$pColumnIndex % 26);
             } else {
-                $_indexCache[$pColumnIndex] = chr(64 + (($pColumnIndex - 26) / 676)) .
-                                              chr(65 + ((($pColumnIndex - 26) % 676) / 26)) .
-                                              chr(65 + $pColumnIndex % 26);
+                $_indexCache[(int)$pColumnIndex] = chr(64 + (((int)$pColumnIndex - 26) / 676)) .
+                                              chr(65 + ((((int)$pColumnIndex - 26) % 676) / 26)) .
+                                              chr(65 + (int)$pColumnIndex % 26);
             }
         }
-        return $_indexCache[$pColumnIndex];
+        return $_indexCache[(int)$pColumnIndex];
     }
 
     /**

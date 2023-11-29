@@ -61,13 +61,18 @@ abstract class ameMenu {
 					'Unknown menu configuration format: "%s".',
 					esc_html($arr['format']['name'])
 				));
-			} else {
+			} else if ( self::looks_like_version_40($arr) ) {
 				return self::load_menu_40($arr);
+			} else if ( is_array($arr) && !array_key_exists('tree', $arr) ) {
+				//This could be a broken menu configuration created by version 2.21
+				//which could save a configuration with extra data (e.g. separator styles)
+				//but without the "format" header and without the "tree" key.
+				//We'll proceed to try to load it.
+				$arr['tree'] = array();
+			} else {
+				//This is not an admin menu configuration.
+				throw new InvalidMenuException('Unknown menu configuration format. No "format" header found, no menus found.');
 			}
-		}
-
-		if ( !(isset($arr['tree']) && is_array($arr['tree'])) ) {
-			throw new InvalidMenuException("Failed to load a menu - the menu tree is missing.");
 		}
 
 		if ( isset($arr['format']) && !empty($arr['format']['compressed']) ) {
@@ -86,10 +91,11 @@ abstract class ameMenu {
 			$menu['format']['is_normalized'] = true;
 		}
 
-		if ( isset($arr['color_css']) && is_string($arr['color_css']) ) {
-			$menu['color_css'] = $arr['color_css'];
-			$menu['color_css_modified'] = isset($arr['color_css_modified']) ? intval($arr['color_css_modified']) : 0;
-			$menu['icon_color_overrides'] = isset($arr['icon_color_overrides']) ? $arr['icon_color_overrides'] : null;
+		if ( isset($arr['color_css_modified']) ) {
+			$menu['color_css_modified'] = intval($arr['color_css_modified']);
+		}
+		if ( isset($arr['icon_color_overrides']) ) {
+			$menu['icon_color_overrides'] = $arr['icon_color_overrides'];
 		}
 
 		//Sanitize color presets.
@@ -204,6 +210,23 @@ abstract class ameMenu {
 		return self::load_array($menu, true);
 	}
 
+	private static function looks_like_version_40($arr) {
+		//Check the first N items. For this to be a valid menu list, all of them
+		//should be arrays with at least a "file" key.
+		$maxCheckedItems = 10;
+		$checkedItems = 0;
+		foreach($arr as $item) {
+			if ( !is_array($item) || !array_key_exists('file', $item) ) {
+				return false;
+			}
+			$checkedItems++;
+			if ( $checkedItems >= $maxCheckedItems ) {
+				break;
+			}
+		}
+		return true;
+	}
+
 	public static function add_format_header($menu) {
 		if ( !isset($menu['format']) || !is_array($menu['format']) ) {
 			$menu['format'] = array();
@@ -275,6 +298,10 @@ abstract class ameMenu {
 	public static function wp2tree($menu, $submenu, $blacklist = array()){
 		$tree = array();
 		foreach ($menu as $pos => $item){
+			//Sanity check: The item should be array-like.
+			if ( !is_array($item) && !($item instanceof ArrayAccess) ) {
+				continue;
+			}
 
 			$tree_item = ameMenuItem::blank_menu();
 			$tree_item['defaults'] = ameMenuItem::fromWpItem($item, $pos);
@@ -284,6 +311,11 @@ abstract class ameMenu {
 			$parent = $tree_item['defaults']['file'];
 			if ( isset($submenu[$parent]) ){
 				foreach($submenu[$parent] as $position => $subitem){
+					//Sanity check: Same as above.
+					if ( !is_array($subitem) && !($subitem instanceof ArrayAccess) ) {
+						continue;
+					}
+
 					$defaults = ameMenuItem::fromWpItem($subitem, $position, $parent);
 
 					//Skip blacklisted items.
@@ -407,11 +439,13 @@ abstract class ameMenu {
 			'custom_item_defaults' => ameMenuItem::custom_item_defaults(),
 		);
 
-		$menu['tree'] = self::map_items(
-			$menu['tree'],
-			array(__CLASS__, 'compress_item'),
-			array($common)
-		);
+		if ( !empty($menu['tree']) ) {
+			$menu['tree'] = self::map_items(
+				$menu['tree'],
+				array(__CLASS__, 'compress_item'),
+				array($common)
+			);
+		}
 
 		$menu = self::add_format_header($menu);
 		$menu['format']['compressed'] = true;

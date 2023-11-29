@@ -37,7 +37,7 @@ class WC_Order_Export_Order_Coupon_Fields {
 		} elseif ( $field == 'code' ) {
 			return $this->item->get_name();
 		} elseif ( $field == 'discount_amount_plus_tax' ) {
-			return $this->item->get_discount() + $this->item->get_discount_tax();
+			return (float)$this->item->get_discount() + (float)$this->item->get_discount_tax();
 		} elseif ( $field == 'discount_amount' ) {
 			return $this->item->get_discount();
 		} elseif ( $field == 'discount_amount_tax' ) {

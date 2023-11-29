@@ -294,8 +294,13 @@ class WC_Order_Export_Order_Fields {
 			$row[$field] = $this->user ? $this->user->$field : "";
 		} elseif ( $field == 'user_role' ) {
 			$roles         = $wp_roles->roles;
-			$row[$field] =  !isset( $this->user->roles[0] ) ? "" :  ( isset( $roles[ $this->user->roles[0] ] ) ? $roles[ $this->user->roles[0] ]['name'] : $this->user->roles[0] ); // take first role Name
-			$row[$field] =  translate_user_role( $row[$field] );
+			if( $this->user ) {
+				$role = reset($this->user->roles); // take first role Name
+				$row[$field] =  isset( $roles[ $role ] ) ? $roles[ $role ]['name'] : $role; 
+				$row[$field] =  translate_user_role( $row[$field] );
+			}
+			else
+				$row[$field] =  "";
 		} elseif ( $field == 'customer_total_orders' ) {
 			$row[$field] = ( isset( $this->user->ID ) ) ? wc_get_customer_order_count( $this->user->ID ) : WC_Order_Export_Data_Extractor::get_customer_order_count_by_email( $this->order_meta["_billing_email"] );
 		} elseif ( $field == 'customer_paid_orders' ) {
@@ -311,11 +316,19 @@ class WC_Order_Export_Order_Fields {
 			$row[$field] = $last_order? ( $last_order->get_date_created() ? gmdate( 'Y-m-d H:i:s',
 				$last_order->get_date_created()->getOffsetTimestamp() ) : '' ) : '';
 		} elseif ( $field == 'billing_address' ) {
-			$row[$field] = join( ", ",
-				array_filter( array( $this->order->get_billing_address_1(), $this->order->get_billing_address_2() ) ) );
+		        if($this->post->post_type == 'shop_order_refund')
+				$row[$field] = join( ", ",
+					array_filter( array(  $this->order_meta["_billing_address_1"], $this->order_meta["_billing_address_2"] ) ) );
+			else
+				$row[$field] = join( ", ",
+					array_filter( array( $this->order->get_billing_address_1(), $this->order->get_billing_address_2() ) ) );
 		} elseif ( $field == 'shipping_address' ) {
-			$row[$field] = join( ", ",
-				array_filter( array(  $this->order->get_shipping_address_1(), $this->order->get_shipping_address_2() ) ) );
+		        if($this->post->post_type == 'shop_order_refund')
+				$row[$field] = join( ", ",
+					array_filter( array(  $this->order_meta["_shipping_address_1"], $this->order_meta["_shipping_address_2"] ) ) );
+			else
+				$row[$field] = join( ", ",
+					array_filter( array(  $this->order->get_shipping_address_1(), $this->order->get_shipping_address_2() ) ) );
 		} elseif ( $field == 'billing_full_name' ) {
 			$row[$field] = trim( $this->order_meta["_billing_first_name"] . ' ' . $this->order_meta["_billing_last_name"] );
 		} elseif ( $field == 'shipping_full_name' ) {
@@ -327,6 +340,10 @@ class WC_Order_Export_Order_Fields {
 		} elseif ( $field == 'billing_state_full' ) {
 			$country_states = WC()->countries->get_states( $this->billing_country );
 			$row[$field] = isset( $country_states[ $this->billing_state ] ) ? html_entity_decode( $country_states[ $this->billing_state ] ) : $this->billing_state;
+		} elseif ($field == 'fulladdress_shipping') {
+			$row[$field] .= str_replace("<br/>", "\n", $this->order->get_formatted_shipping_address());
+		} elseif ($field == 'fulladdress_billing') {
+			$row[$field] .= str_replace("<br/>", "\n", $this->order->get_formatted_billing_address());
 		} elseif ( $field == 'shipping_state_full' ) {
 			$country_states = WC()->countries->get_states( $this->shipping_country );
 			$row[$field] = isset( $country_states[ $this->shipping_state ] ) ? html_entity_decode( $country_states[ $this->shipping_state ] ) : $this->shipping_state;
@@ -377,7 +394,7 @@ class WC_Order_Export_Order_Fields {
             foreach ( $this->order->get_items() as $item ) {
                 $product   = $item->get_product();
                 if ( !$product )  continue;
-                $value +=  $item->get_quantity() * $product->get_width() * $product->get_height() * $product->get_length();
+                $value +=  $item->get_quantity() * (float)$product->get_width() * (float)$product->get_height() * (float)$product->get_length();
             }
             $row[$field] = $value;
 		} elseif ( $field == 'customer_note' ) {

@@ -5,6 +5,7 @@ class WC_Order_Export_Order_Product_Fields {
 	var $item_meta;
 	var $product;
 	var $product_id;
+	var $variation_id;
 	var $product_fields_with_tags;
 	var $order;
 	var $post;

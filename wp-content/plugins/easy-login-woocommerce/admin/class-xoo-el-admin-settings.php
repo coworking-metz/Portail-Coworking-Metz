@@ -77,7 +77,7 @@ class Xoo_El_Admin_Settings{
 	public function plugin_action_links( $links ) {
 		$action_links = array(
 			'settings' 	=> '<a href="' . admin_url( 'admin.php?page=easy-login-woocommerce-settings' ) . '">Settings</a>',
-			'support' 	=> '<a href="https://xootix.com/support" target="__blank">Support</a>',
+			'support' 	=> '<a href="https://xootix.com/contact" target="__blank">Support</a>',
 			'upgrade' 	=> '<a href="https://xootix.com/plugins/easy-login-for-woocommerce" target="__blank">Upgrade</a>',
 		);
 
@@ -143,6 +143,7 @@ class Xoo_El_Admin_Settings{
 			<?php
 		}
 	}
+
 
 
 }

@@ -15,6 +15,7 @@ class WOE_Formatter_Html extends WOE_Formatter_Plain_Format {
 
      protected $css;
      protected $table_header_row;
+     protected $image_format_fields;
 
      public function __construct(
 		$mode,
@@ -67,7 +68,8 @@ class WOE_Formatter_Html extends WOE_Formatter_Plain_Format {
 				    fwrite( $this->handle, '<div class="header">' . $this->settings['header_text'] . '</div>' );
 				}
 
-				fwrite( $this->handle, '<table>' );
+				if( apply_filters( "woe_html_header_print_table", true) )
+					fwrite( $this->handle, '<table>' );
 
 				do_action( "woe_before_{$this->format}_print_header", $this->handle, $data, $this );
 
@@ -83,7 +85,8 @@ class WOE_Formatter_Html extends WOE_Formatter_Plain_Format {
 				    fwrite( $this->handle, '<div class="header">' . $this->settings['header_text'] . '</div>' );
 				}
 
-				fwrite( $this->handle, '<table>' );
+				if( apply_filters( "woe_html_header_print_table", true) )
+					fwrite( $this->handle, '<table>' );
 			}
 		}
 	}
@@ -147,7 +150,8 @@ class WOE_Formatter_Html extends WOE_Formatter_Plain_Format {
 			    fwrite( $this->handle, '<div class="header" style="'.$this->css['inline']['header'].'">' . $this->settings['header_text'] . '</div>' );
 			}
 
-			fwrite( $this->handle, '<table>' );
+			if( apply_filters( "woe_html_header_print_table", true) )
+				fwrite( $this->handle, '<table>' );
 			if ( $this->settings['display_column_names'] && count( $this->rows ) < 2 || count( $this->rows ) < 1 ) {
 				$this->rows[] = array( '<td colspan=10 style="'.$this->css['inline']['td'].'"><b>' . __( 'No results', 'woo-order-export-lite' ) .'</b></td>' );
 			}
@@ -164,7 +168,8 @@ class WOE_Formatter_Html extends WOE_Formatter_Plain_Format {
 			    fwrite( $this->handle, '<tfoot><tr><th style="'.$this->css['inline']['th'].'">' . join( '</th><th style="'.$this->css['inline']['th'].'">', $this->table_header_row ) . "</th></tr></tfoot>\n" );
 			}
 
-			fwrite( $this->handle, '</table>' );
+			if( apply_filters( "woe_html_header_print_table", true) )
+				fwrite( $this->handle, '</table>' );
 
 			if ( $this->settings['footer_text'] ) {
 			    fwrite( $this->handle, '<div class="footer" style="'.$this->css['inline']['footer'].'">' . $this->settings['footer_text'] . '</div>' );
@@ -183,7 +188,8 @@ class WOE_Formatter_Html extends WOE_Formatter_Plain_Format {
 			    }
 			}
 
-			fwrite( $this->handle, '</table>' );
+			if( apply_filters( "woe_html_header_print_table", true) )
+				fwrite( $this->handle, '</table>' );
 
 			if ( $this->settings['footer_text'] ) {
 			    fwrite( $this->handle, '<div class="footer">' . $this->settings['footer_text'] . '</div>' );

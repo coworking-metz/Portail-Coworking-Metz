@@ -520,10 +520,10 @@ class WC_Order_Export_Engine {
 				$export, $static_vals, self::$extractor_options );
 
 			$row = apply_filters( "woe_fetch_order_row", $row, $order_id );
-			if ( $row ) {
-				$formater->output( $row );
-				do_action( "woe_order_row_exported", $row, $order_id );
-			}
+			if (! $row ) continue;
+
+			$formater->output( $row );
+			do_action( "woe_order_row_exported", $row, $order_id );
 
 			if ( $make_mode != 'preview' ) {
 				do_action( "woe_order_exported", $order_id, $settings );
@@ -625,10 +625,10 @@ class WC_Order_Export_Engine {
 			$row            = WC_Order_Export_Data_Extractor::fetch_order_data( $order_id, $labels,
 				$export, $static_vals, self::$extractor_options );
 			$row            = apply_filters( "woe_fetch_order_row", $row, $order_id );
-			if ( $row ) {
-				$formater->output( $row );
-				do_action( "woe_order_row_exported", $row, $order_id );
-			}
+			if ( !$row ) continue;
+
+			$formater->output( $row );
+			do_action( "woe_order_row_exported", $row, $order_id );
 			do_action( "woe_order_exported", $order_id, $settings );
 
 			do_action( 'woe_formatter_output_custom_formatter', $row, $order_id, $labels,

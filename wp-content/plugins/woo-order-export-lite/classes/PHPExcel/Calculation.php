@@ -154,7 +154,7 @@ class PHPExcel_Calculation
      * @var PHPExcel_CalcEngine_Logger
      *
      */
-    private $debugLog;
+    private $debugLog, $_debugLog;
 
     /**
      * Flag to determine how formula errors should be handled

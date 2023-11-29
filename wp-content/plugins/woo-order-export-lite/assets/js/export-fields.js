@@ -95,7 +95,7 @@ function woe_create_selected_fields( old_output_format, format, format_changed )
 			var index_api = index;
 
 			if (['money', 'number'].indexOf(value.format) > -1 && ['XLS', 'PDF'].indexOf(format) > -1) {
-				var sum_btn = '<div class="mapping_col_3 mapping_row-sum_field_block"><a href="" class="mapping_row-sum_field '+ (typeof value.sum !== 'undefined' && +value.sum ? 'active' : '') +'"><span><label title="'+localize_settings_form.sum_symbol_tooltip+'"><input type="checkbox" name="orders[][sum]" value="1" '+ (typeof value.sum !== 'undefined' && +value.sum ? 'checked' : '') +'>Σ</label></span></a></div>';
+				var sum_btn = '<div class="mapping_col_3 mapping_row-sum_field_block"><a href="" class="mapping_row-sum_field '+ (typeof value.sum !== 'undefined' && +value.sum ? 'active' : '') +'"><span><label title="'+localize_settings_form.sum_symbol_tooltip+'"><input type="checkbox" name="orders[][sum]" value="1" '+ (typeof value.sum !== 'undefined' && +value.sum ? 'checked' : '') +'>'+localize_settings_form.sum_symbol+'</label></span></a></div>';
 				if (typeof value.sum !== 'undefined' && +value.sum) {
 					jQuery('.summary-row-title').removeClass('hide');
 				}
@@ -194,7 +194,7 @@ function woe_create_group_fields( format, index_p, format_changed ) {
 		var delete_btn = '<div class="mapping_col_3 mapping_row-delete_field_block"><a href="#" class="mapping_row-delete_field"><span class="dashicons dashicons-trash"></span></a></div>';
 
                 if (['money', 'number'].indexOf(value.format) > -1) {
-                    var sum_btn = '<div class="mapping_col_3 mapping_row-sum_field_block"><a href="" class="mapping_row-sum_field"><span><label title="'+localize_settings_form.sum_symbol_tooltip+'"><input type="checkbox" name="'+ index_p +'[][sum]" value="1">Σ</label></span></a></div>';
+                    var sum_btn = '<div class="mapping_col_3 mapping_row-sum_field_block"><a href="" class="mapping_row-sum_field"><span><label title="'+localize_settings_form.sum_symbol_tooltip+'"><input type="checkbox" name="'+ index_p +'[][sum]" value="1">'+localize_settings_form.sum_symbol+'</label></span></a></div>';
                 } else {
                     var sum_btn = '';
                 }
@@ -485,7 +485,7 @@ function woe_make_unselected_field( $index, $field_data, $format, $format_change
 	var delete_btn = '<div class="mapping_col_3 mapping_row-delete_field_block"><a href="#" class="mapping_row-delete_field"><span class="dashicons dashicons-trash"></span></a></div>';
 
         if (['money', 'number'].indexOf($field_data.format) > -1) {
-            var sum_btn = '<div class="mapping_col_3 mapping_row-sum_field_block"><a href="" class="mapping_row-sum_field"><span><label title="'+localize_settings_form.sum_symbol_tooltip+'"><input type="checkbox" name="'+ (! woe_is_flat_format( $format ) && ['products', 'coupons'].indexOf( $segment ) > - 1 ? $segment : 'orders') + '[][sum]" value="1">Σ</label></span></a></div>';
+            var sum_btn = '<div class="mapping_col_3 mapping_row-sum_field_block"><a href="" class="mapping_row-sum_field"><span><label title="'+localize_settings_form.sum_symbol_tooltip+'"><input type="checkbox" name="'+ (! woe_is_flat_format( $format ) && ['products', 'coupons'].indexOf( $segment ) > - 1 ? $segment : 'orders') + '[][sum]" value="1">'+localize_settings_form.sum_symbol+'</label></span></a></div>';
         } else {
             var sum_btn = '';
         }
@@ -603,7 +603,10 @@ function woe_activate_draggable_field( el, segment, format ) {
 
 			woe_check_sortable_groups();
 		},
-	} );
+	} )
+	.dblclick(function() {
+	    jQuery('#notice_drag_fields').show().addClass( 'blink' );
+	});
 
 }
 
@@ -923,7 +926,7 @@ function woe_add_custom_field( to, index_p, format, colname, value, segment, for
 	var delete_btn = '<div class="mapping_col_3 mapping_row-delete_field_block"><a href="#" class="mapping_row-delete_field"><span class="dashicons dashicons-trash"></span></a></div>';
 
         if (['money', 'number'].indexOf(format_field) > -1) {
-            var sum_btn = '<div class="mapping_col_3 mapping_row-sum_field_block"><a href="" class="mapping_row-sum_field"><span><label title="'+localize_settings_form.sum_symbol_tooltip+'"><input type="checkbox" name="'+ _index_p +'[sum]" value="1">Σ</label></span></a></div>';
+            var sum_btn = '<div class="mapping_col_3 mapping_row-sum_field_block"><a href="" class="mapping_row-sum_field"><span><label title="'+localize_settings_form.sum_symbol_tooltip+'"><input type="checkbox" name="'+ _index_p +'[sum]" value="1">'+localize_settings_form.sum_symbol+'</label></span></a></div>';
         } else {
             var sum_btn = '';
         }
@@ -1005,7 +1008,7 @@ function woe_add_custom_meta( to, index_p, format, label, colname, segment, form
 	var delete_btn = '<div class="mapping_col_3 mapping_row-delete_field_block"><a href="#" class="mapping_row-delete_field"><span class="dashicons dashicons-trash"></span></a></div>';
 
         if (['money', 'number'].indexOf(format_field) > -1) {
-            var sum_btn = '<div class="mapping_col_3 mapping_row-sum_field_block"><a href="" class="mapping_row-sum_field"><span><label title="'+localize_settings_form.sum_symbol_tooltip+'"><input type="checkbox" name="'+ _index_p +'[][sum]" value="1">Σ</label></span></a></div>';
+            var sum_btn = '<div class="mapping_col_3 mapping_row-sum_field_block"><a href="" class="mapping_row-sum_field"><span><label title="'+localize_settings_form.sum_symbol_tooltip+'"><input type="checkbox" name="'+ _index_p +'[][sum]" value="1">'+localize_settings_form.sum_symbol+'</label></span></a></div>';
         } else {
             var sum_btn = '';
         }

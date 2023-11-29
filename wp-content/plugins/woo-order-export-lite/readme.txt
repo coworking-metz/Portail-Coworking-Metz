@@ -1,11 +1,11 @@
 === Advanced Order Export For WooCommerce ===
 Contributors: algolplus
-Donate link: https://paypal.me/ipprokaev/0usd
-Tags: woocommerce,export,order,xls,csv,xml,woo export lite,export orders,orders export,csv export,xml export,xls export,tsv
+Donate link: 
+Tags: order export,export orders,woocommerce,order,export,xls,csv,xml,json,pdf,tsv
 Requires PHP: 5.4.0
 Requires at least: 4.7
-Tested up to: 6.2
-Stable tag: 3.4.0
+Tested up to: 6.4
+Stable tag: 3.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,34 @@ Yes, you can email a request to aprokaev@gmail.com. We intensively develop this 
 6. Select orders to export and use "bulk action".
 
 == Changelog ==
+
+= 3.4.4 - 2023-11-27 =
+* Fixed critical bug - some columns were empty (XLS format only)
+* Added field "Full Address" to sections Billing and Shipping
+* Minor UI tweaks in mobile view
+* Fixed bug - >Filter by order>Custom Fields didn't work, HPOS mode
+
+= 3.4.3 - 2023-11-14 =
+* Speed up calculation for fields "Customer Total Orders", "Customer Total Amount" in "Summary report by customers" mode
+* Added operator NOT LIKE, for filtering by user fields and order fields
+* Added compatibility with plugin "Transients Manager"
+* Replaced confusing icon "Σ" with text "Sum"
+* Fixed bug - incorrect timezones used in filtering by date, HPOS mode
+* Fixed bug - option "Shipping fields use billing details" didn't work, HPOS mode
+* Fixed bug - empty address fields for order refunds, HPOS mode
+* Fixed bug - date fields were wrongly formatted if timestamp used in database
+* DEV - moved common code from Extractor and Extractor_UI classes to traits
+
+= 3.4.2 - 2023-07-26 =
+* PDF format supports .webp product images
+* Fixed bug - missed Bulk Actions in >WooCommerce>Orders (HPOS mode)
+* Fixed bug - option "Do not set a page break between order lines" worked wrongly for PDF
+* Fixed bug - field "Customer Role" was empty if user has multiple roles
+* Fixed bug - PHP8 warnings and errors for XLS format
+* Fixed bug - PHP8 warnings for PDF export
+
+= 3.4.1 - 2023-04-11 =
+* Internal, not released
 
 = 3.4.0 - 2023-03-13 =
 * Support High-Performance order storage (COT)
