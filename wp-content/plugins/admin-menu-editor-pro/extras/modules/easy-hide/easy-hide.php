@@ -59,7 +59,7 @@ class Core {
 		}
 
 		//Register the EasyHide menu item after the "Menu Editor (Pro)" item.
-		add_action('admin_menu_editor-editor_menu_registered', [$this, 'addAdminMenu']);
+		add_action('admin_menu_editor-editor_menu_registered', [$this, 'addAdminMenu'], 11);
 
 		if ( is_admin() ) {
 			$this->isExplanationHidden = new AmeEhIsExplanationHidden();
@@ -98,6 +98,12 @@ class Core {
 			[$this, 'enqueueDependencies'],
 			2000
 		);
+
+		\ameMenuItem::add_class_to_submenu_item(
+			$this->parentMenuSlug,
+			self::MENU_SLUG,
+			'ws-ame-secondary-am-item'
+		);
 	}
 
 	public function enqueueDependencies() {
@@ -112,7 +118,7 @@ class Core {
 			self::SCRIPT_HANDLE,
 			plugins_url('easy-hide.js', __FILE__),
 			[
-				'knockout',
+				'ame-knockout',
 				'jquery',
 				'ame-ko-extensions',
 				'ame-actor-selector',

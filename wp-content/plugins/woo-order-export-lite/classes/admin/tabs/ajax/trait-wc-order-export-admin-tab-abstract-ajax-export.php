@@ -62,7 +62,7 @@ trait WC_Order_Export_Admin_Tab_Abstract_Ajax_Export {
 		}
 		// file created
 		$file_id = current_time( 'timestamp' );
-		set_transient( $this->tempfile_prefix . $file_id, $filename, 60 );
+		set_transient( $this->tempfile_prefix . $file_id, $filename, 5 * MINUTE_IN_SECONDS );
 		$this->stop_prevent_object_cache();
 		echo json_encode( array( 
 			'total' => $result['total'], 
@@ -108,7 +108,7 @@ trait WC_Order_Export_Admin_Tab_Abstract_Ajax_Export {
 		if ( $file !== false ) {
 			$file_id = current_time( 'timestamp' );
 			$this->start_prevent_object_cache();
-			set_transient( $this->tempfile_prefix . $file_id, $file, 600 );
+			set_transient( $this->tempfile_prefix . $file_id, $file, 5 * MINUTE_IN_SECONDS );
 			$this->stop_prevent_object_cache();
 
 			WC_Order_Export_Manage::set_correct_file_ext( $settings );
@@ -117,7 +117,7 @@ trait WC_Order_Export_Admin_Tab_Abstract_Ajax_Export {
 			$_GET['file_id'] = $_REQUEST['file_id'] = $file_id;
 			$filename = WC_Order_Export_Engine::make_filename( $settings['export_filename'] );
 			$this->start_prevent_object_cache();
-			set_transient( $this->tempfile_prefix . 'download_filename', $filename, 60 );
+			set_transient( $this->tempfile_prefix . 'download_filename', $filename, 5 * MINUTE_IN_SECONDS );
 			$this->stop_prevent_object_cache();
 
 			$this->set_filename($filename);
@@ -148,7 +148,7 @@ trait WC_Order_Export_Admin_Tab_Abstract_Ajax_Export {
 
 		$filename = WC_Order_Export_Engine::make_filename( $settings['export_filename'] );
 		$this->start_prevent_object_cache();
-		set_transient( $this->tempfile_prefix . 'download_filename', $filename, 60 );
+		set_transient( $this->tempfile_prefix . 'download_filename', $filename, 5 * MINUTE_IN_SECONDS );
 		$this->stop_prevent_object_cache();
 		echo json_encode( array( 'done' => true ) );
 	}

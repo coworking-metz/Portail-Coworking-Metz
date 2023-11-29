@@ -563,6 +563,8 @@ jQuery(document).ready(function($){
 				priority = priority + 10;
 				
 			});
+
+			console.log(_userFields);
 		},
 
 		//Load fields on page Load
@@ -578,11 +580,19 @@ jQuery(document).ready(function($){
 			var _userFieldsArray = Object.entries(_userFields);
 
 			_userFieldsArray.sort(function( a, b ){
-				if( b[1]['priority'] === a[1]['priority'] ){
+
+				aPriority = parseInt(a[1]['priority']);
+				bPriority = parseInt(b[1]['priority']);
+
+				if( aPriority === bPriority ){
 					return 0;
 				}
-				return b[1]['priority'] < a[1]['priority'] ? 1 : -1; 
+	
+				return aPriority > bPriority ? 1 : -1; 
 			});
+
+
+			console.log(_userFieldsArray);
 
 			$.each( _userFieldsArray, function( index, field ){
 				//field[0] = Field ID
@@ -770,7 +780,9 @@ jQuery(document).ready(function($){
 	})
 
 	//Field display sort
-	$fieldsDisplay.sortable();
+	$fieldsDisplay.sortable({
+	    items : 'li:not(.xoo-aff-no-sort)'
+	});
 
 })
 

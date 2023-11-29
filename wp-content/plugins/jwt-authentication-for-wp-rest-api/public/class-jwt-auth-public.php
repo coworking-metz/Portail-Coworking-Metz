@@ -1,6 +1,7 @@
 <?php
 
 /** Require the JWT library. */
+
 use Tmeister\Firebase\JWT\JWT;
 use Tmeister\Firebase\JWT\Key;
 
@@ -53,7 +54,20 @@ class Jwt_Auth_Public {
 	 * @since 1.3.1
 	 * @see https://www.rfc-editor.org/rfc/rfc7518#section-3
 	 */
-	private array $supported_algorithms = [ 'HS256', 'HS384', 'HS512', 'RS256', 'RS384', 'RS512', 'ES256', 'ES384', 'ES512', 'PS256', 'PS384', 'PS512' ];
+	private array $supported_algorithms = [
+		'HS256',
+		'HS384',
+		'HS512',
+		'RS256',
+		'RS384',
+		'RS512',
+		'ES256',
+		'ES384',
+		'ES512',
+		'PS256',
+		'PS384',
+		'PS512'
+	];
 
 	/**
 	 * Initialize the class and set its properties.
@@ -93,7 +107,8 @@ class Jwt_Auth_Public {
 	public function add_cors_support() {
 		$enable_cors = defined( 'JWT_AUTH_CORS_ENABLE' ) && JWT_AUTH_CORS_ENABLE;
 		if ( $enable_cors ) {
-			$headers = apply_filters( 'jwt_auth_cors_allow_headers', 'Access-Control-Allow-Headers, Content-Type, Authorization' );
+			$headers = apply_filters( 'jwt_auth_cors_allow_headers',
+				'Access-Control-Allow-Headers, Content-Type, Authorization' );
 			header( sprintf( 'Access-Control-Allow-Headers: %s', $headers ) );
 		}
 	}
@@ -159,7 +174,8 @@ class Jwt_Auth_Public {
 		if ( $algorithm === false ) {
 			return new WP_Error(
 				'jwt_auth_unsupported_algorithm',
-				__( 'Algorithm not supported, see https://www.rfc-editor.org/rfc/rfc7518#section-3', 'wp-api-jwt-auth' ),
+				__( 'Algorithm not supported, see https://www.rfc-editor.org/rfc/rfc7518#section-3',
+					'wp-api-jwt-auth' ),
 				[
 					'status' => 403,
 				]
@@ -203,7 +219,10 @@ class Jwt_Auth_Public {
 		$rest_api_slug = rest_get_url_prefix();
 		$requested_url = sanitize_url( $_SERVER['REQUEST_URI'] );
 		// if we already have a valid user, or we have an invalid url, don't attempt to validate token
-		if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST || strpos( $requested_url, $rest_api_slug ) === false || $user ) {
+		$is_rest_request_constant_defined = defined( 'REST_REQUEST' ) && REST_REQUEST;
+		$is_rest_request                  = $is_rest_request_constant_defined || strpos( $requested_url,
+				$rest_api_slug );
+		if ( $is_rest_request && $user ) {
 			return $user;
 		}
 
@@ -219,13 +238,20 @@ class Jwt_Auth_Public {
 		/**
 		 * We still need to get the Authorization header and check for the token.
 		 */
-		$auth_header = $_SERVER['HTTP_AUTHORIZATION'] ? sanitize_text_field( $_SERVER['HTTP_AUTHORIZATION'] ) : false;
+		$auth_header = ! empty( $_SERVER['HTTP_AUTHORIZATION'] ) ? sanitize_text_field( $_SERVER['HTTP_AUTHORIZATION'] ) : false;
 		/* Double check for different auth header string (server dependent) */
 		if ( ! $auth_header ) {
-			$auth_header = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ? sanitize_text_field( $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ) : false;
+			$auth_header = ! empty( $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ) ? sanitize_text_field( $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ) : false;
 		}
 
 		if ( ! $auth_header ) {
+			return $user;
+		}
+
+		/**
+		 * Check if the auth header is not bearer, if so, return the user
+		 */
+		if ( strpos( $auth_header, 'Bearer' ) !== 0 ) {
 			return $user;
 		}
 
@@ -323,7 +349,8 @@ class Jwt_Auth_Public {
 			if ( $algorithm === false ) {
 				return new WP_Error(
 					'jwt_auth_unsupported_algorithm',
-					__( 'Algorithm not supported, see https://www.rfc-editor.org/rfc/rfc7518#section-3', 'wp-api-jwt-auth' ),
+					__( 'Algorithm not supported, see https://www.rfc-editor.org/rfc/rfc7518#section-3',
+						'wp-api-jwt-auth' ),
 					[
 						'status' => 403,
 					]

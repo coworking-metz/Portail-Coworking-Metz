@@ -9,7 +9,7 @@
  * maintain compatibility. We try to do this as little as possible, but it does
  * happen.
  * @see     https://docs.xootix.com/easy-login-woocommerce/
- * @version 2.1
+ * @version 2.5
  */
 
 if ( ! defined( 'ABSPATH' ) ) { 
@@ -17,6 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
+$tabs  = xoo_el_helper()->get_general_option( 'popup-forms' );
 ?>
 
 <div class="xoo-el-container" style="visibility: hidden;">
@@ -31,7 +32,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <?php
                             $args = array(
                                 'form_class'    => 'xoo-el-form-popup',
-                                'display'       => 'popup'
+                                'display'       => 'popup',
+                                'form_active'   => xoo_el_helper()->get_general_option( 'ao-default-form' ),
+                                'tabs'          => $tabs,
                             );  
                             xoo_el_get_form( $args )
                         ?>

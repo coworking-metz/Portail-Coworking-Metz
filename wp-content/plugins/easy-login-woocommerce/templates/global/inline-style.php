@@ -9,7 +9,7 @@
  * maintain compatibility. We try to do this as little as possible, but it does
  * happen.
  * @see     https://docs.xootix.com/easy-login-woocommerce/
- * @version 2.1
+ * @version 2.5
  */
 
 
@@ -33,6 +33,10 @@ $popup_padding 		= $sySettings['sy-popup-padding'];
 
 $pop_bg_color 		= $sySettings['sy-popup-bgcolor'];
 $pop_txt_color 		= $sySettings['sy-popup-txtcolor'];
+
+
+$overlay_color 		= $sySettings['sy-overlay-color'];
+$overlay_opac		= $sySettings['sy-overlay-opac'];
 
 $inputs = array(
 	'input[type="text"]', 'input[type="password"]', 'input[type="email"]' 
@@ -131,3 +135,22 @@ $select_input_placeholder_string 	= rtrim( $select_input_placeholder_string, ','
 	}
 
 <?php endif; ?>
+
+<?php if( xoo_el_helper()->get_general_option('popup-force') === "yes" ): ?>
+	span.xoo-el-close {
+	    display: none;
+	}
+
+	.xoo-el-modal {
+	    pointer-events: none;
+	}
+
+	.xoo-el-inmodal {
+	    pointer-events: all;
+	}
+<?php endif; ?>
+
+.xoo-el-popup-active .xoo-el-opac{
+    opacity: <?php echo esc_html($overlay_opac) ?>;
+    background-color: <?php echo esc_html($overlay_color) ?>;
+}

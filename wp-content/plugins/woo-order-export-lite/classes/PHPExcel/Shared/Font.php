@@ -256,6 +256,10 @@ class PHPExcel_Shared_Font
             $cellText = $cellText->getPlainText();
         }
 
+        if (is_null($cellText)) {
+            $cellText = '';
+        }
+
         // Special case if there are one or more newline characters ("\n")
         if (strpos($cellText, "\n") !== false) {
             $lineTexts = explode("\n", $cellText);

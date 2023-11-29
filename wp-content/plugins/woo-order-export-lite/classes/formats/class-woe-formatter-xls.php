@@ -15,6 +15,16 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 	private $string_format_force = false;
 	private $string_format_fields;
 	private $date_format_fields;
+	private $date_format_original;
+	private $money_format_fields;
+	private $number_format_fields;
+	private $image_format_fields;
+	private $link_format_fields;
+	private $money_format;
+	private $number_format;
+	private $format_number_fields_original;
+	
+	public $objPHPExcel, $last_row;
 
 	/**
 	 * @var WOE_Formatter_Storage
@@ -75,7 +85,8 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 			$this->money_format  = apply_filters( 'woe_xls_money_format', PHPExcel_Style_NumberFormat::FORMAT_NUMBER_00 );
 			$this->number_format = apply_filters( 'woe_xls_number_format', PHPExcel_Style_NumberFormat::FORMAT_NUMBER );
 			// Excel will format!
-			$this->auto_format_dates             = false;
+			$this->date_format_original = $this->date_format; // Excel view will use correct date format 
+			$this->date_format = "Y-m-d H:i:s"; //dates will be comverted to mysql format 
 			$this->format_number_fields_original = $this->format_number_fields;
 			$this->format_number_fields          = false;
 
@@ -381,7 +392,7 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 				} elseif ( $this->format_number_fields_original AND $column->getMetaItem("number") ) { // NUMBER
 					$numberFormat->setFormatCode( $this->number_format );
 				} elseif ( $column->getMetaItem("date") ) {// DATE!
-					$numberFormat->setFormatCode( $this->date_format );
+					$numberFormat->setFormatCode( $this->date_format_original );
 				} elseif ( $column->getMetaItem("link") ) {
 					$numberFormat->setFormatCode( PHPExcel_Style_NumberFormat::FORMAT_TEXT );
 					$linkColumns[] = $columnIndex;

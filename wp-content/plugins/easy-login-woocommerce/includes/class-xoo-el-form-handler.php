@@ -168,7 +168,7 @@ class Xoo_El_Form_Handler{
 		if ( isset($_POST['_xoo_el_form']) &&  $_POST['_xoo_el_form'] === 'register' ) {
 			$username 		= isset( $_POST['xoo_el_reg_username'] ) ? sanitize_user( $_POST['xoo_el_reg_username'] ) : '';
 			$password 		= isset( $_POST['xoo_el_reg_pass'] ) ? $_POST['xoo_el_reg_pass'] : '';
-			$email    		= sanitize_email( $_POST['xoo_el_reg_email'] );
+			$email    		= isset( $_POST['xoo_el_reg_email'] ) ? sanitize_email( $_POST['xoo_el_reg_email'] ) : '';
 			$reg_extra_data = array();
 
 			try {
@@ -181,7 +181,9 @@ class Xoo_El_Form_Handler{
 
 				$reg_admin_fields = xoo_el()->aff->fields->get_fields_data();
 
-				$fieldValues = xoo_el()->aff->fields->validate_submitted_field_values();
+				$doNotValidateOtherFields = array_keys( array_diff_key( $reg_admin_fields, xoo_el_fields()->get_fields('register') ) );
+
+				$fieldValues = xoo_el()->aff->fields->validate_submitted_field_values( $_POST, $doNotValidateOtherFields );
 
 				if( is_wp_error( $fieldValues ) ){
 					$message = '';
@@ -255,7 +257,7 @@ class Xoo_El_Form_Handler{
 
 
 				if( class_exists( 'woocommerce' ) && empty( $password ) ){
-					$success_notice = __( 'Your account was created successfully and a password has been sent to your email address', 'easy-login-woocommerce' );
+					$success_notice = $email ? __( 'Your account was created successfully and a password has been sent to your email address', 'easy-login-woocommerce' ) : __( 'Your account was created successfully.', 'easy-login-woocommerce' );
 					$redirect = false;
 				}
 			
@@ -295,22 +297,28 @@ class Xoo_El_Form_Handler{
 
 
 	//Create new user
-	public static function create_customer( $email, $username = '', $password = '', $extra_data = array() ){
+	public static function create_customer( $email = '', $username = '', $password = '', $extra_data = array() ){
 
 		// Check the email address.
-		if ( empty( $email ) || ! is_email( $email ) ) {
-			return new WP_Error( 'registration-error-invalid-email', __( 'Please provide a valid email address.', 'easy-login-woocommerce' ) );
+		if ( !empty( $email ) ) {
+
+			if ( email_exists( $email ) ) {
+				return new WP_Error( 'registration-error-email-exists',  __( 'An account is already registered with your email address. Please log in.', 'easy-login-woocommerce' ) );
+			}
+
+			if( !is_email( $email ) ){
+				return new WP_Error( 'registration-error-invalid-email', __( 'Please provide a valid email address.', 'easy-login-woocommerce' ) );
+			}
+			
 		}
 
-		if ( email_exists( $email ) ) {
-			return new WP_Error( 'registration-error-email-exists',  __( 'An account is already registered with your email address. Please log in.', 'easy-login-woocommerce' ) );
-		}
+	
 
 		// Handle username creation.
 		if ( !empty( $username ) ) {
 			$username = sanitize_user( $username );
 
-			if ( empty( $username ) || ! validate_username( $username ) ) {
+			if ( !validate_username( $username ) ) {
 				return new WP_Error( 'registration-error-invalid-username', __( 'Please enter a valid account username.', 'easy-login-woocommerce' ) );
 			}
 
@@ -369,7 +377,7 @@ class Xoo_El_Form_Handler{
 	 * @param string $suffix Append string to username to make it unique.
 	 * @return string Generated username.
 	 */
-	public static function create_new_username( $email, $new_user_args = array(), $suffix = '' ) {
+	public static function create_new_username( $email = '', $new_user_args = array(), $suffix = '' ) {
 
 		$username_parts = array();
 
@@ -385,7 +393,7 @@ class Xoo_El_Form_Handler{
 		$username_parts = array_filter( $username_parts );
 
 		// If there are no parts, e.g. name had unicode chars, or was not provided, fallback to email.
-		if ( empty( $username_parts ) ) {
+		if ( empty( $username_parts ) && $email ) {
 			$email_parts    = explode( '@', $email );
 			$email_username = $email_parts[0];
 
@@ -408,7 +416,13 @@ class Xoo_El_Form_Handler{
 			$username_parts[] = sanitize_user( $email_username, true );
 		}
 
-		$username = strtolower( implode( '.', $username_parts ) );
+		if( !empty( $username_parts ) ){
+			$username = strtolower( implode( '.', $username_parts ) );
+		}
+		else{
+			$username = wp_rand( 0, 9999999999 ); //random username
+		}
+		
 
 		if ( $suffix ) {
 			$username .= $suffix;

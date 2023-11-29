@@ -254,8 +254,54 @@ jQuery(document).ready(function($){
 	password_strength_meter.init();
 
 	if( $.fn.select2 ){
-		$('select.xoo-aff-select_list , select.xoo-aff-country, select.xoo-aff-phone_code').each(function( key, el ){
+		$('select.xoo-aff-select_list , select.xoo-aff-country').each(function( key, el ){
 			$(el).select2();
 		});
 	}
+
+
+	if( $.fn.select2 ){
+
+		function formatState (state) {
+
+			if (!state.id) {
+				return state.text;
+			}
+
+			var cc = state.element.getAttribute('data-country_code');
+				cc = cc ? cc.toLowerCase() : cc;
+
+			var $state = $( '<div class="xoo-aff-flag-cont"><span class="flag ' + cc +'"></span>' + '<span>' + state.text + '</span></div>' );
+
+			return $state;
+
+		};
+
+		
+
+		$('select.xoo-aff-phone_code').each(function( key, el ){
+			$(el).select2({ templateResult: formatState, templateSelection: formatState });
+		});
+	}
+
+
+	//Password toggle visiblity
+	$( 'body' ).on( 'click', '.xoo-aff-pw-toggle', function(){
+
+		var $password = $(this).parents('.xoo-aff-input-group').find('input.xoo-aff-password');
+
+		$(this).toggleClass('active');
+
+		if( $(this).hasClass('active') ){
+			$password.attr('type','text');
+			$(this).find('.xoo-aff-pwtog-hide').show();
+			$(this).find('.xoo-aff-pwtog-show').hide();
+		}
+		else{
+			$password.attr('type','password');
+			$(this).find('.xoo-aff-pwtog-show').show();
+			$(this).find('.xoo-aff-pwtog-hide').hide();
+		}
+
+	} )
 })

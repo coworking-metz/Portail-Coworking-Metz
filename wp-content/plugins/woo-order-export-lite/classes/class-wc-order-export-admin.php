@@ -14,6 +14,7 @@ class WC_Order_Export_Admin {
 	public static $export_types = array( 'EMAIL', 'FTP', 'HTTP', 'FOLDER', 'SFTP', 'ZAPIER' );
 	public $url_plugin;
 	public $path_plugin;
+	public $path_views_default, $settings;
 
 	protected $tabs;
 	
@@ -32,24 +33,6 @@ class WC_Order_Export_Admin {
                 FeaturesUtil::declare_compatibility( 'custom_order_tables', WOE_PLUGIN_PATH, true );
             }
         } );
-
-        add_action('woocommerce_loaded', function () {
-            include 'core/class-wc-order-export-engine.php';
-            if (WC_Order_Export_Engine::isHPOSEnabled()) {
-                include 'core-hpos/class-wc-order-export-data-extractor.php';
-                include 'core-hpos/class-wc-order-export-data-extractor-ui.php';
-            } else {
-                include 'core/class-wc-order-export-data-extractor.php';
-                include 'core/class-wc-order-export-data-extractor-ui.php';
-            }
-
-            $extension_file = WOE_PLUGIN_BASEPATH.'/pro_version/loader.php';
-            if ( file_exists( $extension_file ) ) {
-                include_once $extension_file;
-            }
-
-            do_action( 'woe_order_export_admin_init', $this );
-        });
 
 		if ( is_admin() ) { // admin actions
 			add_action( 'admin_menu', array( $this, 'add_menu' ) );
@@ -74,6 +57,13 @@ class WC_Order_Export_Admin {
 				'export_orders_bulk_action_process',
 			), 10, 3 );
 			add_action( 'admin_notices', array( $this, 'export_orders_bulk_action_notices' ) );
+
+			//HPOS bulk actions
+			add_filter( 'bulk_actions-woocommerce_page_wc-orders', array( $this, 'export_orders_bulk_action' ) );     
+			add_filter( 'handle_bulk_actions-woocommerce_page_wc-orders', array(
+				$this,
+				'export_orders_bulk_action_process',
+			), 10, 3 );
 
 			//do once
 			if ( ! get_option( $this->activation_notice_option ) ) {
@@ -101,6 +91,7 @@ class WC_Order_Export_Admin {
 			}
 		}
 
+		do_action( 'woe_order_export_admin_init', $this );
 		$this->settings = WC_Order_Export_Main_Settings::get_settings();
 
 	}
@@ -269,6 +260,7 @@ class WC_Order_Export_Admin {
 	public function render_menu() {
 
 		$active_tab = isset( $_REQUEST['tab'] ) && $this->is_tab_exists( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : $this->settings['default_tab'];
+
 		$this->render( 'main', array(
 			'WC_Order_Export' => $this,
 			'ajaxurl'         => admin_url( 'admin-ajax.php' ),
@@ -341,6 +333,7 @@ class WC_Order_Export_Admin {
 				'remove_all_fields_confirm' => __( 'Remove all fields?', 'woo-order-export-lite' ),
 				'reset_profile_confirm'     => __( 'This action will reset filters, settings and fields to default state. Are you sure?', 'woo-order-export-lite' ),
 				'sum_symbol_tooltip' => esc_attr__( 'Show total amount for this column', 'woo-order-export-lite' ),
+				'sum_symbol' => esc_attr__( 'Sum', 'woo-order-export-lite' ),
 			);
 			$settings = WC_Order_Export_Main_Settings::get_settings();
 
@@ -547,19 +540,20 @@ class WC_Order_Export_Admin {
 		$settings = WC_Order_Export_Manage::get( WC_Order_Export_Manage::EXPORT_NOW );
 		WC_Order_Export_Manage::set_correct_file_ext( $settings );
 
+		$new_actions = array();
 		// default
 		if ( ! empty( $settings['format'] ) ) {
-			$actions['woe_export_selected_orders'] = sprintf( __( 'Export as %s', 'woo-order-export-lite' ),
+			$new_actions['woe_export_selected_orders'] = sprintf( __( 'Export as %s', 'woo-order-export-lite' ),
 				$settings['format'] );
 		}
 
 		// mark/unmark
 		if ( $this->settings['show_export_actions_in_bulk'] ) {
-			$actions['woe_mark_exported']   = __( 'Mark exported', 'woo-order-export-lite' );
-			$actions['woe_unmark_exported'] = __( 'Unmark exported', 'woo-order-export-lite' );
+			$new_actions['woe_mark_exported']   = __( 'Mark exported', 'woo-order-export-lite' );
+			$new_actions['woe_unmark_exported'] = __( 'Unmark exported', 'woo-order-export-lite' );
 		}
 
-		return $actions;
+		return $new_actions + $actions;
 	}
 
 	function export_orders_bulk_action_process( $redirect_to, $action, $ids ) {

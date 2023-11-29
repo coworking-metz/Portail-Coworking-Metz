@@ -1,15 +1,15 @@
 <?php
 /* ======================================================
- # Login as User for WordPress - v1.4.4 (free version)
+ # Login as User for WordPress - v1.4.8 (free version)
  # -------------------------------------------------------
  # For WordPress
  # Author: Web357
- # Copyright @ 2014-2022 Web357. All rights reserved.
+ # Copyright @ 2014-2023 Web357. All rights reserved.
  # License: GNU/GPLv3, http://www.gnu.org/licenses/gpl-3.0.html
  # Website: https:/www.web357.com
  # Demo: https://demo.web357.com/wordpress/login-as-user/wp-admin/
  # Support: support@web357.com
- # Last modified: Tuesday 14 June 2022, 06:08:05 PM
+ # Last modified: Monday 23 October 2023, 12:29:41 AM
  ========================================================= */
 class LoginAsUser_Admin {
 
@@ -21,6 +21,7 @@ class LoginAsUser_Admin {
 	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
 	private $plugin_name;
+	private $plugin_name_clean = 'login-as-user-pro';
 
 	/**
 	 * The version of this plugin.
@@ -48,7 +49,6 @@ class LoginAsUser_Admin {
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->plugin_name_clean = 'login-as-user';
 		$this->version = $version;
 	}
 

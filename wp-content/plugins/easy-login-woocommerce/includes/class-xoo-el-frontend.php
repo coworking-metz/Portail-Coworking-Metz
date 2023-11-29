@@ -127,6 +127,9 @@ class Xoo_El_Frontend{
 				$change_to_link = wp_logout_url( $logout_link );
 				$change_to_text =  !empty( $change_to_text ) ? $change_to_text : __('Logout','easy-login-woocommerce');
 			}
+			else if( $atts['change_to'] === 'hide' ){
+				return '';
+			}
 			else{
 				$change_to_link = esc_html( $atts['change_to'] );
 				$change_to_text =  !empty( $change_to_text ) ? $change_to_text : __('Logout','easy-login-woocommerce');

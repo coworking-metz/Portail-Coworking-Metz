@@ -382,13 +382,17 @@ function mtnc_do_login_form($user_login, $class_login, $class_password, $error =
     }
 }
 
-function mtnc_reset_pass_url()
+function mtnc_reset_pass_url($lostpassword_url, $redirect)
 {
+    $mt_options     = mtnc_get_plugin_options(true);
+    if($mt_options['state'] === 0){
+        return $lostpassword_url;
+    }
     $args             = array('action' => 'lostpassword');
     $lostpassword_url = add_query_arg($args, network_site_url('wp-login.php', 'login'));
     return $lostpassword_url;
 }
-add_filter('lostpassword_url', 'mtnc_reset_pass_url', 999, 0);
+add_filter('lostpassword_url', 'mtnc_reset_pass_url', 999, 2);
 
 function mtnc_get_preloader_element()
 {

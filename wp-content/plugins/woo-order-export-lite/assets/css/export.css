@@ -541,6 +541,14 @@ input.date {
     animation: blinker 3s linear infinite;
 }
 
+.add_form_warning.blink {
+    animation: blinker 3s linear infinite;
+}
+.segment_field.blink {
+    animation: blinker 3s linear infinite;
+}
+
+
 @keyframes blinker {
     50% {
         opacity: 0;
@@ -790,6 +798,11 @@ input.date {
     color: green;
 }
 
+.add_form_warning {
+    color: red;
+    font-weight: bold;
+}
+
 .default-html-css-label {
     display: block;
 }
@@ -946,3 +959,44 @@ input[type=number] {
     margin-bottom: 10px;
 }
 
+.export-block-left-div
+{
+    float: left;
+    width: 49%;
+    max-width: 500px;
+}
+
+.export-block-right-div
+{
+    float: left;
+    width: 48%;
+    margin: 0px 10px;
+    max-width: 500px;
+}
+
+@media (max-width: 800px) {
+    .export-block-left-div, .export-block-right-div {
+        width: 100% !important;
+        max-width: 100%;
+    }
+
+    .export-block-right-div {
+        float: left;
+        width: 49%;
+        margin: 0px 0px;
+        margin-top: 1rem;
+    }
+
+
+    .my-block {
+        margin-right: 0.7rem;
+    }
+
+    input {
+        margin-top: 0.5rem !important;
+    }
+
+    #my-export-date-field {
+        display: grid;
+    }
+}
