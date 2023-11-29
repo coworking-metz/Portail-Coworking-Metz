@@ -11,6 +11,10 @@ function avent_email_alerte($user_id, $dateDuJour)
 
     $data = get_userdata($user_id);
     if (!$data) return;
+    $envoyer_email_alerte = get_field('avent', 'option')['envoyer_email_alerte'];
+
+    if(!$envoyer_email_alerte) return;
+
     $template_id = get_field('avent', 'option')['email_alerte_avent'];
     $adresse_email_alerte = get_field('avent', 'option')['adresse_email_alerte'];
 
@@ -65,7 +69,8 @@ function avent_add_tirage($user_id, $date_tirage)
             $dateB = DateTime::createFromFormat('d/m/Y', $b);
             return $dateB <=> $dateA;
         });        
-        update_field('avent_tirages_' . date('Y'), json_encode($tirages), 'option');
+        // update_field('avent_tirages_' . date('Y'), json_encode($tirages), 'option');
+        update_field('avent_tirages', json_encode($tirages), 'option');
     }
     return $tirages;
 }
@@ -78,7 +83,8 @@ function avent_add_tirage($user_id, $date_tirage)
  */
 function avent_get_tirages()
 {
-    $tirages = get_field('avent_tirages_' . date('Y'), 'option');
+    // $tirages = get_field('avent_tirages_' . date('Y'), 'option');
+    $tirages = get_field('avent_tirages', 'option');
     $tirages = json_decode($tirages, true);
     if (!$tirages) {
         $tirages = [];
