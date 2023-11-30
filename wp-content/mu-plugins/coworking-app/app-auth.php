@@ -3,10 +3,9 @@
 
 function trtAppAuth($user_id, $check, $credentials)
 {
-
     // return app_login_link($user_id);
     $is_guest = false;
-    if ($user_id) {
+    if ($user_id && !$credentials['user_password']??false) {
         if ($check == sha1($user_id . APP_AUTH_TOKEN)) {
             $user = get_user_by('ID', $user_id);
             if (is_wp_error($user))
