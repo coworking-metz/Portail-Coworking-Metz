@@ -213,6 +213,7 @@ if (!$hd) {
     $img = $newImage;
 }
 
+CF::cacheHeaders();
 // 5. Output the image as jpeg
 header('Content-Type: image/jpeg');
 imagejpeg($img, null, $quality);
