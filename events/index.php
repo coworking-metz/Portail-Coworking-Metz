@@ -7,7 +7,7 @@ if ($id = $_POST['id'] ?? false) {
         $email = sha1(time());
     }
     $participe = $_POST['participe'] ?? false;
-    $nb = isset($_POST['nb']) ? $_POST['nb']+1 : 1;
+    $nb = isset($_POST['nb']) ? $_POST['nb'] + 1 : 1;
 
     $participation = upsertParticipation($id, ['email' => $email, 'participe' => $participe, 'id_evenement' => $id, 'nb' => $nb]);
     rediriger(urlEvenement($id) . '?email=' . urlencode($email));
@@ -106,11 +106,11 @@ if ($setNb) {
             <div>
                 <hgroup>
                     <h1><?= htmlspecialchars($evenement['evenement']); ?></h1>
+                    <p style="font-size:smaller"><?= $evenement['description']; ?></p>
                     <p>Le <?= formatDateToFrench($evenement['date']); ?>
                         <?php if ($evenement['heure']) { ?>à <?= formatTimeToHHMM($evenement['heure']); ?><?php } ?>
                         <?php if ($evenement['lieu']) { ?><br>Lieu: <?= htmlspecialchars($evenement['lieu']); ?><?php } ?>
-
-                            <br><small><b><?= participationEvenement($evenement) ?></b></small>
+                    <br><small><b><?= participationEvenement($evenement) ?></b></small>
                     </p>
                 </hgroup>
                 <?php if (!$changer) { ?>
@@ -137,7 +137,7 @@ if ($setNb) {
                         </label>
                         <label class="if-set-nb">
                             <b>Combien de personnes vous accompagnent ?</b>
-                            <input type="number" name="nb" value="<?= $participation['nb']-1 ?>" />
+                            <input type="number" name="nb" value="<?= $participation['nb'] - 1 ?>" />
                         </label>
                         <?php if ($participe != 'ok') { ?>
                             <button type="submit" name="participe" value="ok">Je participe</button>
