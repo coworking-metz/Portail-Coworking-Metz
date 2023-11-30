@@ -93,8 +93,10 @@ function coworking_app_get_sessions($uid)
 
 function can_use_app($user)
 {
+
     if (is_visiteur($user)) return true;
     if (user_can($user, 'administrator')) return true;
+    if (user_can($user, 'externe')) return true;
     if (in_array('customer', (array) $user->roles)) return true;
 }
 function coworking_app_get_valid_sessions($uid)
@@ -183,6 +185,7 @@ function coworking_app_droits($user_id, $options = [])
 
         // $ouvrir_parking = user_can($user_id, 'ouvrir_parking');
 
+        $externe = user_can($user_id, 'externe');
         if (user_can($user_id, 'administrator')) {
             $admin = true;
         } else {
@@ -191,6 +194,7 @@ function coworking_app_droits($user_id, $options = [])
 
         return [
             'admin' => $admin,
+            'externe' => $externe,
             // 'sessions'=>coworking_app_get_sessions($user_id),
             'settings' => coworking_app_settings(),
             'droits' => [
