@@ -52,7 +52,7 @@ function prepareEvenement($evenement)
 }
 function getEvenements()
 {
-    return supabase()->read('evenements');
+    return array_reverse(supabase()->read('evenements'));
 }
 function  upsertEvenement($data)
 {

@@ -126,7 +126,6 @@ body>footer {
     padding: 1rem 0;
 }
 
-
 body:not(.set-nb) .if-set-nb {
     display: none;
 }
