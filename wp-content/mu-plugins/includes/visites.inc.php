@@ -107,7 +107,6 @@ function fetch_users_with_future_visite()
     );
 
     $users_with_future_visite = get_users($args);
-
     return $users_with_future_visite;
 }
 

@@ -3,7 +3,6 @@
 // error_reporting(E_ALL);
 // ini_set('display_errors', 'On');
 
-
 $user = wp_get_current_user();
 if (!$user) exit;
 $uid = $user->ID;
@@ -49,7 +48,7 @@ if (isset($_POST['valider-polaroid'])) {
 
 <?php if ($photo) {
 
-    $content = getBase64EncodedImage(polaroid_tmpphoto());
+    $content = pathTourl(polaroid_tmpphoto());
     $polaroid = ['nom' => get_field('polaroid_nom', 'user_' . $uid), 'description' => get_field('polaroid_description', 'user_' . $uid), 'complement' => get_field('polaroid_complement', 'user_' . $uid)];
 
     if (!$polaroid['nom']) {
