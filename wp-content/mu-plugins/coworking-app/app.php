@@ -30,7 +30,7 @@ function coworking_app_settings()
     ];
     $visites = [
         'jours_de_visites' => array_map('intval', get_field('jours_de_visites', 'option')),
-        'horaire' => trim(get_field('horaire', 'option')),
+        'horaire' => trim( date("H:i", strtotime(get_field('horaire', 'option')))),
         'limite_mois' => intval(get_field('limite_mois', 'option')),
         'fermer_vacances' => $fermer_vacances,
         'fermer_visites' => visites_fermees(),
