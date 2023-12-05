@@ -11,3 +11,17 @@
 [data-name="votre_photo_alpha"] {
     display: none !important;
 }
+
+
+[data-wp-lists="list:user"] tr:not(:hover) .loginasuser_col a {
+    display: none !important;
+}
+
+[data-wp-lists="list:user"] tr:hover .loginasuser_col a {
+    position: relative;
+    z-index: 10;
+}
+
+[data-wp-lists="list:user"] tr:hover .loginasuser_col a strong{
+    display: none;
+}
