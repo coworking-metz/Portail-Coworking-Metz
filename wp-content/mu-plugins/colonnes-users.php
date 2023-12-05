@@ -28,6 +28,7 @@ add_filter('manage_users_sortable_columns', function ($columns) {
  */
 add_filter('manage_users_columns', function ($columns) {
 
+    $columns['payer_en_virement'] = 'Peut payer en virement bancaire ?';
     $columns['votre_photo'] = 'Photo';
     $columns['date_naissance'] = 'Anniversaire';
     $columns['visite'] = 'Visite';
@@ -55,6 +56,9 @@ add_filter(
         } else
         if ('date_naissance' === $column_name) {
             $value = get_field('date_naissance', 'user_'.$user_id);
+        } else
+        if ('payer_en_virement' === $column_name) {
+            $value = get_field('payer_en_virement', 'user_'.$user_id) ? '<strong>Oui</strong>' : '';
         } else
         if ('user_registered' === $column_name) {
             $user = get_userdata($user_id);
