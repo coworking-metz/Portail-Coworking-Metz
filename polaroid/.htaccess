@@ -5,6 +5,8 @@ RewriteBase /polaroid/
 #RewriteCond %{DOCUMENT_ROOT}/polaroid/gen/$0 -f
 #RewriteRule ^(.*)$ /polaroid/gen/$0
 
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteRule ([0-9]+)-original\.jpg $1.jpg?hd=true&original=true [L,QSA]
 
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteRule ([0-9]+)-hd\.jpg $1.jpg?hd=true [L,QSA]
