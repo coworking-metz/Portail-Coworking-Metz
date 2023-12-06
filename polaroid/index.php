@@ -5,6 +5,7 @@ $quality = 90;
 $hd = $_GET['hd'] ?? false;
 $uid = $_GET['uid'] ?? false;
 $dynamique = isset($_GET['dynamique']);
+$original = isset($_GET['original']);
 $anniversaire = !empty($_GET['anniversaire']);
 
 define('WP_USE_THEMES', false); // We don't want to use themes.
@@ -43,8 +44,11 @@ if ($_GET['custom'] ?? false) {
         $photo = polaroid_tmpphoto();
     } else {
 
-        $image_fond_pola = get_image_fond_pola();
-
+        if ($original) {
+            $image_fond_pola = false;
+        } else {
+            $image_fond_pola = get_image_fond_pola();
+        }
         $polaroid = polaroid_get($uid);
         if ($image = get_user_meta($uid, 'url_image_trombinoscope', true)) {
             $url = wp_get_attachment_url($image);
