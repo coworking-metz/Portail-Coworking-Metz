@@ -2,9 +2,19 @@
 
 use Httpful\Http;
 
+// add_action('rest_api_init', function () {
+//     register_rest_route('cowo/v1', '/nouvelle-visite', [
+//         'methods' => 'GET',
+//         'callback' => function ($request) {
+//             coworking_app_check($request);
+//             return rest_ensure_response(['event' => false]);
+//         },
+//     ]);
+// });
+
 add_action('rest_api_init', function () {
     register_rest_route('cowo/v1', '/nouvelle-visite', [
-        'methods' => 'POST',
+        'methods' => 'GET',
         'callback' => function ($request) {
             coworking_app_check($request);
 
@@ -31,11 +41,16 @@ add_action('rest_api_init', function () {
             // }
 
 
-            // return rest_ensure_response(['event' => true]);
 
-            $params = $request->get_json_params();
+            $payload = $_GET['payload'] ?? false;
+            if (!$payload) return;
+            
+            $params = json_decode(stripslashes($payload), true);
 
-            $user = $params['user']??false;
+            $user = $params['user'] ?? false;
+
+            if (empty($user['email']))
+                return rest_ensure_response(['event' => false]);
 
             $nom = $user['prenom'] . ' ' . $user['nom'] . ' (' . $user['email'] . ')';
 
