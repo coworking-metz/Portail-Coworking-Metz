@@ -1,29 +1,3 @@
-
-// compte.js
-window.addEventListener('load', e => {
-    const fieldset = document.querySelector('fieldset:has(.password-input)');
-    console.log({ fieldset })
-    if (fieldset) {
-        fieldset.addEventListener('click', e => {
-            document.body.dataset.editPassword = true;
-        })
-    }
-
-    const date_naissance = document.querySelector('p.form-row:has(#date_naissance)')
-
-    if (date_naissance) {
-        const cible = document.querySelector('p.form-row:has(#account_display_name)');
-        cible.parentNode.insertBefore(date_naissance, cible);
-    }
-})
-// coworkers_now.js
-document.addEventListener('DOMContentLoaded', function () {
-    fetch('https://api.coworking-metz.fr/api-json-wp/cowo/v1/coworkers_now').then(response => response.json()).then(response => {
-        console.log(response);
-        document.querySelector('#text-count-coworker').innerHTML = response.content;
-    })
-})
-// stats.js
 document.addEventListener('DOMContentLoaded', function () {
     if (!document.querySelector('body.home')) return;
 

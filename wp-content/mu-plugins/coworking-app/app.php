@@ -208,6 +208,7 @@ function coworking_app_droits($user_id, $options = [])
 }
 function coworking_app_check_origins($origin)
 {
+    //if(strstr($origin, 'coworking-metz.fr'))
     return true;
 
     if (in_array($origin, coworking_app_origins())) return true;
