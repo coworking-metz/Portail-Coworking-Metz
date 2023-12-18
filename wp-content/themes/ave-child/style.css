@@ -161,3 +161,7 @@ body:not([data-edit-password="true"]) fieldset:has(.password-input):after {
     text-decoration: underline;
     content: 'Cliquez ici pour modifier votre mot de passer';
 }
+
+body.home #text-count-coworker {
+    color:white;
+}

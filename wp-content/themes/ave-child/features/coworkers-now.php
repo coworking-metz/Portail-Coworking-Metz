@@ -4,7 +4,8 @@
  * coworkers_now_tv();
  * Get the number of people connected
  */
-function coworkers_now_tv() {
+function coworkers_now_tv()
+{
 
     $hour_now = date('H');
     $hour_now += 1;
@@ -23,14 +24,12 @@ function coworkers_now_tv() {
     $number_coworkers = curl_exec($ch);
     $number_worplaces = 28;
     $remaining_workplaces = $number_worplaces - $number_coworkers;
-    
+
     if ($number_coworkers == 0) {
         echo 'Pas de coworker !';
-    }
-    elseif ($number_coworkers == 1) {
+    } elseif ($number_coworkers == 1) {
         echo '<span class="highlight-text">' . $number_coworkers . ' </span>coworker actuellement !';
-    }
-    else {
+    } else {
         echo 'Nous sommes <span class="highlight-text">' . $number_coworkers . '</span> actuellement !';
     }
 }
@@ -38,7 +37,8 @@ function coworkers_now_tv() {
  * coworkers_now();
  * Get the number of people connected
  */
-function coworkers_now() {
+function coworkers_now($return = false)
+{
 
     $hour_now = date('H');
     $hour_now += 1;
@@ -57,22 +57,28 @@ function coworkers_now() {
     $number_coworkers = curl_exec($ch);
     $number_worplaces = 28;
     $remaining_workplaces = $number_worplaces - $number_coworkers;
-    
+
+    $output = '';
     if ($number_coworkers == 0) {
-        echo 'Pas de coworker actuellement. <span class="highlight-text">';
+        $output = 'Pas de coworker actuellement. <span class="highlight-text">';
+    } elseif ($number_coworkers == 1) {
+        $output = 'Actuellement <span class="highlight-text">' . $number_coworkers . ' </span>coworker présent.<br/><span class="highlight-text">' . $remaining_workplaces . '</span> postes de travail encore disponibles.';
+    } else {
+        $output = 'Actuellement <span class="highlight-text">' . $number_coworkers . ' </span>coworkers présents.<br/><span class="highlight-text">' . $remaining_workplaces . '</span> postes de travail encore disponibles.';
     }
-    elseif ($number_coworkers == 1) {
-        echo 'Actuellement <span class="highlight-text">' . $number_coworkers . ' </span>coworker présent.<br/><span class="highlight-text">' . $remaining_workplaces . '</span> postes de travail encore disponibles.';
-    }
-    else {
-        echo 'Actuellement <span class="highlight-text">' . $number_coworkers . ' </span>coworkers présents.<br/><span class="highlight-text">' . $remaining_workplaces . '</span> postes de travail encore disponibles.';
+
+    if ($return) {
+        return $output;
+    } else {
+        echo $output;
     }
 }
 /**
  * coworkers_now_app();
  * Get the number of people connected 
  */
-function coworkers_now_app() {
+function coworkers_now_app()
+{
 
     $hour_now = date('H');
     $hour_now += 1;
@@ -94,7 +100,8 @@ function coworkers_now_app() {
  * coworkers_now_app();
  * Get the number of people connected 
  */
-function remaining_workplaces_app() {
+function remaining_workplaces_app()
+{
 
     $hour_now = date('H');
     $hour_now += 1;
