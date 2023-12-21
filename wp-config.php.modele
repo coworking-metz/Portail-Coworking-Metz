@@ -72,7 +72,7 @@ define('JWT_AUTH_SECRET_KEY', 'cp!Xbu]~~neV^i_>[E}VCiq~l T<7G:7q-|8mZ{,8m.6p`{9r
  * si vous leur donnez chacune un préfixe unique.
  * N'utilisez que des chiffres, des lettres non-accentuées, et des caractères soulignés!
  */
-$table_prefix  = 'prfxcrwkng_';
+$table_prefix  = 'wp_';
 /**
  * Pour les développeurs : le mode deboguage de WordPress.
  *

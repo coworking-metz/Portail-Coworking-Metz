@@ -32,7 +32,7 @@ cd portail-coworking-metz
 - Select the [SQL file](#data)
 - Submit
 
-- Navigate to http://localhost:8180/index.php?route=/&route=%2F&db=wordpress&table=prfxcrwkng_users
+- Navigate to http://localhost:8180/index.php?route=/&route=%2F&db=wordpress&table=wp_users
 - Edit the admin user (the one with id 1)
 - Change its `user_pass` to `newpassword`
 - Select `MD5` in the `Function` column
@@ -73,9 +73,9 @@ you have 2 options to bypass restrictions on `grant_types`:
 ```
 - or edit the client details directly in the database
 ```sql
-UPDATE `prfxcrwkng_postmeta`
+UPDATE `wp_postmeta`
 SET `meta_value` = 'a:3:{i:0;s:18:\"authorization_code\";i:1;s:8:\"implicit\";i:2;s:13:\"refresh_token\";}'
-WHERE `prfxcrwkng_postmeta`.`meta_id` = 386442;
+WHERE `wp_postmeta`.`meta_id` = 386442;
 ```
 
 ### Troubleshoot
