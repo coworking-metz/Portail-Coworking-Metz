@@ -182,7 +182,7 @@ function coworking_app_droits($user_id, $options = [])
 
         $bloquer_ouvrir_portail = get_field('bloquer_ouvrir_portail', 'user_' . $user_id);
         // $ouvrir_parking = get_field('ouvrir_parking', 'user_' . $user_id) || date('Ymd') < '20240101';
-        $ouvrir_parking = get_field('ouvrir_parking', 'user_' . $user_id);
+        $ouvrir_parking = true;
 
         // $ouvrir_parking = user_can($user_id, 'ouvrir_parking');
 
