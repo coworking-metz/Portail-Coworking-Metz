@@ -6,6 +6,7 @@ $form = $_POST['form'] ?? [];
 
 if ($form) {
     $evenement = upsertEvenement($form);
+
     rediriger('admin.php?id=' . $evenement['id']);
 }
 $evenements = getEvenements();
@@ -151,7 +152,7 @@ if ($evenement = getEvenement($id)) {
                         <div>
                             <label for="logo">Logo</label>
                             <select name="form[logo]"><?php foreach (logos() as $logo) { ?>
-                                    <option <?= $logo['url'] == $evenement['logo'] ? 'selected' : ''; ?> value="<?= $logo['url']; ?>"><?= $logo['nom']; ?></option>
+                                    <option <?= $logo['url'] == ($evenement['logo']??false) ? 'selected' : ''; ?> value="<?= $logo['url']; ?>"><?= $logo['nom']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
