@@ -63,8 +63,8 @@ if ($_GET['custom'] ?? false) {
         }
     }
 }
-
 if($raw) {
+    CF::cacheHeaders();
     outputImageWithHeaders($photo);
 }
 // if (!isset($_GET['debug'])) $image_fond_pola = false;
