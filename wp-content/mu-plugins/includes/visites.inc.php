@@ -90,6 +90,7 @@ function fetch_users_with_future_visite()
  */
 function envoyerMailAlerte($user_id)
 {
+    if(wp_get_environment_type() == 'local') return;
 
     $data = get_userdata($user_id);
     if (!$data) return;
@@ -129,6 +130,8 @@ function envoyerMailAlerte($user_id)
  */
 function envoyerMailVisite($user_id, $visite = null)
 {
+
+    if(wp_get_environment_type() == 'local') return;
     $user = get_userdata($user_id);
     if (!$user) return;
 
@@ -154,5 +157,7 @@ function envoyerMailVisite($user_id, $visite = null)
 
     $to  = $user->user_email;
     $headers = array('Content-Type: text/html; charset=UTF-8');
+
     return wp_mail($to, $mail['subject'], $mail['message'], $headers);
 }
+
