@@ -9,7 +9,7 @@ $id = $_GET['id'] ?? false;
 $w = 100;
 $h = 148;
 
-$image_url = $_GET['image_url'] ?? ($id ? site_url() . '/polaroid/' . $id . '-hd.jpg' : false);
+$image_url = $_GET['image_url'] ?? ($id ? site_url() . '/polaroid/' . $id . '-original.jpg' : false);
 
 if (!$image_url) exit;
 $name = $id ? $id : sha1(basename($image_url));

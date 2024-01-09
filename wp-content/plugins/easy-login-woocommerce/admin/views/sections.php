@@ -16,9 +16,24 @@ $sections = array(
 		'tab' 	=> 'general',
 	),
 
+
+	array(
+		'title' => 'Popup',
+		'id' 	=> 'gl_popup',
+		'tab' 	=> 'general',
+	),
+
+
 	array(
 		'title' => 'Auto Open Popup',
 		'id' 	=> 'gl_ao',
+		'tab' 	=> 'general',
+	),
+
+
+	array(
+		'title' => 'Redirects',
+		'id' 	=> 'gl_red',
 		'tab' 	=> 'general',
 	),
 

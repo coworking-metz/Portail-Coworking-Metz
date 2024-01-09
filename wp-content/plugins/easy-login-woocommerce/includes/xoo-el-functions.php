@@ -79,7 +79,7 @@ endif;
 
 
 //Add notice
-function xoo_el_add_notice( $notice_type = 'error', $message, $notice_class = null ){
+function xoo_el_add_notice( $notice_type = 'error', $message = '', $notice_class = null ){
 
 	$classes = $notice_type === 'error' ? 'xoo-el-notice-error' : 'xoo-el-notice-success';
 	
@@ -125,15 +125,20 @@ if( !function_exists( 'xoo_el_inline_form' ) ){
 	function xoo_el_inline_form_shortcode($user_atts){
 
 		$atts = shortcode_atts( array(
-			'active'	=> 'login',
+			'active' 	=> '',
+			'tabs' 		=> 'login,register',
 		), $user_atts, 'xoo_el_inline_form');
+
+		$tabs 	= explode(',', $atts['tabs']);
+		$active = isset( $user_atts['active'] ) ? $user_atts['active'] : $tabs[0];
 
 		if( is_user_logged_in() ) return;
 
 		$args = array(
-			'form_active' 	=> $atts['active'],
-			'return' 		=> true
-		); 
+			'form_active' 	=> $active,
+			'return' 		=> true,
+			'tabs' 			=> $tabs
+		);
 		
 		return xoo_el_get_form( $args );
 
@@ -163,11 +168,26 @@ function xoo_el_get_form( $args = array() ){
 			'resetpw' 		=> array(
 				'enable' 	=> 'yes'
 			),
+		),
+		'tabs' 	=> array(
+			'login', 'register'
 		)
 
 	);
 
+
 	$args = wp_parse_args( $args, $defaults );
+
+	$unsetTabs = array();
+
+	foreach ($args['forms'] as $key => $form ) {
+		if( $form['enable'] !== 'yes' ){
+			$unsetTabs[] = $key;
+		}
+	}
+
+
+	$args['tabs'] = array_diff( $args['tabs'], $unsetTabs );
 
 	if( $glSettings['m-reset-pw'] === "yes" && ( isset( $_GET['reset_password'] ) || isset( $_GET['show-reset-form'] ) ) ){
 
@@ -228,27 +248,18 @@ add_filter( 'wc_get_template', 'xoo_el_override_wc_login_form', 99999, 5 );
 
 function xoo_el_get_myaccount_fields(){
 
-	$fields = (array) xoo_el()->aff->fields->get_fields_data();
-
-	foreach ( $fields as $field_id => $field_data )  {
-
-		//Skip if predefined field
-		if( !isset( $field_data['settings']['display_myacc'] ) || $field_data['settings']['display_myacc'] !== 'yes' ){
-			unset( $fields[ $field_id ] );
-		}
-	}
-
-	$fields = apply_filters( 'xoo_el_myaccount_fields', $fields );
-
-	return $fields;
+	return xoo_el_fields()->get_fields('myaccount');
 
 }
+
+
+
 
 
 //Add fields to woocommerce account edit page
 function xoo_el_myaccount_details(){
 
-	$fields = xoo_el_get_myaccount_fields();
+	$fields = xoo_el_fields()->get_fields('myaccount');
 
 	if( empty($fields) ) return;
 
@@ -296,7 +307,7 @@ add_action('woocommerce_edit_account_form','xoo_el_myaccount_details', 10);
 
 function xoo_el_save_myaccount_details( $user_id  ){
 
-	$fields = xoo_el_get_myaccount_fields();
+	$fields = xoo_el_fields()->get_fields('myaccount');
 
 	if( empty( $fields ) ) return;
 

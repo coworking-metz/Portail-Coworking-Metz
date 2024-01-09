@@ -111,6 +111,9 @@ class PHPExcel_Writer_Excel5_Parser
      * The class constructor
      *
      */
+
+    public $ptg, $functions;
+
     public function __construct()
     {
         $this->currentCharacter  = 0;

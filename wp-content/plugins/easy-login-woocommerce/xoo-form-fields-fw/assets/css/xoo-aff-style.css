@@ -205,3 +205,35 @@ select.xoo-aff-states{
         margin-right: 0;
     }
 }
+
+.xoo-aff-flag-cont {
+    display: flex;
+    align-items: center;
+} 
+.xoo-aff-flag-cont span:nth-child(1) {
+    margin-right: 6px;
+}
+ 
+.xoo-aff-flag-cont span:nth-child(2) {
+    font-size: 12px;
+}
+
+span.xoo-aff-pwtog-hide {
+    display: none;
+}
+
+.xoo-aff-pw-toggle {
+    display: flex;
+    align-items: center;
+    right: 5px;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+    user-select: none;
+}
+
+.xoo-aff-pw-toggle > * {
+    cursor: pointer;
+    padding: 5px;
+}

@@ -18,15 +18,23 @@ class WOE_Formatter_Csv extends WOE_Formatter_sv {
 	) {
 		parent::__construct( $mode, $filename, $settings, $format, $labels, $field_formats, $date_format, $offset );
 		//we just set filter!
-		if ( ! empty( $this->settings['force_quotes'] ) ) {
-			add_filter('woe_csv_custom_output_func',function ($custom_output,$handle,$data,$delimiter,$linebreak,$enclosure,$is_header) {
+		if ( ! empty( $this->settings['force_quotes'] ) ) 
+			add_filter('woe_csv_custom_output_func', array($this,'force_quotes'), 10, 7);
+	}
+	
+	public function finish() {
+		//must remove filter at end!
+		if ( ! empty( $this->settings['force_quotes'] ) ) 
+			remove_filter('woe_csv_custom_output_func', array($this,'force_quotes'), 10);
+		parent::finish();
+	}
+
+	
+	public function force_quotes($custom_output,$handle,$data,$delimiter,$linebreak,$enclosure,$is_header) {
 				foreach($data as $k=>$v) 
 					$data[$k] =  $enclosure . str_replace($enclosure, $enclosure . $enclosure, $v) . $enclosure;
 				fwrite($handle, join($delimiter, $data). $linebreak  );
 				return true;  //stop default fputcsv!
-			}, 10, 7);
-		}
-
 	}
 
     protected function remove_linebreaks_from_array( &$data ) {

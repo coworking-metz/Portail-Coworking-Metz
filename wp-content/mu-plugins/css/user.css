@@ -1,10 +1,27 @@
 .user-rich-editing-wrap,
 .user-admin-color-wrap,
-.user-comment-shortcuts-wrap, .user-url-wrap, .user-description-wrap, .user-profile-picture, #application-passwords-section,
+.user-comment-shortcuts-wrap,
+.user-url-wrap,
+.user-description-wrap,
+.user-profile-picture,
+#application-passwords-section,
 .form-table tr[data-name="profession"],
 .form-table tr[data-name="url_image_trombinoscope"],
-.override-author-setting 
-{
+.override-author-setting,
+[data-name="votre_photo_alpha"] {
     display: none !important;
 }
 
+
+[data-wp-lists="list:user"] tr:not(:hover) .loginasuser_col a {
+    display: none !important;
+}
+
+[data-wp-lists="list:user"] tr:hover .loginasuser_col a {
+    position: relative;
+    z-index: 10;
+}
+
+[data-wp-lists="list:user"] tr:hover .loginasuser_col a strong{
+    display: none;
+}

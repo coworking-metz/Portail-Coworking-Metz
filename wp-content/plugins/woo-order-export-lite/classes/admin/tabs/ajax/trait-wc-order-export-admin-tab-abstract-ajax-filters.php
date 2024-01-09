@@ -12,7 +12,7 @@ trait WC_Order_Export_Admin_Tab_Abstract_Ajax_Filters {
 		$main_settings = WC_Order_Export_Main_Settings::get_settings();
 
 		$limit = $main_settings['show_all_items_in_filters'] ? null : $main_settings['autocomplete_products_max'];
-		echo json_encode( WC_Order_Export_Data_Extractor_UI::get_products_like( $_REQUEST['q'], $limit ) );
+		echo json_encode( apply_filters( "woe_ajax_get_products", WC_Order_Export_Data_Extractor_UI::get_products_like( $_REQUEST['q'], $limit ),  $_REQUEST['q'], $limit ) );
 	}
 
 	/**

@@ -95,6 +95,8 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
      *
      * @param    PHPExcel    $phpExcel    PHPExcel object
      */
+    public $writerWorkbook, $writerWorksheets;
+
     public function __construct(PHPExcel $phpExcel)
     {
         $this->phpExcel    = $phpExcel;

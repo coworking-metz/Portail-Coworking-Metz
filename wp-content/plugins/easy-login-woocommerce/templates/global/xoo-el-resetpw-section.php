@@ -9,7 +9,7 @@
  * maintain compatibility. We try to do this as little as possible, but it does
  * happen.
  * @see     https://docs.xootix.com/easy-login-woocommerce/
- * @version 2.1
+ * @version 2.5
  */
 
 
@@ -17,38 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-
-$fields = array(
-	'xoo-el-rp-pass' => array(
-		'input_type' 		=> 'password',
-		'icon' 				=> 'fas fa-key',
-		'placeholder' 		=> __( 'New Password', 'easy-login-woocommerce' ),
-		'cont_class' 		=> array( 'xoo-aff-group' ),
-		'required' 			=> 'yes',
-	),
-
-	'xoo-el-rp-pass-again' => array(
-		'input_type' 	=> 'password',
-		'icon' 			=> 'fas fa-key',
-		'placeholder' 	=> __( 'Confirm Password', 'easy-login-woocommerce' ),
-		'cont_class' 	=> array( 'xoo-aff-group' ),
-		'required' 		=> 'yes'
-	),
-);
-
-$regPasswordSettings = xoo_el()->aff->fields->get_field_data( 'xoo_el_reg_pass' )['settings'];
-
-if( isset( $regPasswordSettings['strength_meter'] ) && $regPasswordSettings['strength_meter'] === "yes" ){
-	$fields['xoo-el-rp-pass']['custom_attributes'] = array(
-		'check_strength' 	=> 'yes',
-		'strength_pass' 	=> $regPasswordSettings['strength_meter_pass']
-	);
-}
-
-$fields['xoo-el-rp-pass']['minlength'] = $regPasswordSettings['minlength'];
-$fields['xoo-el-rp-pass']['maxlength'] = $regPasswordSettings['maxlength'];
-
-$fields = apply_filters( 'xoo_el_resetpw_fields', $fields, $args );
 
 $resetpw_args = $args['forms']['resetpw']; 
 
@@ -66,13 +34,7 @@ $resetpw_args = $args['forms']['resetpw'];
 
 	<span class="xoo-el-form-txt"><?php _e( 'Please enter a new password', 'easy-login-woocommerce' ); ?></span>
 
-	<?php
-
-	foreach ( $fields as $field_id => $field_args ) {
-		xoo_el()->aff->fields->get_input_html( $field_id, $field_args );
-	}
-
-	?>
+	<?php xoo_el_fields()->get_fields_html('resetpw'); //Reset password Fields ?>
 
 	<input type="hidden" name="rp_login" value="<?php echo esc_attr( $resetpw_args['rp_login'] ) ?>">
 

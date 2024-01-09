@@ -10,9 +10,9 @@ add_action('wp_footer', function () {
 
     if (is_checkout() || is_cart()) {
 
-        if (commande_recente(PRODUIT_CAFE_THE)) return;
-
-        if (!is_product_in_cart(PRODUIT_CAFE_THE)) {
+        $cafe_ids = get_products_with_contribution_cafe_the(true);
+        if (commande_recente($cafe_ids)) return;
+        if (!is_product_in_cart($cafe_ids)) {
             echo generateNotification([
                 'titre' => 'Vous consommez du café ou du thé ?',
                 'texte' => 'Pensez à ajouter l\'option payante café/thé afin de participer aux frais. <a href="/boutique/contribution-cafe-the/">En savoir plus</a>.',

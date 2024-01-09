@@ -3,8 +3,8 @@ Contributors: XootiX, xootixsupport
 Donate link: https://www.paypal.me/xootix
 Tags: social login, login customizer, registration, popup, custom registration fields
 Requires at least: 3.0.1
-Tested up to: 5.9
-Stable tag: 2.3
+Tested up to: 6.4
+Stable tag: 2.5
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,8 @@ You can choose which field to keep from the fields manager
 2. Under Login Popup Tab , select the desired option.
 
 = Shortcodes =
+Please check "How to use" tab under plugin settings for more information.
+
 Use shortcode [xoo_el_action] to include it anywhere on the website. ( See info tab in settings to know more )
 [xoo_el_action type="login" display="button" text="Login" change_to="logout" redirect_to="same"]
 
@@ -87,6 +89,17 @@ theme/templates/easy-login-woocommerce/globals/ For more info, check template he
 10. Shortcodes
 
 == Changelog ==
+
+= 2.5 =
+* New - Password eye toggle
+* New - Login, reset & lost password fields under field editor.
+* New - Tab & Button texts as settings
+* New - Separate login and registration forms using inline shortcode
+* New - Email can be set as optional
+* Fix - #login & #register opening popup only once
+
+= 2.4 =
+* Security fix
 
 = 2.3 =
 * Security fix

@@ -9,7 +9,8 @@ class Xoo_El_Core{
 
 	private static $_instance = null;
 
-	public $aff;
+	public $aff, $db_version;
+	public $updatedFrom = false;
 
 	public static function get_instance(){
 
@@ -21,6 +22,8 @@ class Xoo_El_Core{
 
 
 	public function __construct(){
+
+		$this->db_version = get_option('xoo-el-version');
 
 		if( defined( 'XOO_ML_VERSION' ) && version_compare( XOO_ML_VERSION , '1.3', '<=' ) ){
 			add_action( 'admin_notices', array( $this, 'otp_login_update_notice' ) );
@@ -36,7 +39,7 @@ class Xoo_El_Core{
 		define( "XOO_EL_PATH", plugin_dir_path( XOO_EL_PLUGIN_FILE ) ); // Plugin path
 		define( "XOO_EL_URL", untrailingslashit( plugins_url( '/', XOO_EL_PLUGIN_FILE ) ) ); // plugin url
 		define( "XOO_EL_PLUGIN_BASENAME", plugin_basename( XOO_EL_PLUGIN_FILE ) );
-		define( "XOO_EL_VERSION", "2.1" ); //Plugin version
+		define( "XOO_EL_VERSION", "2.5" ); //Plugin version
 
 	}
 
@@ -54,6 +57,8 @@ class Xoo_El_Core{
 		
 		require_once XOO_EL_PATH.'includes/xoo-el-functions.php';
 
+		require_once XOO_EL_PATH.'includes/class-xoo-el-fields.php';
+
 		if($this->is_request('frontend')){
 
 			require_once XOO_EL_PATH.'includes/class-xoo-el-frontend.php';
@@ -61,12 +66,15 @@ class Xoo_El_Core{
 
 		}
 
-		if ($this->is_request('admin')) {
-
-			require_once XOO_EL_PATH.'admin/class-xoo-el-admin-settings.php';
+		if( $this->is_request('admin') || version_compare( $this->db_version, XOO_EL_VERSION, '<' ) ){
 			require_once XOO_EL_PATH.'admin/class-xoo-el-aff-fields.php';
-			require_once XOO_EL_PATH.'admin/class-xoo-el-user-profile.php';
+			require_once XOO_EL_PATH.'admin/class-xoo-el-admin-settings.php';
+		}
+
+	
+		if ($this->is_request('admin')) {
 			require_once XOO_EL_PATH.'admin/class-xoo-el-menu-settings.php';
+			require_once XOO_EL_PATH.'admin/class-xoo-el-user-profile.php';
 		}
 	}
 
@@ -111,10 +119,9 @@ class Xoo_El_Core{
 		if( $db_version === false ){
 			add_action( 'admin_notices', array( $this, 'admin_notice_on_install' ) );
 		}
-		
 
-		if( version_compare( $db_version, XOO_EL_VERSION, '<') ){
 
+		if( version_compare( $db_version, '2.3', '<') ){
 			//Map old values to new option
 			$oldValues = (array) include XOO_EL_PATH.'/admin/views/oldtonew.php';
 			foreach ( $oldValues as $keyData ) {
@@ -128,11 +135,21 @@ class Xoo_El_Core{
 				}
 				update_option( $keyData['newkey'], $newKeyValue );
 			}
+		}
+		
+
+		if( version_compare( $db_version, XOO_EL_VERSION, '<') ){
 
 			xoo_el()->aff->fields->set_defaults();
 
+			xoo_el_helper()->admin->auto_generate_settings();
+
 			//Update to current version
 			update_option( $version_option, XOO_EL_VERSION);
+
+			xoo_el_helper()->update_theme_templates_data(); //get theme template data
+
+			$this->updatedFrom = $db_version;
 		}
 	}
 
@@ -156,11 +173,13 @@ class Xoo_El_Core{
 
 	public function show_outdated_template_notice(){
 
+		if( !xoo_el_helper()->admin->is_settings_page() ) return;
+
 		$themeTemplatesData = xoo_el_helper()->get_theme_templates_data();
 		if( empty( $themeTemplatesData ) || $themeTemplatesData['has_outdated'] !== 'yes' ) return;
 		?>
 		<div class="notice notice-success is-dismissible xoo-el-admin-notice">
-		<p><?php printf( 'You have <a href="%1$s">outdated templates</a> in your theme which are no longer supported. Please fetch a new copy from the plugin folder.<br>Afterwards go to <a href="%1$s">Settings</a> & click on check again. Until then plugin will use the default templates', admin_url( 'admin.php?page=xoo-el' ) ); ?></p>
+		<p><?php printf( 'You have <a href="%1$s">outdated templates</a> in your theme which are no longer supported. Please see "How to use?" tab for more info.', admin_url( 'admin.php?page=easy-login-woocommerce-settings' ) ); ?></p>
 		</div>
 		<?php
 	}

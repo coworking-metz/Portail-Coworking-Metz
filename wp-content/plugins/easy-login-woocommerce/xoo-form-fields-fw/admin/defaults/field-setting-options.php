@@ -333,6 +333,16 @@ $field_settings = array(
 		'info'		=> 'Accept password if strength is equals to or above this status',
 	),
 
+
+	'password_visibility' => array(
+		'type' 		=> 'checkbox',
+		'id'		=> 'password_visibility',
+		'section' 	=> 'basic',	
+		'title' 	=> 'Password Visibility Toggle',
+		'width'		=> 'half',
+		'value'		=> 'yes',
+	),
+
 	'ta_rows'	=> array(
 		'type' 		=> 'number',
 		'id'		=> 'rows',

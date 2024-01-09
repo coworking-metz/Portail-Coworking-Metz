@@ -4,14 +4,19 @@ if (isset($_GET['test'])) {
     $_GET['debug'] = true;
     add_action('init', function () {
 
-        me(recapJoursDeVisites());
-        $uid = get_current_user_id();
-        update_user_meta($uid, '_first_login_date', false);
-me($uid);
-        // $template = new VIWEC_Render_Email_Template(['template_id' => 28637]);
+        $users = get_users();
+        $cpt = 0;
+        foreach ($users as $user) {
+            if ($d = get_field('date_naissance', 'user_' . $user->ID)) {
+                $cpt++;
 
-        // print_r($template->get_content());
-
+                // $annee = substr($d, 0, 4);
+                // $mois = substr($d, 4, 2);
+                // $jour = substr($d, 6, 2);
+                // update_field('date_naissance', $annee . '/' . $mois . '/' . $jour, 'user_' . $user->ID);
+                m($user->user_nicename,$d,nettoyerDate($d));
+            }
+        }
         exit;
     });
 }

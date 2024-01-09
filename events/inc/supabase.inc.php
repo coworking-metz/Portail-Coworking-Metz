@@ -21,12 +21,13 @@ function getParticipations($id_evenement)
 
 function getEvenement($id)
 {
-    if(!$id) return;
+    if (!$id) return;
     $criteria = ['id' => $id];
     return prepareEvenement(supabase()->read('evenements', $criteria)[0] ?? false);
 }
 
-function prepareEvenement($evenement) {
+function prepareEvenement($evenement)
+{
     if ($evenement['image_url']) {
         $hash = sha1($evenement['image_url']);
         $file = __DIR__ . '/../tmp/' . $hash . '.jpg';
@@ -51,14 +52,14 @@ function prepareEvenement($evenement) {
 }
 function getEvenements()
 {
-    return supabase()->read('evenements');
+    return array_reverse(supabase()->read('evenements'));
 }
 function  upsertEvenement($data)
 {
     $criteria = ['id' => $data['id'] ?? false];
-    $data['ok'] = $data['ok']??0;
-    $data['ko'] = $data['ko']??0;
-    $data['maybe'] = $data['maybe']??0;
+    $data['ok'] = $data['ok'] ?? 0;
+    $data['ko'] = $data['ko'] ?? 0;
+    $data['maybe'] = $data['maybe'] ?? 0;
     unset($data['id']);
     $response = supabase()->upsert('evenements', $data, $criteria);
     if (!empty($response['id'])) {
@@ -81,7 +82,7 @@ function  upsertParticipation($id_evenement, $data)
 {
     $criteria = ['email' => $data['email'], 'id_evenement' => $id_evenement];
     $response = supabase()->upsert('participations', $data, $criteria);
-    if(!empty($response['id'])) {
+    if (!empty($response['id'])) {
         return $response;
     }
     return getParticipation($criteria['email'], $id_evenement);
@@ -95,9 +96,16 @@ function hashEvenement($data)
 function texteParticipation($participation)
 {
     if (empty($participation['participe'])) return 'Vous n\'avez pas encore répondu';
-    if ($participation['participe'] == 'ok') return 'Vous avez confirmé votre participation';
-    if ($participation['participe'] == 'ko') return 'Vous ne participatez pas';
-    if ($participation['participe'] == 'maybe') return 'Vous allez peut-être participer';
+    if ($participation['participe'] == 'ok') {
+        $ret = 'Vous avez confirmé votre participation 👍';
+
+        if ($participation['nb'] > 1) {
+            $ret .= '<small>Vous venez accompagné de ' . ($participation['nb'] - 1) . ' personne(s).</small>';
+        }
+        return $ret;
+    }
+    if ($participation['participe'] == 'ko') return 'Vous avez indiqué ne pas participer à cet événement 👎';
+    if ($participation['participe'] == 'maybe') return 'Vous avez répondu que vous allez peut-être participer 🤔';
 }
 /*
 function getAbonnementByStripeId($stripe_id)

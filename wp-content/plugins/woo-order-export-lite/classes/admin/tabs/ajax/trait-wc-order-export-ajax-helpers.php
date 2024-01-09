@@ -118,10 +118,18 @@ trait WC_Order_Export_Ajax_Helpers {
 
 		$filename = $this->tmp_filename ? $this->tmp_filename :	get_transient( $this->tempfile_prefix . $_REQUEST['file_id'] );
 		if ( $filename === false ) {
-			echo json_encode( array( 'error' => __( 'Can\'t find exported file', 'woo-order-export-lite' ) ) );
+			// should check if Trasient API broken
+			$key = "woe_test_api_".mt_rand(100000, 999999);
+			$value = mt_rand(100000, 999999); 
+			set_transient($key, $value, 5);
+			$test_value = get_transient( $key );
+			if($test_value != $value)
+				echo json_encode( array( 'error' => __( 'Transient API is broken. Try to disable "Transients Manager" plugin or contact to export support.', 'woo-order-export-lite' ) ) );
+			else
+				echo json_encode( array( 'error' => __( 'Can\'t find exported file. Try button "Export [w/o progressbar]" or contact to export support.', 'woo-order-export-lite' ) ) );
 			die();
 		}
-		set_transient( $this->tempfile_prefix . $_REQUEST['file_id'], $filename, 60 );
+		set_transient( $this->tempfile_prefix . $_REQUEST['file_id'], $filename, 5 * MINUTE_IN_SECONDS );
 		$this->stop_prevent_object_cache();
 
 		return $filename;

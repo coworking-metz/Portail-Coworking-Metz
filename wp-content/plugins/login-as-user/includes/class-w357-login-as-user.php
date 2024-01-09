@@ -1,15 +1,15 @@
 <?php
 /* ======================================================
- # Login as User for WordPress - v1.4.4 (free version)
+ # Login as User for WordPress - v1.4.8 (free version)
  # -------------------------------------------------------
  # For WordPress
  # Author: Web357
- # Copyright @ 2014-2022 Web357. All rights reserved.
+ # Copyright @ 2014-2023 Web357. All rights reserved.
  # License: GNU/GPLv3, http://www.gnu.org/licenses/gpl-3.0.html
  # Website: https:/www.web357.com
  # Demo: https://demo.web357.com/wordpress/login-as-user/wp-admin/
  # Support: support@web357.com
- # Last modified: Tuesday 14 June 2022, 06:08:05 PM
+ # Last modified: Monday 23 October 2023, 12:29:41 AM
  ========================================================= */
  
 class w357LoginAsUser
@@ -275,7 +275,7 @@ class w357LoginAsUser
 				/* Translators: 1: user display name; 2: username; */
 				__('go back to admin as %1$s (%2$s)', 'login-as-user'),
 				$old_user->display_name,
-				$old_user->user_login
+				$old_user->user_email
 			);
 			$url = self::back_url($old_user);
 
@@ -445,7 +445,7 @@ CSS;
 	 */
 	public static function loginasuser_url(WP_User $user)
 	{
-		$current_url = urlencode(wp_unslash("//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}"));
+		$current_url = urlencode(wp_unslash(site_url($_SERVER['REQUEST_URI'])));
 
 		if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'admin-ajax.php') !== false)
 		{
@@ -572,9 +572,12 @@ CSS;
 	 */
 	public function filter_user_has_cap(array $user_caps, array $required_caps, array $args, WP_User $user)
 	{
-		if ('login_as_user' === $args[0]) 
+		if (isset($args[2]) && 'login_as_user' === $args[0]) 
 		{
-			$user_caps['login_as_user'] = (user_can($user->ID, 'edit_user', $args[2]) && ($args[2] !== $user->ID));
+			if ((bool)$args[2])
+			{
+				$user_caps['login_as_user'] = (user_can($user->ID, 'edit_user', $args[2]) && ($args[2] !== $user->ID));
+			}
 		}
 
 		return $user_caps;

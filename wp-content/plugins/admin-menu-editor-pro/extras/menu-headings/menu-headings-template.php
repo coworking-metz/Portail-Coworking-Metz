@@ -42,9 +42,9 @@
 							       data-bind="checked: settings.backgroundColorType">
 							<span class="ame-fixed-label-text">Custom</span>
 						</label>
-						<label for="ame-custom-heading-text-color" class="hidden">Custom heading background
+						<label for="ame-custom-heading-background-color" class="hidden">Custom heading background
 							color</label>
-						<input type="text" id="ame-custom-heading-text-color"
+						<input type="text" id="ame-custom-heading-background-color"
 						       data-bind="ameColorPicker: settings.backgroundColor">
 					</p>
 
@@ -214,7 +214,7 @@
 	</div>
 
 	<div class="ws_dialog_buttons">
-		<input type="button" class="button-primary" value="Save Changes" id="ws_save_menu_heading_settings"
+		<input type="button" class="button-primary" value="OK" id="ws_save_menu_heading_settings"
 		       data-bind="click: onConfirm.bind($root)">
 		<input type="button" class="button ws_close_dialog" value="Cancel" data-bind="click: onCancel.bind($root)">
 	</div>

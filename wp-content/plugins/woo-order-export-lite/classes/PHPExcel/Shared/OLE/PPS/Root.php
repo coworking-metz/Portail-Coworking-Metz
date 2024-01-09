@@ -36,6 +36,8 @@ class PHPExcel_Shared_OLE_PPS_Root extends PHPExcel_Shared_OLE_PPS
      */
     protected $tempDirectory = null;
 
+    public  $_tempDir, $_BIG_BLOCK_SIZE, $_SMALL_BLOCK_SIZE, $_FILEH_;
+
     /**
      * @param integer $time_1st A timestamp
      * @param integer $time_2nd A timestamp

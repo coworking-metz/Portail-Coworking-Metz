@@ -1,5 +1,7 @@
 <?php
 
+use YahnisElsts\AdminMenuEditor\WebpackRegistry\WebpackAssetRegistry;
+
 class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	const WPML_CONTEXT = 'admin-menu-editor menu texts';
 
@@ -107,6 +109,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	 */
 	private $loaded_modules = array();
 	private $are_modules_loaded = false;
+	private $is_loading_modules = false;
 
 	/**
 	 * @var array List of capabilities that are used in the default admin menu. Used to detect meta capabilities.
@@ -143,6 +146,11 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		'ame-jquery-cookie' => 'js/jquery.biscuit.js',
 	);
 	private $registered_jquery_plugins = array();
+
+	/**
+	 * @var null|\YahnisElsts\AdminMenuEditor\WebpackRegistry\WebpackAssetRegistry
+	 */
+	private $webpack_registry = null;
 
 	function init(){
 		$this->sitewide_options = true;
@@ -342,6 +350,13 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'admin.php?page=wpgb-facet-settings' => true,
 			//Google Analytics for WordPress by MonsterInsights 8.4.0
 			'index.php?page=monsterinsights-getting-started' => true,
+			//WPForms Lite 1.7.8 (and possibly the paid version)
+			'index.php?page=wpforms-getting-started' => true,
+			//WPFunnels 2.7.6
+			'admin.php?page=edit_funnel' => true,
+			'admin.php?page=email-builder' => true,
+			//Email Marketing Automation - Mail Mint 1.2.5
+			'admin.php?page=mint-mail-automation-editor' => true,
 		);
 
 		//AJAXify screen options
@@ -472,13 +487,19 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	}
 
 	public function load_modules() {
+		//Prevent indirect recursion. This can happen if, for example, a module
+		//immediately tries to check user capabilities when it's loaded.
+		if ( $this->is_loading_modules ) {
+			return;
+		}
+		$this->is_loading_modules = true;
+
 		//Load any active modules that haven't been loaded yet.
 		foreach($this->get_active_modules() as $id => $module) {
 			if ( array_key_exists($id, $this->loaded_modules) ) {
 				continue;
 			}
 
-			/** @noinspection PhpIncludeInspection */
 			include ($module['path']);
 			if ( !empty($module['className']) ) {
 				$instance = new $module['className']($this);
@@ -498,6 +519,8 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		$this->tabs = apply_filters('admin_menu_editor-tabs', $firstTabs);
 		//The "Settings" tab is always last.
 		$this->tabs['settings'] = 'Settings';
+
+		$this->is_loading_modules = false;
 	}
 
 	/**
@@ -576,8 +599,12 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			add_action("admin_print_scripts-$page", array($this, 'enqueue_scripts'), 1);
 			add_action("admin_print_styles-$page", array($this, 'enqueue_styles'));
 
-			//Make sure Lodash doesn't conflict with the copy of Underscore that's bundled with WordPress.
-			add_filter('script_loader_tag', array($this, 'lodash_noconflict'), 10, 2); //Filter exists since WP 4.1.
+			//A special CSS class lets us conditionally style the menu item and its siblings.
+			ameMenuItem::add_class_to_submenu_item(
+				$parent_slug,
+				'menu_editor',
+				'ws-ame-primary-am-item'
+			);
 
 			//Let modules do something when loading a specific tab but before output starts.
 			add_action('load-' . $page, array($this, 'trigger_tab_load_event'));
@@ -641,7 +668,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 		//Is there a custom menu to use?
 		$custom_menu = $this->load_custom_menu();
-		if ( $custom_menu !== null ){
+		if ( ($custom_menu !== null) && !empty($custom_menu['tree']) ){
 			//Merge in data from the default menu
 			$custom_menu['tree'] = $this->menu_merge($custom_menu['tree']);
 
@@ -882,6 +909,39 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		// phpcs:enable
 	}
 
+	public function register_safe_js_libraries() {
+		static $isDone = false;
+		if ( $isDone ) {
+			return;
+		}
+		$isDone = true;
+
+		//Lodash library
+		wp_register_auto_versioned_script('ame-lodash', plugins_url('js/lodash.min.js', $this->plugin_file));
+		//Make sure Lodash doesn't conflict with the copy of Underscore that's bundled with WordPress.
+		//Revert the "_" variable to its original value and store Lodash in "wsAmeLodash" instead.
+		wp_add_inline_script('ame-lodash', 'window.wsAmeLodash = _.noConflict();');
+
+		//Knockout
+		foreach(array('ame-knockout', 'knockout') as $koAlias) {
+			wp_register_auto_versioned_script($koAlias, plugins_url('js/knockout.js', $this->plugin_file));
+		}
+
+		//Knockout bindings for the jQuery UI sortable functionality.
+		wp_register_auto_versioned_script(
+			'ame-knockout-sortable',
+			plugins_url('js/knockout-sortable.js', $this->plugin_file),
+			['ame-knockout', 'jquery', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-droppable']
+		);
+
+		//Mini utilities for more functional programming.
+		wp_register_auto_versioned_script('ame-mini-functional-lib', plugins_url('js/mini-func.js', $this->plugin_file));
+
+		if ( function_exists('ws_ame_register_customizable_js_lib') ) {
+			ws_ame_register_customizable_js_lib($this);
+		}
+	}
+
 	public function register_base_dependencies() {
 		static $done = false;
 		if ( $done ) {
@@ -890,15 +950,10 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		$done = true;
 
 		$this->register_jquery_plugins();
+		$this->register_safe_js_libraries();
 
 		//Base styles.
 		wp_register_auto_versioned_style('menu-editor-base-style', plugins_url('css/menu-editor.css', $this->plugin_file));
-
-		//Lodash library
-		wp_register_auto_versioned_script('ame-lodash', plugins_url('js/lodash.min.js', $this->plugin_file));
-
-		//Knockout
-		wp_register_auto_versioned_script('knockout', plugins_url('js/knockout.js', $this->plugin_file));
 
 		//Actor manager.
 		wp_register_auto_versioned_script(
@@ -967,7 +1022,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		);
 
 		//Let extras register their scripts.
-		do_action('admin_menu_editor-register_scripts');
+		do_action('admin_menu_editor-register_scripts', $this);
 	}
 
 	/**
@@ -1217,6 +1272,10 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'expandSelectedSubmenu' => isset($this->get['expand_submenu']) && ($this->get['expand_submenu'] === '1'),
 
 			'deepNestingEnabled' => $this->options['deep_nesting_enabled'],
+			'auxDataConfig' => apply_filters(
+				'admin_menu_editor-aux_data_config',
+				array('keys' => array('color_presets' => null), 'settingIdMap' => array(), 'prefixMap' => array())
+			),
 
 			'isDemoMode' => defined('IS_DEMO_MODE'),
 			'isMasterMode' => defined('IS_MASTER_MODE'),
@@ -1281,20 +1340,6 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 		//Insert the scripts after core script(s).
 		array_splice($wp_scripts->queue, $last_core_key + 1, 0, $handles_to_move);
-	}
-
-	/**
-	 * Revert the "_" variable to its original value and store Lodash in "wsAmeLodash" instead.
-	 *
-	 * @param string $tag
-	 * @param string $script_handle
-	 * @return string
-	 */
-	public function lodash_noconflict($tag, $script_handle) {
-		if ($script_handle === 'ame-lodash') {
-			$tag .= '<script type="text/javascript">wsAmeLodash = _.noConflict();</script>';
-		}
-		return $tag;
 	}
 
 	/**
@@ -1387,7 +1432,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			$config_id = $this->guess_menu_config_id();
 		}
 
-		$custom_menu = apply_filters('ame_pre_set_custom_menu', $custom_menu);
+		$custom_menu = apply_filters('ame_pre_set_custom_menu', $custom_menu, $config_id);
 
 		$previous_custom_menu = $this->load_custom_menu($config_id);
 		if ( !empty($this->options['wpml_support_enabled']) ) {
@@ -1396,10 +1441,14 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 		if ( !empty($custom_menu) ) {
 			$custom_menu['prebuilt_virtual_caps'] = $this->build_virtual_capability_list($custom_menu);
-		}
 
-		if ( !empty($custom_menu) && $this->options['compress_custom_menu'] ) {
-			$custom_menu = ameMenu::compress($custom_menu);
+			if ( $this->options['compress_custom_menu'] ) {
+				$custom_menu = ameMenu::compress($custom_menu);
+			}
+
+			if ( empty($custom_menu['format']) ) {
+				$custom_menu = ameMenu::add_format_header($custom_menu);
+			}
 		}
 
 		if ($config_id === 'site') {
@@ -2576,6 +2625,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		}
 
 		$action = isset($this->post['action']) ? $this->post['action'] : (isset($this->get['action']) ? $this->get['action'] : '');
+		if ( !empty($action) ) {
+			do_action('admin_menu_editor-page_action-' . $action, $this->post);
+		}
 		do_action('admin_menu_editor-header', $action, $this->post);
 
 		if ( !empty($action) ) {
@@ -2984,10 +3036,6 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			$custom_menu = $default_menu;
 		}
 
-		//The editor doesn't use the color CSS. Including it would just make the page bigger and waste bandwidth.
-		unset($custom_menu['color_css']);
-		unset($custom_menu['color_css_modified']);
-
 		//Encode both menus as JSON
 		$editor_data['default_menu_js'] = ameMenu::to_json($default_menu);
 		$editor_data['custom_menu_js'] = ameMenu::to_json($custom_menu);
@@ -3240,8 +3288,10 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 		//Include caps that are required to access menu items (grant_access).
 		$menuCaps = array();
-		foreach($custom_menu['tree'] as $item) {
-			$menuCaps = self::array_replace_recursive($menuCaps, $this->get_virtual_caps_for($item));
+		if ( !empty($custom_menu['tree']) ) {
+			foreach ($custom_menu['tree'] as $item) {
+				$menuCaps = self::array_replace_recursive($menuCaps, $this->get_virtual_caps_for($item));
+			}
 		}
 
 		//grant_access settings on individual items have precedence.
@@ -3993,7 +4043,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'ame-helper-style',
 			plugins_url('css/admin.css', $this->plugin_file),
 			array(),
-			'20211207'
+			'20220912'
 		);
 
 		if ( $this->options['force_custom_dashicons'] ) {
@@ -4004,7 +4054,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 					'ame-force-dashicons',
 					plugins_url('css/force-dashicons.css', $this->plugin_file),
 					array(),
-					'20210226'
+					'20230828-2'
 				);
 			}
 		}
@@ -4044,6 +4094,15 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			$this->options[$key] = $value;
 		}
 		$this->save_options();
+	}
+
+	/**
+	 * Get the default configuration options.
+	 *
+	 * @return array
+	 */
+	public function get_default_options() {
+		return $this->defaults;
 	}
 
 	/**
@@ -4593,11 +4652,22 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	 * @return WP_User|null
 	 */
 	private function get_user_by_id($user_id) {
+		static $isGettingCurrentUser = false;
+
 		//Usually, pluggable functions will already be loaded by this point,
 		//but there is at least one plugin that indirectly triggers this method
 		//before wp_get_current_user() is available by checking user caps early.
-		if ( function_exists('wp_get_current_user') ) {
-			$current_user = wp_get_current_user();
+		//
+		//At least one plugin can enter infinite recursion if we call wp_get_current_user()
+		//here. To prevent that, avoid nested calls and fall back to get_user_by().
+		if ( function_exists('wp_get_current_user') && !$isGettingCurrentUser ) {
+			$isGettingCurrentUser = true;
+			try {
+				$current_user = wp_get_current_user();
+			} finally {
+				$isGettingCurrentUser = false;
+			}
+
 			if ( $current_user && ($current_user->ID == $user_id) ) {
 				return $current_user;
 			}
@@ -5120,6 +5190,19 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		return 'am/' . $level . '/' . $suffix;
 	}
 
+	public function get_webpack_registry() {
+		if ( !isset($this->webpack_registry) ) {
+			if ( class_exists(WebpackAssetRegistry::class) ) {
+				$this->webpack_registry = new WebpackAssetRegistry(
+					AME_ROOT_DIR . '/dist/build.manifest.json',
+					AME_ROOT_DIR . '/dist'
+				);
+			}
+		}
+
+		return $this->webpack_registry;
+	}
+
 } //class
 
 
@@ -5190,6 +5273,11 @@ class ameMenuTemplateBuilder {
 	 * @param string|null $parent
 	 */
 	private function addItem($wpItem, $position, $parent = null) {
+		//The item should always be array-like.
+		if ( !is_array($wpItem) && !($wpItem instanceof ArrayAccess) ) {
+			return;
+		}
+
 		$item = ameMenuItem::fromWpItem($wpItem, $position, $parent);
 
 		//Skip separators.

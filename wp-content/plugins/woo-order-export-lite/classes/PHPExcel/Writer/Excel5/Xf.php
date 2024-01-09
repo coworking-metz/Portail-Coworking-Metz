@@ -129,6 +129,9 @@ class PHPExcel_Writer_Excel5_Xf
      * @access public
      * @param PHPExcel_Style    The XF format
      */
+
+    public $_diag, $_diag_color, $_style;
+
     public function __construct(PHPExcel_Style $style = null)
     {
         $this->isStyleXf =     false;

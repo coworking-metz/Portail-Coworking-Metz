@@ -319,8 +319,6 @@ class Xoo_Aff_Fields{
 	//Set defaults
 	public function set_defaults(){
 
-		if( !is_admin() ) return;
-
 		//Get default field settings
 		if( empty( $this->setting_options ) ){
 			$this->setting_options = include XOO_AFF_DIR.'/admin/defaults/field-setting-options.php';
@@ -582,6 +580,7 @@ class Xoo_Aff_Fields{
 				'icon' 			=> 'fas fa-smile',
 				'is_selectable' => 'yes',
 				'can_delete' 	=> 'yes',
+				'is_sortable' 	=> 'yes',
 			)
 		);
 	}
@@ -945,6 +944,14 @@ class Xoo_Aff_Fields{
 			case 'email':
 			case 'number':
 				$field_html .= '<input type="' . $input_type . '" class="' . $class . '" name="' . $field_id . '" placeholder="' . $placeholder . '"  value="' . $value . '" ' . $custom_attributes . '/>';
+
+				if( isset( $args['password_visibility'] ) && $args['password_visibility'] === 'yes' ){
+					$field_html .= '<div class="xoo-aff-pw-toggle">
+					<span class="xoo-aff-pwtog-show"><i class="far fa-eye"></i></span>
+					<span class="xoo-aff-pwtog-hide"><i class="far fa-eye-slash"></i></span>
+					</div>';
+				}
+
 				break;
 
 			case 'text':

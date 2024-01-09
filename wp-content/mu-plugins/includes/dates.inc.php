@@ -7,6 +7,26 @@ define('ONE_DAY', ONE_HOUR * 24);
 define('ONE_WEEK', ONE_DAY * 7);
 define('ONE_MONTH', ONE_DAY * 31);
 
+/**
+ * Converts a date string to the format YYYY-MM-DD.
+ *
+ * @param string $dateStr The date string in YYYY-MM-DD or DD/MM/YYYY format.
+ * @return string The date in YYYY-MM-DD format.
+ */
+function nettoyerDate($dateStr)
+{
+    foreach (['Y-m-d', 'd/m/Y', 'Y/m/d','Ymd'] as $format) {
+        $date = DateTime::createFromFormat($format, $dateStr);
+        if ($date) {
+            break;
+        }
+    }
+    if (!$date) return $dateStr;
+
+
+    return $date->format('Y-m-d');
+}
+
 
 /**
  * Récupère les jours fériés et les vacances scolaires.
@@ -25,7 +45,7 @@ function fetch_holidays()
         $holidays = [];
 
         $urls = [
-            'https://fr.ftp.opendatasoft.com/openscol/fr-en-calendrier-scolaire/Zone-B.ics', 
+            'https://fr.ftp.opendatasoft.com/openscol/fr-en-calendrier-scolaire/Zone-B.ics',
             // 'https://etalab.github.io/jours-feries-france-data/ics/jours_feries_metropole.ics'
         ];
         foreach ($urls as $url) {
@@ -94,6 +114,7 @@ function isFuture($date)
  */
 function isToday($date)
 {
+    $date = date('Y-m-d', strtotime($date));
     $currentDate = date('Y-m-d');
     return ($date === $currentDate);
 }

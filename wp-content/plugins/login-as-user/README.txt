@@ -3,9 +3,9 @@ Contributors: yiannistaos, johnbillion
 Tags: user, login, admin, login as user, web357
 Donate link: https://www.paypal.me/web357
 Requires at least: 5.3
-Tested up to: 6.0
-Requires PHP: 7.0
-Stable tag: 1.4.4
+Tested up to: 6.3
+Requires PHP: 7.3
+Stable tag: 1.4.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,25 @@ This plugin is helpful if you are an admin and you want to sign in as any user, 
 5. Settings.
 
 == Changelog ==
+= 23-Oct-2023 : v1.4.8 =
+* Fully compatible with WordPress v6.3.x and WooCommerce v8.2.x
+* Minor fixes and improvements
+
+= 27-Jul-2023 : v1.4.7 =
+* Added PHP 8.2 Compatibility to the Plugin Update Checker and fix deprecation notices regarding PHP 8.2.x.
+* Fix CSS issues regarding z-index on Divi themes.
+
+= 26-Jul-2023 : v1.4.6 =
+* [PHP 8.2 Deprecated Warning]: Creation of dynamic property LoginAsUser_AdminPro::$plugin_name_clean is deprecated in /wp-content/plugins/login-as-user-pro/admin/class-admin.php on line 51 on PHP 8.2, and WordPress 6.2.2.
+
+= 07-Jun-2023 : v1.4.5 =
+* [Compatibility] Fully compatible with WordPress v6.2.x and WooCommerce v7.7.x
+* Compatible with the WooCommerce Mobile App
+* After login as a user, in the notification bar show the email instead of username. Example: "go back to admin as Yiannis Christodoulou (yiannis [@] web357 [.] com)"
+* Bug fixed after going back to admin dashboard. Bug message: "The link you followed as expired." 
+* PHP Warning fixed: Undefined array key "SERVER_NAME" in .../wp-content/plugins/login-as-user-pro/login-as-user-pro.php on line 67
+* Minor fixes and improvements
+
 = 14-Jun-2022 : v1.4.4 =
 * Minor bugfix: The "Login as User" button is missing for specific user roles.
 

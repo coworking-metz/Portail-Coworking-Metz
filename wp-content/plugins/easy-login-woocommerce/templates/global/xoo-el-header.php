@@ -9,7 +9,7 @@
  * maintain compatibility. We try to do this as little as possible, but it does
  * happen.
  * @see     https://docs.xootix.com/easy-login-woocommerce/
- * @version 2.1
+ * @version 2.5
  */
 
 
@@ -17,18 +17,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-$register_args 	= $args['forms']['register'];
-$form_active 	= $args['form_active'];
-
 ?>
 
 <div class="xoo-el-header">
 	<ul class="xoo-el-tabs">
 
-		<li data-tab="login" class="xoo-el-login-tgr"><?php _e( 'Login', 'easy-login-woocommerce' ); ?></li>
+        <?php if( in_array( 'login', $args['tabs'] ) ): ?>
+		  <li data-tab="login" class="xoo-el-login-tgr"><?php esc_html_e( xoo_el_helper()->get_general_option( 'txt-tab-login' ) ) ?></li>
+        <?php endif; ?>
 
-		<?php if( isset( $register_args['enable'] ) && $register_args['enable'] === "yes" ): ?> 
-			<li data-tab="register" class="xoo-el-reg-tgr"><?php _e( 'Sign Up', 'easy-login-woocommerce' ); ?></li>
+		<?php if( in_array( 'register', $args['tabs'] ) ):?> 
+			<li data-tab="register" class="xoo-el-reg-tgr"><?php esc_html_e( xoo_el_helper()->get_general_option( 'txt-tab-reg' ) ) ?></li>
 		<?php endif; ?>
 
 	</ul>

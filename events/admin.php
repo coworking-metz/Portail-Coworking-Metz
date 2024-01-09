@@ -79,6 +79,13 @@ if ($evenement = getEvenement($id)) {
             max-height: 60vh;
             overflow-y: auto;
         }
+
+        article.selected {
+            border: 2px solid #333;
+        }
+        article.past {
+            opacity: 0.6;
+        }
     </style>
 </head>
 
@@ -102,6 +109,11 @@ if ($evenement = getEvenement($id)) {
                         <div>
                             <label for="evenement">Nom de l'événement</label>
                             <input type="text" name="form[evenement]" required value="<?= htmlspecialchars($evenement['evenement'] ?? ''); ?>">
+                        </div>
+                        <div>
+                            <label for="description">Description</label>
+                            <textarea name="form[description]"><?= htmlspecialchars($evenement['description'] ?? ''); ?></textarea>
+                            <small>Facultatif</small>
                         </div>
                         <div>
                             <label for="lieu">Lieu</label>
@@ -143,7 +155,7 @@ if ($evenement = getEvenement($id)) {
                                         <?= $participation['participe'] == 'ok' ? '👍' : '' ?>
                                         <?= $participation['participe'] == 'ko' ? '🚫' : '' ?>
                                         <?= $participation['participe'] == 'maybe' ? '🤔' : '' ?>
-                                        <b><?= strstr($participation['email'], '@') ? $participation['email'] : '<i>Anonyme</i>'; ?></b>
+                                        <b><?= strstr($participation['email'], '@') ? $participation['email'] : '<i>Anonyme</i>'; ?></b> <?= $participation['nb'] > 1 ? ' + ' . $participation['nb'] . ' accompagnateur(s)' : ''; ?>
                                     </div>
                                 <?php } ?>
                             <?php } else { ?>
@@ -157,8 +169,8 @@ if ($evenement = getEvenement($id)) {
                     <a role="button" href="admin.php?new">Créer un évenement</a>
                 </article>
                 <?php foreach ($evenements as $e) { ?>
-                    <article class="<?= $e['id'] == $id; ?>">
-                        <?= descriptionEvenement($e); ?>
+                    <article class="<?= $e['id'] == $id ? 'selected' : ''; ?> <?= $e['date'] < date('Y-m-d') ? 'past' : ''; ?>">
+                        <a href="admin.php?id=<?= $e['id']; ?>"><?= descriptionEvenement($e); ?></a>
                         <br><small><?= participationEvenement($e, true) ?></small>
                         <div><a href="admin.php?id=<?= $e['id']; ?>">✏️</a> <a href="<?= urlEvenement($e['id']); ?>">👀</a></div>
                     </article>

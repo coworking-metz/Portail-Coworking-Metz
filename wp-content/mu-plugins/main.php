@@ -8,6 +8,7 @@ Version: 1.0
 
 
 
+include plugin_dir_path(__FILE__) . 'Classes/CloudFlare.php';
 
 include plugin_dir_path(__FILE__) . 'coworking-app/app.php';
 

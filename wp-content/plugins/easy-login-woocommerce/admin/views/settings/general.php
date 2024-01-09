@@ -8,12 +8,14 @@ foreach ( $editable_roles as $role_id => $role_data) {
 }
 $user_roles = apply_filters( 'xoo_el_admin_user_roles', $user_roles );
 
+$localizeTexts = version_compare( get_option( 'xoo-el-version' ) , '2.5', '<' );
+
 $settings = array(
 
 	/** MAIN **/
 	array(
 		'callback' 		=> 'links',
-		'title' 		=> 'Registration Fields',
+		'title' 		=> 'Fields',
 		'id' 			=> 'fake',
 		'section_id' 	=> 'gl_main',
 		'args' 			=> array(
@@ -30,7 +32,6 @@ $settings = array(
 		'section_id' 	=> 'gl_main',
 		'default' 		=> 'yes',
 	),
-
 
 	array(
 		'callback' 		=> 'checkbox',
@@ -61,44 +62,6 @@ $settings = array(
 		'default' 		=> class_exists( 'woocommerce' ) ? 'customer' : 'subscriber'
 	),
 
-
-	array(
-		'callback' 		=> 'text',
-		'title' 		=> 'Login Redirect',
-		'id' 			=> 'm-red-login',
-		'section_id' 	=> 'gl_main',
-		'default' 		=> '',
-		'desc' 			=> 'Leave empty to redirect on the same page.'
-	),
-
-	array(
-		'callback' 		=> 'text',
-		'title' 		=> 'Register Redirect',
-		'id' 			=> 'm-red-register',
-		'section_id' 	=> 'gl_main',
-		'default' 		=> '',
-		'desc' 			=> 'Leave empty to redirect on the same page.'
-	),
-
-	array(
-		'callback' 		=> 'text',
-		'title' 		=> 'Logout Redirect',
-		'id' 			=> 'm-red-logout',
-		'section_id' 	=> 'gl_main',
-		'default' 		=> '',
-		'desc' 			=> 'Leave empty to redirect on the same page.'
-	),
-
-
-	array(
-		'callback' 		=> 'checkbox',
-		'title' 		=> 'Success Endpoint',
-		'id' 			=> 'm-ep-success',
-		'section_id' 	=> 'gl_main',
-		'default' 		=> 'yes',
-		'desc' 			=> 'Adds (login="success" & register="success") in URL bar on login & register. Clears cache on login/register if you have cache plugin enabled'
-	),
-
 );
 
 
@@ -123,7 +86,73 @@ if( class_exists( 'woocommerce' ) ){
 }
 
 
-$autoOpen = array(
+$popup = array(
+
+
+	array(
+		'callback' 		=> 'text',
+		'title' 		=> 'Login Redirect',
+		'id' 			=> 'm-red-login',
+		'section_id' 	=> 'gl_red',
+		'default' 		=> '',
+		'desc' 			=> 'Leave empty to redirect on the same page.'
+	),
+
+	array(
+		'callback' 		=> 'text',
+		'title' 		=> 'Register Redirect',
+		'id' 			=> 'm-red-register',
+		'section_id' 	=> 'gl_red',
+		'default' 		=> '',
+		'desc' 			=> 'Leave empty to redirect on the same page.'
+	),
+
+	array(
+		'callback' 		=> 'text',
+		'title' 		=> 'Logout Redirect',
+		'id' 			=> 'm-red-logout',
+		'section_id' 	=> 'gl_red',
+		'default' 		=> '',
+		'desc' 			=> 'Leave empty to redirect on the same page.'
+	),
+
+
+	array(
+		'callback' 		=> 'checkbox',
+		'title' 		=> 'Success Endpoint',
+		'id' 			=> 'm-ep-success',
+		'section_id' 	=> 'gl_red',
+		'default' 		=> 'yes',
+		'desc' 			=> 'Adds (login="success" & register="success") in URL bar on login & register. Clears cache on login/register if you have cache plugin enabled'
+	),
+
+	array(
+		'callback' 		=> 'checkbox_list',
+		'title' 		=> 'Forms',
+		'id' 			=> 'popup-forms',
+		'section_id' 	=> 'gl_popup',
+		'args' 			=> array(
+			'options' 	=> array(
+				'login' 		=> 'Login',
+				'register' 		=> 'Register',
+			),
+		),
+		'default' 	=> array(
+			'login', 'register',
+		)
+	),
+
+
+	array(
+		'callback' 		=> 'checkbox',
+		'title' 		=> 'Prevent closing',
+		'id' 			=> 'popup-force',
+		'section_id' 	=> 'gl_popup',
+		'default' 		=> 'no',
+		'desc' 			=> 'Once popup is opened, this option will prevent user from closing it. Useful when you want to hide your website page content for guest users. You can also set "overlay opacity to 1" from style tab to completely blackout the background.'
+	),
+
+
 
 	array(
 		'callback' 		=> 'checkbox',
@@ -135,12 +164,28 @@ $autoOpen = array(
 
 
 	array(
+		'callback' 		=> 'select',
+		'title' 		=> 'Default Tab',
+		'id' 			=> 'ao-default-form',
+		'section_id' 	=> 'gl_ao',
+		'args' 			=> array(
+			'options' 		=> array(
+				'login' 	=> 'Login',
+				'register' 	=> 'Register',
+			),
+		),
+		'default' 		=> 'login',
+	),
+
+
+	array(
 		'callback' 		=> 'checkbox',
 		'title' 		=> 'Open once',
 		'id' 			=> 'ao-once',
 		'section_id' 	=> 'gl_ao',
 		'default' 		=> 'no',
 	),
+
 
 	array(
 		'callback' 		=> 'textarea',
@@ -160,9 +205,51 @@ $autoOpen = array(
 		'desc' 			=> 'Trigger popup after seconds. 1000 = 1 second'
 	),
 
+
+	array(
+		'callback' 		=> 'text',
+		'title' 		=> 'Login Tab text',
+		'id' 			=> 'txt-tab-login',
+		'section_id' 	=> 'gl_texts',
+		'default' 		=> $localizeTexts ? __( 'Login', 'easy-login-woocommerce' ) : 'Login',
+	),
+
+	array(
+		'callback' 		=> 'text',
+		'title' 		=> 'Register Tab text',
+		'id' 			=> 'txt-tab-reg',
+		'section_id' 	=> 'gl_texts',
+		'default' 		=> $localizeTexts ? __( 'Sign Up', 'easy-login-woocommerce' ) : 'Sign Up',
+	),
+
+	array(
+		'callback' 		=> 'text',
+		'title' 		=> 'Login Button text',
+		'id' 			=> 'txt-btn-login',
+		'section_id' 	=> 'gl_texts',
+		'default' 		=> $localizeTexts ? __( 'Sign in', 'easy-login-woocommerce' ) : 'Sign in',
+	),
+
+	array(
+		'callback' 		=> 'text',
+		'title' 		=> 'Register Button text',
+		'id' 			=> 'txt-btn-reg',
+		'section_id' 	=> 'gl_texts',
+		'default' 		=> $localizeTexts ? __( 'Sign Up', 'easy-login-woocommerce' ) : 'Sign Up',
+	),
+
+	array(
+		'callback' 		=> 'text',
+		'title' 		=> 'Rest password Button text',
+		'id' 			=> 'txt-btn-respw',
+		'section_id' 	=> 'gl_texts',
+		'default' 		=> $localizeTexts ? __( 'Email Reset Link', 'easy-login-woocommerce' ) : 'Email Reset Link',
+	),
+
+
 );
 
-$settings = array_merge( $settings, $autoOpen );
+$settings = array_merge( $settings, $popup );
 
 return apply_filters( 'xoo_el_admin_settings', $settings, 'general' );
 
