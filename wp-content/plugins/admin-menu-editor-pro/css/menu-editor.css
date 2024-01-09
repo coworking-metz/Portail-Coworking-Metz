@@ -4,7 +4,7 @@
   display: flex;
   flex-wrap: wrap;
 }
-.ame-input-group > :not(:first-child) {
+.ame-input-group .ame-input-group-secondary, .ame-input-group > :not(:first-child) {
   margin-left: -1px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -812,6 +812,7 @@ select.ws_dropdown optgroup option {
   box-sizing: border-box;
   height: 25px;
   min-height: 25px;
+  min-width: 26px;
 }
 .ame-is-wp53-plus #ws_menu_editor .ws_select_icon {
   height: 28px;
@@ -847,9 +848,20 @@ select.ws_dropdown optgroup option {
   padding: 4px 10px 11px;
 }
 #ws_icon_selector .ws_tool_tab {
-  padding: 4px 4px 2px;
+  padding: 0 4px 2px;
   max-height: 324px;
   overflow-y: auto;
+}
+#ws_icon_selector .ws_icon_search_bar {
+  margin: 0 0 0 2px;
+  position: sticky;
+  top: 0;
+  background-color: #FDFDFD;
+  padding: 4px 0;
+}
+#ws_icon_selector .ws_no_matching_icons {
+  margin-left: 2px;
+  padding: 4px 0;
 }
 
 #ws_choose_icon_from_media {
@@ -936,74 +948,6 @@ select.ws_dropdown optgroup option {
 /************************************
            Menu color picker
 *************************************/
-#ws-ame-menu-color-settings {
-  background: white;
-  display: none;
-}
-
-#ame-menu-color-list {
-  height: 500px;
-  overflow-y: auto;
-}
-
-.ame-menu-color-column {
-  min-width: 460px;
-}
-
-.ame-menu-color-name {
-  display: inline-block;
-  vertical-align: top;
-  padding-top: 2px;
-  line-height: 1.3;
-  font-size: 14px;
-  font-weight: 600;
-  min-width: 180px;
-}
-
-.ame-color-option {
-  padding: 10px 0;
-}
-.ame-color-option .wp-picker-container {
-  display: inline-block;
-}
-
-.ame-advanced-menu-color {
-  display: none;
-}
-
-#ws-ame-apply-colors-to-all {
-  display: block;
-  float: left;
-  margin-left: 5px;
-}
-
-/* Color presets */
-#ame-color-preset-container {
-  padding: 0 8px 8px 8px;
-  margin-left: -8px;
-  margin-right: -8px;
-  margin-bottom: 4px;
-  border-bottom: 1px solid #eee;
-}
-
-#ame-menu-color-presets {
-  width: 290px;
-  margin-right: 5px;
-}
-
-#ws-ame-save-color-preset {
-  /*margin-right: 5px;*/
-}
-
-a#ws-ame-delete-color-preset {
-  color: #A00;
-  text-decoration: none;
-}
-
-a#ws-ame-delete-color-preset:hover {
-  color: #F00;
-}
-
 /* Color scheme display in the editor widget. */
 .ws_color_scheme_display {
   display: inline-block;
@@ -1172,6 +1116,7 @@ a#ws-ame-delete-color-preset:hover {
   display: block;
   float: left;
   margin-top: 0;
+  min-width: 8em;
 }
 
 .ws_dialog_buttons .button {
@@ -1650,7 +1595,7 @@ a#ws-ame-delete-color-preset:hover {
   font-size: 18px;
 }
 
-.ws_ame_custom_postbox .ws_tooltip_trigger .dashicons {
+.ws_ame_custom_postbox .ws_tooltip_trigger .dashicons, .postbox .ws_tooltip_trigger .dashicons {
   font-size: 18px;
   height: 18px;
   vertical-align: bottom;
@@ -1852,6 +1797,22 @@ a#ws-ame-delete-color-preset:hover {
   border-top: 0.3em solid #444;
 }
 
+.ws_ame_has_unsaved_changes #ws_save_menu {
+  position: relative;
+}
+.ws_ame_has_unsaved_changes #ws_save_menu:before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  --ame-me-calc-indicator-size: calc(9px + (var(--ame-ds-btn-radius-tr, 3px) - 3px) / 2);
+  width: var(--ame-me-calc-indicator-size, 9px);
+  height: var(--ame-me-calc-indicator-size, 9px);
+  background: #00e93c;
+  border-top-right-radius: calc(var(--ame-ds-btn-radius-tr, 3px) - 1px);
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+
 /*********************************************
       Miscellaneous
 **********************************************/
@@ -1863,6 +1824,14 @@ a#ws-ame-delete-color-preset:hover {
   right: 20px;
   bottom: 40px;
   z-index: 100;
+}
+#ws_sidebar_pro_ad .dashicons {
+  font-size: 15px;
+  width: unset;
+  height: unset;
+}
+#ws_sidebar_pro_ad.ame-tgc-sidebar-ad {
+  max-width: 280px;
 }
 
 .ws-ame-icon-radio-button-group > label {

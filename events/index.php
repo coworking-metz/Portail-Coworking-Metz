@@ -7,15 +7,19 @@ if ($id = $_POST['id'] ?? false) {
         $email = sha1(time());
     }
     $participe = $_POST['participe'] ?? false;
-    $participation = upsertParticipation($id, ['email' => $email, 'participe' => $participe, 'id_evenement' => $id]);
+    $nb = isset($_POST['nb']) ? $_POST['nb'] + 1 : 1;
+
+    $participation = upsertParticipation($id, ['email' => $email, 'participe' => $participe, 'id_evenement' => $id, 'nb' => $nb]);
     rediriger(urlEvenement($id) . '?email=' . urlencode($email));
 }
 
 $id = $_GET['id'] ?? false;
+$setNb = isset($_GET['set-nb']);
+$changer = isset($_GET['changer']);
 $email = $_GET['email'] ?? '';
 
 
-if($participe = $_GET['p']??false) {
+if ($participe = $_GET['p'] ?? false) {
     $participation = upsertParticipation($id, ['email' => $email, 'participe' => $participe, 'id_evenement' => $id]);
     rediriger(urlEvenement($id) . '?email=' . urlencode($email));
 }
@@ -23,15 +27,18 @@ $evenement = getEvenement($id);
 
 $participation = getParticipation($email, $id);
 
-$participe = $participation['participe'] ?? false;
-
+$participe = $changer ? false : ($participation['participe'] ?? false);
 
 $titre = htmlspecialchars($evenement['evenement'] . ' - Participez à cet évenement !');
 $description = descriptionEvenement($evenement);
+$href = urlEvenement($id) . '?email=' . urlencode($email);
 
+$classes = [];
+
+if ($setNb) {
+    $classes[] = 'set-nb';
+}
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -67,14 +74,14 @@ $description = descriptionEvenement($evenement);
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:description" content="<?= $description; ?>">
-    <meta name="twitter:image" content="<?=$evenement['image_url'];?>">
+    <meta name="twitter:image" content="<?= $evenement['image_url']; ?>">
 
     <meta property="og:description" content="<?= $description; ?>">
-    <meta property="og:image" content="<?=$evenement['image_url'];?>">
+    <meta property="og:image" content="<?= $evenement['image_url']; ?>">
     <meta property="og:image:alt" content="<?= $titre; ?>">
-    <meta property="og:image:secure_url" content="<?=$evenement['image_url'];?>">
+    <meta property="og:image:secure_url" content="<?= $evenement['image_url']; ?>">
     <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:url" content="<?=$evenement['image_url'];?>">
+    <meta property="og:image:url" content="<?= $evenement['image_url']; ?>">
     <meta property="og:locale" content="fr_FR">
     <meta property="og:site_name" content="<?= $titre; ?>">
     <meta property="og:title" content="<?= $titre; ?>">
@@ -86,11 +93,12 @@ $description = descriptionEvenement($evenement);
     <!-- Pico.css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
 
+    <script src="js/scripts.js"></script>
     <!-- Custom styles for this example -->
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
-<body>
+<body class="<?= implode(' ', $classes); ?>">
 
     <!-- Main -->
     <main class="container">
@@ -98,32 +106,48 @@ $description = descriptionEvenement($evenement);
             <div>
                 <hgroup>
                     <h1><?= htmlspecialchars($evenement['evenement']); ?></h1>
+                    <p style="font-size:smaller"><?= $evenement['description']; ?></p>
                     <p>Le <?= formatDateToFrench($evenement['date']); ?>
                         <?php if ($evenement['heure']) { ?>à <?= formatTimeToHHMM($evenement['heure']); ?><?php } ?>
                         <?php if ($evenement['lieu']) { ?><br>Lieu: <?= htmlspecialchars($evenement['lieu']); ?><?php } ?>
-
-                            <br><small><b><?= participationEvenement($evenement) ?></b></small>
+                    <br><small><b><?= participationEvenement($evenement) ?></b></small>
                     </p>
-                    <h2>Votre réponse: <b><?= texteParticipation($participation); ?></b></h2>
                 </hgroup>
+                <?php if (!$changer) { ?>
+                    <h2><b><?= texteParticipation($participation); ?></b></h2>
+                <?php } ?>
                 <form method="post">
                     <input type="hidden" name="id" value="<?= htmlspecialchars($id); ?>">
-                    <label>
-                        <?php if ($participation) { ?>
-                            <b>Modifiez votre choix</b>
-                        <?php } else { ?>
-                            <b>Vous participez ?</b>
+                    <?php if ($participe) { ?>
+                        <?php if ($participe == 'ok' && $participation['nb'] == 1) { ?>
+                            <p>Vous venez à plusieurs ? <a href="<?= $href; ?>&changer&set-nb">Renseignez le nombre de personnes qui vont vous accompagner&hellip;</a></p>
                         <?php } ?>
-                        <input type="<?=empty($email) || strstr($email,'@') ? 'email' : 'hidden';?>" name="email" placeholder="Votre email" value="<?= htmlspecialchars($email) ?>" />
-                    </label>
-                    <?php if ($participe != 'ok') { ?>
-                        <button type="submit" name="participe" value="ok">Je participe</button>
-                    <?php } ?>
-                    <?php if ($participe != 'maybe') { ?>
-                        <button type="submit" name="participe" value="maybe" class="contrast">Je vais peut-être participer</button>
-                    <?php } ?>
-                    <?php if ($participe != 'ko') { ?>
-                        <button type="submit" name="participe" value="ko" class="outline contrast">Je ne participe pas</button>
+                        <p>Changement de programme ?
+                            <a href="<?= $href; ?>&changer" _role="button">Modifiez votre réponse</a>
+                        </p>
+                    <?php } else { ?>
+                        <label>
+                            <?php if ($participation) { ?>
+                                <!-- <b>Modifiez votre choix</b> -->
+                            <?php } else { ?>
+                                <b>Vous participez ?</b>
+                            <?php } ?>
+                            <input type="<?= empty($email) || strstr($email, '@') ? 'email' : 'hidden'; ?>" name="email" placeholder="Votre email" value="<?= htmlspecialchars($email) ?>" />
+                            <small><a href="#set-nb" class="if-not-set-nb">Je viendrai accompagné&hellip;</a></small>
+                        </label>
+                        <label class="if-set-nb">
+                            <b>Combien de personnes vous accompagnent ?</b>
+                            <input type="number" name="nb" value="<?= $participation['nb'] - 1 ?>" />
+                        </label>
+                        <?php if ($participe != 'ok') { ?>
+                            <button type="submit" name="participe" value="ok">Je participe</button>
+                        <?php } ?>
+                        <?php if ($participe != 'maybe') { ?>
+                            <button type="submit" name="participe" value="maybe" class="contrast">Je vais peut-être participer</button>
+                        <?php } ?>
+                        <?php if ($participe != 'ko') { ?>
+                            <button type="submit" name="participe" value="ko" class="outline contrast">Je ne participe pas</button>
+                        <?php } ?>
                     <?php } ?>
                 </form>
             </div>

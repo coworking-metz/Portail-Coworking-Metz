@@ -88,7 +88,7 @@
             <p>
                 Vous avez coworké <em><?php echo $result->activity; ?></em> journées au cours des 6 derniers mois.
                     <?php 
-                        if ($result->activeUser == true && $result->lastMembership == $currentYear){
+                        if ($result->activeUser == true && ($result->lastMembership == $currentYear || $result->lastMembership == $currentYear+1)){
                             echo '<br/><br/>Vous êtes <em>membre actif <sup>**</sup></em> .';
                         } else {
                             echo '<br/><br><em>Vous n\'êtes pas membre actif <sup>**</sup></em> .';

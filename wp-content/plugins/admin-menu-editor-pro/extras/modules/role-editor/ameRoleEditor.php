@@ -2,6 +2,9 @@
 /** @noinspection PhpComposerExtensionStubsInspection, SqlResolve */
 
 /** @noinspection PhpUnused Module is loaded dynamically. */
+
+use YahnisElsts\AdminMenuEditor\AdminCustomizer\AmeAdminCustomizer;
+
 class ameRoleEditor extends amePersistentProModule {
 	const REQUIRED_CAPABILITY = 'edit_users';
 	const CORE_COMPONENT_ID = ':wordpress:';
@@ -77,6 +80,7 @@ class ameRoleEditor extends amePersistentProModule {
 	private $cachedEnabledRoleCaps = array();
 
 	public function __construct($menuEditor) {
+		$this->settingsWrapperEnabled = true;
 		parent::__construct($menuEditor);
 
 		add_filter('editable_roles', array($this, 'filterEditableRoles'), 20, 1);
@@ -104,7 +108,7 @@ class ameRoleEditor extends amePersistentProModule {
 			plugins_url('role-editor.js', __FILE__),
 			array(
 				'ame-lodash',
-				'knockout',
+				'ame-knockout',
 				'jquery',
 				'jquery-qtip',
 				'ame-actor-manager',
@@ -319,6 +323,13 @@ class ameRoleEditor extends amePersistentProModule {
 			//is included in a default group.
 			if ($name === 'attachment') {
 				$isIncluded = false;
+			}
+
+			//Skip AC changesets.
+			if ( class_exists(AmeAdminCustomizer::class) ) {
+				if ( $name === AmeAdminCustomizer::CHANGESET_POST_TYPE ) {
+					$isIncluded = false;
+				}
 			}
 
 			if (!$isIncluded) {
@@ -1860,7 +1871,7 @@ class ameRoleEditor extends amePersistentProModule {
 			$roleObject = get_role($roleId);
 			$capabilities = isset($roleObject->capabilities) ? $roleObject->capabilities : null;
 		}
-		if (!isset($capabilities)) {
+		if (!isset($capabilities) || !is_array($capabilities)) {
 			return array();
 		}
 
@@ -1919,7 +1930,7 @@ class ameRoleEditor extends amePersistentProModule {
 			return $requiredCaps;
 		}
 
-		/** @var int The user that might be edited or deleted. */
+		/** @var int $targetUserId The user that might be edited or deleted. */
 		$targetUserId = intval($args[0]);
 
 		$thisUserId = intval($thisUserId);

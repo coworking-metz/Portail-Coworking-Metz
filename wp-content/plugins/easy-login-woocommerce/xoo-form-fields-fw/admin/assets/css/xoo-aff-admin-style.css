@@ -273,6 +273,8 @@ span.xoo-aff-info-icon {
     max-width: 300px;
     margin: 0 auto 10px;
     cursor: pointer;
+    user-select: none;
+    align-items: center;
 }
 
 .xoo-aff-fs-display.active{
@@ -540,4 +542,26 @@ span.xoo-aff-sel-remove:hover {
     margin-right: 0;
     margin-bottom: 20px; 
   }
+}
+
+ul.xoo-aff-main li:not(.xoo-aff-no-sort) .xoo-aff-label {
+    cursor: move;
+}
+
+.xoo-aff-no-sort {
+    background-color: #ffd7d7;
+}
+
+.xoo-aff-fsd-edit {
+    margin-right: 10px;
+    display: none;
+}
+
+.xoo-aff-fs-display.active .xoo-aff-fsd-edit {
+    display: block;
+}
+
+.xoo-aff-container {
+    position: relative;
+    z-index: 1;
 }

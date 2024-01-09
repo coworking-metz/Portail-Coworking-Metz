@@ -49,6 +49,8 @@ class WOE_FPDF_TT_Font_File
    private $defaultWidth;
    private $maxStrLenRead;
 
+   private $TTCFonts, $version, $sFamilyClass, $sFamilySubClass, $maxUniChar, $glyphdata;
+
    public function __construct()
    {
       $this->maxStrLenRead = 200000;   // Maximum size of glyf table to read in as string (otherwise reads each glyph from file)

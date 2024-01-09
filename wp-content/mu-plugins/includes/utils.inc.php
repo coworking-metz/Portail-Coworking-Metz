@@ -1,5 +1,64 @@
 <?php
+/**
+ *  An example CORS-compliant method.  It will allow any GET, POST, or OPTIONS requests from any
+ *  origin.
+ *
+ *  In a production environment, you probably want to be more restrictive, but this gives you
+ *  the general idea of what is involved.  For the nitty-gritty low-down, read:
+ *
+ *  - https://developer.mozilla.org/en/HTTP_access_control
+ *  - https://fetch.spec.whatwg.org/#http-cors-protocol
+ *
+ */
+function allow_cors() {
+    
+    // Allow from any origin
+    if (isset($_SERVER['HTTP_ORIGIN'])) {
+        // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
+        // you want to allow, and if so:
+        header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+        header('Access-Control-Allow-Credentials: true');
+        header('Access-Control-Max-Age: 86400');    // cache for 1 day
+    }
+    
+    // Access-Control headers are received during OPTIONS requests
+    if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+        
+        if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+            // may also be using PUT, PATCH, HEAD etc
+            header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+        
+        if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+            header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+    
+        exit(0);
+    }
+    
+}
 
+/**
+ * Diviser un tableau en sous-tableaux de taille fixe.
+ *
+ * @param array $input_array Le tableau à diviser.
+ * @param int $size La taille de chaque sous-tableau.
+ * @return array Un tableau de sous-tableaux.
+ */
+function slice_array_to_chunks($input_array, $size = 100) {
+    $output_array = [];
+    $array_length = count($input_array);
+
+    for ($i = 0; $i < $array_length; $i += $size) {
+        $output_array[] = array_slice($input_array, $i, $size);
+    }
+
+    return $output_array;
+}
+
+
+
+function pathTourl($path) {
+    return str_replace(ABSPATH,site_url().'/', $path);
+}
 /**
  * Ajoute un fichier JavaScript à la queue des scripts de WordPress.
  *
@@ -259,7 +318,7 @@ function tableau($data)
  *
  * @param string $filepath Chemin d'accès au fichier image.
  *
- * @return resource|false Ressource d'image ou false en cas d'échec.
+ * @return GDImage|resource|false Ressource d'image ou false en cas d'échec.
  */
 function imagecreatefromfile($filepath)
 {

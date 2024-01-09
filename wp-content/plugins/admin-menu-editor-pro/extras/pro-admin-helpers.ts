@@ -22,7 +22,7 @@ declare var wsAmeProAdminHelperData: Record<string, any>;
 		let collapsedHeadings = loadCollapsedHeadings();
 		const currentTime = Date.now();
 
-		$adminMenu.find('li[id].ame-collapsible-heading').each(function () {
+		$adminMenu.find('li[id].ame-collapsible-heading').each(function (this: HTMLElement) {
 			const $heading = $(this), id = $heading.attr('id');
 			if (id) {
 				if ($heading.hasClass('ame-is-collapsed-heading')) {
@@ -94,11 +94,11 @@ declare var wsAmeProAdminHelperData: Record<string, any>;
 		}
 	});
 
-	jQuery(function ($) {
+	jQuery(function ($: JQueryStatic) {
 		//Menu headings: Handle clicks.
 		const $adminMenu = $('#adminmenumain #adminmenu');
 
-		$adminMenu.find('li.ame-menu-heading-item a').on('click', function () {
+		$adminMenu.find('li.ame-menu-heading-item > a').on('click', function (this: HTMLElement) {
 			const $heading = $(this).closest('li');
 			const canBeCollapsed = $heading.hasClass('ame-collapsible-heading');
 
@@ -112,7 +112,7 @@ declare var wsAmeProAdminHelperData: Record<string, any>;
 			setCollapsedState($heading, isCollapsed);
 
 			//Remember the collapsed/expanded state.
-			if ($.cookie) {
+			if (typeof $.cookie !== 'undefined') {
 				setTimeout(saveCollapsedHeadings.bind(window, $adminMenu), 50);
 			}
 
@@ -129,7 +129,7 @@ declare var wsAmeProAdminHelperData: Record<string, any>;
 
 		//Menu headings: If the user hasn't specified a custom text color, make sure the color
 		//doesn't change on hover/focus.
-		if (wsAmeProAdminHelperData.setHeadingHoverColor && Array.prototype.map) {
+		if (wsAmeProAdminHelperData.setHeadingHoverColor && (typeof Array.prototype.map !== 'undefined')) {
 			let baseTextColor;
 
 			//Look at the first N menu items to discover the default text color.
@@ -139,10 +139,10 @@ declare var wsAmeProAdminHelperData: Record<string, any>;
 				.slice(0, 10)
 				.find('> a .wp-menu-name');
 
-			let mostCommonColor = '#eeeeee', seenColors = {};
+			let mostCommonColor = '#eeeeee', seenColors: Record<string, number> = {};
 			seenColors[mostCommonColor] = 0;
 
-			$menus.each(function () {
+			$menus.each(function (this: HTMLElement) {
 				const color = $(this).css('color');
 				if (color) {
 					if (seenColors.hasOwnProperty(color)) {
@@ -161,11 +161,29 @@ declare var wsAmeProAdminHelperData: Record<string, any>;
 
 			//We want to override the default menu colors, but not per-item styles.
 			const parentSelector = '#adminmenu li.ame-menu-heading-item';
-			let selectors = [':hover', ':active', ':focus', ' a:hover', ' a:active', ' a:focus'].map(function (suffix) {
+			let selectors = [
+				':hover',
+				':active',
+				':focus',
+				' > a:hover',
+				' > a:active',
+				' > a:focus',
+				'.opensub > a.menu-top' //Hovering over a sub-menu item. WP has a separate rule for this.
+			].map(function (suffix) {
 				return parentSelector + suffix;
 			});
+			//Icon hover color.
+			selectors = selectors.concat(
+				[
+					':hover div.wp-menu-image::before',
+					' > a:focus div.wp-menu-image::before',
+					'.opensub div.wp-menu-image::before'
+				].map(function (suffix) {
+						return parentSelector + suffix;
+					}
+				));
 
-			const $newStyle = $('<style type="text/css">')
+			const $newStyle = $('<style>')
 				.text(selectors.join(',\n') + ' { color: ' + baseTextColor + '; }');
 			const $adminCssNode = $('link#admin-menu-css').first();
 			if ($adminCssNode.length === 1) {

@@ -5,7 +5,7 @@
  * Third level menus.
  */
 
-#adminmenu {
+#adminmenu, .folded #adminmenu {
 	.ame-deep-submenu {
 		position: absolute;
 	}
@@ -40,8 +40,13 @@
 
 				padding-top: 0;
 				padding-bottom: 0;
+			}
+		}
 
-				& > li > a {
+		//Don't override the left padding of submenus with icons. Those already have custom padding.
+		&:not(.ame-has-submenu-icons) {
+			&.ame-has-highlighted-item, &.ame-has-current-deep-submenu {
+				> .ame-deep-submenu > li > a {
 					padding-left: 24px;
 				}
 			}
@@ -69,7 +74,8 @@
 	}
 }
 
-#adminmenu .wp-submenu li.opensub > ul.ame-deep-submenu {
+#adminmenu .wp-submenu li.opensub > ul.ame-deep-submenu,
+.folded #adminmenu .wp-submenu li.opensub > ul.ame-deep-submenu {
 	top: -1px;
 }
 
@@ -78,4 +84,42 @@
 .no-js.folded #adminmenu .ame-has-deep-submenu:hover > ul.ame-deep-submenu {
 	top: 0;
 	left: 160px;
+}
+
+.folded #adminmenu li.opensub li.ame-has-highlighted-item > ul.ame-deep-submenu {
+	//Fix deep submenu layout in the folded state.
+	left: 0;
+	box-shadow: none;
+
+	//Hide the submenu head. The parent item will serve as the head.
+	> li.wp-submenu-head {
+		display: none;
+	}
+}
+
+//Folded state: WP adds a transparent left border to the current submenu, and
+//that gets inherited by the current deep submenu. This messes up text alignment,
+//so let's remove the border.
+.folded #adminmenu li.ame-has-deep-submenu {
+	&.ame-has-highlighted-item, &.ame-has-current-deep-submenu {
+		> .ame-deep-submenu {
+			border-left-width: 0;
+		}
+	}
+}
+
+//Display module menu items like "Easy Hide" as subordinate to the main "Menu Editor Pro"
+//menu item. This is only a visual effect.
+#adminmenu {
+	li.ws-ame-primary-am-item + li.ws-ame-secondary-am-item,
+	li.ws-ame-secondary-am-item + li.ws-ame-secondary-am-item {
+		//Based on some experimentation, a simple thick dash looks better than
+		//a T-shaped connector.
+		a:first-of-type:before {
+			content: "– ";
+			font-weight: 800;
+			vertical-align: top;
+			line-height: 1;
+		}
+	}
 }

@@ -2,6 +2,19 @@
 
 $settings = array(
 
+	/** Fields Style **/
+	array(
+		'callback' 		=> 'links',
+		'title' 		=> 'Form Fields Style',
+		'id' 			=> 'fake',
+		'section_id' 	=> 'sy_fields',
+		'args' 			=> array(
+			'options' 	=> array(
+				admin_url('admin.php?page=xoo-el-fields&tab=general') => 'Manage'
+			)
+		)
+	),
+
 	/* Main Style */
 	array(
 		'callback' 		=> 'select',
@@ -98,6 +111,25 @@ $settings = array(
 	),
 
 
+	array(
+		'callback' 		=> 'color',
+		'title' 		=> 'Overlay Color',
+		'id' 			=> 'sy-overlay-color',
+		'section_id' 	=> 'sy_popup',
+		'default' 		=> '#000000',
+	),
+
+
+	array(
+		'callback' 		=> 'text',
+		'title' 		=> 'Overlay opacity',
+		'id' 			=> 'sy-overlay-opac',
+		'section_id' 	=> 'sy_popup',
+		'default' 		=> 0.7,
+		'desc' 			=> 'Put value <= 1 in points'
+	),
+
+
 	/* Form Style */
 	array(
 		'callback' 		=> 'color',
@@ -183,20 +215,6 @@ $settings = array(
 		'section_id' 	=> 'sy_form',
 		'default' 		=> '40',
 		'desc' 			=> 'size in px'
-	),
-
-
-	/** Fields Style **/
-	array(
-		'callback' 		=> 'links',
-		'title' 		=> 'Form Fields Style',
-		'id' 			=> 'fake',
-		'section_id' 	=> 'sy_fields',
-		'args' 			=> array(
-			'options' 	=> array(
-				admin_url('admin.php?page=xoo-el-fields&tab=general') => 'Manage'
-			)
-		)
 	),
 
 );

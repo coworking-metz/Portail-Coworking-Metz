@@ -58,7 +58,7 @@ class Xoo_Admin{
 
 	//Add info tab
 	public function set_info_tab(){
-		$this->register_tab( 'Info', 'info', '' );
+		$this->register_tab( 'How to use?', 'info', '' );
 	}
 
 	public function outdated_template_status_section( $tab_id, $tab_data ){
@@ -75,8 +75,6 @@ class Xoo_Admin{
 	}
 
 	public function save_default_settings(){
-
-		if( !current_user_can( $this->capability ) ) return;
 
 		foreach ( $this->settings as $tab_id => $sections ) {
 
@@ -103,7 +101,7 @@ class Xoo_Admin{
 
 		if( !current_user_can( $this->capability ) ) return;
 
-		if( !isset( $_GET['reset'] ) || !isset( $_GET['page'] ) || $this->settings_slug !== $_GET['page'] ) return;
+		if( !isset( $_GET['reset'] ) || !isset( $_GET['page'] ) || $this->settings_slug !== $_GET['page'] || !isset( $_GET['nonce'] ) || !wp_verify_nonce( $_GET['nonce'], 'xoo_ff_reset_nonce' ) ) return;
 
 
 		foreach ( $this->settings as $tab_id => $sections ) {

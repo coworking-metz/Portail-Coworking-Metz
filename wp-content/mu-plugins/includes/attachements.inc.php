@@ -6,10 +6,11 @@
  * @param string $file_path Chemin vers le fichier à insérer.
  * @param array  $data      Données supplémentaires pour le post de la pièce jointe.
  * @param array  $meta      Métadonnées ACF pour la pièce jointe.
+ * @param int    $width     Largeur pour redimensionner l'image. Par défaut null.
  * 
  * @return int|bool L'ID de la pièce jointe ou false en cas d'échec.
  */
-function insert_attachment_from_file($file_path, $data = [], $meta = [])
+function insert_attachment_from_file($file_path, $data = [], $meta = [], $width = null)
 {
 
     if (!$file_path) {
@@ -34,13 +35,21 @@ function insert_attachment_from_file($file_path, $data = [], $meta = [])
         if (!$ext) {
             return;
         }
-        $upload = wp_upload_bits(basename($file_path).'.'.$ext, null, file_get_contents($file_path));
+        $upload = wp_upload_bits(basename($file_path) . '.' . $ext, null, file_get_contents($file_path));
         if (!empty($upload['error'])) {
             return false;
         }
 
         $file_path = $upload['file'];
 
+        if ($width) {
+            // Redimensionner l'image
+            $image = wp_get_image_editor($file_path);
+            if (!is_wp_error($image)) {
+                $image->resize($width, null, false);
+                $image->save($file_path);
+            }
+        }
 
         $file_name = basename($file_path);
         $file_type = wp_check_filetype($file_name, null);

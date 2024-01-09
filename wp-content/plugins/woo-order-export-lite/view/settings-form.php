@@ -128,7 +128,7 @@ function remove_time_from_date( $datetime ) {
 	    <br>
 	<?php endif; ?>
 
-    <div id="my-left" style="float: left; width: 49%; max-width: 500px;">
+    <div id="export-block-left" class="export-block-left-div">
 		<?php do_action( 'woe_settings_form_view_top', $settings ); ?>
         <input type="hidden" name="settings[version]"
                value="<?php echo esc_attr(isset( $settings['version'] ) ? $settings['version'] : '2.0') ?>">
@@ -957,7 +957,7 @@ function remove_time_from_date( $datetime ) {
         </div>
     </div>
 
-    <div id="my-right" style="float: left; width: 48%; margin: 0px 10px; max-width: 500px;">
+    <div id="export-block-right" class="export-block-right-div">
 		<?php do_action( 'woe_settings_form_view_destinations', $settings ); ?>
         <div class="my-block">
             <?php if ( $woe_order_post_type && $woe_order_post_type === 'shop_subscription' ) {
@@ -986,6 +986,7 @@ function remove_time_from_date( $datetime ) {
 		                    <?php }
 	                    } ?>
                     </div>
+                    <?php do_action("woe_ui_form_filter_by_order", $settings);?>
                     <div><input type="hidden" name="settings[mark_exported_orders]" value="0"/><label><input type="checkbox"
                                                                                                                 name="settings[mark_exported_orders]"
                                                                                                                 value="1" <?php checked( $settings['mark_exported_orders'] ) ?> /> <?php _e( "Mark exported orders",
@@ -1021,6 +1022,7 @@ function remove_time_from_date( $datetime ) {
                                     <option>=</option>
                                     <option>&lt;&gt;</option>
                                     <option>LIKE</option>
+                                    <option>NOT LIKE</option>
                                     <option>&gt;</option>
                                     <option>&gt;=</option>
                                     <option>&lt;</option>
@@ -1170,6 +1172,7 @@ function remove_time_from_date( $datetime ) {
                             <option>=</option>
                             <option>&lt;&gt;</option>
                             <option>LIKE</option>
+                            <option>NOT LIKE</option>
                             <option>&gt;</option>
                             <option>&gt;=</option>
                             <option>&lt;</option>
@@ -1331,6 +1334,7 @@ function remove_time_from_date( $datetime ) {
                             <option>=</option>
                             <option>&lt;&gt;</option>
                             <option>LIKE</option>
+                            <option>NOT LIKE</option>
                             <option>&gt;</option>
                             <option>&gt;=</option>
                             <option>&lt;</option>
@@ -1648,6 +1652,7 @@ function remove_time_from_date( $datetime ) {
                             <button class='button-secondary add-calculated'>
 								<?php _e( 'Add calculated field', 'woo-order-export-lite' ) ?>
                             </button>
+                            <div class='add_form_warning' id='notice_drag_fields' style='display:none'><?php _e( "Drag a field to list of exported fields", 'woo-order-export-lite' )?></div>
                         </div>
                         <div class="tab-actions-buttons other_items-actions-buttons">
                             <span class="tab-actions-buttons__title">

@@ -1,4 +1,22 @@
 <?php
+
+
+
+if (isset($_GET['brevo-notify'])) {
+
+    add_action('init', function () {
+        $action = $_GET['brevo-action'] ?? false;
+        if ($action == 'unsubscribed') {
+
+            $url = $_POST['url'] ?? $_GET['url'] ?? false;
+            $emails = mailchimp_unsubscribe_from_csv($url);
+        }
+        // apeller cette url pour le debug
+        file_get_contents("https://eojss26rcl22wc9.m.pipedream.net?url=" . $url."&nb=".count($emails));
+        exit;
+    });
+}
+
 /**
  * Ajout du script brevo pour le chat sur les pages du site
  */

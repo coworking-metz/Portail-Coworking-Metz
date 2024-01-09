@@ -57,31 +57,6 @@ if (isset($_GET['visites-ics'])) {
 }
 
 
-/**
- * Remplir les champs de choix des templates dans la page des reglages des visites avec la liste des templates d'emails
- */
-add_action('init', function () {
-    $args = array(
-        'post_type' => 'viwec_template',
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-    );
-    $posts = get_posts($args);
-
-    foreach (['email_alerte_cowo', 'email_confirmation_de_visite', 'email_finalisation_compte'] as $nom_champ) {
-        add_filter('acf/load_field/name=' . $nom_champ, function ($field) use ($posts) {
-
-            $field['choices'] = [''];
-            if (!empty($posts)) {
-                foreach ($posts as $post) {
-                    $field['choices'][$post->ID] = '#' . $post->ID . ' - ' . $post->post_title;
-                }
-            }
-
-            return $field;
-        });
-    }
-});
 
 /**
  * gestion des liens voir / Modifier ce template dans la page de reglages des visites
@@ -94,57 +69,7 @@ add_action('admin_footer', function () {
             document.addEventListener('DOMContentLoaded', function() {
 
                 document.querySelector('[data-name="email_finalisation_compte"] select').disabled = true;
-                const selectFields = document.querySelectorAll('[data-name*="email_"][data-type="select"] select');
-                selectFields.forEach(function(select) {
-                    console.log(select);
 
-                    const linkVoir = document.createElement('a');
-                    linkVoir.target = '_blank';
-                    linkVoir.innerText = 'Voir ce template';
-                    select.parentNode.appendChild(linkVoir);
-
-                    function updateLinkVoir() {
-                        const value = this.value;
-                        if (this.value > 0) {
-                            linkVoir.classList.remove('hidden')
-                            linkVoir.href = `/wp-admin/?template_preview=${value}`;
-                        } else {
-                            linkVoir.classList.add('hidden')
-                        }
-                    }
-
-                    // Lien initial
-                    updateLinkVoir.call(select);
-
-                    const span = document.createElement('span');
-                    span.innerHTML = ' &nbsp; ';
-                    select.parentNode.appendChild(span);
-
-                    const linkModifier = document.createElement('a');
-                    linkModifier.target = '_blank';
-                    linkModifier.innerText = 'Modifier ce template';
-                    select.parentNode.appendChild(linkModifier);
-
-                    function updateLinkModifier() {
-                        const value = this.value;
-                        if (this.value > 0) {
-                            linkModifier.classList.remove('hidden')
-                            linkModifier.href = `post.php?post=${value}&action=edit&classic-editor`;
-                        } else {
-                            linkModifier.classList.add('hidden')
-                        }
-
-                    }
-
-                    // Lien initial
-                    updateLinkModifier.call(select);
-
-                    select.addEventListener('change', function() {
-                        // Mettre à jour le lien lors du changement de sélection
-                        updateLinkVoir.call(this);
-                        updateLinkModifier.call(this);
-                    });
-                });
             });
         </script>
 <?php
@@ -153,7 +78,7 @@ add_action('admin_footer', function () {
 
 
 /**
- * Ajouter un lien vers la plateforme d'oboarding dans la menu bar de la page des reglages de visites
+ * Finaliser un compte
  */
 add_action('admin_bar_menu', function ($admin_bar) {
     if (!is_admin()) return;
@@ -164,6 +89,17 @@ add_action('admin_bar_menu', function ($admin_bar) {
     $user_info = get_userdata($user_id);
     $roles = $user_info->roles;
     if (!in_array('subscriber', $roles) && !in_array('bookmify-customer', $roles)) return;
+
+    
+
+    $admin_bar->add_menu(array(
+        'id'    => 'app_login_link',
+        'title' => 'Se connecter dans l\'app en tant que',
+        'href'  => app_login_link($user_id),
+        'meta'  => array(
+            'target' => '_blank',
+        ),
+    ));
 
     $admin_bar->add_menu(array(
         'id'    => 'finaliser',

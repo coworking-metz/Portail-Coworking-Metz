@@ -2,12 +2,11 @@
 
 function participationEvenement($evenement, $details = false)
 {
-
+    if (!$evenement) return;
 
     $ret = $evenement['ok'] . ' participant(s)';
-    if($details) {
+    if ($details) {
         $ret .= ', ' . $evenement['ko'] . ' refu(s)';
-
     }
     if ($evenement['maybe']) {
         $ret .= ' et ' . $evenement['maybe'] . ' indécis';
@@ -18,6 +17,7 @@ function participationEvenement($evenement, $details = false)
 }
 function descriptionEvenement($evenement)
 {
+
     $description = $evenement['evenement'] . ' organisé le ' . formatDateToFrench($evenement['date']);
     if ($evenement['heure']) {
         $description .= ' à ' . formatTimeToHHMM($evenement['heure']);
@@ -46,7 +46,8 @@ function urlEvenement($evenement)
     return baseUrl() . slugify($evenement['evenement'] . '-' . $evenement['date'] . '-' . $heure) . '/' . $evenement['id'];
 }
 
-function baseUrl() {
+function baseUrl()
+{
     return (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]/events/";
 }
 function rediriger($url = null)
@@ -90,6 +91,15 @@ function m()
  */
 function formatDateToFrench($date)
 {
+
+
+    setlocale(LC_TIME, 'fr_FR.utf8', 'fra'); // Set locale to French
+    $dateTime = DateTime::createFromFormat('Y-m-d', $date);
+    $ret = strftime('%A %d %B %Y', $dateTime->getTimestamp());
+
+    $ret = str_replace(date('Y'), '', $ret);
+    return trim($ret);
+    /*
     $dateTime = DateTime::createFromFormat('Y-m-d', $date);
     $today = new DateTime();
     $format = 'l j F';
@@ -99,7 +109,7 @@ function formatDateToFrench($date)
     }
 
     setlocale(LC_TIME, 'fr_FR', 'fra');
-    return strftime('%A %d %B', $dateTime->getTimestamp()) . ($dateTime->format('Y') !== $today->format('Y') ? ' ' . $dateTime->format('Y') : '');
+    return strftime('%A %d %B', $dateTime->getTimestamp()) . ($dateTime->format('Y') !== $today->format('Y') ? ' ' . $dateTime->format('Y') : '');*/
 }
 
 

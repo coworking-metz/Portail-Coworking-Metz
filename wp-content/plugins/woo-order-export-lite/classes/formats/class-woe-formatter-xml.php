@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class WOE_Formatter_Xml extends WOE_Formatter {
+	var $linebreak;
 
 	public function __construct(
 		$mode,
@@ -41,6 +42,13 @@ class WOE_Formatter_Xml extends WOE_Formatter {
 	}
 
 	public function output( $rec ) {
+		$rec = parent::output( $rec );
+		$recs = apply_filters( 'woe_xml_prepare_records', array($rec) );
+		foreach($recs as $rec)
+			$this->output_one_record($rec);
+	}
+
+	public function output_one_record( $rec ) {
 		$rec = parent::output( $rec );
 		$xml = new SimpleXMLElement( "<" . $this->settings['order_tag'] . "></" . $this->settings['order_tag'] . ">" );
 

@@ -9,7 +9,7 @@
  * maintain compatibility. We try to do this as little as possible, but it does
  * happen.
  * @see     https://docs.xootix.com/easy-login-woocommerce/
- * @version 2.1
+ * @version 2.5
  */
 
 
@@ -18,30 +18,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-$fields = array(
-	'user_login' => array(
-		'input_type' 	=> 'text',
-		'icon' 			=> 'fas fa-key',
-		'placeholder' 	=> __( 'Username / Email', 'easy-login-woocommerce' ),
-		'cont_class' 	=> array( 'xoo-aff-group' ),
-		'required' 		=> 'yes'
-	),
-);
-
-$fields = apply_filters( 'xoo_el_lostpw_fields', $fields, $args );
-
 ?>
 
 
 <span class="xoo-el-form-txt"><?php _e('Lost your password? Please enter your username or email address. You will receive a link to create a new password via email.','easy-login-woocommerce'); ?></span>
 
-<?php
-
-foreach ( $fields as $field_id => $field_args ) {
-	xoo_el()->aff->fields->get_input_html( $field_id, $field_args );
-}
-
-?>
+<?php  xoo_el_fields()->get_fields_html('lostpw'); //Lost Password Fields ?>
 
 <?php do_action( 'xoo_el_lostpw_add_fields', $args ); ?>
 
@@ -49,4 +31,4 @@ foreach ( $fields as $field_id => $field_args ) {
 
 <?php wp_referer_field(); ?>
 
-<button type="submit" class="button btn xoo-el-action-btn xoo-el-lostpw-btn"><?php _e('Email Reset Link','easy-login-woocommerce'); ?></button>
+<button type="submit" class="button btn xoo-el-action-btn xoo-el-lostpw-btn"><?php esc_html_e( xoo_el_helper()->get_general_option( 'txt-btn-respw' ) ) ?></button>

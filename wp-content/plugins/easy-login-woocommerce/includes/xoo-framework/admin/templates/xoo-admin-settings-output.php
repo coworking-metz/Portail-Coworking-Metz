@@ -21,7 +21,14 @@
 				<a class="xoo-as-pro-toggle">Show/Hide Pro options</a>
 			<?php endif; ?>
 			<button type="submit" class="xoo-as-form-save">Save</button>
-			<a class="xoo-as-form-reset" href="<?php echo esc_url( add_query_arg( 'reset', true ) ) ?>">Reset</a>
+			<a class="xoo-as-form-reset" href="<?php echo esc_url(
+				add_query_arg(
+					array(
+						'reset' => true,
+						'nonce' => wp_create_nonce('xoo_ff_reset_nonce')
+					)
+				)
+			) ?>">Reset</a>
 		</div>
 
 	</form>

@@ -1,11 +1,26 @@
 <?php
 
 
-$quality = 60;
+$quality = 90;
 $hd = $_GET['hd'] ?? false;
 $uid = $_GET['uid'] ?? false;
 $dynamique = isset($_GET['dynamique']);
+$original = isset($_GET['original']);
+$anniversaire = !empty($_GET['anniversaire']);
 
+define('WP_USE_THEMES', false); // We don't want to use themes.
+require('../wp-load.php');
+require('./lib/utils.php');
+
+$options = get_field('polaroids', 'option');
+
+if ($anniversaire) {
+    $pola_source = $options['cadre_anniversaire'];
+} else {
+    $pola_source = $options['cadre'];
+}
+
+$pola_source = urlToPath($pola_source);
 // if ($uid) {
 //     $target = __DIR__ . '/' . $uid . ($hd ? '-hd' : '') . '.jpg';
 //     if (!$dynamique && file_exists($target)) {
@@ -14,13 +29,10 @@ $dynamique = isset($_GET['dynamique']);
 // }
 
 
-define('WP_USE_THEMES', false); // We don't want to use themes.
-require('../wp-load.php');
-require('./lib/utils.php');
-
 
 
 // print_r($_GET);
+$image_fond_pola = false;
 
 if ($_GET['custom'] ?? false) {
     $polaroid = $_GET['polaroid'] ?? false;
@@ -31,6 +43,12 @@ if ($_GET['custom'] ?? false) {
     if ($polaroid) {
         $photo = polaroid_tmpphoto();
     } else {
+
+        if ($original) {
+            $image_fond_pola = false;
+        } else {
+            $image_fond_pola = get_image_fond_pola();
+        }
         $polaroid = polaroid_get($uid);
         if ($image = get_user_meta($uid, 'url_image_trombinoscope', true)) {
             $url = wp_get_attachment_url($image);
@@ -39,10 +57,15 @@ if ($_GET['custom'] ?? false) {
             }
         }
         $photo = $polaroid['photo'];
+        if ($image_fond_pola) {
+            $photo = $polaroid['alpha'] ?? $photo;
+        }
     }
 }
 
-list($width, $height) = getimagesize('./images/pola-vide.png');
+// if (!isset($_GET['debug'])) $image_fond_pola = false;
+
+list($width, $height) = getimagesize($pola_source);
 $img = imagecreatetruecolor($width, $height);
 
 $bande = $height * 5.3 / 100;
@@ -51,11 +74,33 @@ $frameWidth = $width - 2 * $bande;
 $frameHeight = $frameWidth * $frameRatio;
 
 
+// Code to overlay $image_fond_pola onto $img
+if ($image_fond_pola) {
+    $fond = imagecreatefromfile($image_fond_pola);
+
+    // Obtient les dimensions de $image_fond_pola
+    list($polaWidth, $polaHeight) = getimagesize($image_fond_pola);
+
+    // Calcule les nouvelles dimensions tout en gardant le ratio
+    $newHeight = ($width / $polaWidth) * $polaHeight;
+
+    // Redimensionne $image_fond_pola
+    $resizedPola = imagecreatetruecolor($width, $newHeight);
+    imagecopyresampled($resizedPola, $fond, 0, 0, 0, 0, $width, $newHeight, $polaWidth, $polaHeight);
+
+    // Place $resizedPola en haut à gauche de $img
+    imagecopy($img, $resizedPola, 0, 0, 0, 0, $width, $newHeight);
+
+    // Libère la mémoire
+    imagedestroy($resizedPola);
+}
+
 
 /**
  * Ajout de la photo du coworker
  */
 $tmp = imagecreatefromfile($photo);
+
 list($tmpWidth, $tmpHeight) = getimagesize($photo);
 
 $mode = ($tmpWidth - $tmpHeight) > 100 ? 'landscape' : 'portrait';
@@ -77,6 +122,8 @@ if ($mode == 'landscape') {
     }
 }
 
+
+
 // print_r([$newWidth, $newHeight, $tmpWidth, $tmpHeight]);exit;
 // if ($newHeight > $height) {
 //     $newHeight = $height;
@@ -90,7 +137,7 @@ imagedestroy($tmp);
  * AJout du cadre du pola vide au dessus de la photo 
  */
 // 4. Open the './images/pola-vide.png' file and place it on top of everything in $img
-$overlay = imagecreatefrompng('./images/pola-vide.png');
+$overlay = imagecreatefrompng($pola_source);
 imagecopy($img, $overlay, 0, 0, 0, 0, $width, $height);
 imagedestroy($overlay);
 
@@ -170,6 +217,7 @@ if (!$hd) {
     $img = $newImage;
 }
 
+CF::cacheHeaders();
 // 5. Output the image as jpeg
 header('Content-Type: image/jpeg');
 imagejpeg($img, null, $quality);

@@ -206,12 +206,13 @@ class WOE_PDF_MC_Table extends WOE_FPDF {
 	}
 
 	public function isEnoughSpace( $data, $heights ) {
-		$widths       = $this->getRowWidths( $data );
-		$baseHeight   = $this->getRowHeight( $widths, $data );
 		$image_height = floatval( $this->table_row_props['image_height'] );
 		$height       = floatval( 0 );
 
 		foreach ( $data as $index => $row ) {
+            $widths       = $this->getRowWidths( $row );
+            $baseHeight   = $this->getRowHeight( $widths, $row );
+
 			$h = $baseHeight;
 
 			if ( $image_height && $this->isRowWithImage( $row ) && $h < $image_height ) {
@@ -300,8 +301,7 @@ class WOE_PDF_MC_Table extends WOE_FPDF {
 			} elseif ( $this->isLinkCell( $data[ $i ] ) ) {
 				$margin = 1 / 2;
 				$link = $data[ $i ]['link'];
-
-				$this->MultiCell( $w, $h, $link, $link, $horizontal_align, $vertical_align, false, 0 );
+				$this->MultiCell( $w, $h, $data[ $i ]['label'], 0, $horizontal_align, $vertical_align, false, 0 );
 				$this->Link( $x + 3 * $margin, $y + 3 * $margin, $w - 2 * $margin, $h - 2 * $margin, $link );
 			} elseif ( ! is_array( $data[ $i ] ) ) {
 				//Print the text

@@ -1,8 +1,10 @@
 <div>
+
 	<h3>How to open popup?</h3>
+	<i><b>Please test the front end without signing in so you can see forms and links</b></i>
 	<h5>There are 4 ways</h5>
 	<ol>
-		<li>From Menu - You can add Popup link from your menu page.</li>
+		<li>From Menu - Navigate to your menu page and select links under "Login/Signup popup" section.</li>
 		<li>Using link - Simply add #login or #register at the end of your URL<br>
 			For eg: <xmp><a href="wwww.mywebsite.com#login">Login</a></xmp>
 		</li>
@@ -13,6 +15,19 @@
 		<li>Using [xoo_el_action] shortcode below</li>
 	</ol>
 </div>
+
+
+<div>
+
+	<h3>How to translate or change text?</h3>
+
+	<ol>
+		<li>Form fields texts can be changed from <a href="<?php echo admin_url('admin.php?page=xoo-el-fields') ?>" target="__blank">Fields page</a></li>
+		<li>Some texts can be changed from the settings.</li>
+		<li>For other texts, you can edit <a href="https://docs.xootix.com/easy-login-for-woocommerce/#override-tempaltes" target="__blank">template files</a> or if translating into another language, it is recommended to use translation plugins such as "Loco Translate"</li>
+	</ol>
+</div>
+
 
 <?php
 
@@ -63,13 +78,19 @@ $shortcodes = array(
 	'xoo_el_inline_form' => array(
 		'shortcode' => '[xoo_el_inline_form]',
 		'desc' 		=> 'Generates an inline login/signup form',
-		'example' 	=> '[xoo_el_inline_form active="login"]',
+		'example' 	=> '[xoo_el_inline_form tabs="login,register" active="login"]',
 		'atts' 		=> array(
 			array(
+				'tabs',
+				'login,register',
+				'login,register',
+				'Forms to show'
+			),
+			array(
 				'active',
-				'login, register',
+				'login,register',
 				'login',
-				'Which form to open on click'
+				'Which form to be displayed first'
 			)
 		)
 	)

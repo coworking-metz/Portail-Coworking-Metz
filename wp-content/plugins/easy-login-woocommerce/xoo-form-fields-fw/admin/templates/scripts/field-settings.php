@@ -46,7 +46,7 @@ $countries = include XOO_AFF_DIR.'/countries/countries.php';
 	<# if ( "select" === data.type ) { #>
 		<select id="xoo_aff_{{data.id}}" class="{{data.class}}" name="xoo_aff_{{data.id}}">
 			<# _.each( data.options , function(option_title, option_value) { #>
-				<option value="{{option_value}}" {{{ ( data.value === option_value ) ? 'selected="selected"' : '' }}} >{{option_title}}</option>
+				<option value="{{option_value}}" {{{ ( data.value == option_value ) ? 'selected="selected"' : '' }}} >{{option_title}}</option>
 			<# }) #>
 		</select>
 	<# } #>

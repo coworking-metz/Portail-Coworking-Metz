@@ -30,7 +30,9 @@
 				//Create a new style block that will apply these colors to deep submenu parents.
 				let selectors = [
 					'#adminmenu li.ame-has-deep-submenu.ame-has-highlighted-item > a:first-of-type',
-					'#adminmenu li.ame-has-deep-submenu.ame-has-current-deep-submenu > a:first-of-type'
+					'#adminmenu li.ame-has-deep-submenu.ame-has-current-deep-submenu > a:first-of-type',
+					'.folded #adminmenu li.ame-has-deep-submenu.ame-has-highlighted-item > a:first-of-type',
+					'.folded #adminmenu li.ame-has-deep-submenu.ame-has-current-deep-submenu > a:first-of-type'
 				];
 				const $newStyle = $('<style>')
 					.text(selectors.join(',\n') + ' { background: ' + background + '; color: ' + textColor + '; }');
@@ -100,6 +102,11 @@
 				overflow: 'visible'
 			});
 			$deepSubmenu.addClass('ame-deep-submenu');
+
+			//If the submenu has icons, the parent needs the appropriate class.
+			if ($tempContainer.hasClass('ame-has-submenu-icons')) {
+				$deepParent.addClass('ame-has-submenu-icons');
+			}
 
 			//Remove the temporary container, we don't need it anymore.
 			$tempContainer.remove();

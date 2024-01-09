@@ -415,7 +415,7 @@ jQuery( document ).ready( function ( $ ) {
 
 	jQuery( '#product_custom_fields_compare' ).change( function () {
 		var val_op = jQuery( '#product_custom_fields_compare' ).val();
-		if ( 'LIKE' === val_op ) {
+		if ( 'LIKE' === val_op  || 'NOT LIKE' === val_op) {
 			jQuery( "#select_product_custom_fields" ).css( 'display', 'none' ).attr( 'disabled', 'disabled' );
 			jQuery( "#select_product_custom_fields--select2" ).hide();
 			jQuery( "#text_product_custom_fields" ).css( 'display', 'inline' ).attr( 'disabled', false );
@@ -789,7 +789,7 @@ jQuery( document ).ready( function ( $ ) {
 
 	jQuery( '#user_custom_fields_compare' ).change( function () {
 		var val_op = jQuery( '#user_custom_fields_compare' ).val();
-		if ( 'LIKE' === val_op ) {
+		if ( 'LIKE' === val_op || 'NOT LIKE' === val_op ) {
 			jQuery( "#select_user_custom_fields" ).css( 'display', 'none' ).attr( 'disabled', 'disabled' );
 			jQuery( "#select_user_custom_fields--select2" ).hide();
 			jQuery( "#text_user_custom_fields" ).css( 'display', 'inline' ).attr( 'disabled', false );
@@ -888,7 +888,7 @@ jQuery( document ).ready( function ( $ ) {
 
 	jQuery( '#custom_fields_compare' ).change( function () {
 		var val_op = jQuery( '#custom_fields_compare' ).val();
-		if ( 'LIKE' === val_op ) {
+		if ( 'LIKE' === val_op || 'NOT LIKE' === val_op ) {
 			jQuery( "#select_custom_fields" ).css( 'display', 'none' ).attr( 'disabled', 'disabled' );
 			jQuery( "#select_custom_fields--select2" ).hide();
 			jQuery( "#text_custom_fields" ).css( 'display', 'inline' ).attr( 'disabled', false );
