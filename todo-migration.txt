@@ -1,0 +1,15 @@
+migrer sites statiques
+    trombi (reste a migrer le domaine)
+    app
+    rejoindre
+    menu lamour food
+
+verifier backups
+
+migrer domaines
+    www
+    api
+
+migrer sous sites
+    events
+    pola
