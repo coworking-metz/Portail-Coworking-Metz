@@ -17,3 +17,6 @@ echo 'Updating site URL...'
 wget -qO- 'https://wordpress.coworking-metz.fr/wp-admin/?config=force&auto'
 
 echo 'Import completed.'
+
+echo 'Data rsync'
+rsync -avh ~/htdocs/coworking-metz.fr/wp-content/uploads/ coworking@wordpress.coworking-metz.fr:/home/coworking/data/uploads/

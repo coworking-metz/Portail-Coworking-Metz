@@ -7,7 +7,7 @@ add_action(
 
 
         register_rest_route('cowo/v1', '/app-session', array(
-            'methods'  => 'POST',
+            'methods'  => ['GET','POST'],
             'callback' => function ($request) {
                 if ($sid = coworking_app_check($request)) {
                     $uid = $request['user_id'] ?? false;

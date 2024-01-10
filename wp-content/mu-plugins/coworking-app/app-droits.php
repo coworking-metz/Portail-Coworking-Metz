@@ -3,7 +3,7 @@ add_action(
     'rest_api_init',
     function () {
         register_rest_route('cowo/v1', '/app-droits', array(
-            'methods'  => 'POST',
+            'methods'  => ['GET','POST'],
             'callback' => function ($request) {
 
                 coworking_app_check($request);

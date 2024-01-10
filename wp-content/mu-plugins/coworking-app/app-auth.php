@@ -79,7 +79,7 @@ add_action(
 
 
         register_rest_route('cowo/v1', '/app-auth', array(
-            'methods'  => 'POST',
+            'methods'  => ['GET','POST'],
             'callback' => function ($request) {
 
                 coworking_app_check($request);
