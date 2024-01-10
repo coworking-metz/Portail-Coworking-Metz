@@ -70,6 +70,8 @@ function check_current_config()
     }
   }
 
+}
+
   // Recursive function to replace URLs
   function recursive_replace($value, $old, $siteurl)
   {
@@ -82,5 +84,5 @@ function check_current_config()
     }
     return $value;
   }
-}
+
 add_action('init', 'check_current_config');
