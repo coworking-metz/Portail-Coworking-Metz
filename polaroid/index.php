@@ -3,6 +3,7 @@
 
 $quality = 90;
 $hd = $_GET['hd'] ?? false;
+$raw = $_GET['raw'] ?? false;
 $uid = $_GET['uid'] ?? false;
 $dynamique = isset($_GET['dynamique']);
 $original = isset($_GET['original']);
@@ -61,7 +62,10 @@ if ($_GET['custom'] ?? false) {
         }
     }
 }
-
+if($raw) {
+    CF::cacheHeaders();
+    outputImageWithHeaders($photo);
+}
 // if (!isset($_GET['debug'])) $image_fond_pola = false;
 
 list($width, $height) = getimagesize($pola_source);

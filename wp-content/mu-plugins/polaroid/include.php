@@ -127,11 +127,11 @@ function polaroid_get($uid = null, $defaults = true)
 
     if (!$uid) return;
 
+    $user_info = get_userdata($uid);
 
     $photo = get_field('votre_photo', 'user_' . $uid);
     $nom = get_field('polaroid_nom', 'user_' . $uid);
     if (!$nom) {
-        $user_info = get_userdata($uid);
         $nom = $user_info->display_name ?? false;
     }
     $description = get_field('polaroid_description', 'user_' . $uid);
@@ -142,6 +142,7 @@ function polaroid_get($uid = null, $defaults = true)
     if (!$file && $defaults) {
         $file = ABSPATH . 'polaroid/images/default.jpg';
     }
+//    $file = get_gravatar_url($user_info->user_email);
 
     $alpha = get_alpha_polaroid($uid, $file);
     return ['photo' => $file, 'alpha' => $alpha, 'nom' => $nom, 'description' => $description, 'complement' => $complement];

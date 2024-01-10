@@ -35,7 +35,18 @@ function allow_cors() {
     }
     
 }
-
+/**
+ * Obtenir l'URL du Gravatar pour une adresse e-mail donnée.
+ *
+ * @param string $email L'adresse e-mail pour laquelle obtenir le Gravatar.
+ * @param int    $size  La taille de l'image du Gravatar en pixels. Par défaut à 80.
+ * @return string L'URL du Gravatar.
+ */
+function get_gravatar_url($email, $size = 300) {
+    $email_hash = md5(strtolower(trim($email)));
+    $gravatar_url = "https://www.gravatar.com/avatar/$email_hash?size=$size";
+    return $gravatar_url;
+}
 /**
  * Diviser un tableau en sous-tableaux de taille fixe.
  *

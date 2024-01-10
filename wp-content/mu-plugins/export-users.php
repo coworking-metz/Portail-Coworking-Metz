@@ -7,17 +7,11 @@ if (isset($_GET['export-users'])) {
     add_action('admin_init', function () {
         $recents = isset($_GET['recents']);
 
-        header('Content-Type: text/csv; charset=utf-8');
-        header('Content-Disposition: attachment; filename=users-' . wp_date('Y-m-d-H-i-s') . '.csv');
-
-        $output = fopen('php://output', 'w');
-
-        // Écrire les en-têtes de colonnes
-        fputcsv($output, ['ID', 'Email', 'Display Name', 'Registration Date', '_last_order_date', '_first_order_date', 'Date de la visite', 'Role']);
-
         $args = ['fields' => ['ID']];
 
         if ($recents) {
+
+
             $date_six_months_ago = date('Y-m-d', strtotime('-6 months'));
             $args = [
                 'fields' => ['ID'],
@@ -30,8 +24,27 @@ if (isset($_GET['export-users'])) {
                     ]
                 ]
             ];
+            $users = get_users($args);
+            $ids = array_column($users, 'ID');
+
+            $json = file_get_contents('https://tickets.coworking-metz.fr/api/current-users?key=bupNanriCit1&delay=263002'); // actifs dans les 6 derniers moois
+            $usersactifs = json_decode($json, true);
+            $emails = array_column($usersactifs, 'email');
+            $autres_users = get_users_by_email_list($emails, $ids, ['fields' => ['ID']]);
+            $users = array_merge($users, $autres_users);
+        } else {
+            $users = get_users($args);
         }
-        $users = get_users($args);
+
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=users-' . wp_date('Y-m-d-H-i-s') . '.csv');
+
+        $output = fopen('php://output', 'w');
+
+        // Écrire les en-têtes de colonnes
+        fputcsv($output, ['ID', 'Email', 'Display Name', 'Registration Date', '_last_order_date', '_first_order_date', 'Date de la visite', 'Role']);
+
+
 
         foreach ($users as $user) {
             $user_data = get_userdata($user->ID);
