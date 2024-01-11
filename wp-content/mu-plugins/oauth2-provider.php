@@ -23,17 +23,35 @@ add_filter('wo_me_resource_return', function ($data, $token) {
   unset($data['capabilities']);
   unset($data['user_status']);
   $user_id = $data['ID'];
-  $bloquer_ouvrir_portail = get_field('bloquer_ouvrir_portail', 'user_' . $user_id);
-  $ouvrir_parking = get_field('ouvrir_parking', 'user_' . $user_id) || date('Ymd') < '20240101';
-  if (user_can($user_id, 'administrator')) {
-    $data['admin'] = true;
-  }
-  $data['polaroid'] = polaroid_existe($user_id) ? polaroid_url($user_id, true) : false;
-  $data['droits'] = [
-    'ouvrir_portail' => $bloquer_ouvrir_portail ? false : true,
-    'ouvrir_parking' => $ouvrir_parking ? true : false
-  ];
+  // $bloquer_ouvrir_portail = get_field('bloquer_ouvrir_portail', 'user_' . $user_id);
+  // $ouvrir_parking = get_field('ouvrir_parking', 'user_' . $user_id) || date('Ymd') < '20240101';
+  // if (user_can($user_id, 'administrator')) {
+  //   $data['admin'] = true;
+  // }
+  // $data['polaroid'] = polaroid_existe($user_id) ? polaroid_url($user_id, true) : false;
+  // $data['photo'] = site_url('polaroid/'.$user_id.'-raw.jpg');
+  // $data['droits'] = [
+  //   'ouvrir_portail' => $bloquer_ouvrir_portail ? false : true,
+  //   'ouvrir_parking' => $ouvrir_parking ? true : false
+  // ];
 
+  // $data['birthDate'] = get_field('date_naissance', 'user_'.$user_id);
+  unset($data['user_roles']);
+
+  $tab = coworking_app_droits($user_id);
+
+  $polaroid = polaroid_url($user_id, true);
+  unset($tab['droits']['polaroid']);
+  unset($tab['droits']['admin']);
+  $data['photos'] = ['polaroid'=>$polaroid, 'photo'=>site_url('polaroid/'.$user_id.'-raw.jpg')];
+  $data['droits'] = $tab['droits'];
+  $data['roles'] = [];
+
+  if($tab['admin']??false) $data['roles'][]='admin';
+  if($tab['guest']??false)  $data['roles'][]='guest';
+  if($tab['externe']??false)  $data['roles'][]='external';
+
+  $data['visite'] = $tab['visite']??null;
   // print_r([$data, $token]);
   return $data;
 }, 10, 2);
