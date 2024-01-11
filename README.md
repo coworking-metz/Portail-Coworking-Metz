@@ -32,6 +32,9 @@ cd portail-coworking-metz
 - Select the [SQL file](#data)
 - Submit
 
+- Go to http://www.coworking-metz.local/wp-admin/?config=force
+- Submit
+
 - Navigate to http://localhost:8180/index.php?route=/&route=%2F&db=wordpress&table=prfxcrwkng_users
 - Edit the admin user (the one with id 1)
 - Change its `user_pass` to `newpassword`
@@ -77,6 +80,11 @@ UPDATE `prfxcrwkng_postmeta`
 SET `meta_value` = 'a:3:{i:0;s:18:\"authorization_code\";i:1;s:8:\"implicit\";i:2;s:13:\"refresh_token\";}'
 WHERE `prfxcrwkng_postmeta`.`meta_id` = 386442;
 ```
+
+To test the endpoints, import [docs/coworking-metz.fr.postman_collection.json] into Postman
+and set the following variables:
+- `oauthClientId`: which you can find in the client settings of the OAuth Server plugin
+- `oauthClientSecret`: which you can find in the client settings of the OAuth Server plugin
 
 ### Troubleshoot
 
