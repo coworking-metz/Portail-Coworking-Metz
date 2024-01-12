@@ -36,22 +36,28 @@ add_filter('wo_me_resource_return', function ($data, $token) {
   // ];
 
   // $data['birthDate'] = get_field('date_naissance', 'user_'.$user_id);
-  unset($data['user_roles']);
+  $subscriber = in_array('subscriber',$data['user_roles']);
+  // unset($data['user_roles']);
 
   $tab = coworking_app_droits($user_id);
-
-  $polaroid = polaroid_url($user_id, true);
-  unset($tab['droits']['polaroid']);
-  unset($tab['droits']['admin']);
-  $data['photos'] = ['polaroid'=>$polaroid, 'photo'=>site_url('polaroid/'.$user_id.'-raw.jpg')];
-  $data['droits'] = $tab['droits'];
   $data['roles'] = [];
 
-  if($tab['admin']??false) $data['roles'][]='admin';
-  if($tab['guest']??false)  $data['roles'][]='guest';
-  if($tab['externe']??false)  $data['roles'][]='external';
+  if($subscriber && !$tab['guest']) {
+    $data['roles'][]='inactive';
+  } else {
+    $polaroid = polaroid_url($user_id, true);
+    unset($tab['droits']['polaroid']);
+    unset($tab['droits']['admin']);
+    $data['photos'] = ['polaroid'=>$polaroid, 'photo'=>site_url('polaroid/'.$user_id.'-raw.jpg')];
+    $data['droits'] = $tab['droits'];
 
-  $data['visite'] = $tab['visite']??null;
+    if($tab['admin']??false) $data['roles'][]='admin';
+    if($tab['guest']??false)  $data['roles'][]='guest';
+    if($tab['externe']??false)  $data['roles'][]='external';
+    if(!$tab['guest']??false && !$tab['externe']??false) $data['roles'][]='coworker';
+
+    $data['visite'] = $tab['visite']??null;
+  }
   // print_r([$data, $token]);
   return $data;
 }, 10, 2);
