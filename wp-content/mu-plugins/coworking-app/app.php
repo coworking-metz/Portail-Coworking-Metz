@@ -28,6 +28,15 @@ function coworking_app_settings()
         'recap' => $mentions['mentions-page-recap'],
         'infos' => $mentions['mentions-page-infos']
     ];
+
+
+    $visites_futures = fetch_users_with_future_visite();
+
+
+    $dates = [];
+    foreach($visites_futures as $v)  {
+        $dates[date('Y-m-d', strtotime($v->visite))]=($dates[$v->visite]??0)+1;
+    }
     $visites = [
         'jours_de_visites' => array_map('intval', get_field('jours_de_visites', 'option')),
         'horaire' => trim( date("H:i", strtotime(get_field('horaire', 'option')))),
@@ -35,6 +44,7 @@ function coworking_app_settings()
         'fermer_vacances' => $fermer_vacances,
         'fermer_visites' => visites_fermees(),
         'empecher_visites' => $exclude,
+        'dates'=>$dates
     ];
     $settings = [
         'mentions' => $mentions,

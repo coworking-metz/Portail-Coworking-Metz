@@ -85,6 +85,7 @@ function fetch_users_with_visite_today()
     foreach ($users as $user) {
         $visite = get_field('visite', $user);
         if (strstr($visite, $today)) {
+            $user->visite = $visite; 
             $out[] = $user;
         }
     }
@@ -106,8 +107,14 @@ function fetch_users_with_future_visite()
         'meta_type'    => 'DATETIME',
     );
 
-    $users_with_future_visite = get_users($args);
-    return $users_with_future_visite;
+    $users = get_users($args);
+    $out = [];
+    foreach ($users as $user) {
+        $visite = get_field('visite', $user);
+            $user->visite = $visite; 
+            $out[] = $user;
+    }
+    return $out;
 }
 
 /**
