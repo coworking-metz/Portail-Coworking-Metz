@@ -78,16 +78,35 @@ function getNbVisitesToday()
  */
 function fetch_users_with_visite_today()
 {
-    $today = date('Y-m-d'); // Format today's date
+        // Set the time to the start and end of the current day
+    $today_start = date('Y-m-d 00:00:00');
+    $today_end = date('Y-m-d 23:59:59');
 
-    $users = fetch_users_with_future_visite();
+    $args = array(
+        'meta_query' => array(
+            'relation' => 'AND',
+            array(
+                'key'     => 'visite',
+                'value'   => $today_start,
+                'compare' => '>=',
+                'type'    => 'DATETIME'
+            ),
+            array(
+                'key'     => 'visite',
+                'value'   => $today_end,
+                'compare' => '<=',
+                'type'    => 'DATETIME'
+            )
+        )
+    );
+
+    $users = get_users($args);
+
     $out = [];
     foreach ($users as $user) {
         $visite = get_field('visite', $user);
-        if (strstr($visite, $today)) {
-            $user->visite = $visite; 
-            $out[] = $user;
-        }
+        $user->visite = $visite; 
+        $out[] = $user;
     }
     return $out;
 }

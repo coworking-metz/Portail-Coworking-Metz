@@ -145,6 +145,12 @@ function polaroid_get($uid = null, $defaults = true)
 //    $file = get_gravatar_url($user_info->user_email);
 
     $alpha = get_alpha_polaroid($uid, $file);
+
+    if(is_visiteur($user_info)) {
+        $description='Visite & Journée d\'essai';    
+        $complement='';
+    }
+    
     return ['photo' => $file, 'alpha' => $alpha, 'nom' => $nom, 'description' => $description, 'complement' => $complement];
 }
 function polaroid_tmpphoto($uid = null)

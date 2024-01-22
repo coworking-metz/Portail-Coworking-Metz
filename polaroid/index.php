@@ -4,6 +4,8 @@
 $quality = 90;
 $hd = $_GET['hd'] ?? false;
 $raw = $_GET['raw'] ?? false;
+$small = $_GET['small'] ?? false;
+$width = $_GET['width'] ?? false;
 $uid = $_GET['uid'] ?? false;
 $dynamique = isset($_GET['dynamique']);
 $original = isset($_GET['original']);
@@ -65,7 +67,7 @@ if ($_GET['custom'] ?? false) {
 }
 if($raw) {
     CF::cacheHeaders();
-    outputImageWithHeaders($photo);
+    outputImageWithHeaders($photo, $small ? 150 : $width);
 }
 // if (!isset($_GET['debug'])) $image_fond_pola = false;
 
@@ -98,7 +100,6 @@ if ($image_fond_pola) {
     // Libère la mémoire
     imagedestroy($resizedPola);
 }
-
 
 /**
  * Ajout de la photo du coworker
