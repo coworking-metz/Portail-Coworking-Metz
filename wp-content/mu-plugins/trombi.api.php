@@ -15,6 +15,13 @@ add_action(
                 }
                 $response['polaroids'] = get_field('polaroids', 'option');
                 $response['divers'] = get_field('divers', 'option');
+                $visites = [];
+                $users = fetch_users_with_visite_today();
+                foreach($users as $user) {
+                    $visites[] = ['wpUserId'=>$user->ID, 'name'=>$user->display_name, 'visite'=>$user->visite];
+                }
+                $response['visites'] = $visites;
+
                 return rest_ensure_response($response);
             },
         ));
