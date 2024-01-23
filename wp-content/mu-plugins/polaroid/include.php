@@ -147,6 +147,7 @@ function polaroid_get($uid = null, $defaults = true)
     $alpha = get_alpha_polaroid($uid, $file);
 
     if(is_visiteur($user_info)) {
+        $file = ABSPATH . 'polaroid/images/poussin.jpg';
         $description='Visite & Journée d\'essai';    
         $complement='';
     }
