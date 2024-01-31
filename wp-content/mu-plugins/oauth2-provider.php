@@ -91,12 +91,14 @@ add_action('admin_init', function () {
 
   foreach($files_to_edit as $file_to_edit => $data) {
     $file_to_edit = ABSPATH.$file_to_edit;
-    $php = file_get_contents($file_to_edit);
+    if(file_exists($file_to_edit)) {
+      $php = file_get_contents($file_to_edit);
 
-    // $find = ;
-    if(mb_substr_count($php, $data['find']) == 1) {
-      $php = str_replace($data['find'], $data['replace'], $php);
-      file_put_contents($file_to_edit, $php);
+      // $find = ;
+      if(mb_substr_count($php, $data['find']) == 1) {
+        $php = str_replace($data['find'], $data['replace'], $php);
+        file_put_contents($file_to_edit, $php);
+      }
     }
   }
 
