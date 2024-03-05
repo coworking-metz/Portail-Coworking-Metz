@@ -144,7 +144,7 @@ function fetch_users_with_future_visite()
  * @param int $user_id ID de l'utilisateur
  * @return bool Retourne true si le mail est envoyé, false sinon
  */
-function envoyerMailAlerte($user_id)
+function envoyerMailAlerte($user_id, $autres_codes=[])
 {
 
     $data = get_userdata($user_id);
@@ -166,7 +166,9 @@ function envoyerMailAlerte($user_id)
         ['{url_finaliser_compte_coworker_user}' => admin_url('user-edit.php?finaliser=true&user_id=' . $user_id)],
 
     ];
-
+    foreach($autres_codes as $k=>$v) {
+        $codes[] = ['{'.$k.'}' => $v];
+    }
     $mail = charger_template_mail($template_id, $codes);
     // echo $mail['message'];exit;
     $to  = get_field('destinataire_alerte', 'option');
@@ -183,7 +185,7 @@ function envoyerMailAlerte($user_id)
  * @param string|null $visite La date de la visite
  * @return bool Retourne true si le mail est envoyé, false sinon
  */
-function envoyerMailVisite($user_id, $visite = null)
+function envoyerMailVisite($user_id, $visite = null, $autres_codes = [])
 {
     $user = get_userdata($user_id);
     if (!$user) return;
@@ -205,6 +207,10 @@ function envoyerMailVisite($user_id, $visite = null)
         ['{url_visite_ics}' => site_url() . '/api-json-wp/cowo/v1/visite-ics?user_id=' . $user_id],
         ['{app_login_link}' => app_login_link($user_id)],
     ];
+
+    foreach($autres_codes as $k=>$v) {
+        $codes[] = ['{'.$k.'}' => $v];
+    }
 
     $mail = charger_template_mail($template_id, $codes);
 
