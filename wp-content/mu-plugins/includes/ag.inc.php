@@ -63,10 +63,12 @@ function get_users_candidat_au_ca()
 {
     $users = get_users([
         'meta_key' => 'candidat_au_ca',
-        'meta_value' => 'false',
+        'meta_value' => '',
         'meta_compare' => '!=',
         'fields' => 'all',
     ]);
-
-    return $users;
+    
+    return array_filter($users, function($user) {
+        return $user->candidat_au_ca;
+    });
 }
