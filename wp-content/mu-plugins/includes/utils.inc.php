@@ -1,4 +1,6 @@
 <?php
+
+
 /**
  *  An example CORS-compliant method.  It will allow any GET, POST, or OPTIONS requests from any
  *  origin.

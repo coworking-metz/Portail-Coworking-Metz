@@ -6,11 +6,13 @@
 if (isset($_GET['export-users'])) {
     add_action('admin_init', function () {
         $recents = isset($_GET['recents']);
+        $voting = isset($_GET['voting']);
 
         $args = ['fields' => ['ID']];
 
         if ($recents) {
 
+            $name='recents';
 
             $date_six_months_ago = date('Y-m-d', strtotime('-6 months'));
             $args = [
@@ -32,12 +34,19 @@ if (isset($_GET['export-users'])) {
             $emails = array_column($usersactifs, 'email');
             $autres_users = get_users_by_email_list($emails, $ids, ['fields' => ['ID']]);
             $users = array_merge($users, $autres_users);
-        } else {
+        } else if($voting){
+            $name='voting';
+            $json = file_get_contents('https://tickets.coworking-metz.fr/api/voting-members?key=bupNanriCit1');
+            $usersactifs = json_decode($json, true);
+            $emails = array_column($usersactifs, 'email');
+            $users = get_users_by_email_list($emails, [], ['fields' => ['ID']]);
+        }else{
+            $name='all';
             $users = get_users($args);
         }
 
         header('Content-Type: text/csv; charset=utf-8');
-        header('Content-Disposition: attachment; filename=users-' . wp_date('Y-m-d-H-i-s') . '.csv');
+        header('Content-Disposition: attachment; filename=users-'.$name.'-' . wp_date('Y-m-d-H-i-s') . '.csv');
 
         $output = fopen('php://output', 'w');
 

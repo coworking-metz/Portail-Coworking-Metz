@@ -5,6 +5,17 @@ RewriteBase /polaroid/
 #RewriteCond %{DOCUMENT_ROOT}/polaroid/gen/$0 -f
 #RewriteRule ^(.*)$ /polaroid/gen/$0
 
+RewriteCond %{DOCUMENT_ROOT}/polaroid/tmp/$1-raw-$2.jpg -f
+RewriteRule ([0-9]+)-raw-([0-9]+)\.jpg raw.php?uid=$1&width=$2 [L,QSA]
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteRule ([0-9]+)-raw-([0-9]+)\.jpg raw.php?uid=$1&width=$2 [L,QSA]
+
+RewriteCond %{DOCUMENT_ROOT}/polaroid/tmp/$1-raw-small.jpg -f
+RewriteRule ([0-9]+)-raw-small\.jpg raw.php?uid=$1&small=true [L,QSA]
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteRule ([0-9]+)-raw-small\.jpg raw.php?uid=$1&small=true [L,QSA]
+
+
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteRule ([0-9]+)-raw\.jpg index.php?uid=$1&raw=true [L,QSA]
 

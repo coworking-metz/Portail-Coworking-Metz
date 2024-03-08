@@ -6,6 +6,11 @@ function me()
     m(...func_get_args());
     exit;
 }
+function mse()
+{
+    print_r(func_get_args());
+    exit;
+}
 
 function m()
 {

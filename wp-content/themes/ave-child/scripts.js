@@ -19,7 +19,7 @@ window.addEventListener('load', e => {
 // coworkers_now.js
 document.addEventListener('DOMContentLoaded', function () {
     fetch('https://wpapi.coworking-metz.fr/api-json-wp/cowo/v1/coworkers_now').then(response => response.json()).then(response => {
-        console.log(response);
+        if (!document.querySelector('#text-count-coworker')) return;
         document.querySelector('#text-count-coworker').innerHTML = response.content;
     })
 })
