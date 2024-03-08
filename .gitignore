@@ -20,6 +20,7 @@ events/tmp
 
 /polaroid/vendor
 /polaroid/gen
+/polaroid/tmp
 /polaroid/*.jpg
 # All plugins
 # Note: If you wish to whitelist plugins,
@@ -35,3 +36,4 @@ events/tmp
 # End of https://www.toptal.com/developers/gitignore/api/wordpress
 
 .vscode/settings.json
+wp-content/mu-plugins/includes/ag

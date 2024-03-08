@@ -53,8 +53,10 @@ add_action('rest_api_init', function () {
                 return rest_ensure_response(['event' => false]);
 
             $nom = $user['prenom'] . ' ' . $user['nom'] . ' (' . $user['email'] . ')';
-
-
+            $activite = $user['activite'];
+            if($activite) {
+                $nom.=' - '.$activite;
+            }
             $date = new DateTime($params['visite'], new DateTimeZone('Europe/Paris'));
             $start = $date->format(DateTime::RFC3339);
 
@@ -63,12 +65,12 @@ add_action('rest_api_init', function () {
 
             $event = ['name' => 'Visite pour ' . $nom, 'start' => $start, 'end' => $end];
 
-            $user_id = create_wp_user_if_not_exists($user, ['visite' => date_maline($start)]);
+            $user_id = create_wp_user_if_not_exists($user, ['visite' => date_maline($start), 'activite'=>$activite]);
             if ($user_id) {
                 // addEventToCalendar($user_id, $event);
 
+                envoyerMailAlerte($user_id, ['activite'=>$activite?$activite:'Non renseigné']);
                 envoyerMailVisite($user_id, $params['visite']);
-                envoyerMailAlerte($user_id);
 
                 return rest_ensure_response(['event' => $event]);
             }

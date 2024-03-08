@@ -78,15 +78,35 @@ function getNbVisitesToday()
  */
 function fetch_users_with_visite_today()
 {
-    $today = date('Y-m-d'); // Format today's date
+        // Set the time to the start and end of the current day
+    $today_start = date('Y-m-d 00:00:00');
+    $today_end = date('Y-m-d 23:59:59');
 
-    $users = fetch_users_with_future_visite();
+    $args = array(
+        'meta_query' => array(
+            'relation' => 'AND',
+            array(
+                'key'     => 'visite',
+                'value'   => $today_start,
+                'compare' => '>=',
+                'type'    => 'DATETIME'
+            ),
+            array(
+                'key'     => 'visite',
+                'value'   => $today_end,
+                'compare' => '<=',
+                'type'    => 'DATETIME'
+            )
+        )
+    );
+
+    $users = get_users($args);
+
     $out = [];
     foreach ($users as $user) {
         $visite = get_field('visite', $user);
-        if (strstr($visite, $today)) {
-            $out[] = $user;
-        }
+        $user->visite = $visite; 
+        $out[] = $user;
     }
     return $out;
 }
@@ -106,8 +126,14 @@ function fetch_users_with_future_visite()
         'meta_type'    => 'DATETIME',
     );
 
-    $users_with_future_visite = get_users($args);
-    return $users_with_future_visite;
+    $users = get_users($args);
+    $out = [];
+    foreach ($users as $user) {
+        $visite = get_field('visite', $user);
+            $user->visite = $visite; 
+            $out[] = $user;
+    }
+    return $out;
 }
 
 /**
@@ -118,7 +144,7 @@ function fetch_users_with_future_visite()
  * @param int $user_id ID de l'utilisateur
  * @return bool Retourne true si le mail est envoyé, false sinon
  */
-function envoyerMailAlerte($user_id)
+function envoyerMailAlerte($user_id, $autres_codes=[])
 {
 
     $data = get_userdata($user_id);
@@ -140,7 +166,9 @@ function envoyerMailAlerte($user_id)
         ['{url_finaliser_compte_coworker_user}' => admin_url('user-edit.php?finaliser=true&user_id=' . $user_id)],
 
     ];
-
+    foreach($autres_codes as $k=>$v) {
+        $codes[] = ['{'.$k.'}' => $v];
+    }
     $mail = charger_template_mail($template_id, $codes);
     // echo $mail['message'];exit;
     $to  = get_field('destinataire_alerte', 'option');
@@ -157,7 +185,7 @@ function envoyerMailAlerte($user_id)
  * @param string|null $visite La date de la visite
  * @return bool Retourne true si le mail est envoyé, false sinon
  */
-function envoyerMailVisite($user_id, $visite = null)
+function envoyerMailVisite($user_id, $visite = null, $autres_codes = [])
 {
     $user = get_userdata($user_id);
     if (!$user) return;
@@ -179,6 +207,10 @@ function envoyerMailVisite($user_id, $visite = null)
         ['{url_visite_ics}' => site_url() . '/api-json-wp/cowo/v1/visite-ics?user_id=' . $user_id],
         ['{app_login_link}' => app_login_link($user_id)],
     ];
+
+    foreach($autres_codes as $k=>$v) {
+        $codes[] = ['{'.$k.'}' => $v];
+    }
 
     $mail = charger_template_mail($template_id, $codes);
 
