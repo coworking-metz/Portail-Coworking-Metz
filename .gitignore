@@ -20,6 +20,7 @@ events/tmp
 
 /polaroid/vendor
 /polaroid/gen
+/polaroid/tmp
 /polaroid/*.jpg
 # All plugins
 # Note: If you wish to whitelist plugins,
