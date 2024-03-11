@@ -6,7 +6,7 @@ add_action('template_redirect', function() {
     if(isset($_GET['ouvrir']) || isset($_COOKIE['ouvrir'])) {
         // Stocke une valeur dans un cookie si 'ouvrir' est défini
         if(isset($_GET['ouvrir'])) {
-            setcookie('ouvrir', '1', time() + 3600, "/"); // Le cookie expire dans 1 heure
+            setcookie('ouvrir', '1', time() + (24 * 3600), "/"); // Le cookie expire dans 1 heure
         }
         CoworkingMetz\CloudFlare::noCacheHeaders();
         header('coworking-maintenance: BYPASS');
