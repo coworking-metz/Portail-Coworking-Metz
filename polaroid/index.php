@@ -66,7 +66,7 @@ if ($_GET['custom'] ?? false) {
     }
 }
 if($raw) {
-    CF::cacheHeaders();
+    CoworkingMetz\Cloudflare::cacheHeaders();
     outputImageWithHeaders($photo, $small ? 150 : $width);
 }
 // if (!isset($_GET['debug'])) $image_fond_pola = false;
@@ -222,7 +222,7 @@ if (!$hd) {
     $img = $newImage;
 }
 
-CF::cacheHeaders();
+CoworkingMetz\Cloudflare::cacheHeaders();
 // 5. Output the image as jpeg
 header('Content-Type: image/jpeg');
 imagejpeg($img, null, $quality);

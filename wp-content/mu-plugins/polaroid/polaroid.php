@@ -5,7 +5,7 @@ require 'api.php';
 
 add_action('profile_update', function ($uid, $old_user_data) {
 
-    system('rm -rf ' . ABSPATH . 'polaroid/tmp/' . $uid . '-*.jpg');
+    @system('rm -rf ' . ABSPATH . 'polaroid/tmp/' . $uid . '-*.jpg');
     @unlink(polaroid_tmpphoto($uid));
     @unlink(polaroid_gen_file($uid));
     @unlink(str_replace('.jpg', '-hd.jpg', polaroid_gen_file($uid)));
@@ -13,7 +13,7 @@ add_action('profile_update', function ($uid, $old_user_data) {
     if (polaroid_existe($uid)) {
         update_user_meta($uid, 'url_image_trombinoscope', '');
     }
-    CF::purgeUrls([site_url("/polaroid/$uid.jpg"), site_url("/polaroid/$uid-hd.jpg"), site_url("/polaroid/$uid-raw-small.jpg")]);
+    CoworkingMetz\CloudFlare::purgeUrls([site_url("/polaroid/$uid.jpg"), site_url("/polaroid/$uid-hd.jpg"), site_url("/polaroid/$uid-raw-small.jpg")]);
     $polaroid = polaroid_get($uid);
 }, 99, 2);
 
