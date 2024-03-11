@@ -30,6 +30,6 @@ $photo = $polaroid['photo'] ?? false;
 
 
 if ($photo) {
-    CF::cacheHeaders();
+    CoworkingMetz\CloudFlare::cacheHeaders();
     outputImageWithHeaders($photo, $small ? 150 : $width, $path);
 }
