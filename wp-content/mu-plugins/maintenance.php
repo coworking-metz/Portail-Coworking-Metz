@@ -2,6 +2,7 @@
 
 // Vérifie si le paramètre 'ouvrir' est présent dans l'URL ou si le cookie est déjà défini, puis stocke une valeur dans un cookie si nécessaire. Empêche l'exécution du reste du code si 'ouvrir' est défini ou si le cookie est présent.
 add_action('template_redirect', function() {
+
     // Vérifie si le paramètre 'ouvrir' est présent dans l'URL ou si le cookie est déjà défini
     if(isset($_GET['ouvrir']) || isset($_COOKIE['ouvrir'])) {
         // Stocke une valeur dans un cookie si 'ouvrir' est défini
@@ -10,6 +11,7 @@ add_action('template_redirect', function() {
         }
         CoworkingMetz\CloudFlare::noCacheHeaders();
         header('coworking-maintenance: BYPASS');
+        header('coworking-hostname: '.gethostname());
         return; // Retourne sans exécuter le reste du code
     }
 
