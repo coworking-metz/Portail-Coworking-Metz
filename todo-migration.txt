@@ -1,14 +1,10 @@
-migrer sites statiques
-    trombi (reste a migrer le domaine)
-    app
-    rejoindre
-    menu lamour food
+
 
 verifier backups
 
 migrer domaines
     www
-    api
+    wpapi
 
 migrer sous sites
     events
