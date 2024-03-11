@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     function loadStats() {
-        fetch("https://tickets.coworking-metz.fr/stats")
+        fetch("https://wpapi.coworking-metz.fr/api-json-wp/cowo/v1/stats")
             .then(response => response.json())
             .then(data => {
                 console.log(data)

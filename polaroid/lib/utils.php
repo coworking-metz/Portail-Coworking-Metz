@@ -86,7 +86,7 @@ function outputImageIfExists($imagePath, $age = 2592000)
             return unlink($imagePath);
         }
         $mime_type = mime_content_type($imagePath);
-        CF::cacheHeaders($age);
+        CoworkingMetz\CloudFlare::cacheHeaders($age);
         header('Content-Type: '.$mime_type);
 
         readfile($imagePath);
