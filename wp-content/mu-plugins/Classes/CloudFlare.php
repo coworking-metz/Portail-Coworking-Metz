@@ -16,6 +16,16 @@ class CloudFlare
 
         return $urls;
     }
+
+    public static function noCacheHeaders()
+	{
+		header_remove('Pragma');
+		header_remove('Expires');
+		header_remove('Cache-Control');
+		header('Cache-Control: no-store, max-age=30, s-maxage=0');
+		header('Expires: 0');
+	}
+
     public static function cacheHeaders($max_age = null)
     {
         if (isset($_GET['nocache'])) return;
