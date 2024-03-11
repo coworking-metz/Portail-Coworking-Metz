@@ -91,6 +91,8 @@ class CloudFlare
      */
     public static function purgeDomainCache()
     {
+
+        file_get_contents('https://coworking.requestcatcher.com/wordpress?purgeDomainCache');
         $endpoint = "https://api.cloudflare.com/client/v4/zones";
         $zoneID = self::$zone_id;
 
