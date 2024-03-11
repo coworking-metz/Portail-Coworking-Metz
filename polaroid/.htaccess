@@ -16,8 +16,10 @@ RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteRule ([0-9]+)-raw-small\.jpg raw.php?uid=$1&small=true [L,QSA]
 
 
+RewriteCond %{DOCUMENT_ROOT}/polaroid/tmp/$1-raw.jpg -f
+RewriteRule ([0-9]+)-raw\.jpg raw.php?uid=$1 [L,QSA]
 RewriteCond %{SCRIPT_FILENAME} !-f
-RewriteRule ([0-9]+)-raw\.jpg index.php?uid=$1&raw=true [L,QSA]
+RewriteRule ([0-9]+)-raw\.jpg raw.php?uid=$1 [L,QSA]
 
 
 RewriteCond %{SCRIPT_FILENAME} !-f
