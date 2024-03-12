@@ -22,7 +22,6 @@ if ($anniversaire) {
 } else {
     $pola_source = $options['cadre'];
 }
-
 $pola_source = urlToPath($pola_source);
 // if ($uid) {
 //     $target = __DIR__ . '/' . $uid . ($hd ? '-hd' : '') . '.jpg';

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Filtrer la page des visites pour ne garder que les users ayant une viiste future (et on met aussi toutes les visites du mois passé)
+ * Filtrer la page des visites pour ne garder que les users ayant une visite future (et on met aussi toutes les visites de la semaine passée)
  */
 if (isset($_GET['visitesOnly'])) {
     add_action('pre_get_users', function ($query) {
         if (is_admin()) {
             $query->set('meta_key', 'visite');
-            $query->set('meta_value', date('Y-m-d H:i:s', strtotime('-1 month')));
+            $query->set('meta_value', date('Y-m-d H:i:s', strtotime('-1 week')));
             $query->set('meta_compare', '>');
         }
     });

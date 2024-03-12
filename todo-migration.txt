@@ -1,0 +1,11 @@
+
+
+verifier backups
+
+migrer domaines
+    www
+    wpapi
+
+migrer sous sites
+    events
+    pola
