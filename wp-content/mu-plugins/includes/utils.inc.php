@@ -236,6 +236,7 @@ function url_get_contents($url)
  */
 function current_site_url($host = false, $request = false)
 {
+	if(php_sapi_name() == 'cli') return;
     $host = $host ? $host : $_SERVER['HTTP_HOST'];
     $https = false;
     if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
