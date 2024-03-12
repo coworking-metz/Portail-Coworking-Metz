@@ -130,9 +130,9 @@
                     return;
                 }
 
-                $this->base_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+                $this->base_url = ( is_ssl() ? 'https://' : 'http://' ) . ($_SERVER["HTTP_HOST"]??'') . ($_SERVER["REQUEST_URI"]??'');
                 
-                $this->post_id  = $this->url_to_postid( ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"] );
+                $this->post_id  = $this->url_to_postid( ( is_ssl() ? 'https://' : 'http://' ) . ($_SERVER["HTTP_HOST"]??'') . ($_SERVER["REQUEST_URI"]??'') );
                 if ( is_admin() && isset( $_GET['post_type'] ) && ! empty( $_GET['post_type'] ) ) {
                     $this->post_type = $_GET['post_type'];
                 } else {
