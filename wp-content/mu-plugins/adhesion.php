@@ -3,13 +3,13 @@
 define('PRODUIT_ADHESION', 3063);
 
 /**
- * Afficher une notif lors du checkout pour inviter les gens a ajouter le café dans leur panier s'il n'y est pas déja
+ * Afficher une notif lors du checkout pour inviter les gens a ajouter l'adhesion dans leur panier 
  */
 add_action('wp_footer', function () {
     if (is_order_received_page()) return;
 
     if (is_checkout() || is_cart()) {
-//        if (is_product_in_cart(PRODUIT_ADHESION)) return;<!--  -->
+        if (is_product_in_cart(PRODUIT_ADHESION)) return;
 
 		$uid = get_current_user_id();
         $json = file_get_contents(TICKET_BASE_URL.'/members/'.$uid.'?key='.API_KEY_TICKET); // actifs dans les 6 derniers moois
