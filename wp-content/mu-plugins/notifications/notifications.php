@@ -12,9 +12,13 @@ add_action('init', function () {
 
 
 
-function generateNotification($data): string
+function generateNotification($data)
 {
 
+	$GLOBALS['notification'] = $GLOBALS['notification']??0;
+
+	if($GLOBALS['notification']) return;
+	$GLOBALS['notification']++;
     $cta = '';
     if ($data['cta']) {
         $cta = '<span><a href="' . $data['cta']['url'] . '" class="button">' . $data['cta']['caption'] . '</a></span>';
