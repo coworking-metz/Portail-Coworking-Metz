@@ -5,7 +5,7 @@ function api_purchase_start_stop_abo() {
         $current_user = wp_get_current_user();
         $coworker_email = $current_user->user_login;
 
-        $url = 'https://tickets.coworking-metz.fr/api/user-stats?key=' . API_KEY_TICKET . '&email=' . $coworker_email;
+        $url = TICKET_BASE_URL.'/user-stats?key=' . API_KEY_TICKET . '&email=' . $coworker_email;
         $data = file_get_contents($url);
         $json = json_decode($data);
         

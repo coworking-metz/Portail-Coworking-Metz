@@ -5,7 +5,7 @@ add_action(
         register_rest_route('cowo/v1', '/stats', array(
             'methods'  => 'GET',
             'callback' => function () {
-                return json_decode(file_get_contents('https://tickets.coworking-metz.fr/stats'), true);
+                return json_decode(file_get_contents(TICKET_URL.'/stats'), true);
             }
         ));
     }

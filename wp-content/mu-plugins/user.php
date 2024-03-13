@@ -2,7 +2,7 @@
 
 
 add_action('profile_update', function ($user_id, $old_user_data) {
-    $webhook_url = 'https://tickets.coworking-metz.fr/api/sync-user-webhook?key='.API_KEY_TICKET.'&wpUserId=' . $user_id;
+    $webhook_url = TICKET_BASE_URL.'/sync-user-webhook?key='.API_KEY_TICKET.'&wpUserId=' . $user_id;
 
     $response = wp_remote_post($webhook_url, array(
         'method'    => 'POST',
