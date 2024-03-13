@@ -1,5 +1,7 @@
 <?php
 
+
+
 /**
  * Insère une pièce jointe à partir d'un fichier.
  *

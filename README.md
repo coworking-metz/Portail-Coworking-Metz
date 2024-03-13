@@ -103,6 +103,8 @@ SET `meta_value` = 'a:3:{i:0;s:18:\"authorization_code\";i:1;s:8:\"implicit\";i:
 WHERE `wp_postmeta`.`meta_id` = 386442;
 ```
 
+Update: This manual modification is no longer necessary, it is done by the code in mu-plugins/oauth2-provider.php
+
 ### Troubleshoot
 
 If you are experiencing slowliness from loading files in Docker on macOS, you can set the `VirtioFS`

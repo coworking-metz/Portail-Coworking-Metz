@@ -3,6 +3,9 @@
 
 $quality = 90;
 $hd = $_GET['hd'] ?? false;
+$raw = $_GET['raw'] ?? false;
+$small = $_GET['small'] ?? false;
+$width = $_GET['width'] ?? false;
 $uid = $_GET['uid'] ?? false;
 $dynamique = isset($_GET['dynamique']);
 $original = isset($_GET['original']);
@@ -19,7 +22,6 @@ if ($anniversaire) {
 } else {
     $pola_source = $options['cadre'];
 }
-
 $pola_source = urlToPath($pola_source);
 // if ($uid) {
 //     $target = __DIR__ . '/' . $uid . ($hd ? '-hd' : '') . '.jpg';
@@ -62,7 +64,10 @@ if ($_GET['custom'] ?? false) {
         }
     }
 }
-
+if($raw) {
+    CoworkingMetz\Cloudflare::cacheHeaders();
+    outputImageWithHeaders($photo, $small ? 150 : $width);
+}
 // if (!isset($_GET['debug'])) $image_fond_pola = false;
 
 list($width, $height) = getimagesize($pola_source);
@@ -94,7 +99,6 @@ if ($image_fond_pola) {
     // Libère la mémoire
     imagedestroy($resizedPola);
 }
-
 
 /**
  * Ajout de la photo du coworker
@@ -217,7 +221,7 @@ if (!$hd) {
     $img = $newImage;
 }
 
-CF::cacheHeaders();
+CoworkingMetz\Cloudflare::cacheHeaders();
 // 5. Output the image as jpeg
 header('Content-Type: image/jpeg');
 imagejpeg($img, null, $quality);

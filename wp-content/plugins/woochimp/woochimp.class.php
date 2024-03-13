@@ -375,11 +375,13 @@ class WooChimp
             'woochimp_webhook_url' => site_url('/?woochimp-webhook-call'),
         );
 
-        return array_merge(
+        $ret = array_merge(
                    $default_options,
                    get_option('woochimp_options', $this->options('default')),
                    $overrides
                );
+            //    me($ret);
+               return $ret;
     }
 
     /*

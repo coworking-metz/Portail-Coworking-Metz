@@ -16,6 +16,16 @@ class CloudFlare
 
         return $urls;
     }
+
+    public static function noCacheHeaders()
+	{
+		header_remove('Pragma');
+		header_remove('Expires');
+		header_remove('Cache-Control');
+		header('Cache-Control: no-store, max-age=30, s-maxage=0');
+		header('Expires: 0');
+	}
+
     public static function cacheHeaders($max_age = null)
     {
         if (isset($_GET['nocache'])) return;
@@ -51,6 +61,7 @@ class CloudFlare
     {
 
         $files = tableau($urls);
+		file_get_contents('https://coworking.requestcatcher.com/wordpress?'.urldecode(http_build_query(['files'=>array_map(function($file) { return str_replace(site_url(), '/', $file);}, $files)])));
         $head = [];
         $head[] = 'Content-Type: application/json';
         $head[] = 'Authorization: Bearer ' . self::$api_key_cache;
@@ -90,6 +101,8 @@ class CloudFlare
      */
     public static function purgeDomainCache()
     {
+
+        file_get_contents('https://coworking.requestcatcher.com/wordpress?purgeDomainCache');
         $endpoint = "https://api.cloudflare.com/client/v4/zones";
         $zoneID = self::$zone_id;
 
