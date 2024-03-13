@@ -36,3 +36,4 @@ oldfunctions.php
 
 # End of https://www.toptal.com/developers/gitignore/api/wordpress
 
+local/init.sql
