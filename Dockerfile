@@ -6,6 +6,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# remplacer le code de wordpress par le contenu de notre site
 RUN rm -rf /var/www/html/
 
 RUN git clone https://github.com/coworking-metz/Portail-Coworking-Metz /var/www/html/
