@@ -29,14 +29,14 @@ if (isset($_GET['export-users'])) {
             $users = get_users($args);
             $ids = array_column($users, 'ID');
 
-            $json = file_get_contents(TICKET_BASE_URL.'/current-users?key=bupNanriCit1&delay=263002'); // actifs dans les 6 derniers moois
+            $json = file_get_contents(TICKET_BASE_URL.'/current-users?key='.API_KEY_TICKET.'&delay=263002'); // actifs dans les 6 derniers moois
             $usersactifs = json_decode($json, true);
             $emails = array_column($usersactifs, 'email');
             $autres_users = get_users_by_email_list($emails, $ids, ['fields' => ['ID']]);
             $users = array_merge($users, $autres_users);
         } else if($voting){
             $name='voting';
-            $json = file_get_contents(TICKET_BASE_URL.'/voting-members?key=bupNanriCit1');
+            $json = file_get_contents(TICKET_BASE_URL.'/voting-members?key='.API_KEY_TICKET);
             $usersactifs = json_decode($json, true);
             $emails = array_column($usersactifs, 'email');
             $users = get_users_by_email_list($emails, [], ['fields' => ['ID']]);
