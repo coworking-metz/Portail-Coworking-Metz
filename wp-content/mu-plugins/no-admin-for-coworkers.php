@@ -9,14 +9,14 @@ add_action('admin_init', function () {
     wp_redirect(get_permalink(get_option('woocommerce_myaccount_page_id')));
 });
 
-add_action('wp_login', function ($user_login, $user) {
-    $uid = $user->ID;
-    if (!is_first_login($uid)) return;
-    if (in_array('administrator', $user->roles)) return;
+// add_action('wp_login', function ($user_login, $user) {
+//     $uid = $user->ID;
+//     if (!is_first_login($uid)) return;
+//     if (in_array('administrator', $user->roles)) return;
 
-    wp_redirect('/mon-compte/polaroid/');
-    exit;
-}, 99, 2);
+//     wp_redirect('/mon-compte/polaroid/');
+//     exit;
+// }, 99, 2);
 
 function is_first_login($uid)
 {
