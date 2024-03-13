@@ -1,13 +1,18 @@
 version: "3.6"
 services:
   wordpress:
-    image: wordpress:5.9.3
+#    image: wordpress:5.9.3
+    build: .
     container_name: wordpress
     volumes:
-      - ./:/var/www/html:delegated
+     - ./wp-content/mu-plugins:/var/www/html/wp-content/mu-plugins:delegated
+      # - type: bind
+      #   source: .
+      #   target: /var/www/html
+      #   consistency: cached
     environment:
       - WORDPRESS_DB_NAME=wordpress
-      - WORDPRESS_TABLE_PREFIX=prfxcrwkng_
+      - WORDPRESS_TABLE_PREFIX=wp_
       - WORDPRESS_DB_HOST=db
       - WORDPRESS_DB_USER=root
       - WORDPRESS_DB_PASSWORD=password
@@ -15,6 +20,7 @@ services:
     depends_on:
       - db
       - phpmyadmin
+      - redis # Adding Redis as a dependency for WordPress
     restart: always
     ports:
       - 80:80
@@ -32,6 +38,7 @@ services:
     restart: always
     ports:
       - 3306:3306
+
   phpmyadmin:
     depends_on:
       - db
@@ -44,6 +51,13 @@ services:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: password
       UPLOAD_LIMIT: 300M
+
+  redis: # Redis service definition
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - 6380:6379
 
 volumes:
   db_data:
