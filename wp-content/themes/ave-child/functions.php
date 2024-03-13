@@ -6,13 +6,18 @@ function liquid_parent_theme_scripts() {
     wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css?2' );
 }
 function liquid_child_theme_style(){
-    wp_enqueue_style( 'child-one-style', get_stylesheet_directory_uri() . '/style.css?2' );	
+    $css_path = get_stylesheet_directory() . '/style.js';
+    $version = file_exists($css_path) ? filemtime($css_path) : 1;
+    wp_enqueue_style( 'child-one-style', get_stylesheet_directory_uri() . '/style.css?'.$version );	
 }
 
 add_action( 'wp_enqueue_scripts', function () {
-    wp_register_script( 'custom-scripts', get_stylesheet_directory_uri( ).'/scripts.js?2' );
+    $script_path = get_stylesheet_directory() . '/scripts.js';
+    $version = file_exists($script_path) ? filemtime($script_path) : 1;
+    wp_register_script( 'custom-scripts', get_stylesheet_directory_uri() . '/scripts.js?' . $version );
     wp_enqueue_script( 'custom-scripts' );
 });
+
 //features
 // include get_stylesheet_directory() . '/features/polaroid.php';
 // include get_stylesheet_directory() . '/features/gender.php';

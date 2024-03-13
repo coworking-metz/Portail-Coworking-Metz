@@ -22,6 +22,7 @@ events/tmp
 oldfunctions.php
 /polaroid/vendor
 /polaroid/gen
+/polaroid/tmp
 /polaroid/*.jpg
 # All plugins
 # Note: If you wish to whitelist plugins,
@@ -37,3 +38,5 @@ oldfunctions.php
 # End of https://www.toptal.com/developers/gitignore/api/wordpress
 
 local/init.sql
+.vscode/settings.json
+wp-content/mu-plugins/includes/ag

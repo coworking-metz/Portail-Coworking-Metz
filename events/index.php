@@ -95,7 +95,13 @@ if ($setNb) {
 
     <script src="js/scripts.js"></script>
     <!-- Custom styles for this example -->
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style.css?<?=filemtime('./css/style.css');?>" />
+    <style>
+        body {
+            --primary: <?=$evenement['couleur'] ? $evenement['couleur'] : '#e9b142';?>;
+            --primary-rgb: <?=$evenement['couleur'] ? hexToRgb($evenement['couleur']) : '243, 175, 16';?>;
+        }
+    </style>
 </head>
 
 <body class="<?= implode(' ', $classes); ?>">
@@ -110,7 +116,7 @@ if ($setNb) {
                     <p>Le <?= formatDateToFrench($evenement['date']); ?>
                         <?php if ($evenement['heure']) { ?>à <?= formatTimeToHHMM($evenement['heure']); ?><?php } ?>
                         <?php if ($evenement['lieu']) { ?><br>Lieu: <?= htmlspecialchars($evenement['lieu']); ?><?php } ?>
-                    <br><small><b><?= participationEvenement($evenement) ?></b></small>
+                            <br><small><b><?= participationEvenement($evenement) ?></b></small>
                     </p>
                 </hgroup>
                 <?php if (!$changer) { ?>
@@ -153,7 +159,7 @@ if ($setNb) {
             </div>
             <div>
                 <div class="duotone"><img src="<?= $evenement['image_url']; ?>)"></div>
-                <img src="./img/logo.png">
+                <img src="<?= $evenement['logo'] ? $evenement['logo'] :  './img/logo.png'; ?>">
             </div>
         </article>
     </main>

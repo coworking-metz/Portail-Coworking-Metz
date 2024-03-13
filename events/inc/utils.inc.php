@@ -1,5 +1,19 @@
 <?php
 
+function hexToRgb($hexColor) {
+    // Remove '#' if it exists
+    $hexColor = ltrim($hexColor, '#');
+
+    // Convert hex color to RGB values
+    $r = hexdec(substr($hexColor, 0, 2));
+    $g = hexdec(substr($hexColor, 2, 2));
+    $b = hexdec(substr($hexColor, 4, 2));
+
+    // Return the RGB color as a string
+    return "$r, $g, $b";
+}
+
+
 function participationEvenement($evenement, $details = false)
 {
     if (!$evenement) return;

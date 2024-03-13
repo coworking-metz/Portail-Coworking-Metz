@@ -6,6 +6,7 @@ $form = $_POST['form'] ?? [];
 
 if ($form) {
     $evenement = upsertEvenement($form);
+
     rediriger('admin.php?id=' . $evenement['id']);
 }
 $evenements = getEvenements();
@@ -18,6 +19,7 @@ if ($evenement = getEvenement($id)) {
 } else {
     $titre = 'Nouvel évenement';
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,8 +85,22 @@ if ($evenement = getEvenement($id)) {
         article.selected {
             border: 2px solid #333;
         }
+
         article.past {
             opacity: 0.6;
+        }
+
+        a[target="_blank"]::after {
+            content: '⇗';
+            margin-left: 0.5em;
+            font-size: 0.75em;
+            vertical-align: middle;
+            border: 1px solid;
+            width: 1.1em;
+            height: 1.1em;
+            display: inline-block;
+            text-align: center;
+            line-height: 0.8em;
         }
     </style>
 </head>
@@ -99,13 +115,7 @@ if ($evenement = getEvenement($id)) {
                         <h1><?= htmlspecialchars($titre); ?>
                             <br><small><?= participationEvenement($evenement) ?></small>
                         </h1>
-                        <?php if ($evenement['id'] ?? false) { ?>
-                            <div>
-                                <label>Url à partager pour que les gens indiquent leur participation</label>
-                                <input type="url" readonly value="<?= urlEvenement($evenement); ?>">
-                            </div>
-                            <hr>
-                        <?php } ?>
+
                         <div>
                             <label for="evenement">Nom de l'événement</label>
                             <input type="text" name="form[evenement]" required value="<?= htmlspecialchars($evenement['evenement'] ?? ''); ?>">
@@ -130,6 +140,21 @@ if ($evenement = getEvenement($id)) {
                             <label for="heure">Heure</label>
                             <input type="time" name="form[heure]" value="<?= htmlspecialchars($evenement['heure'] ?? ''); ?>">
                             <small>Facultatif</small>
+                        </div>
+
+                        <div>
+                            <label for="couleur">couleur</label>
+                            <input type="text" name="form[couleur]" value="<?= htmlspecialchars($evenement['couleur'] ?? ''); ?>" oninput="this.closest('div').querySelector('[type=color]').value = this.value">
+                            <input type="color" value="<?= htmlspecialchars($evenement['couleur'] ?? ''); ?>" oninput="this.closest('div').querySelector('[type=text]').value = this.value">
+                        </div>
+
+
+                        <div>
+                            <label for="logo">Logo</label>
+                            <select name="form[logo]"><?php foreach (logos() as $logo) { ?>
+                                    <option <?= $logo['url'] == ($evenement['logo']??false) ? 'selected' : ''; ?> value="<?= $logo['url']; ?>"><?= $logo['nom']; ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
 
                         <div>
@@ -162,6 +187,20 @@ if ($evenement = getEvenement($id)) {
                                 Pas de réponses pour l'instant
                             <?php } ?>
                         </div>
+                    </article>
+                    <article>
+                        <div>
+                            <label>Url à partager pour que les gens indiquent leur participation
+                            <a target="_blank" href="<?= urlEvenement($evenement); ?>">Voir la page de l'évènement</a></label>
+                            <code><?= urlEvenement($evenement); ?></code>
+                            <b>Liens rapides :</b>
+                            <a href="<?= urlEvenement($evenement); ?>?p=ok&email=">oui</a> |
+                            <a href="<?= urlEvenement($evenement); ?>?p=ko&email=">non</a> |
+                            <a href="<?= urlEvenement($evenement); ?>?p=maybe&email=">peut-être</a>
+                        </div><br>
+                        <figure>
+                            <img width="150" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=<?= urlEvenement($evenement); ?>">
+                        </figure>
                     </article>
                 <?php } ?>
 

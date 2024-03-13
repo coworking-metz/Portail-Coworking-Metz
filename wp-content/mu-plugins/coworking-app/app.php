@@ -28,13 +28,24 @@ function coworking_app_settings()
         'recap' => $mentions['mentions-page-recap'],
         'infos' => $mentions['mentions-page-infos']
     ];
+
+
+    $visites_futures = fetch_users_with_future_visite();
+
+
+    $dates = [];
+    foreach($visites_futures as $v)  {
+        $dates[date('Y-m-d', strtotime($v->visite))]=($dates[$v->visite]??0)+1;
+    }
     $visites = [
         'jours_de_visites' => array_map('intval', get_field('jours_de_visites', 'option')),
         'horaire' => trim( date("H:i", strtotime(get_field('horaire', 'option')))),
         'limite_mois' => intval(get_field('limite_mois', 'option')),
+        'limite_visites_jour' => intval(get_field('limite_visites_jour', 'option')),
         'fermer_vacances' => $fermer_vacances,
         'fermer_visites' => visites_fermees(),
         'empecher_visites' => $exclude,
+        'dates'=>$dates
     ];
     $settings = [
         'mentions' => $mentions,
@@ -181,7 +192,8 @@ function coworking_app_droits($user_id, $options = [])
     } else {
 
         $bloquer_ouvrir_portail = get_field('bloquer_ouvrir_portail', 'user_' . $user_id);
-        $ouvrir_parking = get_field('ouvrir_parking', 'user_' . $user_id) || date('Ymd') < '20240101';
+        // $ouvrir_parking = get_field('ouvrir_parking', 'user_' . $user_id) || date('Ymd') < '20240101';
+        $ouvrir_parking = true;
 
         // $ouvrir_parking = user_can($user_id, 'ouvrir_parking');
 
@@ -208,6 +220,7 @@ function coworking_app_droits($user_id, $options = [])
 }
 function coworking_app_check_origins($origin)
 {
+    //if(strstr($origin, 'coworking-metz.fr'))
     return true;
 
     if (in_array($origin, coworking_app_origins())) return true;
