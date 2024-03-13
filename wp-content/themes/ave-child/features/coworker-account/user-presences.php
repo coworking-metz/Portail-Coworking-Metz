@@ -11,7 +11,7 @@ function api_coworker_presences(){
         $current_user = wp_get_current_user();
         $coworker_email = $current_user->user_login;
         
-        $url = 'https://tickets.coworking-metz.fr/api/user-presences?key=' . API_KEY_TICKET . '&email=' . $coworker_email;
+        $url = TICKET_BASE_URL.'/user-presences?key=' . API_KEY_TICKET . '&email=' . $coworker_email;
         $data = file_get_contents($url);
         $json = json_decode($data, true);
 

@@ -11,7 +11,7 @@ include __DIR__ . '/app-visite-ics.php';
 
 function coworking_app_settings()
 {
-    $url = 'https://tickets.coworking-metz.fr/api/current-users?key=' . API_KEY_TICKET . '&delay=15';
+    $url = TICKET_BASE_URL.'/current-users?key=' . API_KEY_TICKET . '&delay=15';
     $data = file_get_contents($url);
     $presences = json_decode($data, true);
     $fermer_vacances = get_field('fermer_vacances', 'option');
