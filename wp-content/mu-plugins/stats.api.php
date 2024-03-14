@@ -5,6 +5,7 @@ add_action(
         register_rest_route('cowo/v1', '/stats', array(
             'methods'  => 'GET',
             'callback' => function () {
+                CoworkingMetz\CloudFlare::cacheHeaders(HOUR_IN_SECONDS);
                 return json_decode(file_get_contents(TICKET_URL.'/stats'), true);
             }
         ));
