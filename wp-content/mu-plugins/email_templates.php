@@ -12,7 +12,7 @@ add_action('init', function () {
     );
     $posts = get_posts($args);
 
-    foreach (['email_alerte_avent','email_alerte_cowo', 'email_confirmation_de_visite', 'email_finalisation_compte'] as $nom_champ) {
+    foreach (['email_recap_visite', 'email_alerte_avent','email_alerte_cowo', 'email_confirmation_de_visite', 'email_finalisation_compte'] as $nom_champ) {
         add_filter('acf/load_field/name=' . $nom_champ, function ($field) use ($posts) {
 
             $field['choices'] = [''];

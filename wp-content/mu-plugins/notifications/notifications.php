@@ -23,11 +23,11 @@ function generateNotification($data)
     if ($data['cta']) {
         $cta = '<span><a href="' . $data['cta']['url'] . '" class="button">' . $data['cta']['caption'] . '</a></span>';
     }
-    return '<div class="notification" role="alert">
+    return '<div class="notification" role="alert" data-type="'.($data['type']??'default').'">
     <div>
     <div>
     <figure><img src="' . $data['image'] . '"></figure>
-    <p><b>' . $data['titre'] . '</b><span>' . $data['texte'] . '</span></p>
+    <p><b class="titre">' . $data['titre'] . '</b><span>' . $data['texte'] . '</span></p>
     </div>
     ' . $cta . '
     </div>
