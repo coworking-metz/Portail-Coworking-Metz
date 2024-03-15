@@ -35,7 +35,6 @@ $pola_source = urlToPath($pola_source);
 
 // print_r($_GET);
 $image_fond_pola = false;
-
 if ($_GET['custom'] ?? false) {
     $polaroid = $_GET['polaroid'] ?? false;
     $photo = $polaroid['photo'];
