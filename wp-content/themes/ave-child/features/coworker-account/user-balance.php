@@ -13,7 +13,7 @@
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL => TICKET_BASE_URL.'/api/user-stats',
+        CURLOPT_URL => TICKET_BASE_URL.'/user-stats',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -28,7 +28,6 @@
     ));
 
     $result = json_decode(curl_exec($curl));
-
     curl_close($curl);
 
 ?>
