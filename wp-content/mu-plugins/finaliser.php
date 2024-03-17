@@ -104,7 +104,7 @@ if ($user_id) {
     if (isset($_GET['finaliser'])) {
         add_action('init', function () use ($user_id) {
 
-            $status = finaliser_compte($user_id);
+            $status = finaliser_user($user_id);
             wp_redirect(admin_url('user-edit.php?status_finaliser=' . $status . '&user_id=' . $user_id));
         });
     }
