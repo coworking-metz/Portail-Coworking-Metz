@@ -22,7 +22,8 @@ add_action(
                     $output = 'Actuellement <span class="highlight-text">' . $number_coworkers . ' </span>coworkers présents.<br/><span class="highlight-text">' . $remaining_workplaces . '</span> postes de travail encore disponibles.';
                 }
 
-                CoworkingMetz\CloudFlare::cacheHeaders(HOUR_IN_SECONDS);
+                CoworkingMetz\CloudFlare::cacheHeaders(HOUR_IN_SECONDS/4);
+				$output.=date('H:i:s');
                 return ['content'=>$output];
             }
         ));
