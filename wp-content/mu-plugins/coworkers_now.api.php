@@ -21,9 +21,9 @@ add_action(
                 } else {
                     $output = 'Actuellement <span class="highlight-text">' . $number_coworkers . ' </span>coworkers présents.<br/><span class="highlight-text">' . $remaining_workplaces . '</span> postes de travail encore disponibles.';
                 }
+				$output.='<br><small>Information mise à jour à '.wp_date('H:i:s').'</small>';
 
                 CoworkingMetz\CloudFlare::cacheHeaders(HOUR_IN_SECONDS/4);
-				$output.=date('H:i:s');
                 return ['content'=>$output];
             }
         ));
