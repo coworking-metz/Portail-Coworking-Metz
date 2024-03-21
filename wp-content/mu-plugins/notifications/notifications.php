@@ -21,7 +21,7 @@ function generateNotification($data)
 	$GLOBALS['notification']++;
     $cta = '';
     if ($data['cta']) {
-        $cta = '<span><a href="' . $data['cta']['url'] . '" class="button">' . $data['cta']['caption'] . '</a></span>';
+        $cta = '<span class="cta"><a href="' . $data['cta']['url'] . '" class="button">' . $data['cta']['caption'] . '</a></span>';
     }
     return '<div class="notification" role="alert" data-type="'.($data['type']??'default').'">
     <div>

@@ -4,8 +4,10 @@ if (isset($_GET['test'])) {
     $_GET['debug'] = true;
     add_action('init', function () {
 
-phpinfo();
-
+me(
+    get_user_balance(465)
+);
+        
         exit;
     });
 }

@@ -2,6 +2,34 @@
 
 
 /**
+ * Retourne l'uri de la page, sans query string ni slash final
+ *
+ * @return void
+ */
+function get_current_uri() {
+    return rtrim(explode('?',$_SERVER['REQUEST_URI']??'')[0], '/');
+}
+/**
+ * retourne une phrase indiquant une quantité accompagnée d'un libellé texte mis au pluriel
+ *
+ * @param  mixed $qte La quantité déterminant le pluriel ou nom
+ * @param  mixed $lib Le ou les mots suivants à mettre au pluriel (séparés par des espaces)
+ * @param  mixed $pluriel La marque du pluriel à appliquer au libellé (défaut: s)
+ * @return void
+ */
+function pluriel($qte, $lib, $pluriel = 's')
+{
+	if ($qte > 1) {
+		$lib = explode(' ', $lib);
+		foreach ($lib as $a => $b) {
+			$lib[$a] = $b . $pluriel;
+		}
+		return $qte . ' ' . implode(' ', $lib);
+	} else {
+		return $qte . ' ' . $lib;
+	}
+}
+/**
  *  An example CORS-compliant method.  It will allow any GET, POST, or OPTIONS requests from any
  *  origin.
  *
