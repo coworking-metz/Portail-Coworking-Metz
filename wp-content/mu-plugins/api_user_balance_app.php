@@ -13,7 +13,7 @@ function api_user_balance_app($email = NULL) {
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://tickets.coworking-metz.fr/api/user-stats',
+        CURLOPT_URL => TICKET_BASE_URL.'/user-stats',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
