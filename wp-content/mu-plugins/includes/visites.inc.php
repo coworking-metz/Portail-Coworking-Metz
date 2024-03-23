@@ -260,11 +260,11 @@ function envoyerMailRecapVisite($user_id, $autres_codes = [])
 {
     if (wp_get_environment_type() == 'local')
         return;
-
     $user = get_userdata($user_id);
     if (!$user)
         return;
     $template_id = get_field('email_recap_visite', 'option');
+
     $visite = get_user_meta($user_id, 'visite', true);
 
     $key = 'email-recap-visite-' . $user_id;

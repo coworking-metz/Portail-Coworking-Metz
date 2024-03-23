@@ -4,6 +4,8 @@ RewriteBase /polaroid/
 
 #RewriteCond %{DOCUMENT_ROOT}/polaroid/gen/$0 -f
 #RewriteRule ^(.*)$ /polaroid/gen/$0
+RewriteRule anonyme\.jpg index.php?anonyme=true [L,QSA]
+RewriteRule anonyme-([0-9]+)\.jpg index.php?anonyme=true [L,QSA]
 
 RewriteCond %{DOCUMENT_ROOT}/polaroid/tmp/$1-raw-$2.jpg -f
 RewriteRule ([0-9]+)-raw-([0-9]+)\.jpg raw.php?uid=$1&width=$2 [L,QSA]
