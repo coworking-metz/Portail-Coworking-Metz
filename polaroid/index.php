@@ -2,8 +2,9 @@
 
 
 $quality = 90;
+$anonyme = $_GET['anonyme'] ?? false;
 $hd = $_GET['hd'] ?? false;
-$raw = $_GET['raw'] ?? false;
+// $raw = $_GET['raw'] ?? false;
 $small = $_GET['small'] ?? false;
 $width = $_GET['width'] ?? false;
 $uid = $_GET['uid'] ?? false;
@@ -50,23 +51,29 @@ if ($_GET['custom'] ?? false) {
         } else {
             $image_fond_pola = get_image_fond_pola();
         }
-        $polaroid = polaroid_get($uid);
-        if ($image = get_user_meta($uid, 'url_image_trombinoscope', true)) {
-            $url = wp_get_attachment_url($image);
-            if ($url) {
-                polaroid_output(urlToPath($url));
+        if($anonyme) {
+            $photo = __DIR__.'/images/default.jpg';
+            $polaroid = ['nom'=>nom_random(), 'description'=>'Adhérente du Poulailler'];
+        } else {
+
+            $polaroid = polaroid_get($uid);
+            if ($image = get_user_meta($uid, 'url_image_trombinoscope', true)) {
+                $url = wp_get_attachment_url($image);
+                if ($url) {
+                    polaroid_output(urlToPath($url));
+                }
             }
-        }
-        $photo = $polaroid['photo'];
-        if ($image_fond_pola) {
-            $photo = $polaroid['alpha'] ?? $photo;
+            $photo = $polaroid['photo'];
+            if ($image_fond_pola) {
+                $photo = $polaroid['alpha'] ?? $photo;
+            }
         }
     }
 }
-if($raw) {
-    CoworkingMetz\Cloudflare::cacheHeaders();
-    outputImageWithHeaders($photo, $small ? 150 : $width);
-}
+// if($raw) {
+//     CoworkingMetz\Cloudflare::cacheHeaders();
+//     outputImageWithHeaders($photo, $small ? 150 : $width);
+// }
 // if (!isset($_GET['debug'])) $image_fond_pola = false;
 
 list($width, $height) = getimagesize($pola_source);

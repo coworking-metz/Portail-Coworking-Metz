@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function updateLinkVoir() {
             const value = this.value;
-            if (this.value > 0) {
+            if (this.value) {
                 linkVoir.classList.remove('hidden')
                 linkVoir.href = `/wp-admin/?template_preview=${value}`;
             } else {
@@ -33,7 +33,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function updateLinkModifier() {
             const value = this.value;
-            if (this.value > 0) {
+            if(value.includes('brevo-')) {
+                const bid = value.replace('brevo-','');
+                linkModifier.classList.remove('hidden')
+                linkModifier.href = `https://my.brevo.com/camp/template/${bid}/message-setup?editor=v6`;
+
+            } else if (this.value > 0) {
                 linkModifier.classList.remove('hidden')
                 linkModifier.href = `post.php?post=${value}&action=edit&classic-editor`;
             } else {
