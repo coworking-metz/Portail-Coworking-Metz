@@ -107,13 +107,13 @@ function formatDateToFrench($date)
 {
 
 
-    setlocale(LC_TIME, 'fr_FR.utf8', 'fra'); // Set locale to French
-    $dateTime = DateTime::createFromFormat('Y-m-d', $date);
-    $ret = strftime('%A %d %B %Y', $dateTime->getTimestamp());
+    // setlocale(LC_TIME, 'fr_FR.utf8', 'fra'); // Set locale to French
+    // $dateTime = DateTime::createFromFormat('Y-m-d', $date);
+    // $ret = strftime('%A %d %B %Y', $dateTime->getTimestamp());
 
-    $ret = str_replace(date('Y'), '', $ret);
-    return trim($ret);
-    /*
+    // $ret = str_replace(date('Y'), '', $ret);
+    // return trim($ret);
+    
     $dateTime = DateTime::createFromFormat('Y-m-d', $date);
     $today = new DateTime();
     $format = 'l j F';
@@ -123,7 +123,7 @@ function formatDateToFrench($date)
     }
 
     setlocale(LC_TIME, 'fr_FR', 'fra');
-    return strftime('%A %d %B', $dateTime->getTimestamp()) . ($dateTime->format('Y') !== $today->format('Y') ? ' ' . $dateTime->format('Y') : '');*/
+    return strftime('%A %d %B', $dateTime->getTimestamp()) . ($dateTime->format('Y') !== $today->format('Y') ? ' ' . $dateTime->format('Y') : '');
 }
 
 
