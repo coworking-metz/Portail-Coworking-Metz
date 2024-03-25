@@ -60,8 +60,17 @@ if (isset($_GET['export-users'])) {
 
         $output = fopen('php://output', 'w');
 
+        $ligne = ['ID', 'Email', 'Display Name', 'Registration Date', '_last_order_date', '_first_order_date', 'Date de la visite', 'Role'];
+
+        $useractif= $usersactifs[0];
+        unset($useractif['firstName']);
+        unset($useractif['lastName']);
+        unset($useractif['email']);
+
+        $ligne = array_merge($ligne, array_keys($useractif));
+
         // Écrire les en-têtes de colonnes
-        fputcsv($output, ['ID', 'Email', 'Display Name', 'Registration Date', '_last_order_date', '_first_order_date', 'Date de la visite', 'Role']);
+        fputcsv($output, $ligne);
 
 
 
@@ -77,9 +86,17 @@ if (isset($_GET['export-users'])) {
             $first_order_date = get_user_meta($id, '_first_order_date', true);
             $visite = get_user_meta($id, 'visite', true);
             $role = !empty($user_data->roles) ? implode(',', $user_data->roles) : '';
-
+            $ligne = [$id, $email, $display_name, $registration_date, $last_order_date, $first_order_date, $visite, $role];
+            foreach($usersactifs as $useractif) {
+                if($useractif['email'] == $email) {
+                    unset($useractif['firstName']);
+                    unset($useractif['lastName']);
+                    unset($useractif['email']);
+                    $ligne = array_merge($ligne, $useractif);
+                }
+            }
             // Écrire la ligne de données pour chaque utilisateur
-            fputcsv($output, [$id, $email, $display_name, $registration_date, $last_order_date, $first_order_date, $visite, $role]);
+            fputcsv($output, $ligne);
         }
 
         fclose($output);

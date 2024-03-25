@@ -17,14 +17,14 @@ function get_current_uri() {
  * @param  mixed $pluriel La marque du pluriel à appliquer au libellé (défaut: s)
  * @return void
  */
-function pluriel($qte, $lib, $pluriel = 's')
+function pluriel($qte, $lib, $pluriel = 's', $separateur=' ')
 {
 	if ($qte > 1) {
-		$lib = explode(' ', $lib);
+		$lib = explode($separateur, $lib);
 		foreach ($lib as $a => $b) {
 			$lib[$a] = $b . $pluriel;
 		}
-		return $qte . ' ' . implode(' ', $lib);
+		return $qte . ' ' . implode($separateur, $lib);
 	} else {
 		return $qte . ' ' . $lib;
 	}
