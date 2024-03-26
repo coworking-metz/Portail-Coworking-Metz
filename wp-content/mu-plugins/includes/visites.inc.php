@@ -324,7 +324,7 @@ function envoyerMailVisite($user_id, $visite = null, $autres_codes = [])
     $template_id = get_field('email_confirmation_de_visite', 'option');
     $codes = [
         ['{date_visite}' => date_francais($visite, true)],
-        ['{url_visite_ics}' => site_url() . '/api-json-wp/cowo/v1/visite-ics?user_id=' . $user_id],
+        ['{url_visite_ics}' =>   'https://www.coworking-metz.fr/api-json-wp/cowo/v1/visite-ics?user_id=' . $user_id],
         ['{app_login_link}' => app_login_link($user_id)],
     ];
 
