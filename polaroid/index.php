@@ -212,8 +212,11 @@ if (!$hd) {
     $originalWidth = imagesx($img);
     $originalHeight = imagesy($img);
 
-    // Calculate the new height while maintaining the aspect ratio
-    $newWidth = 400; // target width
+    if($small) {
+        $newWidth = 200;
+    } else {
+        $newWidth = 400;
+    }
     $aspectRatio = $originalWidth / $originalHeight;
     $newHeight = $newWidth / $aspectRatio;
 
