@@ -20,6 +20,7 @@
 
 .notification[data-type="warning"] {
     background-color: #fffb8b;
+    color:black;
 }
 .notification .titre:before {
     display: inline-block;
@@ -32,6 +33,7 @@
 
 .notification[data-type="error"] {
     background-color: #ff918b;
+    color:black;
 }
 
 .notification[data-type="error"] .titre:before {
@@ -41,6 +43,7 @@
 
 .notification[data-type="success"] {
     background-color: #93ff8b;
+    color:black;
 }
 
 .notification[data-type="success"] .titre:before {

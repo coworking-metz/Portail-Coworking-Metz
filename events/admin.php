@@ -19,7 +19,6 @@ if ($evenement = getEvenement($id)) {
 } else {
     $titre = 'Nouvel évenement';
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -194,9 +193,9 @@ if ($evenement = getEvenement($id)) {
                             <a target="_blank" href="<?= urlEvenement($evenement); ?>">Voir la page de l'évènement</a></label>
                             <code><?= urlEvenement($evenement); ?></code>
                             <b>Liens rapides :</b>
-                            <a href="<?= urlEvenement($evenement); ?>?p=ok&email=">oui</a> |
-                            <a href="<?= urlEvenement($evenement); ?>?p=ko&email=">non</a> |
-                            <a href="<?= urlEvenement($evenement); ?>?p=maybe&email=">peut-être</a>
+                            <a href="<?= urlEvenement($evenement); ?>?p=ok&email={{contact.EMAIL}}">oui</a> |
+                            <a href="<?= urlEvenement($evenement); ?>?p=ko&email={{contact.EMAIL}}">non</a> |
+                            <a href="<?= urlEvenement($evenement); ?>?p=maybe&email={{contact.EMAIL}}">peut-être</a>
                         </div><br>
                         <figure>
                             <img width="150" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=<?= urlEvenement($evenement); ?>">
