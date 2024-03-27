@@ -28,6 +28,9 @@ RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteRule ([0-9]+)-original\.jpg $1.jpg?hd=true&original=true [L,QSA]
 
 RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteRule ([0-9]+)-micro\.jpg $1.jpg?micro=true [L,QSA]
+
+RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteRule ([0-9]+)-small\.jpg $1.jpg?small=true [L,QSA]
 
 RewriteCond %{SCRIPT_FILENAME} !-f
