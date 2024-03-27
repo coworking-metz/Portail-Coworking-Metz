@@ -6,6 +6,7 @@ $anonyme = $_GET['anonyme'] ?? false;
 $hd = $_GET['hd'] ?? false;
 // $raw = $_GET['raw'] ?? false;
 $small = $_GET['small'] ?? false;
+$micro = $_GET['micro'] ?? false;
 $width = $_GET['width'] ?? false;
 $uid = $_GET['uid'] ?? false;
 $dynamique = isset($_GET['dynamique']);
@@ -212,7 +213,9 @@ if (!$hd) {
     $originalWidth = imagesx($img);
     $originalHeight = imagesy($img);
 
-    if($small) {
+    if($micro) {
+        $newWidth = 20;
+    } else if($small) {
         $newWidth = 200;
     } else {
         $newWidth = 400;
