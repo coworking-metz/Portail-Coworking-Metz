@@ -77,6 +77,7 @@ if ($_GET['custom'] ?? false) {
         }
     }
 }
+
 // if($raw) {
 //     CoworkingMetz\Cloudflare::cacheHeaders();
 //     outputImageWithHeaders($photo, $small ? 150 : $width);
