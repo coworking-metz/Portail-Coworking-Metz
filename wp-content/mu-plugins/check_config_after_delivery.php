@@ -13,7 +13,8 @@ function check_current_config()
     wp_cache_flush();
   }
   $config = isset($_GET['config']) ? $_GET['config'] : false;
-  $auto = isset($_GET['auto']);
+//  $auto = isset($_GET['auto']);
+$auto=false;
   $new = rtrim(current_site_url() . current(explode('wp-admin', $_SERVER['REQUEST_URI'])), '/');
 
   if ($config) {
