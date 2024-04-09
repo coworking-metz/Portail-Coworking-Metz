@@ -1,5 +1,23 @@
 <?php
+function get_user_ranking($uid) {
 
+    $rankings = get_transient('user_rankings');
+    if(!$rankings) {
+        $api = TICKET_BASE_URL.'/users-stats?key=bupNanriCit1&period=last-365-days&sort=createdAt';
+        $data = file_get_contents($api);
+
+        $users = json_decode($data, true);
+
+        $rankings=[];
+        foreach($users as $user) {
+            if(!$user['wpUserId']) continue;
+            $rankings[$user['wpUserId']]=explode('-',$user['createdAt'])[0]??date('Y');
+        }
+        set_transient('user_rankings', $rankings, DAY_IN_SECONDS);
+    }
+    return $rankings[$uid] ?? false;
+
+}
 /**
  * Retourne les stats du compte utilisateur, dont la balance des tickets et ses infos abo, membership, etc
  *
