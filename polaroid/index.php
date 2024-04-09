@@ -2,7 +2,7 @@
 
 
 $quality = 90;
-$anonyme = $_GET['anonyme'] ?? false;
+$anonyme = $_GET['anonyme'] ?? !!strstr($_SERVER['REQUEST_URI'], 'anonyme');
 $hd = $_GET['hd'] ?? false;
 // $raw = $_GET['raw'] ?? false;
 $small = $_GET['small'] ?? false;
@@ -52,12 +52,18 @@ if ($_GET['custom'] ?? false) {
         } else {
             $image_fond_pola = get_image_fond_pola();
         }
+        $polaroid = polaroid_get($uid);
         if($anonyme) {
-            $photo = __DIR__.'/images/default.jpg';
-            $polaroid = ['nom'=>nom_random(), 'description'=>'Adhérente du Poulailler'];
+            if($polaroid['visite']) {
+                $photo = $polaroid['photo'];
+                $description = 'Visite & Journée d\'éssai';
+            } else {
+                $photo = __DIR__.'/images/default.jpg';
+                $description = 'Adhérente du Poulailler';
+            }
+            $polaroid = ['nom'=>nom_random(), 'description'=>$description];
         } else {
 
-            $polaroid = polaroid_get($uid);
             if ($image = get_user_meta($uid, 'url_image_trombinoscope', true)) {
                 $url = wp_get_attachment_url($image);
                 if ($url) {
