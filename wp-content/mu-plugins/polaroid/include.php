@@ -151,7 +151,9 @@ function polaroid_get($uid = null, $defaults = true)
     $visite = false;
 
     if(is_visiteur($user_info)) {
-        $file = ABSPATH . 'polaroid/images/poussin.jpg';
+        if($defaults) {
+            $file = ABSPATH . 'polaroid/images/poussin.jpg';
+        } else $file=false;
         $description='Visite & Journée d\'essai';    
         $complement='';
         $visite = true;
