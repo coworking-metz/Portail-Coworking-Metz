@@ -30,13 +30,34 @@ add_action(
                 $response = [];
 
                 $ranking = get_user_ranking($user_id);
-                $response = polaroid_get($user_id);
+                $response = polaroid_get($user_id, false);
                 $response['legacy'] = wp_get_attachment_url(get_user_meta($user_id, 'url_image_trombinoscope', true));
-                $response['photo'] = pathTourl($response['photo']);
-                $response['alpha'] = pathTourl($response['alpha']);
                 $response['ranking']=$ranking;
                 $response['options'] = get_field('polaroids', 'option');
+                foreach($response['options'] as $k => $v) {
+                    $prefix = explode('_',$k)[0];
+                    if($prefix == 'photo') {
+                        $response['options'][$k.'_alpha']=generer_image_alpha($v);
+                    }
+                }
+
                 $response['options']['image_fond_pola'] = pathTourl(get_image_fond_pola());
+
+
+                if($response['photo']) {
+                    $response['photo'] = pathTourl($response['photo']);
+                } else if($response['visite']) {
+                    $response['photo'] = $response['options']['photo_visiteur'];
+                } else {
+                    $response['photo'] = $response['options']['photo_par_defaut'];
+                }
+                if($response['alpha']) {
+                    $response['alpha'] = pathTourl($response['alpha']);
+                } else if($response['visite']) {
+                    $response['alpha'] = $response['options']['photo_visiteur_alpha'];
+                } else {
+                    $response['alpha'] = $response['options']['photo_par_defaut_alpha'];
+                }
 
 
                 // $response['polaroid_default'] = coworking_app_settings()['polaroid_default']??'';
