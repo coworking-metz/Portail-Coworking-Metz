@@ -46,9 +46,13 @@ cd portail-coworking-metz
 - Select `MD5` in the `Function` column
 - Submit by clicking on the `Go` button at the bottom
 
+##### Building JavaScript
+Build scripts.js using wp-content/themes/ave-child/build.sh script. 
+If run with --watch, the script will watch for changes and then write update the js file
+
 ##### Local URL
 - Navigate to http://www.coworking-metz.local/wp-admin/?config=force
-- Check taht yourlocal url has been detected by the form. Validate and wait.
+- Check that your local url has been detected by the form. Validate and wait.
 
 ##### Logging in
 - Navigate to http://www.coworking-metz.local/wp-admin/

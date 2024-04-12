@@ -16,4 +16,14 @@ add_filter('woocommerce_available_payment_gateways', function ($available_gatewa
     return $available_gateways;
 });
 
+add_filter('woocommerce_webhook_payload', function ($payload, $resource, $resource_id, $id) {
+    $order = wc_get_order($resource_id);
 
+    if ($order && isset($payload['line_items'])) {
+        // Loop through each item in the order
+        foreach ($payload['line_items'] as &$item) {
+            $item['product_type'] = get_field('productType',$item['product_id']);
+        }
+    }
+    return $payload;
+}, 10, 4);
