@@ -13,6 +13,9 @@ function get_alpha_polaroid($uid, $file)
 
     if(WP_ENVIRONMENT_TYPE == 'local') return;
     // if($uid!=225) return;
+    if(basename($file) == 'default.jpg' || basename($file) == 'poussin.jpg') {
+        return str_replace('.jpg','-alpha.png',$file);
+    }
     $url = pathTourl($file);
     // update_field('votre_photo_alpha', '', 'user_861');
 
@@ -80,6 +83,8 @@ function polaroid_url($uid = null, $domain = false)
     }
 }
 
+
+
 function polaroid_existe($uid = null)
 {
 
@@ -144,17 +149,20 @@ function polaroid_get($uid = null, $defaults = true)
     if (!$file && $defaults) {
         $file = ABSPATH . 'polaroid/images/default.jpg';
     }
-//    $file = get_gravatar_url($user_info->user_email);
-
-    $alpha = get_alpha_polaroid($uid, $file);
+    // $file = get_gravatar_url($user_info->user_email);
+    $visite = false;
 
     if(is_visiteur($user_info)) {
-        $file = ABSPATH . 'polaroid/images/poussin.jpg';
+        if($defaults) {
+            $file = ABSPATH . 'polaroid/images/poussin.jpg';
+        } else $file=false;
         $description='Visite & Journée d\'essai';    
         $complement='';
+        $visite = true;
     }
+    $alpha = get_alpha_polaroid($uid, $file);
     
-    return ['photo' => $file, 'alpha' => $alpha, 'nom' => $nom, 'description' => $description, 'complement' => $complement];
+    return ['photo' => $file, 'alpha' => $alpha, 'nom' => $nom, 'description' => $description, 'complement' => $complement, 'visite'=>$visite];
 }
 function polaroid_tmpphoto($uid = null)
 {

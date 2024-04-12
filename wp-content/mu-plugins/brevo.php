@@ -18,8 +18,19 @@ if (isset($_GET['brevo-notify'])) {
 }
 
 /**
+ * Ajout JS dédié au test de connexion
+ */
+add_action('wp_enqueue_scripts', function () {
+    $base = '/wp-content/mu-plugins/js';
+
+    $js = $base . '/brevo.js';
+    wp_enqueue_script('brevo-script', $js, array (), filemtime(ABSPATH.$js), true);
+});
+
+/**
  * Ajout du script brevo pour le chat sur les pages du site
  */
+/*
 add_action('wp_head', function () {
     if (is_admin()) return;
 
@@ -57,7 +68,6 @@ add_action('wp_head', function () {
 
         if (user_data) {
             window.BrevoConversationsSetup = {
-                /* current user’s generated string */
                 visitorId: user_data.hash
             };
         }
@@ -80,4 +90,4 @@ add_action('wp_head', function () {
     <!-- /Brevo Conversations {/literal} -->
 <?php
 
-});
+});*/

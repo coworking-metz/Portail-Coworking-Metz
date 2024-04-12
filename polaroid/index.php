@@ -2,9 +2,11 @@
 
 
 $quality = 90;
+$anonyme = $_GET['anonyme'] ?? !!strstr($_SERVER['REQUEST_URI'], 'anonyme');
 $hd = $_GET['hd'] ?? false;
-$raw = $_GET['raw'] ?? false;
+// $raw = $_GET['raw'] ?? false;
 $small = $_GET['small'] ?? false;
+$micro = $_GET['micro'] ?? false;
 $width = $_GET['width'] ?? false;
 $uid = $_GET['uid'] ?? false;
 $dynamique = isset($_GET['dynamique']);
@@ -35,7 +37,6 @@ $pola_source = urlToPath($pola_source);
 
 // print_r($_GET);
 $image_fond_pola = false;
-
 if ($_GET['custom'] ?? false) {
     $polaroid = $_GET['polaroid'] ?? false;
     $photo = $polaroid['photo'];
@@ -52,22 +53,35 @@ if ($_GET['custom'] ?? false) {
             $image_fond_pola = get_image_fond_pola();
         }
         $polaroid = polaroid_get($uid);
-        if ($image = get_user_meta($uid, 'url_image_trombinoscope', true)) {
-            $url = wp_get_attachment_url($image);
-            if ($url) {
-                polaroid_output(urlToPath($url));
+        if($anonyme) {
+            if($polaroid['visite']) {
+                $photo = $polaroid['photo'];
+                $description = 'Visite & Journée d\'éssai';
+            } else {
+                $photo = __DIR__.'/images/default.jpg';
+                $description = 'Adhérente du Poulailler';
             }
-        }
-        $photo = $polaroid['photo'];
-        if ($image_fond_pola) {
-            $photo = $polaroid['alpha'] ?? $photo;
+            $polaroid = ['nom'=>nom_random(), 'description'=>$description];
+        } else {
+
+            if ($image = get_user_meta($uid, 'url_image_trombinoscope', true)) {
+                $url = wp_get_attachment_url($image);
+                if ($url) {
+                    polaroid_output(urlToPath($url));
+                }
+            }
+            $photo = $polaroid['photo'];
+            if ($image_fond_pola) {
+                $photo = $polaroid['alpha'] ?? $photo;
+            }
         }
     }
 }
-if($raw) {
-    CoworkingMetz\Cloudflare::cacheHeaders();
-    outputImageWithHeaders($photo, $small ? 150 : $width);
-}
+
+// if($raw) {
+//     CoworkingMetz\Cloudflare::cacheHeaders();
+//     outputImageWithHeaders($photo, $small ? 150 : $width);
+// }
 // if (!isset($_GET['debug'])) $image_fond_pola = false;
 
 list($width, $height) = getimagesize($pola_source);
@@ -206,8 +220,13 @@ if (!$hd) {
     $originalWidth = imagesx($img);
     $originalHeight = imagesy($img);
 
-    // Calculate the new height while maintaining the aspect ratio
-    $newWidth = 400; // target width
+    if($micro) {
+        $newWidth = 20;
+    } else if($small) {
+        $newWidth = 200;
+    } else {
+        $newWidth = 400;
+    }
     $aspectRatio = $originalWidth / $originalHeight;
     $newHeight = $newWidth / $aspectRatio;
 

@@ -2,6 +2,28 @@
 
 use function Crontrol\Event\pause;
 
+function brevo_getTemplates() {
+
+    $templates = get_transient('brevo-templates');
+    if(!$templates) {
+        $apiClient = new SendinblueApiClient();
+
+        $templates = $apiClient->getAllEmailTemplates()['templates']??[];
+        set_transient('brevo-templates', $templates, HOUR_IN_SECONDS);
+    }
+
+    return $templates;
+}
+
+function brevo_getTemplate($id) {
+    $templates = brevo_getTemplates();
+
+    foreach($templates as $template) {
+        if($template['id']==$id) {
+            return $template;
+        }
+    }
+}
 function brevo_start_unsubscribed()
 {
     $apiClient = new SendinblueApiClient();

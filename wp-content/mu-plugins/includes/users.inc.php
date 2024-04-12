@@ -1,4 +1,71 @@
 <?php
+function get_user_ranking($uid) {
+
+    $rankings = get_transient('user_rankings');
+    if(!$rankings) {
+        $api = TICKET_BASE_URL.'/users-stats?key=bupNanriCit1&period=last-365-days&sort=createdAt';
+        $data = file_get_contents($api);
+
+        $users = json_decode($data, true);
+
+        $rankings=[];
+        foreach($users as $user) {
+            if(!$user['wpUserId']) continue;
+            $rankings[$user['wpUserId']]=explode('-',$user['createdAt'])[0]??date('Y');
+        }
+        set_transient('user_rankings', $rankings, DAY_IN_SECONDS);
+    }
+    return $rankings[$uid] ?? false;
+
+}
+/**
+ * Retourne les stats du compte utilisateur, dont la balance des tickets et ses infos abo, membership, etc
+ *
+ * @param  mixed $uid
+ * @return mixed
+ */
+function get_user_balance($uid) {
+    // Vérifier si les résultats sont en cache
+    $cached_result = get_transient('user_balance_' . $uid);
+    $cached_result=false;
+    if ($cached_result) {
+        return $cached_result;
+    }
+
+    $user = get_userdata($uid);
+    if (!$user) return;
+
+    $email = $user->user_email;
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => TICKET_BASE_URL.'/user-stats',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => 'key=' . API_KEY_TICKET . '&email=' . $email,
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/x-www-form-urlencoded'
+        ),
+    ));
+
+    $response = curl_exec($curl);
+    curl_close($curl);
+    
+    if (!$response) return;
+
+    $result = json_decode($response, true);
+
+    // Stocker le résultat dans un transient pour 1 heure
+    set_transient('user_balance_' . $uid, $result, HOUR_IN_SECONDS);
+
+    return $result;
+}
+
 
 function get_users_with_photos() {
 	// Vérifie si le résultat est déjà stocké dans un transient

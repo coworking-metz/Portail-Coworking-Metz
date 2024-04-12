@@ -52,7 +52,72 @@ function outputImageWithHeaders($imagePath, $width = null, $destinationPath = fa
     imagedestroy($image);
     exit;
 }
+function nom_random() {
+    $nom1 = [
+        'Sophie',
+        'Louise',
+        'Juliette',
+        'Clara',
+        'Émilie',
+        'Margot',
+        'Louisette',
+        'Isabelle',
+        'Valérie',
+        'Caroline',
+        'Patricia',
+        'Monique',
+        'Nicole',
+        'Olivia',
+        'Pauline',
+        'Béatrice',
+        'Bernadette',
+        'Colette',
+        'Hélène',
+        'Suzanne',
+        'Chantal',
+        'Danielle',
+        'Sylvie',
+        'Isabelle',
+        'Catherine',
+        'Brigitte',
+        'Josette',
+        'Madeleine'
+    ];
+    $nom2 = [
+        'Plume',
+        'Picore',
+        'Cocotte',
+        'Caquete',
+        'Poulette',
+        'Couvée',
+        'Nid',
+        'Éclosion',
+        'Volaille',
+        'Caille',
+        'Pondue',
+        'Muesli',
+        'Coquille',
+        'Oeuf',
+        'Paille',
+        'Bec',
+        'Poussine',
+        'Oeufine',
+        'Cotcot',
+        'Caquet',
+        'Poulinette',
+        'Grattelle',
+        'Pioupiou',
+        'Poulette',
+        'Piaille',
+        'Picote',
+        'Becquée',
+        'Plume'
+    ];
 
+
+    return $nom1[array_rand($nom1)].'-'.$nom2[array_rand($nom2)];
+    
+}
 
 function write_and_output_image($image, $path, $type)
 {

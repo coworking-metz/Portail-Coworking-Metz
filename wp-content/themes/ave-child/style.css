@@ -18,7 +18,13 @@ a.acf-icon.-pencil.dark {
 .about_paypal {
     display: none;
 }
-
+/* body:has(.login-as-user.login-as-user-top) {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+.login-as-user.login-as-user-top {
+    display: none;
+} */
 .tickets-status {
     border: 1px solid #e0e1e0;
     background: #FFF;
