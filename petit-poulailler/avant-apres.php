@@ -18,7 +18,8 @@ if($w == 1) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avant/Après 1</title>
     <link rel="stylesheet" href="style.css" type="text/css" media="screen" />
-    <style>
+    <script type="text/javascript" defer async src="https://cloudflare.coworking-metz.fr/cf.js"></script>
+        <style>
 
 
     </style>
@@ -46,27 +47,25 @@ document.querySelector('#comparison').addEventListener('click', e => {
   
   if(e.target.closest('#slider')) return;
   console.log(e.target)
+  switchView()
+})
+document.addEventListener('keyup', e => {
+  switchView()
+})
 
+function switchView() {
   slider.value = slider.value == 100 ? 0 : 100;
     divisor.classList.add('transition')
   setTimeout(() => {
     divisor.classList.remove('transition')
   }, 1000)
   moveDivisor()
-})
 
+}
 moveDivisor()
 window.addEventListener('load', e =>{
   setTimeout(() => {
     document.querySelector('#comparison').click();
-    setTimeout(() => {
-      document.querySelector('#comparison').click();
-      setTimeout(() => {
-      document.querySelector('#comparison').click();
-    }, 3000)
-
-    }, 5000)
-
   }, 2000)
 })
 </script>
