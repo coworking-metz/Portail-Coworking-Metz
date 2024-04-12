@@ -1552,6 +1552,7 @@ if ( ! function_exists( 'yith_plugin_fw_load_update_and_licence_files' ) ) {
 	 * @author Andrea Grillo <andrea.grillo@yithemes.com>
 	 */
 	function yith_plugin_fw_load_update_and_licence_files() {
+		return;
 		global $plugin_upgrade_fw_data;
 
 		/**

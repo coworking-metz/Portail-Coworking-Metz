@@ -2,42 +2,47 @@
 
 use function Crontrol\Event\pause;
 
-function brevo_getTemplates() {
+function brevo_getTemplates()
+{
+    if (!class_exists('SendinblueApiClient')) {
+        return;
+    }
 
     $templates = get_transient('brevo-templates');
-    if(!$templates) {
+    if (!$templates) {
         $apiClient = new SendinblueApiClient();
 
-        $templates = $apiClient->getAllEmailTemplates()['templates']??[];
+        $templates = $apiClient->getAllEmailTemplates()['templates'] ?? [];
         set_transient('brevo-templates', $templates, HOUR_IN_SECONDS);
     }
 
     return $templates;
 }
 
-function brevo_getTemplate($id) {
+function brevo_getTemplate($id)
+{
     $templates = brevo_getTemplates();
 
-    foreach($templates as $template) {
-        if($template['id']==$id) {
+    foreach ($templates as $template) {
+        if ($template['id'] == $id) {
             return $template;
         }
     }
 }
 function brevo_start_unsubscribed()
 {
+    if (!class_exists('SendinblueApiClient')) return;
     $apiClient = new SendinblueApiClient();
     $lists = $apiClient->getAllLists();
 
-
     $processes = [];
     foreach ($lists['lists'] as $list) {
-        $data =  [
+        $data = [
             "customContactFilter" => [
                 "actionForContacts" => "unsubscribed",
-                "listId" => $list['id']
+                "listId" => $list['id'],
             ],
-            "notifyUrl" => site_url('?brevo-notify&brevo-action=unsubscribed')
+            "notifyUrl" => site_url('?brevo-notify&brevo-action=unsubscribed'),
         ];
 
         $ret = $apiClient->post('/contacts/export', $data);
@@ -58,14 +63,16 @@ function brevo_start_unsubscribed()
 
 function brevo_get_process($pid)
 {
+    if (!class_exists('SendinblueApiClient')) return;
     $apiClient = new SendinblueApiClient();
     return $apiClient->get('/processes/' . $pid);
 }
 
 function brevo_sync_to_wordpress_list()
 {
+    if (!class_exists('SendinblueApiClient')) return;
     $users = get_users([
-        'role__in' => ['administrator', 'customer']
+        'role__in' => ['administrator', 'customer'],
     ]);
 
     $apiClient = new SendinblueApiClient();
@@ -83,7 +90,7 @@ function brevo_sync_to_wordpress_list()
             "updateExistingContacts" => true,
             "emptyContactsAttributes" => false,
             "jsonBody" => $json,
-            "listIds" => [10]
+            "listIds" => [10],
         );
         $ret = $apiClient->importContacts($data);
     }
@@ -93,6 +100,8 @@ function brevo_sync_to_wordpress_list()
 
 function brevo_unsubscribe($emails)
 {
+    if (!class_exists('SendinblueApiClient')) return;
+
     $apiClient = new SendinblueApiClient();
 
     $lists = $apiClient->getAllLists();
@@ -108,7 +117,7 @@ function brevo_unsubscribe($emails)
         "updateExistingContacts" => true,
         "emptyContactsAttributes" => false,
         "jsonBody" => $json,
-        "listIds" => array_column($lists['lists'], 'id')
+        "listIds" => array_column($lists['lists'], 'id'),
     );
     return $apiClient->importContacts($data);
 }
@@ -127,7 +136,7 @@ function importContactsToBrevo($data)
     $headers = array(
         'Accept: application/json',
         'Content-Type: application/json',
-        'api-key: ' . BREVO_KEY
+        'api-key: ' . BREVO_KEY,
     );
 
     $ch = curl_init();
