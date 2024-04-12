@@ -10,6 +10,8 @@ function get_image_fond_pola()
 
 function get_alpha_polaroid($uid, $file)
 {
+
+    if(WP_ENVIRONMENT_TYPE == 'local') return;
     // if($uid!=225) return;
     $url = pathTourl($file);
     // update_field('votre_photo_alpha', '', 'user_861');

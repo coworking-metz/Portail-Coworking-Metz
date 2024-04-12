@@ -1,11 +1,12 @@
 version: "3.6"
 services:
   wordpress:
-#    image: wordpress:5.9.3
-    build: .
+    image: wordpress:6.5.2
+    # build: .
     container_name: wordpress
     volumes:
-     - ./wp-content/mu-plugins:/var/www/html/wp-content/mu-plugins:delegated
+     - ./:/var/www/html/:delegated
+    #  - ./wp-content/mu-plugins:/var/www/html/wp-content/mu-plugins:delegated
       # - type: bind
       #   source: .
       #   target: /var/www/html
