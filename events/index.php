@@ -158,7 +158,7 @@ if ($setNb) {
                 </form>
             </div>
             <div>
-                <div class="duotone"><img src="<?= $evenement['image_url']; ?>)"></div>
+                <div class="duotone"><img src="<?= $evenement['image_url']; ?>"></div>
                 <img src="<?= $evenement['logo'] ? $evenement['logo'] :  './img/logo.png'; ?>">
             </div>
         </article>

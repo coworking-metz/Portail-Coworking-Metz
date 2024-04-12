@@ -23,18 +23,34 @@ function add_custom_shortcodes_to_template($shortcodes)
  */
 function charger_template_mail($template_id, $codes = [])
 {
+
+    if(strstr($template_id, 'brevo')) {
+        $template_id = str_replace('brevo-','',$template_id);
+        $template = brevo_getTemplate($template_id);
+
+        $ret = ['message' => $template['htmlContent'], 'subject' => $template['subject']];
+
+        foreach($ret as &$item) {
+            foreach($codes as $code) {
+                foreach($code as $index=>$value) {
+                    $item = str_replace($index, (string) $value, $item);
+                }
+            }
+        }
+
+        return $ret;
+
+    } else {
     add_custom_shortcodes_to_template($codes);
 
-    $template = new VIWEC_Render_Email_Template(['template_id' => $template_id]);
-    ob_start();
-    $template->get_content();
-    $message = ob_get_contents();
-    ob_end_clean();
-
-    return ['message' => $message, 'subject' => $template->get_subject()];
+        $template = new VIWEC_Render_Email_Template(['template_id' => $template_id]);
+        ob_start();
+        $template->get_content();
+        $message = ob_get_contents();
+        ob_end_clean();
+        return ['message' => $message, 'subject' => $template->get_subject()];
+    }
 }
-
-
 
 function envoyer_email_creation_compte($user)
 {

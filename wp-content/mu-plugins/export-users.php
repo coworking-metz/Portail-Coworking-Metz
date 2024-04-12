@@ -36,8 +36,18 @@ if (isset($_GET['export-users'])) {
             $users = array_merge($users, $autres_users);
         } else if($voting){
             $name='voting';
-            $json = file_get_contents(TICKET_BASE_URL.'/voting-members?key='.API_KEY_TICKET);
+            $minActivity = 20;
+            $date=$_GET['date']??'aujourd\'hui';
+
+            if($date != 'aujourd\'hui'){
+                $minActivity = 10;
+            }
+            $json = file_get_contents(TICKET_BASE_URL.'/voting-members?minActivity='.$minActivity.'&key='.API_KEY_TICKET);
             $usersactifs = json_decode($json, true);
+
+            if($date != 'aujourd\'hui'){
+                $usersactifs = calculerPresencesTheoriques($usersactifs, $date, 20);
+            }
             $emails = array_column($usersactifs, 'email');
             $users = get_users_by_email_list($emails, [], ['fields' => ['ID']]);
         }else{
@@ -50,8 +60,17 @@ if (isset($_GET['export-users'])) {
 
         $output = fopen('php://output', 'w');
 
+        $ligne = ['ID', 'Email', 'Display Name', 'Registration Date', '_last_order_date', '_first_order_date', 'Date de la visite', 'Role'];
+
+        $useractif= $usersactifs[0];
+        unset($useractif['firstName']);
+        unset($useractif['lastName']);
+        unset($useractif['email']);
+
+        $ligne = array_merge($ligne, array_keys($useractif));
+
         // Écrire les en-têtes de colonnes
-        fputcsv($output, ['ID', 'Email', 'Display Name', 'Registration Date', '_last_order_date', '_first_order_date', 'Date de la visite', 'Role']);
+        fputcsv($output, $ligne);
 
 
 
@@ -67,12 +86,67 @@ if (isset($_GET['export-users'])) {
             $first_order_date = get_user_meta($id, '_first_order_date', true);
             $visite = get_user_meta($id, 'visite', true);
             $role = !empty($user_data->roles) ? implode(',', $user_data->roles) : '';
-
+            $ligne = [$id, $email, $display_name, $registration_date, $last_order_date, $first_order_date, $visite, $role];
+            foreach($usersactifs as $useractif) {
+                if($useractif['email'] == $email) {
+                    unset($useractif['firstName']);
+                    unset($useractif['lastName']);
+                    unset($useractif['email']);
+                    $ligne = array_merge($ligne, $useractif);
+                }
+            }
             // Écrire la ligne de données pour chaque utilisateur
-            fputcsv($output, [$id, $email, $display_name, $registration_date, $last_order_date, $first_order_date, $visite, $role]);
+            fputcsv($output, $ligne);
         }
 
         fclose($output);
         exit;
     });
+}
+
+
+
+/**
+ * Calcule le nombre de jours de présence théorique pour chaque personne à une date future.
+ * 
+ * @param array $personnes Tableau associatif des personnes et de leurs jours de présence.
+ * @param string $dateFuture Date future au format DD/MM/YYYY.
+ * @param int $keepOnlyPresence Garder les personnes qui auront au moins $keepOnlyPresence dans activity.
+ * @return array Tableau mis à jour avec le nombre de jours de présence théorique.
+ */
+function calculerPresencesTheoriques(array $personnes, string $dateFuture, int $keepOnlyPresence=0): array {
+    // Conversion de la date future en objet DateTime
+    $dateActuelle = new DateTime();
+    $dateFuture = DateTime::createFromFormat('d/m/Y', $dateFuture);
+    
+    // Calcul du nombre de jours jusqu'à la date future
+    $interval = $dateActuelle->diff($dateFuture);
+    $joursJusquaDateFuture = $interval->days;
+    
+    // Nombre de jours dans les 6 derniers mois (approximativement)
+    $joursDans6Mois = 6 * 30;
+    
+    // Mise à jour des présences théoriques pour chaque personne
+    foreach ($personnes as $index => $data) {
+        $originalActivity=$data['activity'];
+        // Taux de présence quotidienne basé sur les 6 derniers mois
+        $tauxQuotidien = $data['activity'] / $joursDans6Mois;
+        
+        // Calcul de la présence théorique à la date future
+        $presencesTheoriques = ceil($data['activity'] + ($tauxQuotidien * $joursJusquaDateFuture));
+        
+        // Mise à jour du tableau
+        $personnes[$index]['activity'] = $presencesTheoriques;
+
+        if($personnes[$index]['activity'] < $keepOnlyPresence) {
+            unset($personnes[$index]);
+        } else {
+            
+            $personnes[$index]['activityRating']=round($tauxQuotidien,3);
+            $personnes[$index]['originalActivity']=$originalActivity;
+            $personnes[$index]['activityDiff']=$presencesTheoriques - $originalActivity;
+        }
+    }
+    
+    return $personnes;
 }

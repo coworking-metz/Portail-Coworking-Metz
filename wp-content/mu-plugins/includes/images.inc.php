@@ -1,7 +1,20 @@
 <?php
 
 
+function generer_image_alpha($url){
 
+    $alpha = get_post_by_meta('original', $url, 'attachment');
+
+    if($alpha) {
+        return wp_get_attachment_url($alpha->ID);
+    } else {
+        $api = 'https://tools.sopress.net/remove-background/?raw&force=true&crop=false&image=' . urlencode($url);
+        $alpha_url = file_get_contents($api);
+        $alpha_id = insert_attachment_from_file($alpha_url, [], ['original' => $url], 1000);
+        return wp_get_attachment_url($alpha_id);
+    }
+
+}
 /**
  * Converts a PNG image to a JPEG image
  *

@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     function loadStats() {
+        if (!document.querySelector("#coworkers-veille")) return;
         fetch("https://wpapi.coworking-metz.fr/api-json-wp/cowo/v1/stats")
             .then(response => response.json())
             .then(data => {

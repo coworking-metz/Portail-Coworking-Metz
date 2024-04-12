@@ -24,6 +24,7 @@ function avent_email_alerte($user_id, $dateDuJour)
     update_user_meta($user_id, $key, true);
 
     $codes = [
+        ['{user_id}' => $user_id],
         ['{user_name}' => $data->display_name],
         ['{date_du_jour}' => $dateDuJour],
         ['{date_du_jour_fr}' => date_francais(date('Y-m-d', DateTime::createFromFormat('d/m/Y', $dateDuJour)->getTimestamp()))],

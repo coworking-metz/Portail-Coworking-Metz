@@ -13,9 +13,9 @@ function coworkers_now_tv() {
     $end_hour = 15;
 
     if ($hour_now >= $start_hour && $hour_now < $end_hour) {
-        $curl_url = 'https://tickets.coworking-metz.fr/coworkersNow?delay=180';
+        $curl_url = TICKET_URL.'/coworkersNow?delay=180';
     } else {
-        $curl_url = 'https://tickets.coworking-metz.fr/coworkersNow?delay=15';
+        $curl_url = TICKET_URL.'/coworkersNow?delay=15';
     }
 
     $ch = curl_init($curl_url);
@@ -46,9 +46,9 @@ function coworkers_now($return = false)
     $end_hour = 15;
 
     if ($hour_now >= $start_hour && $hour_now < $end_hour) {
-        $curl_url = 'https://tickets.coworking-metz.fr/coworkersNow?delay=180';
+        $curl_url = TICKET_URL.'/coworkersNow?delay=180';
     } else {
-        $curl_url = 'https://tickets.coworking-metz.fr/coworkersNow?delay=15';
+        $curl_url = TICKET_URL.'/coworkersNow?delay=15';
     }
 
     $ch = curl_init($curl_url);
@@ -86,9 +86,9 @@ function coworkers_now_app()
     $end_hour = 15;
 
     if ($hour_now >= $start_hour && $hour_now < $end_hour) {
-        $curl_url = 'https://tickets.coworking-metz.fr/coworkersNow?delay=180';
+        $curl_url = TICKET_URL.'/coworkersNow?delay=180';
     } else {
-        $curl_url = 'https://tickets.coworking-metz.fr/coworkersNow?delay=15';
+        $curl_url = TICKET_URL.'/coworkersNow?delay=15';
     }
 
     $ch = curl_init($curl_url);
@@ -109,9 +109,9 @@ function remaining_workplaces_app()
     $end_hour = 15;
 
     if ($hour_now >= $start_hour && $hour_now < $end_hour) {
-        $curl_url = 'https://tickets.coworking-metz.fr/coworkersNow?delay=180';
+        $curl_url = TICKET_URL.'/coworkersNow?delay=180';
     } else {
-        $curl_url = 'https://tickets.coworking-metz.fr/coworkersNow?delay=15';
+        $curl_url = TICKET_URL.'/coworkersNow?delay=15';
     }
 
     $ch = curl_init($curl_url);

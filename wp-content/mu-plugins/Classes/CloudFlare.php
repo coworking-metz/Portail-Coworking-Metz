@@ -28,7 +28,7 @@ class CloudFlare
 
     public static function cacheHeaders($max_age = null)
     {
-        if (isset($_GET['nocache'])) return;
+        // if (isset($_GET['nocache'])) return;
         if (is_null($max_age)) {
             // $max_age = 3600;
             $max_age = 3600 * 24;
