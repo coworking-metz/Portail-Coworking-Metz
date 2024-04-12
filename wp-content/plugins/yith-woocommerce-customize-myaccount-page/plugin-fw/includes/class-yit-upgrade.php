@@ -46,7 +46,8 @@ if ( ! class_exists( 'YIT_Upgrade' ) ) {
 		public function register( $plugin_slug, $plugin_init ) {
 			if ( ! function_exists( 'YITH_Plugin_Upgrade' ) ) {
 				// Try to load YITH_Plugin_Upgrade class.
-				yith_plugin_fw_load_update_and_licence_files();
+				// GFRA 2024 : le site n'existe plus, on ne veut plus que cet appel soit fait
+				// yith_plugin_fw_load_update_and_licence_files();
 			}
 
 			if ( function_exists( 'YITH_Plugin_Upgrade' ) && is_callable( array( YITH_Plugin_Upgrade(), 'register' ) ) ) {

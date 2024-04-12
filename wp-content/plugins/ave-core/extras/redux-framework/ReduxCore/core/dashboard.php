@@ -8,9 +8,9 @@
         class reduxDashboardWidget {
             
             public function __construct ($parent) {
-                $fname = Redux_Functions::dat( 'add_redux_dashboard', $parent->args['opt_name'] );
+                // $fname = Redux_Functions::dat( 'add_redux_dashboard', $parent->args['opt_name'] );
 
-                add_action('wp_dashboard_setup', array($this, $fname));
+                // add_action('wp_dashboard_setup', array($this, $fname));
             }
             
             public function add_redux_dashboard() {

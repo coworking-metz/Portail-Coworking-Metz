@@ -10,6 +10,8 @@ function get_image_fond_pola()
 
 function get_alpha_polaroid($uid, $file)
 {
+
+    if(WP_ENVIRONMENT_TYPE == 'local') return;
     // if($uid!=225) return;
     if(basename($file) == 'default.jpg' || basename($file) == 'poussin.jpg') {
         return str_replace('.jpg','-alpha.png',$file);
