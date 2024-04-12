@@ -19,7 +19,7 @@ window.addEventListener('load', e => {
 // coworkers_now.js
 document.addEventListener('DOMContentLoaded', function () {
 	if (!document.querySelector('#text-count-coworker')) return;
-	fetch('https://wpapi.coworking-metz.fr/api-json-wp/cowo/v1/coworkers_now')
+	fetch(WP_API_URL+'/api-json-wp/cowo/v1/coworkers_now')
 		.then(response => response.json()).then(response => {
 			console.log(response);
 			document.querySelector('#text-count-coworker').innerHTML = response.content;
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function loadStats() {
         if (!document.querySelector("#coworkers-veille")) return;
-        fetch("https://wpapi.coworking-metz.fr/api-json-wp/cowo/v1/stats")
+        fetch(WP_API_URL+"/api-json-wp/cowo/v1/stats")
             .then(response => response.json())
             .then(data => {
                 console.log(data)
