@@ -309,12 +309,12 @@ if (isset($_GET["_first_login_date"])) {
  */
 if (isset($_GET["_derniere_activite"])) {
     add_action("admin_init", function () {
-        $users = json_decode(file_get_contents('https://tickets.coworking-metz.fr/api/users-stats?key=bupNanriCit1&period=all-time'), true);
+        $users = json_decode(file_get_contents(TICKET_BASE_URL.'/users-stats?key=bupNanriCit1&period=all-time'), true);
 
         foreach($users as $user) {
             if(get_user_meta($user['wpUserId'], '_derniere_activite', true)) continue;
 
-            $activity = json_decode(file_get_contents('https://tickets.coworking-metz.fr/api/members/'.$user['_id'].'/activity?key=bupNanriCit1'), true);
+            $activity = json_decode(file_get_contents(TICKET_BASE_URL.'/members/'.$user['_id'].'/activity?key=bupNanriCit1'), true);
             $lastActivity = $activity[0]['date']??false;
             update_user_meta($user['wpUserId'], '_derniere_activite', $lastActivity );
             echo $user['wpUserId'].' - '.$user['email'].' - '.$lastActivity;
@@ -337,7 +337,7 @@ add_action('init', function() {
  * Hook d'Exécution de la mise à jour de _derniere_activite
  */
 add_action('cron_derniere_activite', function() {
-    $users = json_decode(file_get_contents('https://tickets.coworking-metz.fr/api/users-stats?key=bupNanriCit1&period=all-time'), true);
+    $users = json_decode(file_get_contents(TICKET_BASE_URL.'/users-stats?key=bupNanriCit1&period=all-time'), true);
 
     foreach($users as $user) {
         $uid = $user['wpUserId']??false;
@@ -350,7 +350,7 @@ add_action('cron_derniere_activite', function() {
         } else {
             // if(get_user_meta($user['wpUserId'], '_derniere_activite', true)) continue;
 
-            $activity = json_decode(file_get_contents('https://tickets.coworking-metz.fr/api/members/'.$user['_id'].'/activity?key=bupNanriCit1'), true);
+            $activity = json_decode(file_get_contents(TICKET_BASE_URL.'/members/'.$user['_id'].'/activity?key=bupNanriCit1'), true);
             $lastActivity = $activity[0]['date']??false;
         }
         if($uid) {
