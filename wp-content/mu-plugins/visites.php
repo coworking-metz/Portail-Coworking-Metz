@@ -7,7 +7,7 @@ if (isset($_GET['visitesOnly'])) {
     add_action('pre_get_users', function ($query) {
         if (is_admin()) {
             $query->set('meta_key', 'visite');
-            $query->set('meta_value', date('Y-m-d H:i:s', strtotime('-1 week')));
+            $query->set('meta_value', date('Y-m-d H:i:s', strtotime('last monday')));
             $query->set('meta_compare', '>');
         }
     });
@@ -88,18 +88,31 @@ add_action('admin_bar_menu', function ($admin_bar) {
     if (!$user_id) return;
     $user_info = get_userdata($user_id);
     $roles = $user_info->roles;
-    if (!in_array('subscriber', $roles) && !in_array('bookmify-customer', $roles)) return;
 
     
 
-    $admin_bar->add_menu(array(
-        'id'    => 'app_login_link',
-        'title' => 'Se connecter dans l\'app en tant que',
-        'href'  => app_login_link($user_id),
-        'meta'  => array(
-            'target' => '_blank',
-        ),
-    ));
+    // $admin_bar->add_menu(array(
+    //     'id'    => 'app_login_link',
+    //     'title' => 'Se connecter dans l\'app en tant que',
+    //     'href'  => app_login_link($user_id),
+    //     'meta'  => array(
+    //         'target' => '_blank',
+    //     ),
+    // ));
+    if (!mailRecapVisiteDejaEnvoye($user_id)) {
+
+        $admin_bar->add_menu(array(
+            'id'    => 'mail-recap',
+            'title' => 'Envoyer le mail recapitulatif de visite',
+            'href'  => admin_url('user-edit.php?mail-recap-visite&user_id=' . $user_id),
+            'meta'  => array(
+                'onclick' => 'return confirm("Confirmez cet envoi ? Note : si la personne a déjà reçu le mail de visite, elle ne le recevera pas une seconde fois.")',
+                'title' => __('Envoyer le mail recap de visite. Une confirmation vous sera demandée'),
+            ),
+        ));
+    }
+
+    if (!in_array('subscriber', $roles) && !in_array('bookmify-customer', $roles)) return;
 
     $admin_bar->add_menu(array(
         'id'    => 'finaliser',

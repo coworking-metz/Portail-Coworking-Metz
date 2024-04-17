@@ -247,7 +247,13 @@ function envoyerMailAlerte($user_id, $autres_codes = [])
     return wp_mail($to, $mail['subject'], $mail['message'], $headers);
 }
 
+function mailRecapVisiteDejaEnvoye($user_id) {
+    $key = 'email-recap-visite-' . $user_id;
+    if (get_user_meta($user_id, $key, true)) {
+        return true;
+    }
 
+}
 /**
  * Envoyer un mail à un utilisateur le soir de sa visite
  * le mail ne peut pas etre envoyé plusieurs fois à un même 

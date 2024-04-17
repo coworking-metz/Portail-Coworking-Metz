@@ -1,5 +1,11 @@
 <?php
-
+function replace_first_occurrence($search, $replace, $subject) {
+    $pos = strpos($subject, $search);
+    if ($pos !== false) {
+        return substr_replace($subject, $replace, $pos, strlen($search));
+    }
+    return $subject; // No change if the search string is not found
+}
 
 /**
  * Retourne l'uri de la page, sans query string ni slash final

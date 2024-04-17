@@ -63,6 +63,17 @@ add_action('cron_envoyer_mails_recap_de_vistes', function() {
     echo $total.' cron_envoyer_mails_recap_de_vistes';
 });
 
+if(isset($_GET['mail-recap-visite'])){
+    add_action('admin_init', function() {
+        $user_id = $_GET['user_id']??false;
+
+        if(!$user_id) {
+            return ;
+        }
+        $status=envoyerMailRecapVisite($user_id);
+        wp_redirect(admin_url('user-edit.php?status_mail_recap=' . $status . '&user_id=' . $user_id));
+    });
+}
 /**
  * Envoie un email récapitulatif des visites aux utilisateurs qui ont effectué une visite aujourd'hui, et qui ne sont pas déjà customers
  *

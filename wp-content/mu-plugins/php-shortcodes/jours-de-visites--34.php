@@ -1,0 +1,1 @@
+<p><?=recapJoursDeVisites();?></p>
