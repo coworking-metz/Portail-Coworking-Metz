@@ -9,17 +9,20 @@ function api_coworker_presences(){
     if (is_user_logged_in()) {
 
         $current_user = wp_get_current_user();
-        $coworker_email = $current_user->user_login;
-        
-        $url = TICKET_BASE_URL.'/user-presences?key=' . API_KEY_TICKET . '&email=' . $coworker_email;
-        $data = file_get_contents($url);
-        $json = json_decode($data, true);
+
+		$user_id = $current_user->ID;
+		$json = file_get_contents(TICKET_BASE_URL.'/members/'.$user_id.'/activity?key='.API_KEY_TICKET); 
+		$json = json_decode($json, true);
+
 
         $html = '<h5 style="text-align: center">Décompte</h5>';
         $html .= '<div class="my-account-presences-list"><table class="table table-left">';
         $html .= '<caption></caption>';
         $html .= '<tr><th>Date</th><th>Durée</th><th>Couvert par</th></tr>';
         
+			$array_day =[];
+			$array_month =[];
+			$array_year =[];
         foreach ($json as $key => $value) {
             $presence_date = strtotime($value['date']);
 			$presence_day = date_i18n('l', $presence_date);
@@ -28,10 +31,10 @@ function api_coworker_presences(){
 			$array_day [] = $presence_day;
 			$array_month [] = $presence_month;
 			$array_year [] = $presence_year;
-            $result_type = ($value['type'] == 'T') ? '<img src="https://www.coworking-metz.fr/wp-content/uploads/2021/11/ticket-le-poulailler.png"> ticket' : '<img src="https://www.coworking-metz.fr/wp-content/uploads/2021/11/abonnement-type.png"> abonnement';
+            $result_type = ($value['type'] == 'T' || $value['type'] == 'ticket') ? '<img src="/wp-content/uploads/2021/11/ticket-le-poulailler.png"> ticket' : '<img src="/wp-content/uploads/2021/11/abonnement-type.png"> abonnement';
             $html .= '<tr>';
             $html .= '<td class="presence-date"><span>' . date_i18n('l d F Y', $presence_date) . '</span></td>';
-            $html .= '<td class="presence-amount"><span>' . $value['amount'] . ' journée</span></td>';
+            $html .= '<td class="presence-amount"><span>' . ($value['value']??$value['amount']) . ' journée</span></td>';
             $html .= '<td class="result-type">' . $result_type . '</td>';
             
             $html .= '</tr>';
@@ -39,25 +42,25 @@ function api_coworker_presences(){
         echo '<script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>';
         // values by days
         $json_value = '<script> const datasPresencesMonday = ';
-        $json_value .= json_encode(array_count_values($array_day)['lundi']);
+        $json_value .= json_encode(array_count_values($array_day)['lundi']??0);
         $json_value .= '</script>';
         $json_value .= '<script> const datasPresencesTuesday = ';
-        $json_value .= json_encode(array_count_values($array_day)['mardi']);
+        $json_value .= json_encode(array_count_values($array_day)['mardi']??0);
         $json_value .= '</script>';
         $json_value .= '<script> const datasPresencesWednesday = ';
-        $json_value .= json_encode(array_count_values($array_day)['mercredi']);
+        $json_value .= json_encode(array_count_values($array_day)['mercredi']??0);
         $json_value .= '</script>';
         $json_value .= '<script> const datasPresencesThursday = ';
-        $json_value .= json_encode(array_count_values($array_day)['jeudi']);
+        $json_value .= json_encode(array_count_values($array_day)['jeudi']??0);
         $json_value .= '</script>';
         $json_value .= '<script> const datasPresencesFriday = ';
-        $json_value .= json_encode(array_count_values($array_day)['vendredi']);
+        $json_value .= json_encode(array_count_values($array_day)['vendredi']??0);
         $json_value .= '</script>';
         $json_value .= '<script> const datasPresencesSaturday = ';
-        $json_value .= json_encode(array_count_values($array_day)['samedi']);
+        $json_value .= json_encode(array_count_values($array_day)['samedi']??0);
         $json_value .= '</script>';
         $json_value .= '<script> const datasPresencesSunday = ';
-        $json_value .= json_encode(array_count_values($array_day)['dimanche']);
+        $json_value .= json_encode(array_count_values($array_day)['dimanche']??0);
         $json_value .= '</script>';
         //values by months
         $json_value .= '<script> const datasPresencesJanuary = ';

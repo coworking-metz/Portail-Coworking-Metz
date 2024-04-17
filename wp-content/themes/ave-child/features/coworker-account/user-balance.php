@@ -3,32 +3,12 @@
  * api_user_balance();
  * Get the user balance information from the ticket service (improved)
  */
- function api_user_balance($email = NULL) {
-    if(!isset($email) || !$email ) :
-        global $user_email;
-    else:
-        $user_email = $email;
-    endif;
+ function api_user_balance() {
+	$user_id = get_current_user_id();
+	if(!$user_id) return;
 
-    $curl = curl_init();
-
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => TICKET_BASE_URL.'/user-stats',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'key=' . API_KEY_TICKET . '&email=' . $user_email,
-        CURLOPT_HTTPHEADER => array(
-            'Content-Type: application/x-www-form-urlencoded'
-        ),
-    ));
-
-    $result = json_decode(curl_exec($curl));
-    curl_close($curl);
+    $json = file_get_contents(TICKET_BASE_URL.'/members/'.$user_id.'?key='.API_KEY_TICKET); 
+	$result = json_decode($json);
 
 ?>
         <div class="tickets-status">

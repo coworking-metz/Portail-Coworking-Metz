@@ -35,27 +35,10 @@ function get_user_balance($uid) {
     $user = get_userdata($uid);
     if (!$user) return;
 
-    $email = $user->user_email;
-    $curl = curl_init();
 
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => TICKET_BASE_URL.'/user-stats',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'key=' . API_KEY_TICKET . '&email=' . $email,
-        CURLOPT_HTTPHEADER => array(
-            'Content-Type: application/x-www-form-urlencoded'
-        ),
-    ));
+	$response = file_get_contents(TICKET_BASE_URL.'/members/'.$uid.'?key='.API_KEY_TICKET); 
 
-    $response = curl_exec($curl);
-    curl_close($curl);
-    
+
     if (!$response) return;
 
     $result = json_decode($response, true);
