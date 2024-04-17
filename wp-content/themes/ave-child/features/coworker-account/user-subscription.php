@@ -3,11 +3,10 @@ function api_purchase_start_stop_abo() {
     if (is_user_logged_in()) {
 
         $current_user = wp_get_current_user();
-        $coworker_email = $current_user->user_login;
+		$user_id = $current_user->ID;
+		$json = file_get_contents(TICKET_BASE_URL.'/members/'.$user_id.'?key='.API_KEY_TICKET); 
+		$json = json_decode($json);
 
-        $url = TICKET_BASE_URL.'/user-stats?key=' . API_KEY_TICKET . '&email=' . $coworker_email;
-        $data = file_get_contents($url);
-        $json = json_decode($data);
         
         $abo_array = $json->abos;
     
