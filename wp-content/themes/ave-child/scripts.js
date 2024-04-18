@@ -10,20 +10,22 @@ window.addEventListener('load', e => {
     }
 
     const date_naissance = document.querySelector('p.form-row:has(#date_naissance)')
-
+    
     if (date_naissance) {
         const cible = document.querySelector('p.form-row:has(#account_display_name)');
-        cible.parentNode.insertBefore(date_naissance, cible);
+        if (cible) {
+            cible.parentNode.insertBefore(date_naissance, cible);
+        }
     }
 })
 // coworkers_now.js
 document.addEventListener('DOMContentLoaded', function () {
-	if (!document.querySelector('#text-count-coworker')) return;
-	fetch(WP_API_URL+'/api-json-wp/cowo/v1/coworkers_now')
-		.then(response => response.json()).then(response => {
-			console.log(response);
-			document.querySelector('#text-count-coworker').innerHTML = response.content;
-		})
+    if (!document.querySelector('#text-count-coworker')) return;
+    fetch(WP_API_URL + '/api-json-wp/cowo/v1/coworkers_now')
+        .then(response => response.json()).then(response => {
+            console.log(response);
+            document.querySelector('#text-count-coworker').innerHTML = response.content;
+        })
 })
 // stats.js
 document.addEventListener('DOMContentLoaded', function () {
@@ -43,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function loadStats() {
         if (!document.querySelector("#coworkers-veille")) return;
-        fetch(WP_API_URL+"/api-json-wp/cowo/v1/stats")
+        fetch(WP_API_URL + "/api-json-wp/cowo/v1/stats")
             .then(response => response.json())
             .then(data => {
                 console.log(data)

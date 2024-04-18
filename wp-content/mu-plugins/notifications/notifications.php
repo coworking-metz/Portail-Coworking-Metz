@@ -15,15 +15,17 @@ add_action('init', function () {
 function generateNotification($data)
 {
 
+
 	$GLOBALS['notification'] = $GLOBALS['notification']??0;
 
 	if($GLOBALS['notification']) return;
 	$GLOBALS['notification']++;
+    $id = sha1(json_encode($data));
     $cta = '';
     if ($data['cta']) {
         $cta = '<span class="cta"><a href="' . $data['cta']['url'] . '" class="button">' . $data['cta']['caption'] . '</a></span>';
     }
-    return '<div class="notification" role="alert" data-type="'.($data['type']??'default').'">
+    return '<div class="notification" role="alert" data-id="'.$id.'" data-type="'.($data['type']??'default').'" data-once="'.(($data['once']??false) ? 'true':'false').'">
     <div>
     <div>
     <figure><img src="' . $data['image'] . '"></figure>
