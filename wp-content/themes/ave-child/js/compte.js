@@ -11,6 +11,8 @@ window.addEventListener('load', e => {
 
     if (date_naissance) {
         const cible = document.querySelector('p.form-row:has(#account_display_name)');
-        cible.parentNode.insertBefore(date_naissance, cible);
+        if (cible) {
+            cible.parentNode.insertBefore(date_naissance, cible);
+        }
     }
 })
