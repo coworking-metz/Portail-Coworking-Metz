@@ -1,4 +1,16 @@
 <?php
+
+
+function get_date_naissance($user_id) {
+    $d = get_field('date_naissance', 'user_'.$user_id);
+
+    if(!$d) return '';
+
+    $t = strtotime($d);
+    if(!$t) return '';
+
+    return date('Y-m-d', $t);
+}
 function get_user_ranking($uid) {
 
     $rankings = get_transient('user_rankings');

@@ -1,10 +1,18 @@
 <?php
+add_filter('rest_prepare_user', function ($response, $user, $request) {
+    // Vérifiez si le contexte de la requête est 'edit'
+    if ('edit' === $request->get_param('context')) {
+        $response->data['birthDate'] = get_date_naissance($user->ID);
+    }
+
+    return $response;
+}, 10, 3);
 
 
 
 add_action('woocommerce_edit_account_form', function () {
     $user_id = get_current_user_id();
-    $date_naissance = get_user_meta($user_id, 'date_naissance', true);
+    $date_naissance = get_date_naissance($user_id);
 ?>
     <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
         <label for="date_naissance">Date de naissance</label>
@@ -24,6 +32,8 @@ add_action('woocommerce_save_account_details', function ($user_id) {
 
 add_action('woocommerce_after_checkout_billing_form', function ($checkout) {
     if ($user_id = get_current_user_id()) {
+        $date_naissance = get_date_naissance($user_id);
+
         woocommerce_form_field('date_naissance', array(
             'type'          => 'date',
             'class'         => array('form-row-wide'),
@@ -31,7 +41,7 @@ add_action('woocommerce_after_checkout_billing_form', function ($checkout) {
             'placeholder'   => '',
             'required'      => true,
             'custom_attributes' => ['required' => true]
-        ), $checkout->get_value('date_naissance'));
+        ), $date_naissance);
     }
 });
 

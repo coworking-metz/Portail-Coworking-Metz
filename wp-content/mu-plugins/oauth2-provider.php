@@ -35,7 +35,7 @@ add_filter('wo_me_resource_return', function ($data, $token) {
   //   'ouvrir_parking' => $ouvrir_parking ? true : false
   // ];
 
-  // $data['birthDate'] = get_field('date_naissance', 'user_'.$user_id);
+  $data['birthDate'] = get_date_naissance($user_id);
   $subscriber = in_array('subscriber',$data['user_roles']);
   // unset($data['user_roles']);
 
