@@ -1,5 +1,28 @@
 <?php
+/**
+ * Récupère les métadonnées d'une commande WooCommerce spécifiée par son ID.
+ *
+ * Cette fonction charge une commande à l'aide de son ID, puis récupère toutes les métadonnées
+ * associées à cette commande. Chaque métadonnée est ensuite ajoutée à un tableau associatif,
+ * où chaque clé est le nom de la métadonnée et chaque valeur est la valeur de la métadonnée.
+ *
+ * @param int $order_id L'ID de la commande pour laquelle récupérer les métadonnées.
+ * @return array Un tableau associatif des métadonnées de la commande, où chaque clé est
+ *               le nom de la métadonnée et chaque valeur est la valeur de la métadonnée.
+ */
 
+ function get_order_meta_data($order_id) {
+    $order = wc_get_order($order_id);
+    $meta_data = $order->get_meta_data();
+    $meta_data_array = array();
+
+    foreach ($meta_data as $meta) {
+        // Convert the meta object to an array and access its elements
+        $meta_data_array[$meta->get_data()['key']] = $meta->get_data()['value'];
+    }
+
+    return $meta_data_array;
+}
 
 /**
  * Vérifie si un produit est dans le panier.
