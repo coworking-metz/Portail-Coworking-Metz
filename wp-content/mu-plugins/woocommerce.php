@@ -22,7 +22,7 @@ add_filter('woocommerce_webhook_payload', function ($payload, $resource, $resour
     if ($order && isset($payload['line_items'])) {
         // Loop through each item in the order
         foreach ($payload['line_items'] as &$item) {
-            $item['product_type'] = get_field('productType',$item['product_id']);
+            $item['productType'] = get_field('productType',$item['product_id']);
         }
     }
     return $payload;
