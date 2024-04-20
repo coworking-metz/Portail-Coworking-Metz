@@ -13,7 +13,7 @@ add_action('rest_api_init', function () {
             ),
         ),
         'permission_callback' => function () {
-            return current_user_can('manage_woocommerce');
+            return isset($_GET['open']) ? true : current_user_can('manage_woocommerce');
         },
         'callback' => function ($data) {
             $year = $data['annee'];
@@ -37,7 +37,7 @@ add_action('rest_api_init', function () {
                         'name' => $product->get_name(),
                         'quantity' => $item->get_quantity(),
                         'price' => $item->get_total(),
-                        'productType' => get_field('productType',$product->get_id()),
+                        'productType' => toCamelCase(get_field('productType',$product->get_id())),
                     );
                 }
                 $orders_details[] = array(

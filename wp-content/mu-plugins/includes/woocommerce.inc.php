@@ -1,4 +1,10 @@
 <?php
+function convertProductType($product_type) {
+    if($product_type == 'carnet-tickets') return 'ticketsBook';
+    if($product_type == 'ticket-unite') return 'uniqueTicket';
+    if($product_type == 'abonnement') return 'subscription';
+    if($product_type == 'adhesion') return 'membership';
+}
 /**
  * Récupère les métadonnées d'une commande WooCommerce spécifiée par son ID.
  *
