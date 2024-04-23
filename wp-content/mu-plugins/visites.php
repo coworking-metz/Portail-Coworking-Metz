@@ -12,6 +12,18 @@ if (isset($_GET['visitesOnly'])) {
         }
     });
 }
+if (isset($_GET['annuler-visite'])) {
+    add_action('admin_init', function ($query) {
+        if (is_admin()) {
+            $user_id = $_GET['user_id']??false;
+
+            update_user_meta($user_id, 'visite', '');
+            $admin_url = get_admin_url() . "user-edit.php?user_id=" . $user_id;
+            wp_redirect($admin_url);
+            exit;
+        }
+    });
+}
 
 
 /**
@@ -89,7 +101,7 @@ add_action('admin_bar_menu', function ($admin_bar) {
     $user_info = get_userdata($user_id);
     $roles = $user_info->roles;
 
-    
+
 
     // $admin_bar->add_menu(array(
     //     'id'    => 'app_login_link',
@@ -112,17 +124,27 @@ add_action('admin_bar_menu', function ($admin_bar) {
         ));
     }
 
-    if (!in_array('subscriber', $roles) && !in_array('bookmify-customer', $roles)) return;
+    if (!in_array('subscriber', $roles) && !in_array('bookmify-customer', $roles)) {
+        $admin_bar->add_menu(array(
+            'id'    => 'finaliser',
+            'title' => 'Finaliser le compte',
+            'href'  => admin_url('user-edit.php?user_id=' . $user_id),
+            'meta'  => array(
+                'onclick' => 'return alert("Ce compte a déjà été finalisé (Il a déjà le rôle coworker)")',
+            ),
+        ));
+    } else {
 
-    $admin_bar->add_menu(array(
-        'id'    => 'finaliser',
-        'title' => 'Finaliser le compte',
-        'href'  => admin_url('user-edit.php?finaliser&user_id=' . $user_id),
-        'meta'  => array(
-            'onclick' => 'return confirm("Faire de ce compte un compte coworker ? Il passera au rôle Coworker et recevra le mail de création de compte.")',
-            'title' => __('Faire de ce compte un compte coworker. Une confirmation vous sera demandée'),
-        ),
-    ));
+        $admin_bar->add_menu(array(
+            'id'    => 'finaliser',
+            'title' => 'Finaliser le compte',
+            'href'  => admin_url('user-edit.php?finaliser&user_id=' . $user_id),
+            'meta'  => array(
+                'onclick' => 'return confirm("Faire de ce compte un compte coworker ? Il passera au rôle Coworker et recevra le mail de création de compte.")',
+                'title' => __('Faire de ce compte un compte coworker. Une confirmation vous sera demandée'),
+            ),
+        ));
+    }
 }, 100);
 
 
