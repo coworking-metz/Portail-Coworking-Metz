@@ -229,6 +229,7 @@ function envoyerMailAlerte($user_id, $autres_codes = [])
 
 
     $codes = [
+        ['{_user_id}' => $data->ID],
         ['{user_name}' => $data->display_name],
         ['{_user_email}' => $data->user_email],
         ['{date_visite}' => date_francais($visite, true)],

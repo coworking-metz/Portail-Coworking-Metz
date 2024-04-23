@@ -18,6 +18,7 @@ if (isset($_GET['template_preview'])) {
             $visite = get_user_meta($user_id, 'visite', true);
             $data = get_userdata($user_id);
             $codes = [
+                ['{_user_id}' => $data->ID],
                 ['{date_visite}' => date_francais($visite, true)],
                 ['{url_visite_ics}' => 'https://www.coworking-metz.fr/api-json-wp/cowo/v1/visite-ics?user_id=' . $user_id],
                 ['{app_login_link}' => app_login_link($user_id)],
