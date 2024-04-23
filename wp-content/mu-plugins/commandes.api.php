@@ -37,7 +37,7 @@ add_action('rest_api_init', function () {
                         'name' => $product->get_name(),
                         'quantity' => $item->get_quantity(),
                         'price' => $item->get_total(),
-                        'productType' => toCamelCase(get_field('productType',$product->get_id())),
+                        'productType' => convertProductType(get_field('productType',$product->get_id())),
                     );
                 }
                 $orders_details[] = array(
@@ -49,7 +49,8 @@ add_action('rest_api_init', function () {
                     'products' => $products,
                 );
             }
-        
+            
+            nocache_headers();
             return new WP_REST_Response($orders_details, 200);
         },
     ));
