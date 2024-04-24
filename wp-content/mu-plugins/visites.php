@@ -130,7 +130,7 @@ add_action('admin_bar_menu', function ($admin_bar) {
             'title' => 'Finaliser le compte',
             'href'  => admin_url('user-edit.php?user_id=' . $user_id),
             'meta'  => array(
-                'onclick' => 'return alert("Ce compte a déjà été finalisé (Il a déjà le rôle coworker)")',
+                'onclick' => 'return (() => {alert("Ce compte a déjà été finalisé (Il a déjà le rôle coworker)");return false})();',
             ),
         ));
     } else {
