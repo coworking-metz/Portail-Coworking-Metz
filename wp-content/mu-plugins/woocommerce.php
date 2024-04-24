@@ -1,4 +1,34 @@
 <?php
+define('WOOCOMMERCE_CLOSED', true);
+define('WOOCOMMERCE_CLOSED_ALLOW_ADMINS', false);
+define('WOOCOMMERCE_CLOSED_MESSAGE', 'La boutique est fermée temporairement pour maintenance. Merci de revenir dans quelques instants.');
+
+
+if (WOOCOMMERCE_CLOSED) {
+    // Disable purchasing capabilities
+    add_filter('woocommerce_is_purchasable', function ($purchasable, $product) {
+        if (WOOCOMMERCE_CLOSED_ALLOW_ADMINS && current_user_can('administrator')) return $purchasable;
+        return false; // Makes all products unpurchasable
+    }, 10, 2);
+
+    add_filter('woocommerce_add_to_cart_validation', function ($valid, $product_id, $quantity) {
+        if (WOOCOMMERCE_CLOSED_ALLOW_ADMINS && current_user_can('administrator')) return $valid;
+        wc_add_notice(__('Sorry, our shop is currently closed.', 'woocommerce'), 'error');
+        return false; // Prevents adding products to the cart
+    }, 10, 3);
+
+    // Display a shop closure notice
+    add_action('woocommerce_before_main_content', function () {
+        if (WOOCOMMERCE_CLOSED_ALLOW_ADMINS && current_user_can('administrator')) {
+            echo '<div style="margin-block:.5em;background-color: #ff2f00; color:white;padding: 10px; text-align: center;">La boutique est fermée au membres pour maintenance. Les administrateurs ont accès à la boutique.</div>';
+        } else {
+            echo '<div style="margin-block:.5em;background-color: #ff2f00; color:white;padding: 10px; text-align: center;">' . esc_html__(WOOCOMMERCE_CLOSED_MESSAGE, 'woocommerce') . '</div>';
+        }
+    });
+}
+
+
+
 
 add_filter('woocommerce_available_payment_gateways', function ($available_gateways) {
     if (is_admin() && !defined('DOING_AJAX')) {
@@ -22,7 +52,7 @@ add_filter('woocommerce_webhook_payload', function ($payload, $resource, $resour
     if ($order && isset($payload['line_items'])) {
         // Loop through each item in the order
         foreach ($payload['line_items'] as &$item) {
-            $item['productType'] = convertProductType(get_field('productType',$item['product_id']));
+            $item['productType'] = convertProductType(get_field('productType', $item['product_id']));
         }
     }
     return $payload;
