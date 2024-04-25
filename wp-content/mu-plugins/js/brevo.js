@@ -1,5 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    if(document.location.href.includes('wp-admin')) return;
+    if (document.location.href.includes('wp-admin')) return;
+
+    document.querySelectorAll('[href="#ouvrir-brevo"]').forEach(bouton => bouton.addEventListener('click', e => {
+        e.preventDefault()
+        BrevoConversations('openChat', true);
+    }));
+
     fetch('/mon-compte/?is-connected').then(response => response.json()).then(data => {
         const user_data = {}
         if (data.user) {
