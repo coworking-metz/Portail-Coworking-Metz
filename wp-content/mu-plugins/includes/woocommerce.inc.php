@@ -1,4 +1,47 @@
 <?php
+
+/**
+ * Récupère les commandes WooCommerce selon les numéros de commande personnalisés spécifiés.
+ *
+ * Cette fonction interroge les commandes WooCommerce en cherchant des métadonnées spécifiques,
+ * '_alg_wc_full_custom_order_number', qui correspondent à n'importe quelle valeur dans le tableau
+ * fourni. Selon le paramètre 'makeArrayAssoc', la fonction peut retourner un tableau associatif
+ * où les clés sont les valeurs de '_alg_wc_full_custom_order_number' pour chaque commande.
+ *
+ * @param array $order_numbers Un tableau des valeurs de numéro de commande à rechercher.
+ * @param bool $makeArrayAssoc (optionnel) Si vrai, retourne un tableau associatif basé sur les numéros de commande.
+ * @return array|null Retourne un tableau d'objets de commande ou un tableau associatif si 'makeArrayAssoc' est vrai,
+ *                     null si WooCommerce n'est pas actif ou aucun ordre n'est trouvé.
+ */
+
+function get_orders_by_custom_order_numbers($order_numbers, $makeArrayAssoc = false) {
+    // Ensure WooCommerce is active
+    if (!function_exists('wc_get_orders')) {
+        return null;
+    }
+
+    $args = [
+        'limit'        => -1, // Retrieve all matching orders
+        'meta_key'     => '_alg_wc_full_custom_order_number',
+        'meta_value'   => $order_numbers,
+        'meta_compare' => 'IN',
+    ];
+
+    $orders = wc_get_orders($args);
+    if ($makeArrayAssoc) {
+        $assoc_orders = [];
+        foreach ($orders as $order) {
+            $custom_order_number = $order->get_meta('_alg_wc_full_custom_order_number');
+            $assoc_orders[$custom_order_number] = $order;
+        }
+        return $assoc_orders;
+    }
+    return $orders;
+}
+
+
+
+
 function convertProductType($product_type) {
     if($product_type == 'carnet-tickets') return 'ticketsBook';
     if($product_type == 'ticket-unite') return 'singleTicket';
