@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    if(document.location.href.includes('wp-admin')) return;
     fetch('/mon-compte/?is-connected').then(response => response.json()).then(data => {
         const user_data = {}
         if (data.user) {

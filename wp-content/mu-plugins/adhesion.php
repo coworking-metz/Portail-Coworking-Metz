@@ -12,6 +12,7 @@ add_action('wp_footer', function () {
         if (is_product_in_cart(PRODUIT_ADHESION)) return;
 
 		$uid = get_current_user_id();
+        if(!$uid) return;
         $json = file_get_contents(TICKET_BASE_URL.'/members/'.$uid.'?key='.API_KEY_TICKET); // actifs dans les 6 derniers moois
 		$member = json_decode($json, true);
 

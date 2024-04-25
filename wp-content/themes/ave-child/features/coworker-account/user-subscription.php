@@ -6,7 +6,6 @@ function api_purchase_start_stop_abo()
         $current_user = wp_get_current_user();
         $user_id = $current_user->ID;
         $json = file_get_contents(TICKET_BASE_URL . '/members/' . $user_id . '/subscriptions?key=' . API_KEY_TICKET);
-        // $json = file_get_contents(TICKET_BASE_URL.'/members/'.$user_id.'?key='.API_KEY_TICKET); 
         $abos = json_decode($json);
 
 

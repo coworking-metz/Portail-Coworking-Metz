@@ -1,5 +1,5 @@
 <?php
-define('WOOCOMMERCE_CLOSED', false);
+define('WOOCOMMERCE_CLOSED', true);
 define('WOOCOMMERCE_CLOSED_ALLOW_ADMINS', true);
 define('WOOCOMMERCE_CLOSED_MESSAGE', 'La boutique est fermée temporairement pour maintenance. Merci de revenir dans quelques instants.');
 

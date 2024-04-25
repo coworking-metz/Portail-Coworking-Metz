@@ -149,7 +149,7 @@ class LD_Shortcode extends WPBakeryShortCode {
 		}
 		
 		//Check content for any sc
-		if( '' !== get_post()->post_content ) {
+		if( '' !== (get_post()->post_content??false) ) {
 			if( !is_404() && !is_search() && !is_archive() && has_shortcode( $post->post_content, $this->slug ) ) {
 				foreach( (array)$this->styles as $handle ) {
 					wp_enqueue_style( $handle );
