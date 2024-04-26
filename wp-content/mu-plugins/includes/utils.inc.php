@@ -1,4 +1,25 @@
 <?php
+
+
+/**
+ * Fetches a Markdown file from a URL and returns the HTML content.
+ * 
+ * @param string $url The URL of the markdown file.
+ * @return string The parsed HTML content.
+ */
+function fetchAndParseMarkdown($url) {
+    require_once ABSPATH.MUPLUGINDIR.'/Classes/Parsedown.php';
+    $markdownContent = file_get_contents($url);
+    if ($markdownContent === false) {
+        return ;
+    }
+    $parsedown = new Parsedown();
+    $html = $parsedown->text($markdownContent);
+    return $html;
+}
+
+
+
 function replace_first_occurrence($search, $replace, $subject) {
     $pos = strpos($subject, $search);
     if ($pos !== false) {

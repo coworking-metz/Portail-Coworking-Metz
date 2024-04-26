@@ -35,6 +35,19 @@ add_action('admin_init',function() {
     }
 });
 
+add_action('init',function() {
+
+    // Ajouter les fichiers js
+    foreach (glob(__DIR__ . "/js/front/*.js") as $filename) {
+        ajouter_js('front/'.explode('.',basename($filename))[0]);
+    }
+    
+    // Ajouter les fichiers css
+    foreach (glob(__DIR__ . "/css/front/*.css") as $filename) {
+        ajouter_css('front/'.explode('.',basename($filename))[0]);
+    }
+});
+
 /*
 nromalement ca ne sert plus
 add_action('init', function () {
