@@ -97,12 +97,8 @@ function envoyer_mails_recap_de_vistes() {
     return $cpt;
 }
 /**
- * Récupère l'ID de l'utilisateur à partir de la requête GET.
- *
- * Si l'ID de l'utilisateur est défini et que le paramètre 'finaliser' est présent dans la requête GET,
- * l'action 'init' est ajoutée pour finaliser le compte de l'utilisateur.
- * Si le paramètre 'status_finaliser' est présent dans la requête GET, une notification est affichée dans
- * l'admin en fonction de la valeur de 'status_finaliser'.
+ * 
+ * Finaliser le compte wordpress : passer au rôle "Coworker" et envoyer le mail de création de mot de passe
  *
  * @global array $_GET Les données de la requête GET.
  * 

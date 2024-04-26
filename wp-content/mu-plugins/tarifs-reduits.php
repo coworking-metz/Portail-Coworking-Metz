@@ -1,5 +1,52 @@
 <?php
 
+/**
+ * 
+ * Autoriser les tarifs réduit pour un compte
+ *
+ * @global array $_GET Les données de la requête GET.
+ * 
+ * @var int|bool $user_id L'ID de l'utilisateur ou false si non défini.
+ * @var int|bool $status Le statut du tarif réduit (1: succès, -1: déjà tarif réduit) ou false si non défini.
+ */
+
+$user_id = $_GET['user_id'] ?? false;
+if ($user_id) {
+    if (isset($_GET['tarif-reduit'])) {
+        add_action('init', function () use ($user_id) {
+
+            $cle = 'user_' . $user_id;
+            $tarifs_reduits_ok = get_field('tarifs_reduits_ok', $cle);
+            $stats = false;
+            if ($tarifs_reduits_ok) {
+                $status = -1;
+            } else {
+                update_field('tarifs_reduits_ok', true, $cle);
+                $status = 1;
+            }
+            wp_redirect(admin_url('user-edit.php?status_tarif-reduit=' . $status . '&user_id=' . $user_id));
+        });
+    }
+
+    if (isset($_GET['status_tarif-reduit'])) {
+        $status = $_GET['status_tarif-reduit'] ?? false;
+        add_action('admin_notices', function () use ($status) {
+            $details = tarif_reduit_status_details($status);
+            if ($details) {
+?>
+                <div class="notice notice-<?= $details['type']; ?> is-dismissible">
+                    <p style="font-size:150%"><strong><?= $details['title']; ?></strong></p>
+                    <p style="font-size:150%"><?= $details['description']; ?></p>
+                </div>
+<?php
+
+            }
+        });
+    }
+}
+
+
+
 add_action('woocommerce_single_product_summary', function () {
     global $product;
     if (has_term('tarifs-reduits', 'product_cat', $product->get_id())) {
