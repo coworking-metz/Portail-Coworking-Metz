@@ -171,3 +171,4 @@ body:not([data-edit-password="true"]) fieldset:has(.password-input):after {
 body.home #text-count-coworker {
     color:white;
 }
+

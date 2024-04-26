@@ -1,0 +1,7 @@
+.page-reglement-interieur .container blockquote {
+    background-color: var(--color-primary);
+    color:white;
+    border-radius: 5px;
+    font-style: normal;
+    padding: 1em;
+}
