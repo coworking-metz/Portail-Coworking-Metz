@@ -1,3 +1,7 @@
+.page-reglement-interieur .container{
+    max-width: 800px;
+}
+
 .page-reglement-interieur .container blockquote {
     background-color: var(--color-primary);
     color:white;

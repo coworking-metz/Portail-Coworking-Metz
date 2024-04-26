@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Passer un user en customer (Coworker) et lui envoyer le mail de creation de compte
  * Status de retour : 
@@ -8,18 +9,19 @@
  * -3 : Utilisateur inconnu
  * ?? : Erreur de finalisation inconnue
  */
-function finaliser_user($user_id) {
-    
+function finaliser_user($user_id)
+{
+
     $status = -3;
-    if(!$user_id) return $status;
-    
+    if (!$user_id) return $status;
+
     $user = get_userdata($user_id);
-    if(!$user) return $status;
+    if (!$user) return $status;
 
     if (in_array('subscriber', $user->roles) || in_array('bookmify-customer', $user->roles)) {
         $user->set_role('customer');
         if (envoyer_email_creation_compte($user)) {
-            $status=1;
+            $status = 1;
         } else $status = -2;
     } else $status = -1;
 
@@ -29,7 +31,8 @@ function finaliser_user($user_id) {
 /**
  * Retourne une explication textuelle du statut de retour de finalisation d'un user
  */
-function finaliser_status_details($status) {
+function finaliser_status_details($status)
+{
 
 
     switch ($status) {
@@ -59,31 +62,62 @@ function finaliser_status_details($status) {
             break;
     }
     $response = [
-        'type'        => $type, 
+        'type'        => $type,
         'title'       => $title,
-        'subtitle'       => $subtitle??'',
+        'subtitle'       => $subtitle ?? '',
         'description' => $description
     ];
     return $response;
 }
 
 
+/**
+ * Retourne une explication textuelle du statut de retour de finalisation d'un user
+ */
+function tarif_reduit_status_details($status)
+{
+
+
+    switch ($status) {
+        case 1:
+            $type = 'success';
+            $title = 'Accès aux tarifs réduits ouvert';
+            $description = 'Cette personne pourra désormais commander dans la boutique tous les produits de la catégorie "<a href="' . admin_url('edit.php?product_cat=tarifs-reduits&post_type=product') . '">Tarifs réduits</a>".';
+            break;
+        case -1:
+            $type = 'warning';
+            $title = 'Ce compte adhérent a déjà accès aux tarifs réduits';
+            $description = 'Aucune autre action n\'est requise de votre part';
+            break;
+        default:
+            $type = 'error';
+            $title = 'Erreur lors de l\'activation de l\'accès aux tarifs réduits';
+            $description = 'Contactez <b>contact@coworking-metz.fr</b> si le problème persiste';
+            break;
+    }
+    $response = [
+        'type'        => $type,
+        'title'       => $title,
+        'subtitle'       => $subtitle ?? '',
+        'description' => $description
+    ];
+    return $response;
+}
+
 
 function boutonVisites()
 {
     if (visites_fermees())
         return;
-    ?>
-    <a href="https://rejoindre.coworking-metz.fr/" title="Prendre rendez-vous" target="_self"
-        class="btn btn-solid btn-xlg semi-round btn-bordered border-thin ld_button_653a54d4ec23e lqd-unit-animation-done"
-        style="">
+?>
+    <a href="https://rejoindre.coworking-metz.fr/" title="Prendre rendez-vous" target="_self" class="btn btn-solid btn-xlg semi-round btn-bordered border-thin ld_button_653a54d4ec23e lqd-unit-animation-done" style="">
         <span>
 
             <span class="btn-txt">Je prends rendez-vous !</span>
 
         </span>
     </a>
-    <?php
+<?php
 }
 /**
  * Indique si les visites sont fermées
@@ -232,9 +266,11 @@ function envoyerMailAlerte($user_id, $autres_codes = [])
         ['{_user_id}' => $data->ID],
         ['{user_name}' => $data->display_name],
         ['{_user_email}' => $data->user_email],
+        ['{activite}' => get_visiteur_activite($user_id)],
         ['{date_visite}' => date_francais($visite, true)],
         ['{url_commandes_user}' => admin_url('edit.php?s&post_status=all&post_type=shop_order&_customer_user=' . $user_id)],
         ['{url_fiche_user}' => admin_url('user-edit.php?user_id=' . $user_id)],
+        ['{_admin_url}' => admin_url()],
         ['{url_finaliser_compte_coworker_user}' => admin_url('user-edit.php?finaliser=true&user_id=' . $user_id)],
 
     ];
@@ -248,12 +284,12 @@ function envoyerMailAlerte($user_id, $autres_codes = [])
     return wp_mail($to, $mail['subject'], $mail['message'], $headers);
 }
 
-function mailRecapVisiteDejaEnvoye($user_id) {
+function mailRecapVisiteDejaEnvoye($user_id)
+{
     $key = 'email-recap-visite-' . $user_id;
     if (get_user_meta($user_id, $key, true)) {
         return true;
     }
-
 }
 /**
  * Envoyer un mail à un utilisateur le soir de sa visite
@@ -283,8 +319,8 @@ function envoyerMailRecapVisite($user_id, $autres_codes = [])
     $codes = [
         ['{user_name}' => $user->display_name],
         ['{date_visite}' => date_francais($visite, true)],
-        ['{date_visite_mention}' => isToday($visite)? "aujourd'hui" :date_francais($visite, true)],
-        ['{url_visite_activer_compte}' => site_url('/mon-compte/?uid='.$user_id.'&validation-compte=' . sha1($user_id.AUTH_SALT))],
+        ['{date_visite_mention}' => isToday($visite) ? "aujourd'hui" : date_francais($visite, true)],
+        ['{url_visite_activer_compte}' => site_url('/mon-compte/?uid=' . $user_id . '&validation-compte=' . sha1($user_id . AUTH_SALT))],
     ];
     foreach ($autres_codes as $k => $v) {
         $codes[] = ['{' . $k . '}' => $v];
@@ -294,7 +330,7 @@ function envoyerMailRecapVisite($user_id, $autres_codes = [])
     $bcc = get_field('destinataire_alerte', 'option');
 
     $to = $user->user_email;
-    $headers = array('Content-Type: text/html; charset=UTF-8', 'Bcc: '.$bcc);
+    $headers = array('Content-Type: text/html; charset=UTF-8', 'Bcc: ' . $bcc);
     return wp_mail($to, $mail['subject'], $mail['message'], $headers);
 }
 
@@ -347,3 +383,16 @@ function envoyerMailVisite($user_id, $visite = null, $autres_codes = [])
     return wp_mail($to, $mail['subject'], $mail['message'], $headers);
 }
 
+
+
+function get_visiteur_activite($user_id)
+{
+    $activite = get_user_meta($user_id, 'activite', true);
+    if (!$activite) {
+        $activite = get_user_meta($user_id, 'polaroid_description', true);
+        if (!$activite) {
+            $activite = 'Non renseigné';
+        }
+    }
+    return $activite;
+}
