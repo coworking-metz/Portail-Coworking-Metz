@@ -28,6 +28,17 @@ if (WOOCOMMERCE_CLOSED) {
 }
 
 
+add_filter('woocommerce_post_class', function ($classes) {
+    if ('product' == get_post_type()) {
+
+        $pid = get_the_ID();
+        $terms = wp_get_post_terms($pid, 'product_cat');
+        $classes = array_merge($classes, array_map(function ($slug) {
+            return 'cat-' . $slug;
+        }, array_column($terms, 'slug')));
+    }
+    return $classes;
+}, 21, 3); //woocommerce use priority 20, so if you want to do something after they finish be more lazy
 
 
 add_filter('woocommerce_available_payment_gateways', function ($available_gateways) {

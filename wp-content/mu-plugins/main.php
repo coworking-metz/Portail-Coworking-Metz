@@ -37,6 +37,7 @@ add_action('admin_init',function() {
 
 add_action('init',function() {
 
+
     // Ajouter les fichiers js
     foreach (glob(__DIR__ . "/js/front/*.js") as $filename) {
         ajouter_js('front/'.explode('.',basename($filename))[0]);
@@ -46,6 +47,24 @@ add_action('init',function() {
     foreach (glob(__DIR__ . "/css/front/*.css") as $filename) {
         ajouter_css('front/'.explode('.',basename($filename))[0]);
     }
+    
+    $uri = $_SERVER['REQUEST_URI']??"";
+    foreach(glob(__DIR__ . "/js/front/**/*.js") as $filename) {
+        $fileKey = explode('.',basename($filename))[0];
+        $folder = getLastFolderName($filename);
+        if(strstr($uri,$folder)) {
+            ajouter_js('front/'.$folder.'/'.$fileKey);
+        }
+    }
+
+    foreach(glob(__DIR__ . "/css/front/**/*.css") as $filename) {
+        $fileKey = explode('.',basename($filename))[0];
+        $folder = getLastFolderName($filename);
+        if(strstr($uri,$folder)) {
+            ajouter_css('front/'.$folder.'/'.$fileKey);
+        }
+    }
+
 });
 
 /*
