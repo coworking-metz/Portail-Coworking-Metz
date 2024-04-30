@@ -1,4 +1,21 @@
 <?php
+/**
+ * Renvoie le dernier nom de dossier dans un chemin de fichier, en gérant les noms de fichiers à la fin.
+ * @param string $path Le chemin du fichier.
+ * @return string Le dernier nom de dossier.
+ */
+function getLastFolderName($path) {
+    $path = rtrim($path, "/");  // Supprime le slash de fin si présent
+    $parts = explode("/", $path);  // Divise le chemin en parties
+
+    // Si le dernier élément contient un point, il est considéré comme un fichier
+    if (strpos(end($parts), '.') !== false) {
+        array_pop($parts);  // Retire le fichier pour accéder au dernier dossier
+    }
+    return end($parts);  // Retourne la dernière partie
+}
+
+
 
 
 /**

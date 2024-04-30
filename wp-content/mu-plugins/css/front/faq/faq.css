@@ -1,0 +1,12 @@
+.page-faq .container >*:first-child {
+    margin-top: 10vh;
+}
+
+.page-faq .container {
+    max-width: 600px;
+}
+
+.page-faq .container h4 {
+    font-size: clamp(2em, 3.5vw, 3em);
+    line-height: 1;
+}

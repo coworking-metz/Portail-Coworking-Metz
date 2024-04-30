@@ -144,7 +144,7 @@ span.digor {
 
     .titlebar-inner,
     a.woocommerce-product-gallery__trigger,
-    .woocommerce-product-details__short-description,
+    /* .woocommerce-product-details__short-description, */
     section.up-sells.upsells.products,
     section.related.products {
         display: none !important;

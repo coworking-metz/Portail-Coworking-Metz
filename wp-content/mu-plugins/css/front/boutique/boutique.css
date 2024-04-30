@@ -1,0 +1,52 @@
+.product-template-default,
+.page-la-boutique {
+    .titlebar-inner {
+        padding: 0;
+        margin-block: clamp(20px, 5vh, 100px)
+    }
+
+    .titlebar {
+        background: none !important;
+    }
+}
+
+.product-template-default {
+    .titlebar-inner {
+        display: none !important;
+    }
+}
+
+.products {
+    .product {
+        &.cat-nouveaux-tarifs-2024 {
+            figure {
+                position: relative;
+
+                &::before {
+                    content: 'Nouveau tarif';
+                    position: absolute;
+                    background: var(--wc-orange);
+                    color: white;
+                    width: 20%;
+                    aspect-ratio: 1;
+                    font-size: 10px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    border-radius: 50%;
+                    line-height: 1;
+                    transform: rotate(15deg);
+                    z-index: 111111;
+                    bottom: 0;
+                    right: 0;
+                    opacity: 1;
+                    transition: opacity .5s ease-in-out;
+                }
+                &:hover:before {
+                    opacity: 0;
+                }
+            }
+        }
+    }
+}
