@@ -1,11 +1,13 @@
-body:not(.home) {
-    #header {
-        .logo-default {
-            display: none;
-        }
+@media screen and (min-width: 1199px) {
+    body:not(.home) {
+        #header {
+            .logo-default {
+                display: none;
+            }
 
-        .logo-sticky {
-            display: block;
+            .logo-sticky {
+                display: block;
+            }
         }
     }
 }
