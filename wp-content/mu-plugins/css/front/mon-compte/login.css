@@ -1,0 +1,5 @@
+form.woocommerce-form-login[data-loading] button{
+
+    background:url(/wp-admin/images/loading.gif) no-repeat center#eee !important;
+    color:transparent !important
+}
