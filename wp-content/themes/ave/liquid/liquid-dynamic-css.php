@@ -80,15 +80,15 @@ class Liquid_Dynamic_CSS extends Liquid_Base {
 	 * @return  bool 	true/false depending on whether the file is successfully created or not.
 	 */
 	public function make_css() {
+		return; // desactivé car il n'est plus possible d'ecrire via wpfilesystem
 
 		global $wp_filesystem;
 
 		// Initialize the WordPress filesystem.
 		if ( empty( $wp_filesystem ) ) {
-			require_once( ABSPATH . '/wp-admin/includes/file.php' );
+			// require_once( ABSPATH . '/wp-admin/includes/file.php' );
 			WP_Filesystem();
 		}
-
 		$content = "/********* Compiled - Do not edit *********/\n" . $this->dynamic_css_cached();
 
 		// Take care of domain mapping

@@ -209,8 +209,6 @@ class WP_Filesystem_FTPext extends WP_Filesystem_Base {
 
 		fseek( $temphandle, 0 ); // Skip back to the start of the file being written to.
 
-		// m("ok"); TODO ce bug est chelou
-		if(!$this->link) return;
 		$ret = ftp_fput( $this->link, $file, $temphandle, FTP_BINARY );
 
 		fclose( $temphandle );
@@ -733,7 +731,7 @@ class WP_Filesystem_FTPext extends WP_Filesystem_Base {
 	 * @return array|false {
 	 *     Array of arrays containing file information. False if unable to list directory contents.
 	 *
-	 *     @type array $0... {
+	 *     @type array ...$0 {
 	 *         Array of file information. Note that some elements may not be available on all filesystems.
 	 *
 	 *         @type string           $name        Name of the file or directory.
