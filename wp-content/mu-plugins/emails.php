@@ -26,14 +26,15 @@ if (isset($_GET['template_preview'])) {
                 ['{_user_email}' => $data->user_email],
                 ['{activite}' => get_visiteur_activite($data->ID)],
                 ['{date_visite}' => date_francais($visite, true)],
+                ['{date_visite_mention}' => isToday($visite) ? "aujourd'hui" : (isTomorrow($visite) ? 'demain' : date_francais($visite, true))],
                 ['{url_commandes_user}' => admin_url('edit.php?s&post_status=all&post_type=shop_order&_customer_user=' . $user_id)],
                 ['{url_fiche_user}' => admin_url('user-edit.php?user_id=' . $user_id)],
                 ['{_admin_url}' => admin_url()],
+                ['{url_visite_activer_compte}' => site_url('/mon-compte/?uid=' . $user_id . '&validation-compte=' . sha1($user_id . AUTH_SALT))],
                 ['{url_finaliser_compte_coworker_user}' => admin_url('user-edit.php?finaliser=true&user_id=' . $user_id)],
 
             ];
         }
-
 
         $mail = charger_template_mail($template_id, $codes);
 
@@ -43,12 +44,12 @@ if (isset($_GET['template_preview'])) {
             'order' => 'DESC'
         );
         $allusers = get_users($args);
-        ?>
+?>
         <script>
             function reloadPage() {
                 const url = new URL(window.location.href);
                 url.searchParams.delete('user_id'); // Remove the user_id if it exists
-                
+
                 const newUserId = document.getElementById('user_id').value;
                 url.searchParams.set('user_id', newUserId); // Set the new user_id
                 console.log(url)
@@ -59,7 +60,7 @@ if (isset($_GET['template_preview'])) {
 
         echo '<select id="user_id" onchange="reloadPage()"><option value="" selected disabled>Voir pour le compte:</option>';
         foreach ($allusers as $user) {
-            echo '<option value="' . $user->ID . '"' . ($user->ID == $user_id ? 'selected' : '') . '>' . $user->display_name . ' #'.$user->ID.' (' . $user->user_email . ')</option>';
+            echo '<option value="' . $user->ID . '"' . ($user->ID == $user_id ? 'selected' : '') . '>' . $user->display_name . ' #' . $user->ID . ' (' . $user->user_email . ')</option>';
         }
         echo '</select><hr>';
 

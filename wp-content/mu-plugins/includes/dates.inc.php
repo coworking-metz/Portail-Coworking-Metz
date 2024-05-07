@@ -118,6 +118,18 @@ function isToday($date)
     $currentDate = date('Y-m-d');
     return ($date === $currentDate);
 }
+/**
+ * Vérifie si la date correspond à demain
+ *
+ * @param string $date Date au format 'Y-m-d'
+ * @return bool
+ */
+function isTomorrow($date)
+{
+    $date = date('Y-m-d', strtotime($date));
+    $tomorrow = date('Y-m-d', strtotime('+1 day'));
+    return ($date === $tomorrow);
+}
 
 /**
  * Convertit un timestamp en date et heure formatées selon la locale française.
