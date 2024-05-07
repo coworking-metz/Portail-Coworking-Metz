@@ -42,3 +42,5 @@ local/init.sql
 wp-content/mu-plugins/includes/ag
 googlecfede2e786a4238a.html
 wp-content/db.php
+wp-content/plugins/query-monitor/wp-content/db.php
+wp-content/mu-plugins/_recette.php
