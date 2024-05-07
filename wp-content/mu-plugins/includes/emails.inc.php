@@ -31,13 +31,13 @@ function charger_template_mail($template_id, $codes = [])
         $ret = ['message' => $template['htmlContent'], 'subject' => $template['subject']];
 
         foreach($ret as &$item) {
+            $item = str_replace('http://https://','https://', $item);
             foreach($codes as $code) {
                 foreach($code as $index=>$value) {
                     $item = str_replace($index, (string) $value, $item);
                 }
             }
         }
-
         return $ret;
 
     } else {

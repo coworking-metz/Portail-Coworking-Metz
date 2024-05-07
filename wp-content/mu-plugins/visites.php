@@ -195,3 +195,41 @@ add_action('admin_menu', function () {
         }
     }
 }, 999);
+
+
+
+/**
+ * Définition du créneau d'éxécution de l'envoi des mails rappel de visites : tous les jours à 10h00
+ */
+add_action('init', function () {
+    if (!wp_next_scheduled('cron_envoyer_mails_rappel_de_visites')) {
+        wp_schedule_event(strtotime('10:00:00'), 'daily', 'cron_envoyer_mails_rappel_de_visites');
+    }
+});
+
+/**
+ * Hook d'Exécution de l'envoi des mails rappel de visites
+ */
+add_action('cron_envoyer_mails_rappel_de_visites', function () {
+    $total = envoyer_mails_rappel_de_vistes();
+    echo $total . ' cron_envoyer_mails_rappel_de_visites';
+});
+
+
+function envoyer_mails_rappel_de_vistes()
+{
+    $cpt = 0;
+    $visiteurs = fetch_users_with_visite_tomorrow();
+    foreach ($visiteurs as $visiteur) {
+
+        // on ignore les utilisateurs qui sont déjà au statut customer
+        if (in_array('customer', $visiteur->roles))
+            continue;
+
+        if (envoyerMailRappelVisite($visiteur->ID)) {
+            $cpt++;
+        }
+    }
+
+    return $cpt;
+}

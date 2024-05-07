@@ -33,12 +33,12 @@ add_action('init', function () {
     $posts = get_posts($args);
     $templates = brevo_getTemplates();
 
-    foreach (['email_recap_visite', 'email_alerte_avent','email_alerte_cowo', 'email_confirmation_de_visite', 'email_finalisation_compte'] as $nom_champ) {
+    foreach (['email_recap_visite', 'email_rappel_visite', 'email_alerte_avent','email_alerte_cowo', 'email_confirmation_de_visite', 'email_finalisation_compte'] as $nom_champ) {
         add_filter('acf/load_field/name=' . $nom_champ, function ($field) use ($posts, $templates) {
 
             $field['choices'] = [''];
             foreach ($templates as $template) {
-                $field['choices']['brevo-'.$template['id']] = 'Brevo - #' . $template['id'] . ' - ' . $template['name'];
+                $field['choices']['brevo-'.$template['id']] = 'Brevo - #' . str_pad($template['id'],3,0,STR_PAD_LEFT) . ' - ' . $template['name'];
             }
 
             if (!empty($posts)) {

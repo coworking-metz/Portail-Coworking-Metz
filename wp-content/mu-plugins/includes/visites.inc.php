@@ -188,6 +188,16 @@ function fetch_users_with_visite_today()
     return fetch_users_with_visite_for_date(date('Y-m-d'));
 }
 
+/**
+ * Obtenir et stocker les utilisateurs avec des visites demain
+ *
+ * @return array Retourne une liste des utilisateurs avec des visites ce jour
+ */
+function fetch_users_with_visite_tomorrow()
+{
+    return fetch_users_with_visite_for_date(date('Y-m-d', strtotime('+1 day')));
+}
+
 
 /**
  * Obtenir et stocker les utilisateurs avec des visites aujourd'hui
@@ -291,6 +301,52 @@ function mailRecapVisiteDejaEnvoye($user_id)
         return true;
     }
 }
+
+
+/**
+ * Envoyer un mail à un utilisateurla veille de sa visite
+ * le mail ne peut pas etre envoyé plusieurs fois à un même 
+ * user, même si la fonction est apellée plusieurs fois 
+ *
+ * @param int $user_id ID de l'utilisateur
+ * @return bool Retourne true si le mail est envoyé, false sinon
+ */
+function envoyerMailRappelVisite($user_id, $autres_codes = [])
+{
+    if (wp_get_environment_type() == 'local')
+        return;
+
+    $user = get_userdata($user_id);
+    if (!$user)
+        return;
+    $template_id = get_field('email_rappel_visite', 'option');
+
+    $visite = get_user_meta($user_id, 'visite', true);
+    if(!$visite) return;
+    $key = 'email-rappel-visite-' . $user_id;
+    if (get_user_meta($user_id, $key, true))
+        return;
+    update_user_meta($user_id, $key, true);
+
+
+    $codes = [
+        ['{user_name}' => $user->display_name],
+        ['{date_visite}' => date_francais($visite, true)],
+        ['{date_visite_mention}' => isToday($visite) ? "aujourd'hui" : (isTomorrow($visite) ? 'demain' : date_francais($visite, true))],
+        ['{url_visite_activer_compte}' => site_url('/mon-compte/?uid=' . $user_id . '&validation-compte=' . sha1($user_id . AUTH_SALT))],
+    ];
+    foreach ($autres_codes as $k => $v) {
+        $codes[] = ['{' . $k . '}' => $v];
+    }
+    $mail = charger_template_mail($template_id, $codes);
+    // m($codes,$mail);exit;
+    $bcc = get_field('destinataire_alerte', 'option');
+
+    $to = $user->user_email;
+    $headers = array('Content-Type: text/html; charset=UTF-8', 'Bcc: ' . $bcc);
+    return wp_mail($to, $mail['subject'], $mail['message'], $headers);
+}
+
 /**
  * Envoyer un mail à un utilisateur le soir de sa visite
  * le mail ne peut pas etre envoyé plusieurs fois à un même 
@@ -309,6 +365,7 @@ function envoyerMailRecapVisite($user_id, $autres_codes = [])
     $template_id = get_field('email_recap_visite', 'option');
 
     $visite = get_user_meta($user_id, 'visite', true);
+    if(!$visite) return;
 
     $key = 'email-recap-visite-' . $user_id;
     if (get_user_meta($user_id, $key, true))
@@ -319,7 +376,7 @@ function envoyerMailRecapVisite($user_id, $autres_codes = [])
     $codes = [
         ['{user_name}' => $user->display_name],
         ['{date_visite}' => date_francais($visite, true)],
-        ['{date_visite_mention}' => isToday($visite) ? "aujourd'hui" : date_francais($visite, true)],
+        ['{date_visite_mention}' => isToday($visite) ? "aujourd'hui" : (isTomorrow($visite) ? 'demain' : date_francais($visite, true))],
         ['{url_visite_activer_compte}' => site_url('/mon-compte/?uid=' . $user_id . '&validation-compte=' . sha1($user_id . AUTH_SALT))],
     ];
     foreach ($autres_codes as $k => $v) {
