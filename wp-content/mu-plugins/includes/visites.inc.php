@@ -165,7 +165,12 @@ function recapJoursDeVisites()
  */
 function getNbVisites()
 {
-    return count(fetch_users_with_future_visite());
+    $ret = get_transient('getNbVisites');
+    if ($ret === false) {
+        $ret = count(fetch_users_with_future_visite());
+        set_transient('getNbVisites', $ret, HOUR_IN_SECONDS);
+    }
+    return $ret;
 }
 
 /**
@@ -175,7 +180,12 @@ function getNbVisites()
  */
 function getNbVisitesToday()
 {
-    return count(fetch_users_with_visite_today());
+    $ret = get_transient('getNbVisitesToday');
+    if ($ret === false) {
+        $ret = count(fetch_users_with_visite_today());
+        set_transient('getNbVisitesToday', $ret, HOUR_IN_SECONDS);
+    }
+    return $ret;
 }
 
 /**
