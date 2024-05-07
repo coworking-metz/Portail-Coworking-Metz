@@ -17,7 +17,7 @@ if ($user_id) {
 
             $cle = 'user_' . $user_id;
             $tarifs_reduits_ok = get_field('tarifs_reduits_ok', $cle);
-            $stats = false;
+            $status = false;
             if ($tarifs_reduits_ok) {
                 $status = -1;
             } else {
