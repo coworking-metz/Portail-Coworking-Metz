@@ -5,8 +5,6 @@ if (isset($_GET['test'])) {
     add_action('init', function () {
         
         $ret = get_transient('getNbVisites');
-			var_dump($ret);
-			exit;
         if ($ret === false) {
             m('save');
             $ret = count(fetch_users_with_future_visite());
