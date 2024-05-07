@@ -7,30 +7,31 @@ Version: 1.0
 */
 
 
+define('MUDIR', ABSPATH.'/wp-content/mu-plugins');
 
-include plugin_dir_path(__FILE__) . 'Classes/CloudFlare.php';
+include MUDIR.'/Classes/CloudFlare.php';
 
-include plugin_dir_path(__FILE__) . 'coworking-app/app.php';
+include MUDIR.'/coworking-app/app.php';
 
-include plugin_dir_path(__FILE__) . 'colonnes/colonnes.php';
-include plugin_dir_path(__FILE__) . 'mon-compte/mon-compte.php';
-include plugin_dir_path(__FILE__) . 'polaroid/polaroid.php';
-include plugin_dir_path(__FILE__) . 'notifications/notifications.php';
+include MUDIR.'/colonnes/colonnes.php';
+include MUDIR.'/mon-compte/mon-compte.php';
+include MUDIR.'/polaroid/polaroid.php';
+include MUDIR.'/notifications/notifications.php';
 
 // Récupérer tous les fichiers .inc.php dans le dossier ./includes en utilisant __DIR__
-foreach (glob(__DIR__ . "/includes/*.inc.php") as $filename) {
+foreach (glob(MUDIR . "/includes/*.inc.php") as $filename) {
     include $filename;
 }
 
 add_action('admin_init',function() {
 
     // Ajouter les fichiers js
-    foreach (glob(__DIR__ . "/js/*.js") as $filename) {
+    foreach (glob(MUDIR . "/js/*.js") as $filename) {
         ajouter_js(explode('.',basename($filename))[0]);
     }
     
     // Ajouter les fichiers css
-    foreach (glob(__DIR__ . "/css/*.css") as $filename) {
+    foreach (glob(MUDIR . "/css/*.css") as $filename) {
         ajouter_css(explode('.',basename($filename))[0]);
     }
 });
