@@ -38,6 +38,10 @@ function charger_template_mail($template_id, $codes = [])
                 }
             }
         }
+        $ret = str_replace('http://https://','https://', $ret);
+        $ret = str_replace('https://https://','https://', $ret);
+        $ret = str_replace('https://http://','http://', $ret);
+
         return $ret;
 
     } else {

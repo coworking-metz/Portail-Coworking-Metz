@@ -57,7 +57,7 @@ if (isset($_GET['export-users'])) {
         }
 
         header('Content-Type: text/csv; charset=utf-8');
-        header('Content-Disposition: attachment; filename=users-'.$name.'-' . wp_date('Y-m-d-H-i-s') . '.csv');
+        header('Content-Disposition: attachment; filename=coworking-users-'.$name.'-' . wp_date('Y-m-d-H-i-s') . '.csv');
 
         $output = fopen('php://output', 'w');
 

@@ -1,4 +1,38 @@
 <?php
+
+
+/**
+ * Vérifie si une date donnée est un jour ouvrable.
+ *
+ * @param string $date Date à vérifier au format YYYY-MM-DD.
+ * @return bool Retourne true si c'est un jour ouvrable, sinon false.
+ */
+function isWorkDay($date) {
+    // Convert the date string into a DateTime object
+    $dateTime = new DateTime($date);
+    
+    // Get the day of the week (1 = Monday, ..., 7 = Sunday)
+    $dayOfWeek = $dateTime->format('N');
+    
+    // Check if the day is a Saturday (6), Sunday (7), or a defined holiday
+    if ($dayOfWeek == 6 || $dayOfWeek == 7) {
+        return false;
+    }
+
+    return true;
+}
+
+
+function get_json($url) {
+    $key = 'json-'.$url;
+    $data = get_transient($key);
+    if(!$data) {
+        $data = file_get_contents($url);
+        $data = json_decode($data, true);
+        set_transient($key, $data, DAY_IN_SECONDS);
+    }
+    return $data;
+}
 /**
  * Renvoie le dernier nom de dossier dans un chemin de fichier, en gérant les noms de fichiers à la fin.
  * @param string $path Le chemin du fichier.
