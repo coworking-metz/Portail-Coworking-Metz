@@ -343,7 +343,7 @@ function envoyerMailRappelVisite($user_id, $autres_codes = [])
         ['{user_name}' => $user->display_name],
         ['{date_visite}' => date_francais($visite, true)],
         ['{date_visite_mention}' => isToday($visite) ? "aujourd'hui" : (isTomorrow($visite) ? 'demain' : date_francais($visite, true))],
-        ['{url_visite_activer_compte}' => site_url('/mon-compte/?uid=' . $user_id . '&validation-compte=' . sha1($user_id . AUTH_SALT))],
+        ['{url_visite_activer_compte}' => (site_url('/mon-compte/?uid=' . $user_id . '&validation-compte=' . sha1($user_id . AUTH_SALT)))],
     ];
     foreach ($autres_codes as $k => $v) {
         $codes[] = ['{' . $k . '}' => $v];
@@ -387,7 +387,7 @@ function envoyerMailRecapVisite($user_id, $autres_codes = [])
         ['{user_name}' => $user->display_name],
         ['{date_visite}' => date_francais($visite, true)],
         ['{date_visite_mention}' => isToday($visite) ? "aujourd'hui" : (isTomorrow($visite) ? 'demain' : date_francais($visite, true))],
-        ['{url_visite_activer_compte}' => site_url('/mon-compte/?uid=' . $user_id . '&validation-compte=' . sha1($user_id . AUTH_SALT))],
+        ['{url_visite_activer_compte}' => (site_url('/mon-compte/?uid=' . $user_id . '&validation-compte=' . sha1($user_id . AUTH_SALT)))],
     ];
     foreach ($autres_codes as $k => $v) {
         $codes[] = ['{' . $k . '}' => $v];

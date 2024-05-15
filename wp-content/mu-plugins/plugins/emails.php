@@ -30,7 +30,7 @@ if (isset($_GET['template_preview'])) {
                 ['{url_commandes_user}' => admin_url('edit.php?s&post_status=all&post_type=shop_order&_customer_user=' . $user_id)],
                 ['{url_fiche_user}' => admin_url('user-edit.php?user_id=' . $user_id)],
                 ['{_admin_url}' => admin_url()],
-                ['{url_visite_activer_compte}' => site_url('/mon-compte/?uid=' . $user_id . '&validation-compte=' . sha1($user_id . AUTH_SALT))],
+                ['{url_visite_activer_compte}' => (site_url('/mon-compte/?uid=' . $user_id . '&validation-compte=' . sha1($user_id . AUTH_SALT)))],
                 ['{url_finaliser_compte_coworker_user}' => admin_url('user-edit.php?finaliser=true&user_id=' . $user_id)],
 
             ];

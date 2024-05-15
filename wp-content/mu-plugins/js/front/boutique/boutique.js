@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let dateValue = new Date();
 
-        if (startDate && /^(\d{2})-(\d{2})-(\d{4})$/.test(startDate)) {
-            const [day, month, year] = startDate.split('-');
+        if (startDate) {
+            const [year, month, day] = startDate.split('-');
             dateValue = new Date(`${year}-${month}-${day}`);
 
             const formattedDate = dateValue.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });

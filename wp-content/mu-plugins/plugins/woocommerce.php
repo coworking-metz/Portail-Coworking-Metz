@@ -28,6 +28,10 @@ if (WOOCOMMERCE_CLOSED) {
 }
 
 
+add_action( 'wp', function () {
+    remove_theme_support( 'wc-product-gallery-zoom' );
+}, 100 );
+
 add_filter('woocommerce_post_class', function ($classes) {
     if ('product' == get_post_type()) {
 
