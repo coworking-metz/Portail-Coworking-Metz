@@ -86,6 +86,9 @@ add_action('init', function () {
         $file = false;
         if ($atts['slug']) {
             $file = glob(ABSPATH . MUPLUGINDIR . '/php-shortcodes/' . $atts['slug'] . '--*.php')[0] ?? false;
+            if(!$file) {
+                $file = glob(ABSPATH . MUPLUGINDIR . '/php-shortcodes/' . $atts['slug'] . '.php')[0] ?? false;
+            }
         } else if ($id) {
             $file = glob(ABSPATH . MUPLUGINDIR . '/php-shortcodes/' . '*--' . $id . '.php')[0] ?? false;
         }
