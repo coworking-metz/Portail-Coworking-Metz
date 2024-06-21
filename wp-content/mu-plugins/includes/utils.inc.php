@@ -1,5 +1,27 @@
 <?php
 
+/**
+ * Récupère et interprète les erreurs d'upload de fichiers.
+ *
+ * @param int $errorCode Code d'erreur de l'upload.
+ * @return string Description de l'erreur.
+ */
+function getFileUploadError($errorCode)
+{
+    $errors = [
+        UPLOAD_ERR_OK         => false,
+        UPLOAD_ERR_INI_SIZE   => 'Le fichier téléchargé dépasse maximale de ' . ini_get('upload_max_filesize'),
+        UPLOAD_ERR_FORM_SIZE  => 'Le fichier téléchargé dépasse la directive MAX_FILE_SIZE spécifiée dans le formulaire HTML.',
+        UPLOAD_ERR_PARTIAL    => 'Le fichier n\'a été que partiellement téléchargé.',
+        UPLOAD_ERR_NO_FILE    => 'Aucun fichier n\'a été téléchargé.',
+        UPLOAD_ERR_NO_TMP_DIR => 'Dossier temporaire manquant.',
+        UPLOAD_ERR_CANT_WRITE => 'Échec de l\'écriture du fichier sur le disque.',
+        UPLOAD_ERR_EXTENSION  => 'Une extension PHP a arrêté le téléchargement du fichier.'
+    ];
+
+    return $errors[$errorCode] ?? 'Erreur inconnue lors du téléchargement du fichier.';
+}
+
 
 /**
  * Vérifie si une date donnée est un jour ouvrable.
@@ -7,13 +29,14 @@
  * @param string $date Date à vérifier au format YYYY-MM-DD.
  * @return bool Retourne true si c'est un jour ouvrable, sinon false.
  */
-function isWorkDay($date) {
+function isWorkDay($date)
+{
     // Convert the date string into a DateTime object
     $dateTime = new DateTime($date);
-    
+
     // Get the day of the week (1 = Monday, ..., 7 = Sunday)
     $dayOfWeek = $dateTime->format('N');
-    
+
     // Check if the day is a Saturday (6), Sunday (7), or a defined holiday
     if ($dayOfWeek == 6 || $dayOfWeek == 7) {
         return false;
@@ -23,10 +46,11 @@ function isWorkDay($date) {
 }
 
 
-function get_json($url) {
-    $key = 'json-'.$url;
+function get_json($url)
+{
+    $key = 'json-' . $url;
     $data = get_transient($key);
-    if(!$data) {
+    if (!$data) {
         $data = file_get_contents($url);
         $data = json_decode($data, true);
         set_transient($key, $data, DAY_IN_SECONDS);
@@ -38,7 +62,8 @@ function get_json($url) {
  * @param string $path Le chemin du fichier.
  * @return string Le dernier nom de dossier.
  */
-function getLastFolderName($path) {
+function getLastFolderName($path)
+{
     $path = rtrim($path, "/");  // Supprime le slash de fin si présent
     $parts = explode("/", $path);  // Divise le chemin en parties
 
@@ -58,11 +83,12 @@ function getLastFolderName($path) {
  * @param string $url The URL of the markdown file.
  * @return string The parsed HTML content.
  */
-function fetchAndParseMarkdown($url) {
-    require_once ABSPATH.MUPLUGINDIR.'/Classes/Parsedown.php';
+function fetchAndParseMarkdown($url)
+{
+    require_once ABSPATH . MUPLUGINDIR . '/Classes/Parsedown.php';
     $markdownContent = file_get_contents($url);
     if ($markdownContent === false) {
-        return ;
+        return;
     }
     $parsedown = new Parsedown();
     $html = $parsedown->text($markdownContent);
@@ -71,7 +97,8 @@ function fetchAndParseMarkdown($url) {
 
 
 
-function replace_first_occurrence($search, $replace, $subject) {
+function replace_first_occurrence($search, $replace, $subject)
+{
     $pos = strpos($subject, $search);
     if ($pos !== false) {
         return substr_replace($subject, $replace, $pos, strlen($search));
@@ -84,8 +111,9 @@ function replace_first_occurrence($search, $replace, $subject) {
  *
  * @return void
  */
-function get_current_uri() {
-    return rtrim(explode('?',$_SERVER['REQUEST_URI']??'')[0], '/');
+function get_current_uri()
+{
+    return rtrim(explode('?', $_SERVER['REQUEST_URI'] ?? '')[0], '/');
 }
 /**
  * retourne une phrase indiquant une quantité accompagnée d'un libellé texte mis au pluriel
@@ -95,17 +123,17 @@ function get_current_uri() {
  * @param  mixed $pluriel La marque du pluriel à appliquer au libellé (défaut: s)
  * @return void
  */
-function pluriel($qte, $lib, $pluriel = 's', $separateur=' ')
+function pluriel($qte, $lib, $pluriel = 's', $separateur = ' ')
 {
-	if ($qte > 1) {
-		$lib = explode($separateur, $lib);
-		foreach ($lib as $a => $b) {
-			$lib[$a] = $b . $pluriel;
-		}
-		return $qte . ' ' . implode($separateur, $lib);
-	} else {
-		return $qte . ' ' . $lib;
-	}
+    if ($qte > 1) {
+        $lib = explode($separateur, $lib);
+        foreach ($lib as $a => $b) {
+            $lib[$a] = $b . $pluriel;
+        }
+        return $qte . ' ' . implode($separateur, $lib);
+    } else {
+        return $qte . ' ' . $lib;
+    }
 }
 /**
  *  An example CORS-compliant method.  It will allow any GET, POST, or OPTIONS requests from any
@@ -118,8 +146,9 @@ function pluriel($qte, $lib, $pluriel = 's', $separateur=' ')
  *  - https://fetch.spec.whatwg.org/#http-cors-protocol
  *
  */
-function allow_cors() {
-    
+function allow_cors()
+{
+
     // Allow from any origin
     if (isset($_SERVER['HTTP_ORIGIN'])) {
         // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
@@ -128,20 +157,19 @@ function allow_cors() {
         header('Access-Control-Allow-Credentials: true');
         header('Access-Control-Max-Age: 86400');    // cache for 1 day
     }
-    
+
     // Access-Control headers are received during OPTIONS requests
     if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-        
+
         if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
             // may also be using PUT, PATCH, HEAD etc
             header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-        
+
         if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
             header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
-    
+
         exit(0);
     }
-    
 }
 /**
  * Obtenir l'URL du Gravatar pour une adresse e-mail donnée.
@@ -150,7 +178,8 @@ function allow_cors() {
  * @param int    $size  La taille de l'image du Gravatar en pixels. Par défaut à 80.
  * @return string L'URL du Gravatar.
  */
-function get_gravatar_url($email, $size = 300) {
+function get_gravatar_url($email, $size = 300)
+{
     $email_hash = md5(strtolower(trim($email)));
     $gravatar_url = "https://www.gravatar.com/avatar/$email_hash?size=$size";
     return $gravatar_url;
@@ -162,7 +191,8 @@ function get_gravatar_url($email, $size = 300) {
  * @param int $size La taille de chaque sous-tableau.
  * @return array Un tableau de sous-tableaux.
  */
-function slice_array_to_chunks($input_array, $size = 100) {
+function slice_array_to_chunks($input_array, $size = 100)
+{
     $output_array = [];
     $array_length = count($input_array);
 
@@ -175,8 +205,10 @@ function slice_array_to_chunks($input_array, $size = 100) {
 
 
 
-function pathTourl($path) {
-    return str_replace(ABSPATH,site_url().'/', $path);
+function pathTourl($path)
+{
+    if (!$path) return;
+    return str_replace(ABSPATH, site_url() . '/', $path);
 }
 /**
  * Ajoute un fichier JavaScript à la queue des scripts de WordPress.
@@ -342,7 +374,7 @@ function url_get_contents($url)
  */
 function current_site_url($host = false, $request = false)
 {
-	if(php_sapi_name() == 'cli') return;
+    if (php_sapi_name() == 'cli') return;
     $host = $host ? $host : $_SERVER['HTTP_HOST'];
     $https = false;
     if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {

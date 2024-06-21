@@ -91,36 +91,36 @@ function polaroid_existe($uid = null)
     $polaroid = polaroid_get($uid, false);
     return $polaroid['photo'] && $polaroid['nom'];
 
-    if (!$uid) {
-        $user = wp_get_current_user();
-        if (!$user) return;
-        $uid = $user->ID;
-    }
+    // if (!$uid) {
+    //     $user = wp_get_current_user();
+    //     if (!$user) return;
+    //     $uid = $user->ID;
+    // }
 
 
-    $ret = true;
-    if (!$uid) $ret = false;
+    // $ret = true;
+    // if (!$uid) $ret = false;
 
-    // $photo = get_field('votre_photo', 'user_' . $uid);
-    // if (!$photo) $ret = false;
+    // // $photo = get_field('votre_photo', 'user_' . $uid);
+    // // if (!$photo) $ret = false;
 
-    $nom = get_field('polaroid_nom', 'user_' . $uid);
-    if (!$nom) {
-        $user_info = get_userdata($uid);
-        $nom = $user_info->display_name ?? false;
-        if (!$nom) {
-            $ret = false;
-        }
-    }
+    // $nom = get_field('polaroid_nom', 'user_' . $uid);
+    // if (!$nom) {
+    //     $user_info = get_userdata($uid);
+    //     $nom = $user_info->display_name ?? false;
+    //     if (!$nom) {
+    //         $ret = false;
+    //     }
+    // }
 
-    if (!$ret) {
-        $image = get_user_meta($uid, 'url_image_trombinoscope', true);
-        if ($image) {
-            $ret = true;
-        }
-    }
+    // if (!$ret) {
+    //     $image = get_user_meta($uid, 'url_image_trombinoscope', true);
+    //     if ($image) {
+    //         $ret = true;
+    //     }
+    // }
 
-    return $ret;
+    // return $ret;
 }
 
 function polaroid_get($uid = null, $defaults = true)
@@ -192,6 +192,8 @@ function polaroid_tmpdir()
 function polaroid_upload()
 {
 
+    
+    wp_enqueue_style('fonts', '/fonts/eveleth/eveleth.css', array(), time(), false);
     wp_enqueue_style('polaroid', '/wp-content/mu-plugins/polaroid/polaroid.css', array(), time(), false);
     wp_enqueue_script('polaroid', '/wp-content/mu-plugins/polaroid/polaroid.js', array(), time(), false);
     get_template_part('polaroid'); // This will load polaroid.php from your theme.

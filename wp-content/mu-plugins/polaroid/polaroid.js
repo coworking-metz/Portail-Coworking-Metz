@@ -1,6 +1,5 @@
 window.addEventListener('load', e => {
     console.log('pola')
-
     let form = document.querySelector('form#polaroid');
     if (form) {
         let fileUpload = form.querySelector('[name=photo]')
@@ -31,30 +30,19 @@ window.addEventListener('load', e => {
 
 
     function polaroid_apercu() {
+        if (!document.querySelector('#polaroid_content')) return;
+        const content = document.querySelector('#polaroid_content').value;
         let apercu = document.querySelector('.polaroid__apercu')
-        if(!apercu) return;
-        let queryString = [Math.random()];
-        let formElements = formPola.elements;
-        let bouton = document.querySelector('[name="valider-polaroid"]');
-        for (let i = 0; i < formElements.length; i++) {
-            if (formElements[i].tagName === 'INPUT' && formElements[i].name) {
-                let key = encodeURIComponent(formElements[i].name);
-                let value = encodeURIComponent(formElements[i].value);
-                queryString.push(key + '=' + value);
-            }
-        }
+        apercu.querySelector('.photo').src = content;
 
-        queryString = queryString.join('&');
-        apercu.dataset.loading = true;
-        bouton.disabled = true;
-        apercu.innerHTML = '';
-        let img = document.createElement('img');
+        const polaroid_nom = document.querySelector('#polaroid_nom').value;
+        document.querySelector(`[data-id="polaroid_nom"]`).innerHTML = polaroid_nom
 
-        img.addEventListener('load', () => {
-            delete apercu.dataset.loading
-            bouton.disabled = false;
-        });
-        img.src = '/polaroid/?' + queryString;
-        apercu.appendChild(img);
+        const polaroid_description = document.querySelector('#polaroid_description').value;
+        document.querySelector(`[data-id="polaroid_description"]`).innerHTML = polaroid_description
+
+        const polaroid_complement = document.querySelector('#polaroid_complement').value;
+        document.querySelector(`[data-id="polaroid_complement"]`).innerHTML = polaroid_complement
+
     }
 })
