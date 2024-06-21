@@ -27,22 +27,60 @@
     width: 100%;
     aspect-ratio: 1;
     margin-block: 2em;
+    position: relative;
 }
-.polaroid__apercu[data-loading] img{
+
+.polaroid__apercu[data-loading] img {
     opacity: 0;
 }
 
 .polaroid__apercu[data-loading] {
-    outline:1px solid #eab234;
+    outline: 1px solid #eab234;
     background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='L9' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 100 100' enable-background='new 0 0 0 0' xml:space='preserve'%3E%3Cpath fill='%23eab234' d='M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50'%3E%3CanimateTransform attributeName='transform' attributeType='XML' type='rotate' dur='1s' from='0 50 50' to='360 50 50' repeatCount='indefinite'%3E%3C/animateTransform%3E%3C/path%3E%3C/svg%3E");
     background-size: 40% auto;
     background-position: center center;
     background-repeat: no-repeat;
 }
-.polaroid__apercu img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+
+.polaroid__apercu .cadre {
+    position: relative;
+    z-index: 1;
+}
+
+.polaroid__apercu .texte {
+    position: absolute;
+    bottom: 2%;
+    left: 5%;
+    right: 5%;
+    z-index: 2;
+    height: 18%;
+    text-align: center;
+}
+
+.polaroid__apercu .texte [data-id="polaroid_complement"]:empty {
+    display: none;
+}
+
+.polaroid__apercu .texte [data-id="polaroid_nom"] {
+    font-family: 'evelethclean_regular';
+}
+
+.polaroid__apercu .texte .desc {
+    font-family: 'evelethclean_thin';
+    font-size: 15px;
+}
+.polaroid__apercu .texte:not(:has([data-id="polaroid_complement"]:empty)) .desc {
+    font-size: 11px;
+}
+
+
+.polaroid__apercu .photo {
+    position: absolute;
+    aspect-ratio: 1;
+    object-fit: cover;
+    top: 5%;
+    left: 5%;
+    width: 91%;
 }
 
 
@@ -70,7 +108,8 @@
     max-width: 400px;
     width: 100%;
 }
-.polaroid__definitif IMG{
+
+.polaroid__definitif IMG {
     width: 100%;
     display: block;
 }
