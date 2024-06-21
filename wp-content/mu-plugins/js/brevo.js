@@ -17,7 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 user_data.phone = null;
                 user_data.notes = '';
                 user_data.display_name = data.user.display_name;
-                user_data.roles = data.user.roles.join(', ');
+                try {
+                    user_data.roles = data.user.roles.join(', ');
+                } catch (e) {
+                    console.error({e});
+                }
                 user_data._first_order_date = data.user._first_order_date;
             }
             console.log({ user_data })

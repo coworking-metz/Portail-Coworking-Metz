@@ -12,19 +12,17 @@ if (isset($_GET['brevo-notify'])) {
             $emails = mailchimp_unsubscribe_from_csv($url);
         }
         // apeller cette url pour le debug
-        file_get_contents("https://eojss26rcl22wc9.m.pipedream.net?url=" . $url."&nb=".count($emails));
+        file_get_contents("https://eojss26rcl22wc9.m.pipedream.net?url=" . $url . "&nb=" . count($emails));
         exit;
     });
 }
 
-/**
- * Ajout JS dédié au test de connexion
- */
 add_action('wp_enqueue_scripts', function () {
+    if (equipe_admin_logged_in_as()) return;
     $base = '/wp-content/mu-plugins/js';
 
     $js = $base . '/brevo.js';
-    wp_enqueue_script('brevo-script', $js, array (), filemtime(ABSPATH.$js), true);
+    wp_enqueue_script('brevo-script', $js, array(), filemtime(ABSPATH . $js), true);
 });
 
 /**
