@@ -36,6 +36,7 @@ function getMonEquipe($uid, $gestionnaire = true)
                 $equipe['membres'] = [];
                 foreach ($membres as $m) {
                     $tmp = $m['membre'];
+                    $tmp['balance'] = get_user_balance($m['membre']);
                     $tmp['equipe-role'] = $m['role'];
                     $tmp['photo'] = 'https://photos.coworking-metz.fr/photo/size/thumbnail/' . $tmp['ID'] . '.jpg';
                     // $tmp['polaroid'] = 'https://photos.coworking-metz.fr/polaroid/size/thumbnail/' . $tmp['ID'] . '.jpg';
