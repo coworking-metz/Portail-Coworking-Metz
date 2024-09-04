@@ -15,7 +15,7 @@ if (isset($_GET['visitesOnly'])) {
 if (isset($_GET['annuler-visite'])) {
     add_action('admin_init', function ($query) {
         if (is_admin()) {
-            $user_id = $_GET['user_id']??false;
+            $user_id = $_GET['user_id'] ?? false;
 
             update_user_meta($user_id, 'visite', '');
             $admin_url = get_admin_url() . "user-edit.php?user_id=" . $user_id;
@@ -64,6 +64,39 @@ if (isset($_GET['visites-ics'])) {
         }
 
         echo "END:VCALENDAR\r\n";
+        exit;
+    });
+}
+
+
+if (isset($_GET['visites-csv'])) {
+    add_action('init', function () {
+        $args = [
+            'meta_key' => 'visite'
+        ];
+        $users = get_users($args);
+
+
+
+        $stats = [];
+        for ($y = 2023; $y <= date('Y'); $y++) {
+            for ($m = 1; $m <= 12; $m++) {
+                $stats[$y . '-' . str_pad($m, 2, '0',STR_PAD_LEFT)] = 0;
+            }
+        }
+        // Pour chaque utilisateur, créer un événement ICS
+        foreach ($users as $user) {
+            $visite_date = get_user_meta($user->ID, 'visite', true);  // Récupérer la date de visite
+            if (!$visite_date) continue;
+            $visite_date = date('Y-m', strtotime($visite_date));
+            $stats[$visite_date]++;
+        }
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=coworking-visites-' . wp_date('Y-m-d-H-i-s') . '.csv');
+
+        $output = fopen('php://output', 'w');
+        fputcsv($output, array_keys($stats));
+        fputcsv($output, $stats);
         exit;
     });
 }
