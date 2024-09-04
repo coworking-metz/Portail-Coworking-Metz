@@ -59,35 +59,42 @@ if ($equipe) {
             <caption><?= $equipe['post_title']; ?></caption>
             <tbody>
                 <tr>
-                    <th colspan="2">Nom</th>
-                    <th>Email</th>
+                    <th colspan="2">Membre</th>
                     <th>Rôle</th>
+                    <th title="Balance de tickets">Bal.</th>
+                    <th title="Abonnement">Abo.</th>
+                    <th title="Adhésion">Adh.</th>
                     <?php if ($admin) { ?>
                         <th></th>
                         <th></th>
                     <?php } ?>
                 </tr>
-                <?php foreach ($equipe['membres'] as $membre) { ?>
+                <?php foreach ($equipe['membres'] as $membre) {
+                    $balance = $membre['balance']; ?>
                     <tr>
                         <td valign="middle"><img width="32" height="32" style="width:32px;height:32px;object-fit:cover" decoding="async" src="<?= $membre['photo']; ?>"></td>
-                        <td valign="middle"><span><?= $membre['display_name']; ?></span></td>
-                        <td valign="middle"><span><?= $membre['user_email']; ?></span></td>
+                        <td valign="middle"><span><?= $membre['display_name']; ?></span><br>
+                            <code><?= $membre['user_email']; ?></code>
+                        </td>
                         <td valign="middle"><span><?= equipe_role($membre['equipe-role']); ?></span></td>
+                        <td valign="middle"><span><?= $balance['balance']; ?></span></td>
+                        <td valign="middle"><span title="Echéance: <?= $balance['lastAboEnd']; ?>"><?= isAboEnCours($balance['lastAboEnd']) ? '✅' : '❌'; ?></span></td>
+                        <td valign="middle"><span><?= $balance['lastMembership']; ?></span></td>
                         <?php if ($admin && $membre['equipe-role'] != 'waiting') { ?>
                             <th>
                                 <?php if ($membre['ID'] != $uid) { ?>
-                                    <a onclick="return confirm('Vous allez accéder à la boutique en étant connecté en tant que <?= addslashes($membre['display_name']); ?>.')" href="?se-connecter-en-tant-que=<?= $membre['ID']; ?>">Passer commande</a>
+                                    <a title="Se connecter avec se compte et passer une commande..." onclick="return confirm('Vous allez accéder à la boutique en étant connecté en tant que <?= addslashes($membre['display_name']); ?>.')" href="?se-connecter-en-tant-que=<?= $membre['ID']; ?>">🛒</a>
                                 <?php } ?>
                             </th>
                             <th>
                                 <?php if ($membre['ID'] != $uid) { ?>
-                                    <a onclick="return confirm('Voulez-vous retirer ce membre de votre équipe ?')" href="?equipe-retirer=<?= $membre['ID']; ?>">Retirer</a>
+                                    <a title="Retirer de cette équipe..." onclick="return confirm('Voulez-vous retirer ce membre de votre équipe ?')" href="?equipe-retirer=<?= $membre['ID']; ?>">🗑️</a>
                                 <?php } ?>
                             </th>
                         <?php } else { ?>
                             <th>
                                 <?php if ($membre['ID'] == $uid) { ?>
-                                    <a onclick="return confirm('Voulez-vous quitter cette équipe ?')" href="?equipe-quitter=<?= $membre['ID']; ?>">Quitter</a>
+                                    <a title="Quitter cette équipe..." onclick="return confirm('Voulez-vous quitter cette équipe ?')" href="?equipe-quitter=<?= $membre['ID']; ?>">🚪</a>
                                 <?php } ?>
                             </th>
                         <?php } ?>
@@ -95,6 +102,12 @@ if ($equipe) {
                 <?php } ?>
             </tbody>
         </table>
+        <div>
+            <b>Légende</b><br>
+            🛒&nbsp; <span>Se connecter avec se compte et passer une commande...</span><br>
+            🚪&nbsp; <span>Quitter une équipe</span><br>
+            🗑️&nbsp; <span>Retirer un membre de l'équipe</span><br>
+        </div>
     </div>
 
 <?php } else { ?>
