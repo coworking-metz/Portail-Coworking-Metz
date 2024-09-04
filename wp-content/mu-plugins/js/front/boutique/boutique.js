@@ -1,5 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     if (document.querySelector('.product-template-default')) {
+
+        const custom_price = document.querySelector('input#custom_price');
+        if (custom_price) {
+            const prix = queryGet('prix');
+            if (prix) {
+                custom_price.value = prix.replace('.',',');
+            }
+        }
+
         const dateDebut = document.querySelector("#tm-extra-product-options");
         if (dateDebut) {
             const dateField = dateDebut.querySelector('input');
@@ -16,27 +25,30 @@ document.addEventListener('DOMContentLoaded', () => {
             // dateDebut.appendChild(btnAddToCart); POURQUOI ??
 
             const dateConseillee = getDateFromQuery()
-            if(dateConseillee) {
+            if (dateConseillee) {
                 dateField.value = dateConseillee
                 const div = document.createElement('div')
-                div.setAttribute('style','font-size:.7em;line-height:1.1')
+                div.setAttribute('style', 'font-size:.7em;line-height:1.1')
                 div.innerHTML = `Vous devez commencer votre nouvel abonnement le ${dateConseillee} pour correspondre avec la fin de votre abonnement précédent, ou de votre solde de tickets`;
                 dateField.parentElement.after(div)
-    
+
             } else {
                 dateField.value = getToday()
                 const div = document.createElement('div')
                 div.innerHTML = `<a href="#date-yesterday">Hier</a> - <a href="#date-today">Aujourd'hui</a> - <a href="#date-tomorrow">Demain</a>`;
                 dateField.parentElement.after(div)
-    
+
             }
         }
     }
 
-
-    function getDateFromQuery() {
+    function queryGet(name) {
         const queryParams = new URLSearchParams(window.location.search);
-        const startDate = queryParams.get('startDate');
+        if (!window.location.search) return;
+        return queryParams.get(name);
+    }
+    function getDateFromQuery() {
+        const startDate = queryGet('startDate');
         const dateField = document.querySelector('#dateField'); // Ensure the ID matches your form field's ID
 
         let dateValue = new Date();
