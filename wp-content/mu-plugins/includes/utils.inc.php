@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * Récupère et interprète les erreurs d'upload de fichiers.
  *

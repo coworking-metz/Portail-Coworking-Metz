@@ -1,5 +1,6 @@
 <?php
 
+
 function current_user_can_tarif_reduit(){
     $user_id = get_current_user_id();
     $tarifs_reduits_ok = get_user_meta($user_id, 'tarifs_reduits_ok', true);
@@ -40,7 +41,8 @@ function get_user_ranking($uid) {
  * @param  mixed $uid
  * @return mixed
  */
-function get_user_balance($uid) {
+function get_user_balance($user) {
+    $uid = get_post_id($user);
     // Vérifier si les résultats sont en cache
     $cached_result = get_transient('user_balance_' . $uid);
     $cached_result=false;
