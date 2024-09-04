@@ -50,3 +50,13 @@
         }
     }
 }
+.summary.entry-summary.ld-product-summary:has(.custom-price-field) .woocommerce-Price-amount.amount {
+    display: none !important;
+}
+.summary.entry-summary.ld-product-summary:has(.custom-price-field) .quantity {
+    display: none !important;
+}
+.custom-price-field {
+    width: 100%;
+    padding-block: 1em;
+}
