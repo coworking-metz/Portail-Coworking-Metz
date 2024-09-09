@@ -8,6 +8,7 @@ add_action(
 
                 $response = [];
                 if (get_field('activer_theme_trombi', 'option')) {
+                    $response['couleur_du_texte'] = get_field('couleur_du_texte', 'option');
                     $response['fond'] = get_field('fond_trombi', 'option');
                 }
                 if (get_field('activer_avent', 'option')) {
