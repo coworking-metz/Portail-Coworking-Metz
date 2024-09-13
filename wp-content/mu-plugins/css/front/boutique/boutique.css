@@ -16,7 +16,7 @@
     }
 }
 
-.products {
+./* products {
     .product {
         &.cat-nouveaux-tarifs-2024 {
             figure {
@@ -49,7 +49,7 @@
             }
         }
     }
-}
+} */
 .summary.entry-summary.ld-product-summary:has(.custom-price-field) .woocommerce-Price-amount.amount {
     display: none !important;
 }
