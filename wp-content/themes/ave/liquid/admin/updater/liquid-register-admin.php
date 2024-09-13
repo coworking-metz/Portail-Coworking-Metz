@@ -29,7 +29,8 @@ class Liquid_Register {
 	function __construct( $config = array(), $strings = array() ) {
 
 		$config = wp_parse_args( $config, array(
-			'remote_api_url' => 'http://api.liquid-themes.com',
+			// 'remote_api_url' => 'http://api.liquid-themes.com',
+			'remote_api_url' => '',
 			'theme_slug'     => 'ave',
 			'version'        => '',
 			'author'         => 'Liquid Themes',
@@ -210,7 +211,7 @@ class Liquid_Register {
 	 * @return array $response decoded JSON response.
 	 */
 	 function get_api_response( $api_params ) {
-
+		return;
 		 // Call the custom API.
 		$response = wp_remote_get(
 			add_query_arg( $api_params, $this->remote_api_url ),
