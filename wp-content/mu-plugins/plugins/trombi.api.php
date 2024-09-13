@@ -13,6 +13,10 @@ add_action(
                 }
                 if (get_field('activer_avent', 'option')) {
                     $response['avent'] = get_field('avent', 'option');
+                    foreach(['debut_avent', 'fin_avent'] as $date) {
+                        $obj = DateTime::createFromFormat('d/m/Y', $response['avent'][$date]);
+                        $response['avent'][$date] = $obj->format('Y-m-d');
+                    }
                 }
                 $response['polaroids'] = get_field('polaroids', 'option');
                 $response['divers'] = get_field('divers', 'option');
