@@ -71,7 +71,7 @@ function chart_presences_day() {
                     ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'bottom';
-                    ctx.fillStyle = '#eab234';
+                    ctx.fillStyle = '<?=COULEUR_PRINCIPALE;?>';
 
                     this.data.datasets.forEach(function(dataset, i) {
                     var meta = chartInstance.controller.getDatasetMeta(i);
@@ -158,7 +158,7 @@ function chart_presences_month() {
                 ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'bottom';
-                ctx.fillStyle = '#eab234';
+                ctx.fillStyle = '<?=COULEUR_PRINCIPALE;?>';
 
                 this.data.datasets.forEach(function(dataset, i) {
                 var meta = chartInstance.controller.getDatasetMeta(i);

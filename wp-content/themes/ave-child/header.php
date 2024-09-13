@@ -12,7 +12,7 @@
 	<meta charset="<?php echo esc_attr( get_bloginfo( 'charset' ) ) ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="theme-color" content="#eab234">
+	<meta name="theme-color" content="<?=COULEUR_PRINCIPALE;?>">
 	<link rel="profile" href="http://gmpg.org/xfn/11">
 	<?php wp_head(); ?>
 
