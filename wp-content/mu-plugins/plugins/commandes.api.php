@@ -22,34 +22,41 @@ add_action('rest_api_init', function () {
                 'date_created' => $year . '-01-01 ... ' . $year . '-12-31',
                 'return' => 'ids',
             );
-        
+
             $orders = wc_get_orders($args);
             $orders_details = array();
-        
+
             foreach ($orders as $order_id) {
                 $order = wc_get_order($order_id);
                 $products = array();
                 foreach ($order->get_items() as $item_id => $item) {
                     $product = $item->get_product();
-                    if(!$product) continue;
-                    $products[] = array(
+                    if (!$product) continue;
+                    $tmp = array(
                         'product_id' => $product->get_id(),
                         'name' => $product->get_name(),
                         'quantity' => $item->get_quantity(),
                         'price' => $item->get_total(),
-                        'productType' => convertProductType(get_field('productType',$product->get_id())),
+                        'productType' => convertProductType(get_field('productType', $product->get_id())),
                     );
+
+                    if ($meals = get_meals($product)) {
+                        $tmp['meals'] = $meals;
+                        $tmp['meal_price'] = get_meal_price($product);
+                    }
+
+                    $products[] = $tmp;
                 }
                 $orders_details[] = array(
                     'orderId' => $order_id,
-                    'orderReference' => get_order_meta_data($order)['_alg_wc_full_custom_order_number']??'',
+                    'orderReference' => get_order_meta_data($order)['_alg_wc_full_custom_order_number'] ?? '',
                     'wpUserId' => $order->customer_id,
                     'purchaseDate' => $order->get_date_created()->date('Y-m-d H:i:s'),
                     'total' => $order->get_total(),
                     'products' => $products,
                 );
             }
-            
+
             nocache_headers();
             return new WP_REST_Response($orders_details, 200);
         },
