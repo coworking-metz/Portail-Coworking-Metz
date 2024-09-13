@@ -38,7 +38,7 @@ a.acf-icon.-pencil.dark {
     color: #fff;
     display: inline-block;
     padding: 2px 6px;
-    background-color: #E2B34F;
+    background-color: var(--couleur-principale-alt);
     font-weight: bold;
     border-radius: 4px;
     margin: 0px 4px;
