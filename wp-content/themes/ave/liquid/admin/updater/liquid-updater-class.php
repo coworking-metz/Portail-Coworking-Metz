@@ -21,7 +21,8 @@ class Liquid_Updater {
 	function __construct( $args = array(), $strings = array() ) {
 
 		$args = wp_parse_args( $args, array(
-			'remote_api_url' => 'http://api.liquid-themes.com',
+			// 'remote_api_url' => 'http://api.liquid-themes.com',
+			'remote_api_url' => '',
 			'request_data' => array(),
 			'theme_slug' => get_template(),
 			'item_name' => '',
@@ -86,6 +87,7 @@ class Liquid_Updater {
 	}
 
 	function theme_update_transient( $value ) {
+		if(!$value) return;
 		$update_data = $this->check_for_update();
 		if ( $update_data ) {
 			$value->response[ $this->theme_slug ] = $update_data;
@@ -98,7 +100,7 @@ class Liquid_Updater {
 	}
 
 	function check_for_update() {
-
+		return;
 		$update_data = get_transient( $this->response_key );
 
 		if ( false === $update_data ) {
