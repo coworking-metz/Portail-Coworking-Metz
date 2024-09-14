@@ -1,5 +1,39 @@
 <?php
 
+function tickets($endpoint, $options = [])
+{
+    $url = TICKET_BASE_URL . $endpoint;
+
+    $url .= '?key=' . API_KEY_TICKET;
+
+    return file_get_json($url);
+}
+/**
+ * Fetches and decodes JSON data from a file.
+ *
+ * @param string $filename Path to the JSON file.
+ * @param bool $assoc Whether to return an associative array (true) or an object (false).
+ * @return mixed Returns the decoded JSON as an array or object, or null on error.
+ */
+function file_get_json($filename, $assoc = true)
+{
+    if (empty($filename)) {
+        return null;
+    }
+
+    $jsonContent = file_get_contents($filename);
+    if ($jsonContent === false) {
+        return null;
+    }
+
+    $data = json_decode($jsonContent, $assoc);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return null;
+    }
+
+    return $data;
+}
+
 
 /**
  * Récupère et interprète les erreurs d'upload de fichiers.

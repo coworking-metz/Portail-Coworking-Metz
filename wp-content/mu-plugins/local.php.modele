@@ -1,0 +1,31 @@
+<?php
+
+
+// add_action('template_redirect', function ($p) {
+//     // update_option('woocommerce_force_ssl_checkout', false);
+//     me(
+
+//         get_option('woocommerce_force_ssl_checkout')
+//     );
+// });
+// add_filter( 'option_active_plugins', function($plugins) {
+//     print_r($plugins);
+
+//     exit;
+
+//     return $plugins;
+// }, 1);
+
+add_filter('wp_mail', function ($args) {
+    // This will short-circuit wp_mail() and prevent any emails from being sent out.
+    return [];
+});
+
+
+
+// add_action('init', function() {
+//     $new_theme = 'twentytwentyfour'; // The directory name of the new theme
+//     if (get_option('template') !== $new_theme) {
+//         switch_theme($new_theme);
+//     }
+// });
