@@ -12,7 +12,6 @@ add_action('wp_footer', function () {
     if(!$uid) return;
     $equipe = getMonEquipe($uid, true);
     if (!$equipe) return;
-
     $debiteurs = [];
 
     foreach ($equipe['membres'] as $membre) {
@@ -26,7 +25,7 @@ add_action('wp_footer', function () {
     echo generateNotification([
         'type' => 'warning',
         'titre' => 'Alerte abonnement / tickets',
-        'texte' => 'Les personnes suivante de votre équipe présentent un compte débiteur: <b>' . implode('</b>, <b>', array_column($debiteurs, 'display_name')).'</b>',
+        'texte' => 'Les personnes suivantes de votre équipe '.$equipe->post_title.' présentent un compte débiteur: <b>' . implode('</b>, <b>', array_column($debiteurs, 'display_name')).'</b>',
         'cta' => [
             'url' => '/mon-compte/equipe/',
             'caption' => 'Régulariser la situation'
