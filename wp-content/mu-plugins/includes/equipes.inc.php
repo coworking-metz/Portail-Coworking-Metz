@@ -19,8 +19,12 @@ function equipe_rejoindre($equipe, $memberId, $role = 'member')
     $membres[] = ['membre' => $memberId, 'role' => $role];
     update_field('membres', $membres, $eid);
 }
-function getMonEquipe($uid, $gestionnaire = true)
+function getMonEquipe($uid = null, $gestionnaire = true)
 {
+
+    if (is_null($uid)) {
+        $uid = get_current_user_id();
+    }
     $equipes = get_posts([
         'post_type' => 'equipe',
         'posts_per_page' => -1,  // Rechercher tous les posts
