@@ -1,0 +1,94 @@
+body.home {
+    div.wpb_wrapper div.wpb_wrapper-inner div.ld-fancy-heading p.lqd-highlight-underline.lqd-highlight-grow-left span.ld-fh-txt,
+
+    [class*="ld_fancy_heading_"].text-uppercase h6,
+    .vc_column-inner .text-uppercase .lqd-highlight-underline .ld-fh-txt,
+    .highlight-text,
+    .ld-module-trigger,
+    .iconbox-icon-container {
+        color: var(--couleur-principale);
+    }
+
+    [style*="color: #eab234"] {
+        color: var(--couleur-principale) !important
+    }
+
+    .vc_sep_line {
+        border-color: var(--couleur-principale) !important;
+
+    }
+    [class*="ld_media"] .ld-media-bg{
+        opacity: 0.5;
+    }
+
+    [class*="ld_media"] .ld-media-bg,
+    .main-nav-hover-underline-1>li>a .link-ext,
+    .stats,
+    .ld-module-trigger-count {
+        background-color: var(--couleur-principale);
+    }
+
+    [class*="ld_header_button_"] {
+        color: var(--couleur-alternative);
+        border-color: var(--couleur-principale);
+        background-color: var(--couleur-principale);
+
+    }
+
+    [class*="ld_header_button_"]:hover {
+        background-color: var(--couleur-principale-ter);
+        border-color: var(--couleur-principale-ter);
+        color: var(--couleur-alternative)
+    }
+
+    .is-stuck {
+        [class*="ld_header_button_"] {
+            color: var(--couleur-principale);
+            background-color: var(--couleur-alternative);
+        }
+
+        [class*="ld_header_button_"]:hover {
+            background-color: var(--couleur-principale-ter);
+            border-color: var(--couleur-principale-ter);
+            color: var(--couleur-alternative);
+        }
+    }
+
+    [class*="ld_price_table_"] {
+        background-color: var(--couleur-principale);
+        color: var(--couleur-alternative);
+    }
+
+    .wpb_wrapper-inner .vc_row+.vc_row [class*="ld_price_table_"] {
+        background-color: var(--couleur-principale-ter);
+    }
+
+    .navbar-brand-inner {
+        img {
+            opacity: 0;
+        }
+
+        background: url(/images/logo-blanc.svg) no-repeat center;
+        background-size: contain;
+    }
+
+    .is-stuck {
+        .navbar-brand-inner {
+            background-image: url(/images/logo-noir.svg);
+        }
+    }
+
+    .mainbar-wrap:not(.is-stuck) {
+        position: relative;
+
+        &:after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+            z-index: -1;
+        }
+    }
+
+
+}

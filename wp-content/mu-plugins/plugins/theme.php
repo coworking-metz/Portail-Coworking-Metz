@@ -1,7 +1,9 @@
 <?php
 
 define('COULEUR_PRINCIPALE', '6db992');
+define('COULEUR_ALTERNATIVE', 'FFFFFF');
 define('COULEUR_PRINCIPALE_ALT', '146d71');
+define('COULEUR_PRINCIPALE_TER', 'e6857c');
 add_action('wp_head', function () {
 ?>
     <script>
@@ -10,7 +12,9 @@ add_action('wp_head', function () {
     <style>
         :root {
             --couleur-principale: #<?= COULEUR_PRINCIPALE; ?>;
+            --couleur-alternative: #<?= COULEUR_ALTERNATIVE; ?>;
             --couleur-principale-alt: #<?= COULEUR_PRINCIPALE_ALT; ?>;
+            --couleur-principale-ter: #<?= COULEUR_PRINCIPALE_TER; ?>;
         }
     </style>
 <?php
