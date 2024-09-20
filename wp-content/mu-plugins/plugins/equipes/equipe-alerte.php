@@ -23,7 +23,7 @@ add_action('wp_footer', function () {
     }
     if (!count($debiteurs)) return;
     echo generateNotification([
-        'type' => 'warning',
+        // 'type' => 'warning',
         'titre' => 'Alerte abonnement / tickets',
         'texte' => 'Les personnes suivantes de votre équipe '.$equipe->post_title.' présentent un compte débiteur: <b>' . implode('</b>, <b>', array_column($debiteurs, 'display_name')).'</b>',
         'cta' => [
