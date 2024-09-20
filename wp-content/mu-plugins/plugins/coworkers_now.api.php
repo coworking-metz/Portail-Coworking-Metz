@@ -5,9 +5,7 @@ add_action(
         register_rest_route('cowo/v1', '/coworkers_now', array(
             'methods'  => 'GET',
             'callback' => function () {
-                $api = TICKET_BASE_URL.'/current-members?key='.API_KEY_TICKET;
-                $json = file_get_contents($api);
-                $data = json_decode($json);
+                $data = tickets('/current-members');
                             
                 $number_coworkers = count($data);
                 $number_worplaces = 40;
