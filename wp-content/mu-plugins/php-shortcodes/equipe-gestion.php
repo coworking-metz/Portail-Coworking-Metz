@@ -83,7 +83,7 @@ if ($equipe) {
                         <?php if ($admin && $membre['equipe-role'] != 'waiting') { ?>
                             <th>
                                 <?php if ($membre['ID'] != $uid) { ?>
-                                    <a title="Se connecter avec se compte et passer une commande..." onclick="return confirm('Vous allez accéder à la boutique en étant connecté en tant que <?= addslashes($membre['display_name']); ?>.')" href="?se-connecter-en-tant-que=<?= $membre['ID']; ?>">🛒</a>
+                                    <a title="Passer une commande avec ce compte adhérent..." onclick="return confirm('Vous allez accéder à la boutique en étant connecté en tant que <?= addslashes($membre['display_name']); ?>.')" href="?se-connecter-en-tant-que=<?= $membre['ID']; ?>">🛒</a>
                                 <?php } ?>
                             </th>
                             <th>
