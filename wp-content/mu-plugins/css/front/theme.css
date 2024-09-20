@@ -78,6 +78,11 @@ body.home {
         }
     }
 
+    @media screen and (max-width: 1199px) {
+        .navbar-brand-inner {
+            background-image: url(/images/logo-noir.svg);
+        }
+    }
     .mainbar-wrap:not(.is-stuck) {
         position: relative;
 
