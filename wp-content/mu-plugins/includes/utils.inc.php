@@ -1,4 +1,31 @@
 <?php
+/**
+ * Fetches and decodes JSON data from a URL.
+ *
+ * @param string $url URL to fetch the JSON from.
+ * @param bool $assoc Whether to return an associative array (true) or an object (false).
+ * @param resource $context Stream context for HTTP headers (optional).
+ * @return mixed Returns the decoded JSON as an array or object, or null on error.
+ */
+function file_get_json($url, $assoc = true, $context = null)
+{
+    if (empty($url)) {
+        return null;
+    }
+
+    // Use the context if provided
+    $jsonContent = file_get_contents($url, false, $context);
+    if ($jsonContent === false) {
+        return null;
+    }
+
+    $data = json_decode($jsonContent, $assoc);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return null;
+    }
+
+    return $data;
+}
 
 
 /**

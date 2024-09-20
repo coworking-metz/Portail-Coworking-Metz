@@ -19,7 +19,7 @@
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $number_coworkers = curl_exec($ch);
-        $number_worplaces = 28;
+        $number_worplaces = 40;
         $remaining_workplaces = $number_worplaces - $number_coworkers;
 
         if ($number_coworkers == 0) {
