@@ -5,7 +5,10 @@ function tickets($endpoint, $options = [])
 {
     $url = TICKET_BASE_URL . $endpoint;
     $payload = $options['payload'] ?? [];
-    
+
+    $key = 'tickets-' . sha1($endpoint . serialize($payload));
+
+    if(isset($GLOBALS[$key])) return $GLOBALS[$key];
     // $payload['key'] = API_KEY_TICKET;
 
     $url = add_query_arg($payload, $url);
@@ -16,7 +19,9 @@ function tickets($endpoint, $options = [])
         ]
     ]);
 
-    return file_get_json($url, true, $context);
+    $return = file_get_json($url, true, $context);
+    $GLOBALS[$key] = $return;
+    return $return;
 }
 
 function isAboEnCours($date)
