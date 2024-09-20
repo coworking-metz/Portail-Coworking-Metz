@@ -7,8 +7,7 @@
 	$user_id = get_current_user_id();
 	if(!$user_id) return;
 
-    $json = file_get_contents(TICKET_BASE_URL.'/members/'.$user_id.'?key='.API_KEY_TICKET); 
-	$result = json_decode($json);
+    $result = tickets('/members/'.$user_id); 
 
 ?>
         <div class="tickets-status">
@@ -21,17 +20,17 @@
         <div class="tickets-status">
             <p>
                 <?php
-                    if($result->balance > 0) {
-                        echo 'Il vous reste <em>' . $result->balance . '</em> ';
-                            if ($result->balance > 0 && $result->balance < 2) {
+                    if($result['balance'] > 0) {
+                        echo 'Il vous reste <em>' . $result['balance'] . '</em> ';
+                            if ($result['balance'] > 0 && $result['balance'] < 2) {
                                 echo ' ticket<sup>*</sup> à consommer.';
                             } else {
                                 echo ' tickets<sup>*</sup> à consommer.';
                             }
-                    } elseif ($result->balance == 0){
-                        echo 'La balance de vos tickets<sup>*</sup> est de <em>' . $result->balance . '</em> .' ;
+                    } elseif ($result['balance'] == 0){
+                        echo 'La balance de vos tickets<sup>*</sup> est de <em>' . $result['balance'] . '</em> .' ;
                     } else {
-                        echo 'Votre balance de tickets est négative : <em>' . $result->balance . '</em><br>Pour rappel, 
+                        echo 'Votre balance de tickets est négative : <em>' . $result['balance'] . '</em><br>Pour rappel, 
                         l\'accès à l\'espace de coworking est conditionné par un solde positif de tickets.<br>
                         <strong>Merci de bien vouloir régulariser</strong> à  l\'aide d\'un carnet de 10 journées ou de l\'achat de tickets à l\'unité
                         <a href="https://www.coworking-metz.fr/boutique/ticket-1-journee/"><span class="dispo">disponibles ici</span></a>.';
@@ -40,8 +39,8 @@
             </p>
             <p>
                 <?php
-                    if( isset($result->lastAboEnd)) {
-                        $dateAbo = strtotime($result->lastAboEnd);
+                    if( isset($result['lastAboEnd'])) {
+                        $dateAbo = strtotime($result['lastAboEnd']);
                         echo 'Vous disposez d’un abonnement valable jusqu’au <em>' . date_i18n('l d F Y', $dateAbo) . '</em> inclus.';
                     } else {
                         echo 'Vous n\'avez pas d\'abonnement en cours. Vous pouvez vous en procurer un 
@@ -55,8 +54,8 @@
 
                 $currentYear = date('Y');
                 $nextYear = date('Y', strtotime('+1 year'));
-                    if($result->lastMembership == $currentYear || $result->lastMembership == $nextYear){
-                        echo 'Vous disposez d\'une carte d’adhérent à jour pour l\'année<em>' . $result->lastMembership . '</em> .';
+                    if($result['lastMembership'] == $currentYear || $result['lastMembership'] == $nextYear){
+                        echo 'Vous disposez d\'une carte d’adhérent à jour pour l\'année<em>' . $result['lastMembership'] . '</em> .';
                     } else {
                         echo '<span class="alerte"><strong>Vous n\'êtes pas à jour concernant l\'adhésion ' . $currentYear . '.</strong></span><br/><br/><u>La carte adhérent est obligatoire pour venir coworker, 
                         il s\'agit d\'une prérogative de notre assureur. Sans cette adhésion, il ne vous est pas possible de coworker.</u>';
@@ -65,9 +64,9 @@
                 ?>
             </p>
             <p>
-                Vous avez coworké <em><?php echo $result->activity; ?></em> journées au cours des 6 derniers mois.
+                Vous avez coworké <em><?php echo $result['activity']; ?></em> journées au cours des 6 derniers mois.
                     <?php 
-                        if ($result->activeUser == true && ($result->lastMembership == $currentYear || $result->lastMembership == $currentYear+1)){
+                        if ($result['activeUser'] == true && ($result['lastMembership'] == $currentYear || $result['lastMembership'] == $currentYear+1)){
                             echo '<br/><br/>Vous êtes <em>membre actif <sup>**</sup></em> .';
                         } else {
                             echo '<br/><br><em>Vous n\'êtes pas membre actif <sup>**</sup></em> .';
@@ -75,8 +74,8 @@
                     ?>
             </p>
             <p>
-                <?php echo 'Vous avez coworké au total <em>' . $result->presencesConso . '</em> journées pour un total de <em>' . $result->presencesJours .'</em> jours de présence (jours uniques).<br><br>'; ?>
-                <?php if ($result->trustedUser == false) {
+                <?php echo 'Vous avez coworké au total <em>' . $result['presencesConso'] . '</em> journées pour un total de <em>' . $result['presencesJours'] .'</em> jours de présence (jours uniques).<br><br>'; ?>
+                <?php if ($result['trustedUser'] == false) {
                 echo '<strong>Dès votre 11<sup>ème</sup> journée de coworking, vous pourrez :</strong>
                         <ul>
                             <li>accéder à l\'espace aux horaires habituelles (de 7h à 23h) 💪</li>
