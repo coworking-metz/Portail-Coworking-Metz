@@ -1,27 +1,20 @@
 <?php
-
-function tickets($endpoint, $options = [])
-{
-    $url = TICKET_BASE_URL . $endpoint;
-
-    $url .= '?key=' . API_KEY_TICKET;
-
-    return file_get_json($url);
-}
 /**
- * Fetches and decodes JSON data from a file.
+ * Fetches and decodes JSON data from a URL.
  *
- * @param string $filename Path to the JSON file.
+ * @param string $url URL to fetch the JSON from.
  * @param bool $assoc Whether to return an associative array (true) or an object (false).
+ * @param resource $context Stream context for HTTP headers (optional).
  * @return mixed Returns the decoded JSON as an array or object, or null on error.
  */
-function file_get_json($filename, $assoc = true)
+function file_get_json($url, $assoc = true, $context = null)
 {
-    if (empty($filename)) {
+    if (empty($url)) {
         return null;
     }
 
-    $jsonContent = file_get_contents($filename);
+    // Use the context if provided
+    $jsonContent = file_get_contents($url, false, $context);
     if ($jsonContent === false) {
         return null;
     }

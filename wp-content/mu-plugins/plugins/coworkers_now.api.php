@@ -10,7 +10,7 @@ add_action(
                 $data = json_decode($json);
                             
                 $number_coworkers = count($data);
-                $number_worplaces = 28;
+                $number_worplaces = 40;
                 $remaining_workplaces = $number_worplaces - $number_coworkers;
 
                 $output = '';

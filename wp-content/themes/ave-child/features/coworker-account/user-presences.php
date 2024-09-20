@@ -11,8 +11,7 @@ function api_coworker_presences(){
         $current_user = wp_get_current_user();
 
 		$user_id = $current_user->ID;
-		$json = file_get_contents(TICKET_BASE_URL.'/members/'.$user_id.'/activity?key='.API_KEY_TICKET); 
-		$json = json_decode($json, true);
+		$json = tickets('/members/'.$user_id.'/activity'); 
 
 
         $html = '<h5 style="text-align: center">Décompte</h5>';
