@@ -12,7 +12,7 @@ if (is_user_logged_in()) {
 ?>
     <h2>Mes coupons repas</h2>
     <div class="tickets-status">
-        <p>Vous disposez actuellement de <em><?= $member['meals']; ?></em> utilisables dans la cantina, auprès de l'Amour Food</em></p>
+        <p>Vous disposez actuellement de <em><?= $member['meals']; ?></em> coupons repas utilisables dans la cantina, auprès de l'Amour Food</em></p>
     </div>
     <h3>Coupons repas utilisés</h3>
     <?= generateCalendar($_GET['cy'] ?? false, $_GET['cm'] ?? false, array_column($mealsActivity, 'mealDate')); ?>
@@ -24,7 +24,7 @@ if (is_user_logged_in()) {
             <tr>
                 <th>Date d'achat</th>
                 <th>Nombre de repas</th>
-                <th>Prix unitaire</th>
+                <!-- <th>Prix unitaire</th> -->
                 <th>Commande</th>
             </tr>
             <?php foreach ($mealVouchers as $voucher) {
@@ -36,9 +36,9 @@ if (is_user_logged_in()) {
                     <td>
                         <center><?= $voucher['meals']; ?></center>
                     </td>
-                    <td>
+                    <!-- <td>
                         <center><?= $voucher['meal_price']; ?>€</center>
-                    </td>
+                    </td> -->
                     <?php if ($order) { ?>
                         <td class="order-reference"><a href="<?= $order->get_view_order_url(); ?>"><?= $voucher['orderReference']; ?></a></td>
                     <?php } else { ?>
