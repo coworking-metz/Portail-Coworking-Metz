@@ -11,9 +11,10 @@ include __DIR__ . '/app-visite-ics.php';
 
 function coworking_app_settings()
 {
-    $url = TICKET_BASE_URL.'/current-members?key=' . API_KEY_TICKET . '&delay=15';
-    $data = file_get_contents($url);
-    $presences = json_decode($data, true);
+    $presences = tickets('/current-members', ['payload' => ['delay' => 15]]);
+    // $url = TICKET_BASE_URL.'/current-members?key=' . API_KEY_TICKET . '&delay=15';
+    // $data = file_get_contents($url);
+    // $presences = json_decode($data, true);
     $fermer_vacances = get_field('fermer_vacances', 'option');
     if ($fermer_vacances) {
         $exclude = extractDatesExcludePast(get_field('empecher_visites', 'option'), fetch_holidays());
@@ -34,26 +35,26 @@ function coworking_app_settings()
 
 
     $dates = [];
-    foreach($visites_futures as $v)  {
-        $dates[date('Y-m-d', strtotime($v->visite))]=($dates[$v->visite]??0)+1;
+    foreach ($visites_futures as $v) {
+        $dates[date('Y-m-d', strtotime($v->visite))] = ($dates[$v->visite] ?? 0) + 1;
     }
     $visites = [
         'jours_de_visites' => array_map('intval', get_field('jours_de_visites', 'option')),
-        'horaire' => trim( date("H:i", strtotime(get_field('horaire', 'option')))),
+        'horaire' => trim(date("H:i", strtotime(get_field('horaire', 'option')))),
         'limite_mois' => intval(get_field('limite_mois', 'option')),
         'limite_visites_jour' => intval(get_field('limite_visites_jour', 'option')),
         'fermer_vacances' => $fermer_vacances,
         'fermer_visites' => visites_fermees(),
         'empecher_visites' => $exclude,
-        'dates'=>$dates
+        'dates' => $dates
     ];
     $settings = [
         'mentions' => $mentions,
         'visites' => $visites,
         'polaroid_default' => site_url() . '/images/pola-poule-vide.jpg',
         'occupation' => [
-            'total' => 28,
-            'visites'=>getNbVisitesToday(),
+            'total' => 40,
+            'visites' => getNbVisitesToday(),
             'presents' => count($presences)
         ]
     ];
