@@ -46,7 +46,7 @@ if ($equipe) {
 
         <form method="post" action="/mon-compte/equipe/" class="woocommerce-EditAccountForm edit-account">
             <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                <label for="account_display_name">Invitez un membre à rejoindre votre équipe</label>
+                <label for="equipe-inviter">Invitez un membre à rejoindre votre équipe</label>
                 <input type="email" required class="woocommerce-Input woocommerce-Input--text input-text" name="equipe-inviter" value="<?= $saisie ? htmlspecialchars($equipeInviter) : ''; ?>" placeholder="Adresse e-mail du coworker que vous voulez inviter">
                 <?php if ($erreur) { ?><span style="color:red"><?= $erreur; ?></span><br><?php } ?>
                 <span><em>La personne que vous invitez doît déjà avoir un compte coworker</em></span>
