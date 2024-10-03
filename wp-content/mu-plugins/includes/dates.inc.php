@@ -139,6 +139,7 @@ function isTomorrow($date)
  */
 function date_maline($t)
 {
+    if(!$t) return;
 
     $date = new DateTime($t, new DateTimeZone('Europe/Paris'));
 
