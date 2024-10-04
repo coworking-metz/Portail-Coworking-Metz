@@ -8,19 +8,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         removeQueryVar('notification');
         notifications.forEach(notification => {
+            const storage = notification.dataset.storage == 'local' ? localStorage : sessionStorage;
             const id = notification.dataset.id;
             const key = 'hide-notification-' + id
-            if (sessionStorage.getItem(key)) {
+            if (storage.getItem(key)) {
 
                 delete notification.dataset.visible
             } else {
                 if (notification.dataset.once) {
-                    sessionStorage.setItem(key, true);
+                    storage.setItem(key, true);
                 }
                 notification.dataset.visible = true;
                 notification.querySelector('button').addEventListener('click', e => {
                     delete notification.dataset.visible
-                    sessionStorage.setItem(key, true);
+                    storage.setItem(key, true);
                 })
                 if (notification.dataset.duration) {
                     setTimeout(() =>
@@ -52,9 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function generateNotification(data) {
 
 
-        const id = 'notification-' + (data.id || Number(Math.random()*100));
-        console.log('[data-id="'+id+"']")
-        if(document.querySelector('[data-id="'+id+'"]')) return;
+        const id = 'notification-' + (data.id || Number(Math.random() * 100));
+        console.log('[data-id="' + id + "']")
+        if (document.querySelector('[data-id="' + id + '"]')) return;
         let cta = '';
         if (data.cta) {
             cta = `<span class="cta"><a href="${data.cta.url}" class="button">${data.cta.caption}</a></span>`;
@@ -63,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             data.duree = 5;
         }
 
-        const notificationHTML = `<div class="notification ${data.position||''}" role="alert" data-id="${id}" data-type="${data.type || 'default'}" data-once="${data.once ? 'true' : ''}" data-duration="${data.duree || ''}">
+        const notificationHTML = `<div class="notification ${data.position || ''}" role="alert" data-id="${id}" data-type="${data.type || 'default'}" data-once="${data.once ? 'true' : ''}" data-storage="${data.storage ? data.storage : 'session'}" data-duration="${data.duree || ''}">
         <div>
         <div>
         <figure><img src="${data.image || ''}"></figure>
@@ -76,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Inject the notification into the DOM before the closing </body> tag
         document.body.insertAdjacentHTML('beforeend', notificationHTML);
-        setTimeout(() => activerNotifications(),500)
+        setTimeout(() => activerNotifications(), 500)
         return id;
     }
 
