@@ -1,6 +1,31 @@
 <?php
 
 /**
+ * Get the number of WooCommerce orders made by the current connected user
+ *
+ * @return int The number of orders
+ */
+function get_current_user_order_count() {
+    // Get the current user's ID
+    $user_id = get_current_user_id();
+    
+    if ( $user_id === 0 ) {
+        return 0; // Return 0 if no user is logged in
+    }
+
+    // Query WooCommerce orders for the current user
+    $order_query = new WC_Order_Query( array(
+        'customer_id' => $user_id,
+        'return'      => 'ids', // Only get the order IDs
+    ) );
+
+    $orders = $order_query->get_orders();
+
+    // Return the number of orders
+    return count( $orders );
+}
+
+/**
  * Récupère les commandes WooCommerce selon les numéros de commande personnalisés spécifiés.
  *
  * Cette fonction interroge les commandes WooCommerce en cherchant des métadonnées spécifiques,
