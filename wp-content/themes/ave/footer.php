@@ -17,7 +17,7 @@
 		?>
 
 	</div><!-- .site-container -->
-
+	<div class="hide tickets-status"><p><em>1</em></p></div>
 	<?php liquid_action( 'after' ) ?>
 
 	<?php wp_footer(); ?>
