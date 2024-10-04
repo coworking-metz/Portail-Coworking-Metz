@@ -33,7 +33,7 @@ function generateNotification($data)
     if ($data['temporaire'] ?? false) {
         $data['duree'] = 5;
     }
-    return '<div class="notification" role="alert" data-id="' . $id . '" data-type="' . ($data['type'] ?? 'default') . '" data-once="' . (($data['once'] ?? false) ? 'true' : 'false') . '" data-duration="' . ($data['duree'] ?? false) . '">
+    return '<div class="notification" role="alert" data-id="' . $id . '" data-type="' . ($data['type'] ?? 'default') . '" data-once="' . (($data['once'] ?? false) ? 'true' : 'false') . '" data-duration="' . ($data['duree'] ?? false) . '" data-storage="' . ($data['storage'] ?? 'session') . '">
     <div>
     <div>
     <figure><img src="' . ($data['image'] ?? '') . '"></figure>
