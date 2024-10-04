@@ -1,5 +1,11 @@
 <?php
-
+function formatMac($mac) {
+    $mac = trim($mac);
+    $mac =str_replace(' ',':', $mac);
+    $mac =str_replace('-',':', $mac);
+    $mac = strtoupper($mac);
+    return $mac;
+}
 function devices_get_erreur($id_erreur)
 {
     if ($id_erreur == 'mac-deja-enregistree') {

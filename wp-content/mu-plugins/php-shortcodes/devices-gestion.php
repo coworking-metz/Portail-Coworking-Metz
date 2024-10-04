@@ -1,12 +1,14 @@
 <?php
 
+$mac = $_GET['mac'] ?? '';
 $status = $_GET['status'] ?? '';
-$adresseMac = $_GET['adresse-mac'] ?? '';
+$adresseMac = formatMac($_GET['adresse-mac'] ?? '');
 $user_id = get_current_user_id();
 $erreur = devices_get_erreur($_GET['erreur'] ?? false);
 if ($erreur || $adresseMac) {
     $formOpen = true;
 }
+
 
 if ($status=='device-removed') {
     echo generateNotification([
@@ -45,7 +47,7 @@ $okToDelete = count($devices)>1;
     </p>
     <p>
     <button type="submit" class="woocommerce-Button button wp-element-button">Ajouter cet appareil</button>
-    <button type="button" data-action="ajouter-appareil"  class="woocommerce-Button button" style="background-color:transparent;color:black;border:1px solid black">Annuler</button>
+    <button type="button" data-action="annuler-ajouter-appareil"  class="woocommerce-Button button" style="background-color:transparent;color:black;border:1px solid black">Annuler</button>
 </p>
 </form>
 
@@ -60,7 +62,7 @@ $okToDelete = count($devices)>1;
             <th></th>
         </tr>
         <?php foreach ($devices as $device) { ?>
-            <tr>
+            <tr data-mac="<?= $device['macAddress']; ?>">
                 <td>
                     <code><?= $device['macAddress']; ?></code>
                 </td>
@@ -68,7 +70,7 @@ $okToDelete = count($devices)>1;
                     <?= date_francais($device['heartbeat']??'', true) ?: 'Jamais'; ?>
                 </td>
                 <td>
-                    <?= ($device['heartbeat']??false) ? ($device['location'] ?: 'poulailler') : ''; ?>
+                    <?= ($device['heartbeat']??false) ? ucfirst(str_replace('-','',($device['location'] ?: 'poulailler'))) : ''; ?>
                 </td>
                 <th>
                     <?php if($okToDelete) {?>
