@@ -41,7 +41,7 @@ if (isset($_POST['valider-polaroid'])) {
 
 if (!empty($_FILES['photo'])) {
     $message = getFileUploadError($_FILES['photo']['error']);
-
+    $basename = $_FILES['photo']['name'];
     $tmp_name = $_FILES['photo']['tmp_name'] ?? false;
     if (!$message && $tmp_name) {
         // Use finfo to detect the MIME type of the file
@@ -57,6 +57,7 @@ if (!empty($_FILES['photo'])) {
                 imagejpeg($image, $convertedPath, 100); // Save as JPEG with max quality
                 imagedestroy($image); // Free up memory
                 $tmp_name = $convertedPath; // Update tmp_name to the new JPEG path
+                $basename = str_ireplace('.png', '.jpg', $basename);
             } else {
                 $message = 'Seules les images au format JPG ou PNG son autorisées';
             }
@@ -70,6 +71,17 @@ if (!empty($_FILES['photo'])) {
             'texte' => $message
         ]);
     } else {
+        $ext = end(explode('.', $basename));
+        $content = file_get_contents($tmp_name);
+        $tmp_path = wp_upload_dir()['basedir'] . '/' . sha1($content) . '-' . $ext;
+        file_put_contents($tmp_path, $content);
+        $tmp_url = site_url() . '/wp-content/' . explode('/wp-content/', $tmp_path)[1];
+        $isImagePhoto = isImagePhoto($tmp_url);
+        unlink($tmp_path);
+        if (!$isImagePhoto) {
+            custom_redirect('/mon-compte/polaroid/?notification=' . urlencode(json_encode(['type' => 'error', 'titre' => 'Photo invalide', 'texte' => "Merci d'utiliser une photo en prise de vue réelle: Pas de dessin, pas de logo, etc."])));
+        }
+
         $content = getBase64EncodedImage($tmp_name);
     }
 }
@@ -130,7 +142,7 @@ if (!empty($_FILES['photo'])) {
         <form id="polaroid" method="post" enctype="multipart/form-data">
             <div class="file-upload">
                 <input type=file name="photo">
-                <button class="button">Choisir une photo</button>
+                <button type="submit" class="button">Choisir une photo</button>
             </div>
 
         </form>
