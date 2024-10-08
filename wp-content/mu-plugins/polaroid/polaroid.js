@@ -4,6 +4,7 @@ window.addEventListener('load', e => {
     if (form) {
         let fileUpload = form.querySelector('[name=photo]')
         fileUpload.addEventListener('change', e => {
+            form.querySelector('button[type="submit"]').innerHTML='<i>Chargement en cours&hellip;</i>'
             form.submit();
         })
     }
