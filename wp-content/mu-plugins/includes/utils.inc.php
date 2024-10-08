@@ -1,5 +1,17 @@
 <?php
 /**
+ * Redirects to a specified URL using a meta refresh tag.
+ *
+ * @param string $url The URL to redirect to.
+ * @param int $delay Delay in seconds before the redirection takes effect.
+ */
+function custom_redirect($url, $delay = 0) {
+    echo "<meta http-equiv='refresh' content='{$delay};url={$url}'>";
+    exit;
+}
+
+
+/**
  * Fetches and decodes JSON data from a URL.
  *
  * @param string $url URL to fetch the JSON from.
