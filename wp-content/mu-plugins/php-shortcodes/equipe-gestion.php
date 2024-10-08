@@ -104,7 +104,7 @@ if ($equipe) {
         </table>
         <div>
             <b>Légende</b><br>
-            🛒&nbsp; <span>Se connecter avec se compte et passer une commande...</span><br>
+            🛒&nbsp; <span>Se connecter avec ce compte et passer une commande...</span><br>
             🚪&nbsp; <span>Quitter une équipe</span><br>
             🗑️&nbsp; <span>Retirer un membre de l'équipe</span><br>
         </div>
