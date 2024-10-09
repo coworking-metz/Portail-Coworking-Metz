@@ -12,6 +12,7 @@ add_action('wp_footer', function () {
     if(!$uid) return;
     $equipe = getMonEquipe($uid, true);
     if (!$equipe) return;
+    if(count($equipe['membres'])<2) return;
     $debiteurs = [];
 
     foreach ($equipe['membres'] as $membre) {
