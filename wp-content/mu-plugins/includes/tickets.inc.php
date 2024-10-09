@@ -8,7 +8,7 @@ function tickets($endpoint, $options = [])
 
     $key = 'tickets-' . sha1($endpoint . serialize($payload));
 
-    if(isset($GLOBALS[$key])) return $GLOBALS[$key];
+    if (isset($GLOBALS[$key])) return $GLOBALS[$key];
     // $payload['key'] = API_KEY_TICKET;
 
     $url = add_query_arg($payload, $url);
@@ -27,7 +27,8 @@ function tickets($endpoint, $options = [])
 function isAboEnCours($date)
 {
     $dateAbo = strtotime($date);
-    if ($dateAbo > time()) return true;
+    $date = date('Y-m-d', $dateAbo);
+    if ($date >= date('Y-m-d')) return true;
 }
 
 
