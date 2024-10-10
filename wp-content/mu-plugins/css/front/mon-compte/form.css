@@ -1,0 +1,13 @@
+.form-error {
+    color: rgb(175, 0, 0);
+    font-size: smaller;
+}
+
+.form-error a {
+    color:#333;
+    text-decoration: underline;
+}
+
+.form-error a:hover {
+    text-decoration: none;
+}

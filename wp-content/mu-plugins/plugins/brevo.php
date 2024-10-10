@@ -25,6 +25,17 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_script('brevo-script', $js, array(), filemtime(ABSPATH . $js), true);
 });
 
+add_action('wp_head', function () {
+?>
+<style>
+/* body .brevo-conversations {
+  visibility: visible;
+  opacity: 1;
+} */
+
+</style>
+<?php
+});
 /**
  * Ajout du script brevo pour le chat sur les pages du site
  */
