@@ -13,9 +13,10 @@ if (isset($_GET['is-connected'])) {
             $parts = explode(' ', $user->display_name);
 
             $user->firstName = $parts[0];
-            $user->lastName = implode(' ', array_slice($parts, 1));
+            unset($parts[0]);
+            $user->lastName = implode(' ', $parts);
             $user->_first_order_date = date_francais(get_user_meta($user->ID, '_first_order_date', true));
-            $user->hash = sha1($user->ID . AUTH_KEY);
+            $user->hash = sha1($user->ID . 5 . AUTH_KEY);
         } else {
 
             $hash = $_COOKIE['session-hash'] ?? false;
