@@ -10,6 +10,10 @@ if ($adresseMac) {
         $devices = getDevices();
         
         $adressesMac = array_column($devices, 'macAddress');
+        if(isMacAddressRandomized($adresseMac)) {
+            wp_redirect('/mon-compte/appareils/?erreur=mac-random&adresse-mac=' . urlencode($adresseMac));
+            exit;
+        }
         if(in_array($adresseMac, $adressesMac)) {
             wp_redirect('/mon-compte/appareils/?erreur=mac-deja-enregistree&adresse-mac=' . urlencode($adresseMac));
             exit;

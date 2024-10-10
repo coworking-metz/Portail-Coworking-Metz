@@ -28,7 +28,7 @@ $devices = getDevices();
 $okToDelete = count($devices)>1;
 
 
-
+$nbInvalides=0;
 
 ?>
 <p>Vous pouvez gérer ici la liste des appareils associés à votre compte Coworking.</p>
@@ -42,8 +42,9 @@ $okToDelete = count($devices)>1;
     <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
         <label for="adresse-mac"><strong>Ajouter un appareil à votre compte</strong></label>
         <input type="text" required class="woocommerce-Input woocommerce-Input--text input-text" name="adresse-mac" value="<?= htmlspecialchars($adresseMac); ?>" placeholder="Adresse MAC de l'appareil à ajouter">
-        <?php if ($erreur) { ?><span style="color:red"><?= $erreur; ?></span><br><?php } ?>
+        <?php if ($erreur) { ?><span class="form-error"><?= $erreur; ?></span><br><?php } else {?>
         <span><em>Vous pouvez trouver votre adresse MAC <a href="https://www.studentinternet.eu/fr/docs/francais/depannage/comment-puis-je-trouver-ladresse-mac-de-mon-appareil/" target="_blank"><u> en suivant cette procédure</u></a>.</em></span>
+        <?php } ?>
     </p>
     <p>
     <button type="submit" class="woocommerce-Button button wp-element-button">Ajouter cet appareil</button>
@@ -65,6 +66,8 @@ $okToDelete = count($devices)>1;
             <tr data-mac="<?= $device['macAddress']; ?>">
                 <td>
                     <code><?= $device['macAddress']; ?></code>
+                    <?php if(isMacAddressRandomized($device['macAddress'])) {$nbInvalides++;?> <span title="Cette adresse MAC est randomisée, elle est incompatible avec le système de détection des présences du coworking">⚠️</span>
+                        <?php }?>
                 </td>
                 <td>
                     <?= date_francais($device['heartbeat']??'', true) ?: 'Jamais'; ?>
@@ -84,4 +87,8 @@ $okToDelete = count($devices)>1;
 
     </tbody>
 </table>
+<?php if($nbInvalides>0) {?>
+    <b>Légende</b><br>
+    <span>⚠️</span>: <?=devices_get_erreur('mac-random');?>
+    <?php }?>
 <?php }?>

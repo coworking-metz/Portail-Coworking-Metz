@@ -11,8 +11,11 @@ function devices_get_erreur($id_erreur)
     if ($id_erreur == 'mac-deja-enregistree') {
         return "Cette adresse MAC est déjà associée à votre compte";
     }
+    if ($id_erreur == 'mac-random') {
+        return 'Cette adresse MAC semble être une adresse aléatoire, incompatible avec le système de détection des présences du coworking. Vous pouvez <a href="https://support.osmozis.com/je-suis-deja-connectee/comment-desactiver-les-adresses-mac-aleatoires/" target="_blank">consulter cette page pour en savoir plus</a> ou bien <a href="#ouvrir-brevo">nous contacter pour demander de l\'aide</a>';
+    }
     if ($id_erreur == 'ajout-mac-impossible') {
-        return "AJout de l'adresse MAC impossible";
+        return "Ajout de l'adresse MAC impossible";
     }
 }
 
@@ -57,4 +60,23 @@ function getDevices($user_id=null){
     $user_id = $user_id ?: get_current_user_id();
     $devices = tickets('/members/'.$user_id.'/mac-addresses');
     return $devices;
+}
+
+/**
+ * Vérifie si une adresse MAC est probablement randomisée
+ * @param string $mac L'adresse MAC à vérifier
+ * @return bool True si l'adresse MAC est probablement randomisée, false sinon
+ */
+function isMacAddressRandomized($mac) {
+    // Normalise l'adresse MAC en supprimant les caractères non hexadécimaux
+    $cleanedMac = strtoupper(preg_replace('/[^a-fA-F0-9]/', '', $mac));
+
+    // Récupère le deuxième caractère de l'adresse MAC nettoyée
+    $secondChar = $cleanedMac[1];
+
+    // Définit les caractères qui indiquent une adresse randomisée
+    $randomizedChars = ['2', '6', 'A', 'E'];
+
+    // Vérifie si le deuxième caractère est un de ceux qui indiquent une randomisation
+    return in_array($secondChar, $randomizedChars);
 }
