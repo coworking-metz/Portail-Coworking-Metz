@@ -83,4 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     Notifications.generate = generateNotification
+    Notifications.closeAll = function () {
+        document.querySelectorAll('.notification[data-visible]').forEach(div => div.querySelector('button').click())
+    }
 })

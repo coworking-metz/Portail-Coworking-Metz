@@ -1,10 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     if (document.location.href.includes('wp-admin')) return;
 
-    document.querySelectorAll('[href="#ouvrir-brevo"]').forEach(bouton => bouton.addEventListener('click', e => {
+    // document.querySelectorAll('[href="#ouvrir-brevo"]').forEach(bouton => bouton.addEventListener('click', e => {
+    //     e.preventDefault()
+    //     BrevoConversations('openChat', true);
+    // }));
+    document.addEventListener('click', e => {
+        const target = e.target.closest('[href="#ouvrir-brevo"]')
+        if (!target) return;
         e.preventDefault()
+        Notifications.closeAll()
         BrevoConversations('openChat', true);
-    }));
+    });
 
     fetch('/mon-compte/?is-connected').then(response => response.json()).then(data => {
         const user_data = {}
@@ -16,11 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 user_data.lastName = data.user.lastName;
                 user_data.phone = null;
                 user_data.notes = '';
-                user_data.display_name = data.user.display_name;
+                // user_data.display_name = data.user.display_name;
                 try {
                     user_data.roles = data.user.roles.join(', ');
                 } catch (e) {
-                    console.error({e});
+                    console.error({ e });
                 }
                 user_data._first_order_date = data.user._first_order_date;
             }
@@ -36,13 +43,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 var s = d.createElement('script');
                 s.async = true;
                 s.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
+                s.addEventListener('load', () => {
+                    if (user_data) {
+                        BrevoConversations('updateIntegrationData', user_data);
+                    }
+                    if (document.location.hash.includes('ouvrir-brevo')) {
+                        BrevoConversations('openChat', true);
+                    }
+                })
                 if (d.head) d.head.appendChild(s);
             })(document, window, 'BrevoConversations');
 
 
-            if (user_data) {
-                BrevoConversations('updateIntegrationData', user_data);
-            }
+
         }
     })
 })
