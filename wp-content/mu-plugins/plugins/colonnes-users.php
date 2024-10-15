@@ -52,9 +52,9 @@ add_filter(
             $url = wp_get_attachment_url($photo);
             if ($url) {
                 $value =
-                    '<a href="/polaroid/pdf.php?id=' .
+                    '<a href="https://photos.coworking-metz.fr/' .
                     $user_id .
-                    '" target="_blank"><img src="' .
+                    '.pdf" target="_blank"><img src="' .
                     $url .
                     '" style="width:32px;height:32px;object-fit:cover;"></a>';
             }
