@@ -1,4 +1,16 @@
 <?php
+add_filter('pre_user_query', function ($user_query) {
+    global $wpdb;
+
+    if (isset($_GET['pola']) && $_GET['pola'] === 'true') {
+        $user_query->query_from .= " LEFT JOIN $wpdb->usermeta ON $wpdb->usermeta.user_id = $wpdb->users.ID AND $wpdb->usermeta.meta_key = 'votre_photo'";
+        $user_query->query_from .= " LEFT JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->usermeta.meta_value";
+
+        $user_query->query_where .= " AND $wpdb->usermeta.meta_value != ''"; // Ensuring the meta_value is not empty
+
+        $user_query->query_orderby = " ORDER BY $wpdb->posts.post_date DESC"; // Sorting users by attachment upload date
+    }
+});
 
 
 add_action('profile_update', function ($user_id, $old_user_data) {
@@ -40,6 +52,14 @@ add_action('admin_bar_menu', function ($admin_bar) {
         'id'    => 'manager',
         'title' => 'Voir la fiche dans manager',
         'href'  => esc_url( 'https://manager.coworking-metz.fr/members/'.$user_id ),
+        'meta'  => array(
+            'target' => '_blank'
+        ),
+    ));
+    $admin_bar->add_menu(array(
+        'id'    => 'pola_pdf',
+        'title' => 'Téléchager le pdf du polaroid',
+        'href'  => esc_url( 'https://photos.coworking-metz.fr/'.$user_id.'.pdf' ),
         'meta'  => array(
             'target' => '_blank'
         ),
