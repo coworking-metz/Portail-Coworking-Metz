@@ -25,7 +25,10 @@ function generateNotification($data)
 
     if ($GLOBALS['notification']) return;
     $GLOBALS['notification']++;
-    $id = sha1(json_encode($data));
+    $id = $data['id'] ?? sha1(json_encode($data));
+    if($id == 'random') {
+        $id = sha1(microtime());
+    }
     $cta = '';
     if ($data['cta'] ?? false) {
         $cta = '<span class="cta"><a href="' . $data['cta']['url'] . '" class="button">' . $data['cta']['caption'] . '</a></span>';
