@@ -1,4 +1,42 @@
 <?php
+function get_users_with_visit_no_orders()
+{
+    // Obtenir tous les utilisateurs avec la meta 'visite' renseignée
+    $args = [
+        'meta_key'     => 'visite',
+        'meta_compare' => 'EXISTS',
+    ];
+
+    $users = get_users($args);
+    $filtered_users = [];
+
+    // Filtrer les utilisateurs qui n'ont pas de commande WooCommerce
+    foreach ($users as $user) {
+        if (!in_array('subscriber', (array) $user->roles, true) && !in_array('customer', (array) $user->roles, true)) {
+            continue;
+        }
+        $orders = wc_get_orders([
+            'customer_id' => $user->ID,
+            'limit'       => 1, // Limiter pour optimisation
+        ]);
+
+        if (empty($orders)) {
+            // Récupérer la valeur de la meta 'visite' pour tri ultérieur
+            $user->visite_sort = strtotime(get_user_meta($user->ID, 'visite', true));
+            if(!$user->visite_sort) continue;
+            if($user->visite_sort > time()) continue;
+            $filtered_users[] = $user;
+        }
+    }
+
+    // Trier les utilisateurs par 'visite' de manière décroissante
+    usort($filtered_users, function ($a, $b) {
+        return $b->visite_sort <=> $a->visite_sort;
+    });
+
+    return $filtered_users;
+}
+
 
 /**
  * Passer un user en customer (Coworker) et lui envoyer le mail de creation de compte
@@ -332,7 +370,7 @@ function envoyerMailRappelVisite($user_id, $autres_codes = [])
     $template_id = get_field('email_rappel_visite', 'option');
 
     $visite = get_user_meta($user_id, 'visite', true);
-    if(!$visite) return;
+    if (!$visite) return;
     $key = 'email-rappel-visite-' . $user_id;
     if (get_user_meta($user_id, $key, true))
         return;
@@ -375,7 +413,7 @@ function envoyerMailRecapVisite($user_id, $autres_codes = [])
     $template_id = get_field('email_recap_visite', 'option');
 
     $visite = get_user_meta($user_id, 'visite', true);
-    if(!$visite) return;
+    if (!$visite) return;
 
     $key = 'email-recap-visite-' . $user_id;
     if (get_user_meta($user_id, $key, true))

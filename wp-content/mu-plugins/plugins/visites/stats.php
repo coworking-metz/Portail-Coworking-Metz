@@ -12,7 +12,7 @@ add_action('admin_menu', function () {
 
 function render_stats_visites_page()
 {
-    $annee = $_GET['annee']??false;
+    $annee = $_GET['annee'] ?? false;
 ?>
     <div class="stats-visites">
         <div>
@@ -79,11 +79,31 @@ function render_stats_visites_page()
                             position: 'right',
                             beginAtZero: true,
                             grid: {
-                                drawOnChartArea: false // only draw grid lines for this axis
+                                drawOnChartArea: false
                             },
                             ticks: {
                                 callback: function(value) {
-                                    return value + '%'; // format ticks with '%' sign
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        annotation: {
+                            annotations: {
+                                line1: {
+                                    type: 'line',
+                                    yMin: statsData.averageTransformation,
+                                    yMax: statsData.averageTransformation,
+                                    borderColor: '#333',
+                                    borderWidth: 2,
+                                    yScaleID: 'y1', // Assurez-vous que la ligne est ancrée sur l'axe y1
+                                    label: {
+                                        content: 'Taux moyen annuel',
+                                        enabled: true,
+                                        position: 'end',
+                                        backgroundColor: 'rgba(99, 99, 99, 0.5)'
+                                    }
                                 }
                             }
                         }
@@ -92,6 +112,7 @@ function render_stats_visites_page()
             });
         });
     </script>
+
 
 <?php
 }
@@ -104,7 +125,7 @@ add_action('admin_enqueue_scripts', function ($hook) {
 
     // Enqueue Chart.js
     wp_enqueue_script('chartjs', 'https://cdn.jsdelivr.net/npm/chart.js');
-
+    wp_enqueue_script('chartjs-plugin-annotation', 'https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2/dist/chartjs-plugin-annotation.min.js');
     $stat_year = $_GET['annee'] ?? date('Y');
     $visits_data = []; // Nombre de visites par mois
     $orders_data = []; // Visites avec commande par mois
@@ -151,10 +172,13 @@ add_action('admin_enqueue_scripts', function ($hook) {
             $transformation_rate[$i] = 0;
         }
     }
-
+    $average_transformation_rate = array_sum($transformation_rate) / count(array_filter($transformation_rate, function ($value) {
+        return $value > 0;
+    }));
     wp_localize_script('chartjs', 'statsData', [
         'visits' => array_values($visits_data),
         'orders' => array_values($orders_data),
         'transformation' => array_values($transformation_rate),
+        'averageTransformation' => $average_transformation_rate
     ]);
 });
