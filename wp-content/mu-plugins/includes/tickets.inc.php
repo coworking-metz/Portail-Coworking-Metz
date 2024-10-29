@@ -12,6 +12,7 @@ function tickets($endpoint, $options = [])
     // $payload['key'] = API_KEY_TICKET;
 
     $url = add_query_arg($payload, $url);
+    if (isset($_GET['debug-api'])) m(add_query_arg(['key'=>API_KEY_TICKET],$url));
 
     $context = stream_context_create([
         'http' => [
