@@ -95,7 +95,7 @@ $nbInvalides = 0;
         </tbody>
     </table>
     <?php if ($nbInvalides > 0) { ?>
-        <b>Légende</b><br>
-        <span>⚠️</span>: <?= devices_get_erreur('mac-random'); ?>
+        <!-- <b>Légende</b><br> -->
+        <span>⚠️</span>: <?= devices_get_erreur('mac-random-legende'); ?>
     <?php } ?>
 <?php } ?>
