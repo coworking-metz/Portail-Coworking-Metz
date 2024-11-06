@@ -1,0 +1,7 @@
+img.bordure {
+    border: clamp(1rem,10vw,2rem) solid var(--color-primary);
+    border-radius: 15px;
+    display: block;
+    margin: 1rem auto;
+
+}
