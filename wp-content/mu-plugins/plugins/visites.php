@@ -81,7 +81,7 @@ if (isset($_GET['visites-csv'])) {
         $stats = [];
         for ($y = 2023; $y <= date('Y'); $y++) {
             for ($m = 1; $m <= 12; $m++) {
-                $stats[$y . '-' . str_pad($m, 2, '0',STR_PAD_LEFT)] = 0;
+                $stats[$y . '-' . str_pad($m, 2, '0', STR_PAD_LEFT)] = 0;
             }
         }
         // Pour chaque utilisateur, créer un événement ICS
@@ -265,4 +265,30 @@ function envoyer_mails_rappel_de_vistes()
     }
 
     return $cpt;
+}
+
+
+
+if (isset($_GET['set-visite'])) {
+    add_action('init', function () {
+        $users = get_users(); // Get all users
+        $cpt = 0;
+        foreach ($users as $user) {
+            if (in_array('externe', $user->roles))
+                continue;
+            if (in_array('administrator', $user->roles))
+                continue;
+
+            $visite = get_user_meta($user->ID, 'visite', true);
+
+            if (empty($visite)) {
+                $cpt++;
+                // User registration date is used if 'visite' is empty
+                $registered = $user->user_registered;
+                update_user_meta($user->ID, 'visite', $registered);
+            }
+        }
+
+        me($cpt);
+    });
 }
