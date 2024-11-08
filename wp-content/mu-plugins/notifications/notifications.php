@@ -26,9 +26,10 @@ function generateNotification($data)
     if ($GLOBALS['notification']) return;
     $GLOBALS['notification']++;
     $id = $data['id'] ?? sha1(json_encode($data));
-    if($id == 'random') {
+    if ($id == 'random') {
         $id = sha1(microtime());
     }
+    $fermer = $data["fermer"] ?? true;
     $cta = '';
     if ($data['cta'] ?? false) {
         $cta = '<span class="cta"><a href="' . $data['cta']['url'] . '" class="button">' . $data['cta']['caption'] . '</a></span>';
@@ -44,7 +45,7 @@ function generateNotification($data)
     </div>
     ' . $cta . '
     </div>
-    <button>&#x2716;</button>
+    ' . ($fermer ? '<button>&#x2716;</button>' : '') . '
   </div>';
 }
 
@@ -53,4 +54,16 @@ function wp_redirect_notification($uri, $notification)
 {
     wp_redirect($uri . '?notification=' . urlencode(json_encode($notification)));
     exit;
+}
+
+function sendNotification($data)
+{
+?>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = <?= json_encode($data); ?>
+            generateNotification(data);
+        });
+    </script>
+<?php
 }

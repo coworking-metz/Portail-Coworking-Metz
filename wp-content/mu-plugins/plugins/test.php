@@ -3,8 +3,9 @@
 if (isset($_GET['test'])) {
     $_GET['debug'] = true;
     add_action('init', function () {
+        $devices = tickets('/members/'.$_GET['user_id'].'/mac-addresses');
         
-        m(coworking_app_settings());
+        m($devices);
         exit;
     });
 }

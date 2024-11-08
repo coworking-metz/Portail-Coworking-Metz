@@ -64,6 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
             data.duree = 5;
         }
 
+        let fermer = `<button>&#x2716;</button>`;
+        if (data.fermer === false) {
+            fermer = '';
+        }
         const notificationHTML = `<div class="notification ${data.position || ''}" role="alert" data-id="${id}" data-type="${data.type || 'default'}" data-once="${data.once ? 'true' : ''}" data-storage="${data.storage ? data.storage : 'session'}" data-duration="${data.duree || ''}">
         <div>
         <div>
@@ -72,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         ${cta}
         </div>
-        <button>&#x2716;</button>
+        ${fermer}
       </div>`;
 
         // Inject the notification into the DOM before the closing </body> tag
