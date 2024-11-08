@@ -61,8 +61,8 @@ function sendNotification($data)
 ?>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const data = <?= json_encode($data); ?>
-            generateNotification(data);
+            const data = <?= json_encode($data); ?>;
+            Notifications.generate(data);
         });
     </script>
 <?php
