@@ -12,8 +12,12 @@ function devices_get_erreur($id_erreur)
     if ($id_erreur == 'mac-deja-enregistree') {
         return "Cette adresse MAC est déjà associée à votre compte";
     }
-    if ($id_erreur == 'mac-random') {
-        return ['erreur'=>'Adresse MAC invalide','type' => 'warning', 'titre' => 'Appareil incompatible', 'texte' => "L'adresse MAC de l'appareil que vous essayez d'ajouter semble être une adresse aléatoire, incompatible avec le système de détection des présences du coworking. <a href='https://support.osmozis.com/je-suis-deja-connectee/comment-desactiver-les-adresses-mac-aleatoires/' target='_blank'>Comment désactiver cette fonctionnalité ?</a>", 'cta' => ['url' => '#ouvrir-brevo', 'caption' => 'Demander de l\'aide'], 'id'=>'random'];
+    if (strstr($id_erreur, 'mac-random')) {
+        $erreur = ['erreur' => 'Adresse MAC invalide', 'type' => 'warning', 'titre' => 'Appareil incompatible', 'texte' => "L'adresse MAC de l'appareil semble être une adresse aléatoire, incompatible avec le système de détection des présences du coworking. <a href='https://www.coworking-metz.fr/comment-desactiver-les-adresses-mac-aleatoires/' target='_blank'>Comment désactiver cette fonctionnalité ?</a>", 'cta' => ['url' => '#ouvrir-brevo', 'caption' => 'Demander de l\'aide'], 'id' => 'random'];
+        if ($id_erreur == 'mac-random') {
+            return $erreur;
+        }
+        return '<b>' . $erreur['erreur'] . '</b> ' . $erreur['texte'];
     }
     if ($id_erreur == 'ajout-mac-impossible') {
         return "Ajout de l'adresse MAC impossible";

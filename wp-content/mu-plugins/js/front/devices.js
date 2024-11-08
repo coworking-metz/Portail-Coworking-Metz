@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 //         position: 'top-right',
                 //         type: 'warning',
                 //         titre: 'Problème d\'identification de votre appareil',
-                //         texte: `Il semble que vote appareil utilise une technologie de sécurité incompatible avec le système de détection des présences du coworking. <a href="https://support.osmozis.com/je-suis-deja-connectee/comment-desactiver-les-adresses-mac-aleatoires/" target="_blank">En savoir plus</a>`,
+                //         texte: `Il semble que vote appareil utilise une technologie de sécurité incompatible avec le système de détection des présences du coworking. <a href="https://www.coworking-metz.fr/comment-desactiver-les-adresses-mac-aleatoires/" target="_blank">En savoir plus</a>`,
                 //         cta: {
                 //             url: `#ouvrir-brevo`,
                 //             caption: 'Demander de l\'aide'
