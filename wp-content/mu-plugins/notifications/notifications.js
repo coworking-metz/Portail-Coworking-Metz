@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const storage = notification.dataset.storage == 'local' ? localStorage : sessionStorage;
             const id = notification.dataset.id;
             const key = 'hide-notification-' + id
-            if (storage.getItem(key)) {
+            const estfermable = !!notification.querySelector('button')
+            if (estfermable && storage.getItem(key)) {
 
                 delete notification.dataset.visible
             } else {

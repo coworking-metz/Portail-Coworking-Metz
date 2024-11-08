@@ -1,11 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
     if (document.querySelector('.product-template-default')) {
 
+        const addToCart = queryGet('add-to-cart');
+        if (addToCart) {
+            window.addEventListener('load', () => {
+                document.querySelector('.single_add_to_cart_button').click()
+            })
+        }
+        const quantite = queryGet('quantite');
+        if (quantite) {
+            document.querySelector('[name="quantity"]').value = quantite;
+        }
         const custom_price = document.querySelector('input#custom_price');
         if (custom_price) {
             const prix = queryGet('prix');
             if (prix) {
-                custom_price.value = prix.replace('.',',');
+                custom_price.value = prix.replace('.', ',');
             }
         }
 
