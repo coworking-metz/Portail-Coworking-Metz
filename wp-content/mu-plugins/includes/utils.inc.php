@@ -149,7 +149,6 @@ function replace_first_occurrence($search, $replace, $subject)
 /**
  * Retourne l'uri de la page, sans query string ni slash final
  *
- * @return void
  */
 function get_current_uri()
 {
