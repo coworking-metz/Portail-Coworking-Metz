@@ -5,6 +5,7 @@ $status = $_GET['status'] ?? '';
 $adresseMac = formatMac($_GET['adresse-mac'] ?? '');
 $user_id = get_current_user_id();
 $erreur = devices_get_erreur($_GET['erreur'] ?? false);
+$formOpen = false;
 
 if ($erreur || $adresseMac) {
 

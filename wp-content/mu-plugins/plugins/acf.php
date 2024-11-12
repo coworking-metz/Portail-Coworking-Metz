@@ -4,7 +4,7 @@
 add_filter('the_content', function ($content) {
     // Get the global post object
     global $post;
-    if ($post->post_type != 'page') return $content;
+    if (($post->post_type??'') != 'page') return $content;
 
     // Get the meta value for 'importer_depuis_github'
     $importer_depuis_github = get_field('importer_depuis_github', $post->ID);

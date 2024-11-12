@@ -7,7 +7,7 @@ define('PRODUIT_CARNET_TICKETS', 3022);
  * Afficher une notification relative au status retourné lors de la validation d'un compte
  * 
  */
-add_action('wp_head', function () use ($data, $blocked) {
+add_action('wp_head', function () {
     $uid = get_current_user_id();
     if (!$uid) return;
 
@@ -27,7 +27,7 @@ add_action('wp_head', function () use ($data, $blocked) {
 
     $stats = get_user_balance($uid);
     if ($stats['balance'] >= 0) return;
-    $abos_en_cours = $stats['lastAboEnd'] >= date('Y-m-d');
+    $abos_en_cours = ($stats['lastAboEnd']??false) >= date('Y-m-d');
     $titre = 'Solde de tickets débiteur';
     $texte = 'Votre balance est de <b>' . $stats['balance'] . ' ticket(s)</b>.';
     $fermer = true;
@@ -35,7 +35,7 @@ add_action('wp_head', function () use ($data, $blocked) {
     $type = false;
     $total = round(abs($stats['balance']));
     if ($abos_en_cours || $total > 3) {
-        $blocked = true;
+        // $blocked = true;
         $fermer = false;
         $type = 'error';
         $texte .= ' Vous devez acheter des tickets à l\'unité pour régulariser la situation. <a href="/mon-compte/">En savoir plus</a>.';
@@ -52,7 +52,7 @@ add_action('wp_head', function () use ($data, $blocked) {
         'texte' => $texte,
         'cta' => $cta
     ];
-    if (!$blocked && $uri == '/mon-compte') return;
+    if (!$blocked && ($uri == '/mon-compte' || strstr($uri, 'commande-recue'))) return;
     if ($blocked) {
 ?>
         <script type="text/javascript">
