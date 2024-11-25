@@ -5,7 +5,7 @@ add_action(
         register_rest_route('cowo/v1', '/trombi', array(
             'methods'  => 'GET',
             'callback' => function ($request) {
-
+				\CoworkingMetz\CloudFlare::cacheHeaders(60*5);
                 $response = [];
                 if (get_field('activer_theme_trombi', 'option')) {
                     $response['couleur_du_texte'] = get_field('couleur_du_texte', 'option');
@@ -19,6 +19,7 @@ add_action(
                     }
                 }
                 $response['polaroids'] = get_field('polaroids', 'option');
+                $response['image_fond_pola'] = get_field('image_fond_pola', 'option');
                 $response['divers'] = get_field('divers', 'option');
                 $visites = [];
                 $users = fetch_users_with_visite_today();
