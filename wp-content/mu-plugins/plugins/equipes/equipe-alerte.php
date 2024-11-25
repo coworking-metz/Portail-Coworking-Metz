@@ -17,7 +17,7 @@ add_action('wp_footer', function () {
 
     foreach ($equipe['membres'] as $membre) {
         $balance = $membre['balance']['balance'];
-        $aboActif = isAboEnCours($membre['balance']['lastAboEnd']);
+        $aboActif = isAboEnCours($membre['balance']['lastAboEnd']??'');
         if ($aboActif) continue;
         if ($balance > 0) continue;
         $debiteurs[] = $membre;
