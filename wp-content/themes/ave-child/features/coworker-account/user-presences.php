@@ -99,36 +99,11 @@ function api_coworker_presences(){
         $json_value .= json_encode(array_count_values($array_month)['décembre']);
         $json_value .= '</script>';
         //values by years
-        $json_value .= '<script> const datasPresences2014 = ';
-        $json_value .= json_encode(array_count_values($array_year)['2014']);
-        $json_value .= '</script>';
-        $json_value .= '<script> const datasPresences2015 = ';
-        $json_value .= json_encode(array_count_values($array_year)['2015']);
-        $json_value .= '</script>';
-        $json_value .= '<script> const datasPresences2016 = ';
-        $json_value .= json_encode(array_count_values($array_year)['2016']);
-        $json_value .= '</script>';
-        $json_value .= '<script> const datasPresences2017 = ';
-        $json_value .= json_encode(array_count_values($array_year)['2017']);
-        $json_value .= '</script>';
-        $json_value .= '<script> const datasPresences2018 = ';
-        $json_value .= json_encode(array_count_values($array_year)['2018']);
-        $json_value .= '</script>';
-        $json_value .= '<script> const datasPresences2019 = ';
-        $json_value .= json_encode(array_count_values($array_year)['2019']);
-        $json_value .= '</script>';
-        $json_value .= '<script> const datasPresences2020 = ';
-        $json_value .= json_encode(array_count_values($array_year)['2020']);
-        $json_value .= '</script>';
-        $json_value .= '<script> const datasPresences2021 = ';
-        $json_value .= json_encode(array_count_values($array_year)['2021']);
-        $json_value .= '</script>';
-        $json_value .= '<script> const datasPresences2022 = ';
-        $json_value .= json_encode(array_count_values($array_year)['2022']);
-        $json_value .= '</script>';
-        $json_value .= '<script> const datasPresences2023 = ';
-        $json_value .= json_encode(array_count_values($array_year)['2023']);
-        $json_value .= '</script>';
+        for($y = 2014; $y <= date('Y'); $y++) {
+			$json_value .= '<script> const datasPresences'.$y.' = ';
+			$json_value .= json_encode(array_count_values($array_year)[$y]??0);
+			$json_value .= '</script>';
+        }
   
     echo $json_value;
     ?>
