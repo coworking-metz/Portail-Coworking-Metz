@@ -47,7 +47,6 @@ class CloudFlare
      */
     public static function purgeUrls($urls, $prechauffer = false)
     {
-
         foreach (splitArrayByLength($urls, 10) as $tmp_urls) {
             CloudFlare::doPurgeUrls($tmp_urls);
         }
