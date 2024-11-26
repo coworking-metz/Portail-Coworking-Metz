@@ -12,6 +12,11 @@ $changer = false;
 if (isset($_GET['modifier'])) {
     $changer = true;
 }
+if (isset($_GET['supprimer'])) {
+    $key = 'user_' . $uid;
+    update_field('votre_photo', 0, $key);
+    custom_redirect_notification('/mon-compte/polaroid/', ['type' => 'success', 'titre' => 'Photo supprimée', 'texte' => "Votre photo a été supprimée."]);
+}
 
 
 $options = get_field('polaroids', 'option');
@@ -34,7 +39,7 @@ if (isset($_POST['valider-polaroid'])) {
 
     update_field('url_image_trombinoscope', '', $key);
 
-    wp_redirect('/mon-compte/polaroid/');
+    custom_redirect('/mon-compte/polaroid/');
     exit;
 }
 
@@ -76,11 +81,11 @@ if (!empty($_FILES['photo'])) {
         $tmp_path = wp_upload_dir()['basedir'] . '/' . sha1($content) . '-' . $ext;
         file_put_contents($tmp_path, $content);
         $tmp_url = site_url() . '/wp-content/' . explode('/wp-content/', $tmp_path)[1];
-        $isImagePhoto = isImagePhoto($tmp_url);
+        // $isImagePhoto = isImagePhoto($tmp_url);
         unlink($tmp_path);
-        if (!$isImagePhoto) {
-            custom_redirect('/mon-compte/polaroid/?notification=' . urlencode(json_encode(['type' => 'error', 'titre' => 'Photo invalide', 'texte' => "Merci d'utiliser une photo en prise de vue réelle: Pas de dessin, pas de logo, etc."])));
-        }
+        // if (!$isImagePhoto) {
+        //     custom_redirect('/mon-compte/polaroid/?notification=' . urlencode(json_encode(['type' => 'error', 'titre' => 'Photo invalide', 'texte' => "Merci d'utiliser une photo en prise de vue réelle: Pas de dessin, pas de logo, etc."])));
+        // }
 
         $content = getBase64EncodedImage($tmp_name);
     }
@@ -136,6 +141,10 @@ if (!empty($_FILES['photo'])) {
         <div class="polaroid__definitif"><img src="https://photos.coworking-metz.fr/polaroid/size/big/<?= $uid . '.jpg?' . rand(); ?>"></div>
         <br>
         <a class="button" href="?modifier">Modifier</a>
+        <small>
+            <br>
+            <a onclick="return confirm('Voulez vous vraiment retirer votre photo ?')" href="?supprimer">Supprimer ma photo</a>
+        </small>
     <?php } else { ?>
         <p>Utilisez l'outil ci-dessous pour choisir la photo qui sera affichée sur l'écran du coworking sous forme d'un polaroïd aux couleurs du Poulailler.</p>
         <p>Ce polaroïd sera <strong><span style="text-decoration: underline;">uniquement</span></strong> utilisé pour un affichage sur la télévision lorsque vous êtes présent au Poulailler. Il pourra aussi faire l'objet par la suite d'une impression en format papier pour être affiché sur le tableau d'honneur des coworkers de la salle de pause. Merci pour votre participation !</p>

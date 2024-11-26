@@ -56,6 +56,11 @@ function wp_redirect_notification($uri, $notification)
     exit;
 }
 
+function custom_redirect_notification($uri, $notification)
+{
+    custom_redirect($uri . '?notification=' . urlencode(json_encode($notification)));
+}
+
 function sendNotification($data)
 {
 ?>
