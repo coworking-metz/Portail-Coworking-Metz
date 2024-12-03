@@ -49,6 +49,7 @@ function coworking_app_settings()
         'dates' => $dates
     ];
     $settings = [
+		'acces-nomades'=>!!get_field('acces-nomades', 'option'),
         'mentions' => $mentions,
         'visites' => $visites,
         'polaroid_default' => site_url() . '/images/pola-poule-vide.jpg',

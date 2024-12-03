@@ -19,7 +19,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        const dateDebut = document.querySelector("#tm-extra-product-options");
+
+        const datePresenceNomade = document.querySelector("#tm-extra-product-options:has(#tm-epo-field-36253-0)");
+        if (datePresenceNomade) {
+            const dateField = datePresenceNomade.querySelector('input');
+
+            const dateConseillee = getDateFromQuery()
+            if (dateConseillee) {
+                dateField.value = dateConseillee
+            } else {
+                dateField.value = getToday()
+
+            }
+        }
+
+		
+        const dateDebut = document.querySelector("#tm-extra-product-options:has(#tm-epo-field-3208-0)");
         if (dateDebut) {
             const dateField = dateDebut.querySelector('input');
             dateDebut.addEventListener('click', e => {
