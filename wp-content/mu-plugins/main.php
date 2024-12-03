@@ -23,6 +23,11 @@ foreach (glob(MUDIR . "/includes/*.inc.php") as $filename) {
     include $filename;
 }
 
+// Récupérer tous les fichiers .inc.php dans le dossier ./includes en utilisant __DIR__
+foreach (glob(MUDIR . "/cli/*.cli.php") as $filename) {
+    include $filename;
+}
+
 add_action('admin_init',function() {
 
     // Ajouter les fichiers js
