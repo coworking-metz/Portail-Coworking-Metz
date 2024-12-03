@@ -3,18 +3,10 @@
 
 
 // Fonction pour interroger l'API GPT d'OpenAI via une requête POST
-function askGPT($prompt, $args = [], $cache = true)
+function askGPT($prompt, $args = [])
 {
 
-    if ($cache) {
-        $key = 'ask-' . sha1($prompt . serialize($args));
 
-        $result = get_transient($key);
-        if (explode(':', $result)[0] == 'ERREUR') {
-            return '';
-        }
-        if ($result) return $result;
-    }
 
     $data = $args['data'] ?? false;
     $tokens = $args['tokens'] ?? false;
@@ -59,11 +51,10 @@ function askGPT($prompt, $args = [], $cache = true)
         mse($result);
     }
     $reponse = $result['message'] ?? false;
-    set_transient($key, $reponse);
 
+    $status = 'success';
     if (explode(':', $reponse)[0] == 'ERREUR') {
-        return '';
+        $status = 'error';
     }
-    return $reponse;
+    return ['status'=>$status, 'response'=>$reponse];
 }
-

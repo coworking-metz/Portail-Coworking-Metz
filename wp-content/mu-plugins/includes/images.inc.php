@@ -1,9 +1,18 @@
 <?php
 function isImagePhoto($url)
 {
-    $reponse = askGPT('Dis moi si ce fichier image est bien une photo en prise de vue réelle. Ta réponse sera composée d\'un mot : true si c\'est une photo, false sinon', ['image' => $url], false);
+    $payload = askGPT('Dis moi si ce fichier image est bien une photo en prise de vue réelle et quelle contient bien un visage humain. Ta réponse sera composée d\'un mot : true si c\'est une photo avec un visage, false sinon', ['image' => $url]);
 
-    if($reponse == 'true') return true;
+    if($payload['status']!= 'success') return true; // dans le cas où chatgpt n'a pas sur donner une réponse claire
+    if($payload['response'] === 'true') return true;
+}
+
+function isImagePhotoConnue($url)
+{
+    $payload = askGPT('Dis moi si cette photo présente le visage d\'une personnalité connue. Ta réponse sera composée du nom de la personnalité connue, "false" sinon', ['image' => $url]);
+
+    if($payload['status']!= 'success') return true; // dans le cas où chatgpt n'a pas sur donner une réponse claire
+    if($payload['response'] === 'true') return true;
 }
 
 function generer_image_alpha($url)

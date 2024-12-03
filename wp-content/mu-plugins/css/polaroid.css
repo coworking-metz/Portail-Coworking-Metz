@@ -1,0 +1,9 @@
+
+.upload-php #the-list tr[id]:has(.set_polaroid_valid) .has-media-icon a:after {
+    content:'⚠️';
+    display: inline-block;
+}
+
+.upload-php #the-list tr[id]:has(.set_polaroid_valid) .row-actions {
+    position: static;
+}
