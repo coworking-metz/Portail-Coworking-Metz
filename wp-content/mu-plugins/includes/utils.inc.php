@@ -1,4 +1,39 @@
 <?php
+/**
+ * Supprime un paramètre spécifique d'une URI.
+ *
+ * @param string $uri   L'URI d'entrée.
+ * @param string $param Le nom du paramètre à supprimer.
+ * @return string       L'URI mise à jour.
+ */
+function remove_url_parameter(string $uri, string $param): string {
+    // Divise l'URI en deux parties : la partie principale et les paramètres
+    $parts = parse_url($uri);
+    if (!isset($parts['query'])) {
+        return $uri; // Retourne l'URI original si aucun paramètre
+    }
+
+    // Convertit la chaîne de requête en tableau
+    parse_str($parts['query'], $queryParams);
+
+    // Supprime le paramètre demandé
+    unset($queryParams[$param]);
+
+    // Reconstruit la chaîne de requête sans le paramètre
+    $updatedQuery = http_build_query($queryParams);
+
+    // Reconstruit l'URI complète
+    $updatedUri = $parts['scheme'] . '://' . $parts['host'];
+    if (isset($parts['path'])) {
+        $updatedUri .= $parts['path'];
+    }
+    if (!empty($updatedQuery)) {
+        $updatedUri .= '?' . $updatedQuery;
+    }
+
+    return $updatedUri;
+}
+
 
 /**
  * Redirects to a specified URL using a meta refresh tag.

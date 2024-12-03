@@ -55,7 +55,7 @@ function coworking_app_settings()
         'occupation' => [
             'total' => 40,
             'visites' => getNbVisitesToday(),
-            'presents' => count($presences)
+            'presents' => count($presences??[])
         ]
     ];
     return $settings;
@@ -337,7 +337,6 @@ function addEventToCalendar($user_id, $event)
 
     return $payload;
 }
-
 /**
  * Crée un nouvel utilisateur WordPress si l'email n'existe pas déjà
  *
@@ -354,6 +353,8 @@ function create_wp_user_if_not_exists($user, $meta = [])
     $prenom = $user['prenom'];
     $email = $user['email'];
     $password = $user['password'];
+    $role = isset($user['role']) ? $user['role'] : 'subscriber'; // Définit le rôle par défaut à 'subscriber' si aucun rôle n'est fourni
+
     if (!$password) {
         $password = sha1(time());
     }
@@ -366,11 +367,12 @@ function create_wp_user_if_not_exists($user, $meta = [])
 
         // Met à jour les informations supplémentaires
         wp_update_user([
-            'ID'         => $user_id,
-            'first_name' => $prenom,
-            'last_name'  => $nom,
-            'nickname'   => $prenom . ' ' . $nom,
-            'display_name' => $prenom . ' ' . $nom,
+            'ID'          => $user_id,
+            'first_name'  => $prenom,
+            'last_name'   => $nom,
+            'nickname'    => $prenom . ' ' . $nom,
+            'display_name'=> $prenom . ' ' . $nom,
+            'role'        => $role // Définit le rôle de l'utilisateur
         ]);
 
         // Définit le 'user_nicename'
@@ -386,7 +388,9 @@ function create_wp_user_if_not_exists($user, $meta = [])
     }
 
     // Réactive l'envoi de mail
-    add_action('register_new_user', 'wp_send_new_user_notifications');
+    add_action('register_new_user', 'wp_send_new_user_notifications', 10, 1, function($user_id) {
+        wp_send_new_user_notifications($user_id, 'both');
+    });
 
     return $user_id;
 }
