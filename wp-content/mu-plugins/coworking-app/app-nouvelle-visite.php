@@ -24,7 +24,7 @@ add_action('rest_api_init', function () {
             if (!$payload) return;
 
             $params = json_decode(stripslashes($payload), true);
-
+            $modeTest = $params['modeTest'] ?? false;
             $user = $params['user'] ?? false;
 
             if (empty($user['email']))
@@ -53,8 +53,10 @@ add_action('rest_api_init', function () {
                 if ($user_id) {
                     $event = ['name' => 'Visite pour ' . $nom, 'start' => $start, 'end' => $end];
 
-                    envoyerMailAlerte($user_id, ['activite' => $activite ? $activite : 'Non renseigné']);
-                    envoyerMailVisite($user_id, $params['visite']);
+                    if (!$modeTest) {
+                        envoyerMailAlerte($user_id, ['activite' => $activite ? $activite : 'Non renseigné']);
+                        envoyerMailVisite($user_id, $params['visite']);
+                    }
 
                     return rest_ensure_response(['event' => $event, 'user_id' => $user_id]);
                 }
