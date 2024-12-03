@@ -146,8 +146,9 @@ if (!empty($_FILES['photo'])) {
             <a onclick="return confirm('Voulez vous vraiment retirer votre photo ?')" href="?supprimer">Supprimer ma photo</a>
         </small>
     <?php } else { ?>
-        <p>Utilisez l'outil ci-dessous pour choisir la photo qui sera affichée sur l'écran du coworking sous forme d'un polaroïd aux couleurs du Poulailler.</p>
-        <p>Ce polaroïd sera <strong><span style="text-decoration: underline;">uniquement</span></strong> utilisé pour un affichage sur la télévision lorsque vous êtes présent au Poulailler. Il pourra aussi faire l'objet par la suite d'une impression en format papier pour être affiché sur le tableau d'honneur des coworkers de la salle de pause. Merci pour votre participation !</p>
+        <p>Choisissez la photo qui sera affichée sur l'écran du coworking sous forme d'un polaroïd aux couleurs du Poulailler.</p>
+
+        <p>Ce polaroïd sera <strong>uniquement utilisé pour des affichages interne au coworking</strong>. Il pourra aussi faire l'objet par la suite d'une impression en format papier pour être affiché sur le tableau d'honneur des coworkers de la salle de pause.<br><b>Merci pour votre participation !</b></p>
         <form id="polaroid" method="post" enctype="multipart/form-data">
             <div class="file-upload">
                 <input type=file name="photo">
@@ -155,5 +156,6 @@ if (!empty($_FILES['photo'])) {
             </div>
 
         </form>
+        <p style="font-size:80%;margin-top:1em">Merci d'utiliser <b>une vraie photo de vous</b> (pas de logos, d'illustrations, d'images générées par l'IA ou de photos d'une autre personne). L'objectif des polaroids est que les autres coworkers puissent vous reconnaître et en apprendre un peu plus sur vous.</small></p>
     <?php } ?>
 <?php } ?>

@@ -13,8 +13,14 @@ add_filter('get_avatar', function ($avatar, $id_or_email, $size, $default, $alt)
     }
 
     if ($user_id) {
-        $avatar_url = get_user_photo($user_id);
-        $avatar = "<img src='{$avatar_url}' alt='{$alt}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+        // $avatar_url = get_user_photo($user_id);
+        $photo = get_field("votre_photo", "user_" . $user_id);
+        if ($photo) {
+            $avatar_url = wp_get_attachment_url($photo);
+            if ($avatar_url) {
+                $avatar = "<img src='{$avatar_url}' alt='{$alt}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+            }
+        }
     }
 
     return $avatar;
