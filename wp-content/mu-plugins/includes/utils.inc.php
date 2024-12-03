@@ -6,32 +6,20 @@
  * @param string $param Le nom du paramètre à supprimer.
  * @return string       L'URI mise à jour.
  */
-function remove_url_parameter(string $uri, string $param): string {
-    // Divise l'URI en deux parties : la partie principale et les paramètres
-    $parts = parse_url($uri);
-    if (!isset($parts['query'])) {
-        return $uri; // Retourne l'URI original si aucun paramètre
+function remove_url_parameter(string $url, string $param): string {
+    $urlParts = parse_url($url);
+    if (isset($urlParts['query'])) {
+        parse_str($urlParts['query'], $queryParams);
+        unset($queryParams[$param]);
+        $urlParts['query'] = http_build_query($queryParams);
     }
 
-    // Convertit la chaîne de requête en tableau
-    parse_str($parts['query'], $queryParams);
-
-    // Supprime le paramètre demandé
-    unset($queryParams[$param]);
-
-    // Reconstruit la chaîne de requête sans le paramètre
-    $updatedQuery = http_build_query($queryParams);
-
-    // Reconstruit l'URI complète
-    $updatedUri = $parts['scheme'] . '://' . $parts['host'];
-    if (isset($parts['path'])) {
-        $updatedUri .= $parts['path'];
-    }
-    if (!empty($updatedQuery)) {
-        $updatedUri .= '?' . $updatedQuery;
-    }
-
-    return $updatedUri;
+    $newUrl = (isset($urlParts['scheme']) ? $urlParts['scheme'] . '://' : '')
+            . (isset($urlParts['host']) ? $urlParts['host'] : '')
+            . (isset($urlParts['path']) ? $urlParts['path'] : '')
+            . (isset($urlParts['query']) && $urlParts['query'] ? '?' . $urlParts['query'] : '')
+            . (isset($urlParts['fragment']) ? '#' . $urlParts['fragment'] : '');
+    return $newUrl;
 }
 
 
