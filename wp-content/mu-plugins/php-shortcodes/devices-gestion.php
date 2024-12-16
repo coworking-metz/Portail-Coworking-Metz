@@ -31,6 +31,14 @@ if ($status == 'device-added') {
     ]);
 }
 
+if ($status == 'device-added-random') {
+    echo generateNotification([
+        'titre' => 'Appareil ajouté',
+        'texte' => 'Cet appareil est désormais lié à votre compte. Attenion, il s\'agit d\'une adresse MAC virtuelle, assurez vous que votre ordinateur est bien détecté sur les écrans du coworking',
+		'cta' => ['url' => '#ouvrir-brevo', 'caption' => 'Demander de l\'aide']
+    ]);
+}
+
 $devices = getDevices();
 $okToDelete = count($devices) > 1;
 
@@ -74,7 +82,7 @@ $nbInvalides = 0;
                     <td>
                         <code><?= $device['macAddress']; ?></code>
                         <?php if (isMacAddressRandomized($device['macAddress'])) {
-                            $nbInvalides++; ?> <span title="Cette adresse MAC est randomisée, elle est incompatible avec le système de détection des présences du coworking">⚠️</span>
+                            $nbInvalides++; ?> <span title="Cette adresse MAC est randomisée, elle est incompatible avec le système de détection des présences du coworking">🔮</span>
                         <?php } ?>
                     </td>
                     <td>
@@ -97,6 +105,6 @@ $nbInvalides = 0;
     </table>
     <?php if ($nbInvalides > 0) { ?>
         <!-- <b>Légende</b><br> -->
-        <span>⚠️</span>: <?= devices_get_erreur('mac-random-legende'); ?>
+        <span>🔮</span>: <?= devices_get_erreur('mac-random-legende'); ?>
     <?php } ?>
 <?php } ?>

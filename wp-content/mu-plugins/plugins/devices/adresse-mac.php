@@ -9,10 +9,12 @@ if ($adresseMac) {
         if(!$user_id) return;
         $devices = getDevices();
         
+		$status = 'device-added';
         $adressesMac = array_column($devices, 'macAddress');
         if(isMacAddressRandomized($adresseMac)) {
-            wp_redirect('/mon-compte/appareils/?erreur=mac-random&adresse-mac=' . urlencode($adresseMac));
-            exit;
+        		$status = 'device-added-random';
+//			    wp_redirect('/mon-compte/appareils/?erreur=mac-random&adresse-mac=' . urlencode($adresseMac));
+//				exit;
         }
         if(in_array($adresseMac, $adressesMac)) {
             wp_redirect('/mon-compte/appareils/?erreur=mac-deja-enregistree&adresse-mac=' . urlencode($adresseMac));
@@ -24,7 +26,7 @@ if ($adresseMac) {
             wp_redirect('/mon-compte/appareils/?erreur=ajout-mac-impossible&adresse-mac=' . urlencode($adresseMac));
             exit;
         }
-        wp_redirect('/mon-compte/appareils/?status=device-added');
+        wp_redirect('/mon-compte/appareils/?status='.$status);
         exit;
     });
 }
