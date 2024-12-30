@@ -124,8 +124,11 @@ function calculerPresencesTheoriques(array $personnes, string $dateFuture, int $
 {
     // Conversion de la date future en objet DateTime
     $dateActuelle = new DateTime();
-    $dateFuture = DateTime::createFromFormat('d/m/Y', $dateFuture);
-
+	if($dateFuture == 'today') {
+		$dateFuture = new DateTime();
+	} else  {
+		$dateFuture = DateTime::createFromFormat('d/m/Y', $dateFuture);
+	}
     // Calcul du nombre de jours jusqu'à la date future
     $interval = $dateActuelle->diff($dateFuture);
     $joursJusquaDateFuture = $interval->days;
