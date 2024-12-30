@@ -49,14 +49,15 @@ function updateMemberMacAddresses($userId, $macAddresses)
 
     // Exécuter la requête cURL et obtenir la réponse
     $response = curl_exec($ch);
-
     // Vérifier les erreurs cURL
     if (curl_errno($ch)) {
         // echo 'Erreur cURL: ' . curl_error($ch);
         return false;
     } else {
         // Afficher la réponse
-        return json_decode($response, true);
+        $data = json_decode($response, true);
+		if($data['message']??false) return false;
+		return true;
     }
     // Fermer la session cURL
     curl_close($ch);

@@ -17,11 +17,13 @@ if($effacerAdreseMac) {
             wp_redirect('/mon-compte/appareils/?erreur=mac-inconnue');
             exit;
         }
-        $adressesMac = array_filter($adressesMac, static function ($element) use($effacerAdreseMac){
+
+        $adressesMac = array_values(array_filter($adressesMac, static function ($element) use($effacerAdreseMac){
             return $element !== $effacerAdreseMac;
-        });
+        }));
 
         $response = updateMemberMacAddresses($user_id, $adressesMac);
+
         if(!$response) {
             wp_redirect('/mon-compte/appareils/?erreur=erreur-inconnue');
             exit;
