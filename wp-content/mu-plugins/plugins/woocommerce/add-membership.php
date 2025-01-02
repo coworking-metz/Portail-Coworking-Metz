@@ -26,6 +26,30 @@ add_action('wp_loaded', function () {
     WC()->cart->add_to_cart($product_id);
 });
 
+// Limit the quantity of product ID adhesion to 1 in the cart.
+add_action('woocommerce_before_calculate_totals', function () {
+    if (is_admin() && !defined('DOING_AJAX')) {
+        return;
+    }
+	$user_id = get_current_user_id();
+	if(!$user_id) return;
+
+    $product_id = get_latest_adhesion_product_id();
+    // Get the WooCommerce cart.
+    $cart = WC()->cart;
+
+    foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
+        // Check if the product ID .
+        if ($cart_item['product_id'] == $product_id && $cart_item['quantity'] > 1) {
+            // Force the quantity to 1.
+            $cart_item['quantity'] = 1;
+            // Update the cart item quantity.
+            $cart->set_quantity($cart_item_key, 1, true);
+        }
+    }
+});
+
+
 /**
  * Retrieve the latest published product with the meta key 'productType' set to 'adhesion'.
  *
