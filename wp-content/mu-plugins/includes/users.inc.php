@@ -1,4 +1,36 @@
 <?php
+/**
+ * Check if a user has a valid membership and cache the result in a transient until the next 1st of January.
+ *
+ * @param int $user_id The user ID to check for membership validity.
+ * @return bool True if the membership is valid, false otherwise.
+ */
+function has_valid_membership($user_id) {
+    // Generate a unique transient key for this user.
+    $transient_key = 'user_membership_is_valid_' . $user_id;
+
+    // Attempt to retrieve the value from the transient.
+    $cached_result = get_transient($transient_key);
+    if ($cached_result !== false) {
+        return $cached_result;
+    }
+
+    // Fetch the result via the tickets API.
+    $result = tickets('/members/' . $user_id); 
+    $is_valid = $result['membershipOk'] ?? false;
+
+    // Calculate expiration date (next 1st of January).
+    $current_time = time();
+    $next_january = strtotime('first day of January next year', $current_time);
+    $expiration = $next_january - $current_time;
+
+	if($is_valid) {
+		// Save the result in a transient.
+		set_transient($transient_key, $is_valid, $expiration);
+	}
+    return $is_valid;
+}
+
 
 
 function current_user_can_tarif_reduit(){
