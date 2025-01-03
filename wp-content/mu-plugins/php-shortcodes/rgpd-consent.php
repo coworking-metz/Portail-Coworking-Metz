@@ -1,0 +1,1 @@
+<a href="javascript:window.Sddan.cmp.displayUI();"><u>Consentement RGPD</u></a>
