@@ -3,9 +3,60 @@
 
 
 add_action('wp_head',function() {
+	return;
 ?>
-		<script type="text/javascript" src="https://cache.consentframework.com/js/pa/44945/c/V3Ydg/stub"></script>
-	<script type="text/javascript" src="https://choices.consentframework.com/js/pa/44945/c/V3Ydg/cmp" async></script>
+	<script type="text/javascript" src="/tarteaucitron.js-1.19.0/tarteaucitron.js"></script>
+<script type="text/javascript">
+        tarteaucitron.init({
+    	  "privacyUrl": "https://www.coworking-metz.fr/donnees/", /* Privacy policy url */
+          "bodyPosition": "bottom", /* or top to bring it as first element for accessibility */
 
+    	  "hashtag": "#tarteaucitron", /* Open the panel with this hashtag */
+    	  "cookieName": "tarteaucitron", /* Cookie name */
+    
+    	  "orientation": "middle", /* Banner position (top - bottom) */
+       
+          "groupServices": false, /* Group services by category */
+          "showDetailsOnClick": true, /* Click to expand the description */
+          "serviceDefaultState": "wait", /* Default state (true - wait - false) */
+                           
+    	  "showAlertSmall": false, /* Show the small banner on bottom right */
+    	  "cookieslist": false, /* Show the cookie list */
+                           
+          "closePopup": true, /* Show a close X on the banner */
+
+          "showIcon": true, /* Show cookie icon to manage cookies */
+          //"iconSrc": "", /* Optionnal: URL or base64 encoded image */
+          "iconPosition": "BottomLeft", /* BottomRight, BottomLeft, TopRight and TopLeft */
+
+    	  "adblocker": false, /* Show a Warning if an adblocker is detected */
+                           
+          "DenyAllCta" : true, /* Show the deny all button */
+          "AcceptAllCta" : true, /* Show the accept all button when highPrivacy on */
+          "highPrivacy": true, /* HIGHLY RECOMMANDED Disable auto consent */
+          "alwaysNeedConsent": false, /* Ask the consent for "Privacy by design" services */
+                           
+    	  "handleBrowserDNTRequest": false, /* If Do Not Track == 1, disallow all */
+
+    	  "removeCredit": false, /* Remove credit link */
+    	  "moreInfoLink": true, /* Show more info link */
+
+          "useExternalCss": false, /* If false, the tarteaucitron.css file will be loaded */
+          "useExternalJs": false, /* If false, the tarteaucitron.js file will be loaded */
+
+    	  //"cookieDomain": ".my-multisite-domaine.fr", /* Shared cookie for multisite */
+                          
+          "readmoreLink": "", /* Change the default readmore link */
+
+          "mandatory": true, /* Show a message about mandatory cookies */
+          "mandatoryCta": true, /* Show the disabled accept button when mandatory on */
+    
+          //"customCloserId": "", /* Optional a11y: Custom element ID used to open the panel */
+          
+          "googleConsentMode": true, /* Enable Google Consent Mode v2 for Google ads and GA4 */
+          
+          "partnersList": false /* Show the number of partners on the popup/middle banner */
+        });
+        </script>
 	<?php
 },1);

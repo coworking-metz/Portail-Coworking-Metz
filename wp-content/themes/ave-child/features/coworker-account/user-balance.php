@@ -44,7 +44,7 @@
                         echo 'Vous disposez d’un abonnement valable jusqu’au <em>' . date_i18n('l d F Y', $dateAbo) . '</em> inclus.';
                     } else {
                         echo 'Vous n\'avez pas d\'abonnement en cours. Vous pouvez vous en procurer un 
-                        <a href="https://www.coworking-metz.fr/boutique/pass-resident/">
+                        <a href="https://www.coworking-metz.fr/boutique/">
                         <span class="dispo">directement ici</span></a>.';
                     }
                 ?>
