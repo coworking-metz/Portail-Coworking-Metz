@@ -62,7 +62,7 @@ $nbInvalides = 0;
         <?php } ?>
     </p>
     <p>
-        <button type="submit" class="woocommerce-Button button wp-element-button">Ajouter cet appareil</button>
+        <button type="submit" class="woocommerce-Button button wp-element-button">Valider</button>
         <button type="button" data-action="annuler-ajouter-appareil" class="woocommerce-Button button" style="background-color:transparent;color:black;border:1px solid black">Annuler</button>
     </p>
 </form>
