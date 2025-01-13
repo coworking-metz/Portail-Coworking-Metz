@@ -190,7 +190,7 @@ function wo_server_options_page() {
                                     <td>
                                         <input type="number" name="wo_options[refresh_token_lifetime]"
                                                value=""
-                                               placeholder="864000" disabled/>
+                                               placeholder="86400" disabled/>
                                         <p class="description">
                                             How long a refresh token is valid (seconds) - Leave blank for default (24
                                             hours)
