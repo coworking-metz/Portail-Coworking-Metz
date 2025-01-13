@@ -82,6 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (macDejaAssociee(macAddress)) {
                     return;
                 }
+				document.querySelector('[name="adresse-mac"]').value = macAddress
+					document.querySelector('[data-action="ajouter-appareil"]').click();
+
                 let message = "Voulez-vous ajouter l'appareil que vous être en train d'utiliser à votre compte Coworking Metz ?"
                 if (!form && coworkingDevices.length == 0) {
                     message = "Vous n'avez pas encore associé d'appareil à votre compte. Voulez vous ajouter celui que vous utilisez actuellement ?"
