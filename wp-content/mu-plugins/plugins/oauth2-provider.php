@@ -71,21 +71,21 @@ add_action('admin_init', function () {
 
   /**
    * Edition automatique ed'un fichier du plugin oauth
-   * Le but est de changer la valeur par defaut de refresh_token_lifetime pour le passer à 86400 secondes (10 jours)
+   * Le but est de changer la valeur par defaut de refresh_token_lifetime pour le passer à 2592000 secondes (30 jours)
    * Le plugin ne propose pas de le faire en dehors de son option payante
    */
   $files_to_edit = [
     '/wp-content/plugins/oauth2-provider/wp-oauth-main.php' => [
       'find'=>'=> 86400,',
-      'replace'=>'=> 864000,',
+      'replace'=>'=> 2592000,',
     ],
     '/wp-content/plugins/oauth2-provider/library/class-wo-api.php' => [
       'find'=>'=> 86400,',
-      'replace'=>'=> 864000,',
+      'replace'=>'=> 2592000,',
     ],
     '/wp-content/plugins/oauth2-provider/includes/admin/page-server-options.php'=>[
       'find'=>'placeholder="86400" disabled', 
-      'replace'=>'placeholder="864000" disabled'
+      'replace'=>'placeholder="2592000" disabled'
     ]
   ];
 
