@@ -6,6 +6,9 @@ if (isset($_GET['export-stats'])) {
     add_action('admin_init', function () {
 
         $annee = $_GET['annee'] ?? date('Y') - 1;
+        if ($annee == 'current') {
+            $annee = date('Y');
+        }
         $limit = $_GET['limit'] ?? 70;
         $members = get_json(TICKET_BASE_URL . '/members?key=' . API_KEY_TICKET);
 
