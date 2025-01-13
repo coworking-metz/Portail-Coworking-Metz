@@ -1,12 +1,4 @@
 <?php
-add_filter('rest_prepare_user', function ($response, $user, $request) {
-    // Vérifiez si le contexte de la requête est 'edit'
-    if ('edit' === $request->get_param('context')) {
-        $response->data['birthDate'] = get_date_naissance($user->ID);
-    }
-
-    return $response;
-}, 10, 3);
 
 
 
