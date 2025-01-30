@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     if (document.location.href.includes('wp-admin')) return;
 
+	if (document.location.hash === '#ouvrir-brevo') {
+		window.location.href = window.location.pathname + '#brevoConversationsExpanded';
+	}
+
+
     // document.querySelectorAll('[href="#ouvrir-brevo"]').forEach(bouton => bouton.addEventListener('click', e => {
     //     e.preventDefault()
     //     BrevoConversations('openChat', true);

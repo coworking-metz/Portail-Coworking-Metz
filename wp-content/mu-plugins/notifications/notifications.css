@@ -6,7 +6,7 @@
     bottom: 0;
     left: 0;
     margin: 1rem;
-    z-index: 999999;
+    z-index: 9999999999;
     background-color: var(--background);
     color: var(--color);
     width: calc(100% - 2rem);
@@ -180,4 +180,12 @@
 .notification .cta {
     display: flex;
     justify-content: end;
+}
+
+
+@media screen and (max-width: 1000px) {
+
+	body:has(.notification[data-visible="true"]) .brevo-conversations {
+		display:none !important;
+	}
 }

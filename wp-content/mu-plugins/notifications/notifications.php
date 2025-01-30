@@ -45,7 +45,7 @@ function generateNotification($data)
     </div>
     ' . $cta . '
     </div>
-    ' . ($fermer ? '<button>&#x2716;</button>' : '') . '
+    <button '.($fermer ? '':'style="display:none"').'>&#x2716;</button>
   </div>';
 }
 

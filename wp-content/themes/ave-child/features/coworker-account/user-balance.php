@@ -10,6 +10,7 @@
     $result = tickets('/members/'.$user_id); 
 
 ?>
+	<?php if(!isNomade()) {?>
         <div class="tickets-status">
             <p>
                 <em>Petit rappel : </em> Lorsque vous disposez d'un solde positif de tickets, il vous est tout de même possible de 
@@ -17,40 +18,62 @@
                 la période de l'abonnnement !
             </p>
         </div>
+	<?php }?>
+
         <div class="tickets-status">
             <p>
                 <?php
-                    if($result['balance'] > 0) {
-                        echo 'Il vous reste <em>' . $result['balance'] . '</em> ';
-                            if ($result['balance'] > 0 && $result['balance'] < 2) {
-                                echo ' ticket<sup>*</sup> à consommer.';
-                            } else {
-                                echo ' tickets<sup>*</sup> à consommer.';
-                            }
-                    } elseif ($result['balance'] == 0){
-                        echo 'La balance de vos tickets<sup>*</sup> est de <em>' . $result['balance'] . '</em> .' ;
-                    } else {
-                        echo 'Votre balance de tickets est négative : <em>' . $result['balance'] . '</em><br>Pour rappel, 
-                        l\'accès à l\'espace de coworking est conditionné par un solde positif de tickets.<br>
-                        <strong>Merci de bien vouloir régulariser</strong> à  l\'aide d\'un carnet de 10 journées ou de l\'achat de tickets à l\'unité
-                        <a href="https://www.coworking-metz.fr/boutique/ticket-1-journee/"><span class="dispo">disponibles ici</span></a>.';
-                    }
+					if(isNomade()) {
+						echo 'Vous êtes <strong>coworker nomade</strong>. Il vous reste <em>' . $result['balance'] . '</em> ';
+						echo ' journée(s)à consommer.';
+						?><br>
+						<center>
+							<a href="/accueil-nomades/" class="btn btn-solid text-uppercase semi-round ">
+	<span>
+		
+					<span class="btn-txt">En savoir plus sur le coworking "nomade"</span>
+			
+				</span>
+</a>
+</center>
+							<?php
+						echo '<hr>';
+					} else {
+						if($result['balance'] > 0) {
+							echo 'Il vous reste <em>' . $result['balance'] . '</em> ';
+								if ($result['balance'] > 0 && $result['balance'] < 2) {
+									echo ' ticket<sup>*</sup> à consommer.';
+								} else {
+									echo ' tickets<sup>*</sup> à consommer.';
+								}
+						} elseif ($result['balance'] == 0){
+							echo 'La balance de vos tickets<sup>*</sup> est de <em>' . $result['balance'] . '</em> .' ;
+						} else {
+							echo 'Votre balance de tickets est négative : <em>' . $result['balance'] . '</em><br>Pour rappel, 
+							l\'accès à l\'espace de coworking est conditionné par un solde positif de tickets.<br>
+							<strong>Merci de bien vouloir régulariser</strong> à  l\'aide d\'un carnet de 10 journées ou de l\'achat de tickets à l\'unité
+							<a href="https://www.coworking-metz.fr/boutique/ticket-1-journee/"><span class="dispo">disponibles ici</span></a>.';
+						}
+					}
                 ?>
             </p>
             <p>
                 <?php
-                    if( isset($result['lastAboEnd'])) {
-                        $dateAbo = strtotime($result['lastAboEnd']);
-                        echo 'Vous disposez d’un abonnement valable jusqu’au <em>' . date_i18n('l d F Y', $dateAbo) . '</em> inclus.';
-                    } else {
-                        echo 'Vous n\'avez pas d\'abonnement en cours. Vous pouvez vous en procurer un 
-                        <a href="https://www.coworking-metz.fr/boutique/">
-                        <span class="dispo">directement ici</span></a>.';
-                    }
+					if(!isNomade()) {
+						if( isset($result['lastAboEnd'])) {
+							$dateAbo = strtotime($result['lastAboEnd']);
+							echo 'Vous disposez d’un abonnement valable jusqu’au <em>' . date_i18n('l d F Y', $dateAbo) . '</em> inclus.';
+						} else {
+							echo 'Vous n\'avez pas d\'abonnement en cours. Vous pouvez vous en procurer un 
+							<a href="https://www.coworking-metz.fr/boutique/">
+							<span class="dispo">directement ici</span></a>.';
+						}
+					}
                 ?>
             </p>
             <p>
                 <?php
+					if(!isNomade()) {
 
                 $currentYear = date('Y');
                 $nextYear = date('Y', strtotime('+1 year'));
@@ -60,7 +83,7 @@
                         echo '<span class="alerte"><strong>Vous n\'êtes pas à jour concernant l\'adhésion ' . $currentYear . '.</strong></span><br/><br/><u>La carte adhérent est obligatoire pour venir coworker, 
                         il s\'agit d\'une prérogative de notre assureur. Sans cette adhésion, il ne vous est pas possible de coworker.</u>';
                     }
-                
+				}                
                 ?>
             </p>
             <p>
@@ -75,7 +98,7 @@
             </p>
             <p>
                 <?php echo 'Vous avez coworké au total <em>' . $result['presencesConso'] . '</em> journées pour un total de <em>' . $result['presencesJours'] .'</em> jours de présence (jours uniques).<br><br>'; ?>
-                <?php if ($result['trustedUser'] == false) {
+                <?php if ($result['trustedUser'] == false && !isNomade()) {
                 echo '<strong>Dès votre 11<sup>ème</sup> journée de coworking, vous pourrez :</strong>
                         <ul>
                             <li>accéder à l\'espace aux horaires habituelles (de 7h à 23h) 💪</li>

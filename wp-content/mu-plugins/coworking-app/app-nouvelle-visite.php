@@ -39,6 +39,7 @@ add_action('rest_api_init', function () {
                 $user['role'] = 'customer';
                 $user_id = create_wp_user_if_not_exists($user, ['nomade' => true, 'activite' => $activite]);
                 if ($user_id) {
+					// TODO : envoyer un mail à la personne
                     set_transient('auto_login_' . $user_id, true, ONE_DAY);
                     return rest_ensure_response(['user_id' => $user_id]);
                 }

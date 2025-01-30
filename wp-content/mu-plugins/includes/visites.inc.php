@@ -1,4 +1,18 @@
 <?php
+
+
+
+function isNomade($user=false) {
+	$user_id = get_post_id($user);
+
+	if(!$user_id) {
+		$user_id = get_current_user_id();
+	}
+
+	if(!$user_id) return;
+
+	return !empty(get_user_meta($user_id, 'nomade',true));
+}
 function get_users_with_visit_no_orders()
 {
     // Obtenir tous les utilisateurs avec la meta 'visite' renseignée
