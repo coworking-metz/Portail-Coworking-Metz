@@ -216,7 +216,7 @@ add_action('admin_menu', function () {
 
 
 // Ajouter une puce rouge avec le nombre de visites à venir
-add_action('admin_menu', function () {
+/*add_action('admin_menu', function () {
     global $menu;
 
     // Ajouter un nombre rouge
@@ -228,7 +228,7 @@ add_action('admin_menu', function () {
         }
     }
 }, 999);
-
+*/
 
 
 /**

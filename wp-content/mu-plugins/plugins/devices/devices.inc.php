@@ -1,4 +1,26 @@
 <?php
+
+
+function addMemberMacAddress($user_id, $adresseMac) {
+    if (!$user_id || !$adresseMac) {
+        return false;
+    }
+
+    $devices = getDevices(); 
+    $adressesMac = array_column($devices, 'macAddress');
+
+    if (in_array($adresseMac, $adressesMac)) {
+        return;
+    }
+
+    // Add the new MAC address and update the user's devices
+    $adressesMac[] = $adresseMac;
+    $response = updateMemberMacAddresses($user_id, $adressesMac);
+
+	return true;
+}
+
+
 function formatMac($mac)
 {
     $mac = trim($mac);
