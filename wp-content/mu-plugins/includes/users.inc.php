@@ -1,4 +1,39 @@
 <?php
+
+/**
+ * Récupère le nombre total de commandes WooCommerce pour un utilisateur WordPress donné.
+ *
+ * @param int $user_id ID de l'utilisateur WordPress.
+ * @return int Nombre total de commandes.
+ */
+function get_user_order_count($user_id) {
+    // Vérifie que l'ID de l'utilisateur est valide
+    if (!is_numeric($user_id)) {
+        return 0;
+    }
+
+    // Prépare la requête WP_Query pour les commandes
+    $query_args = [
+        'post_type'   => 'shop_order',
+//        'post_status' => ['wc-completed', 'wc-processing', 'wc-on-hold', 'wc-pending'],
+        'post_status' => ['wc-completed'],
+        'meta_query'  => [
+            [
+                'key'     => '_customer_user',
+                'value'   => $user_id,
+                'compare' => '=',
+            ],
+        ],
+        'fields'      => 'ids', // Récupérer uniquement les IDs pour optimiser
+    ];
+
+    // Compte le nombre de commandes
+    $orders = get_posts($query_args);
+    return count($orders);
+}
+
+
+
 /**
  * Check if a user has a valid membership and cache the result in a transient until the next 1st of January.
  *

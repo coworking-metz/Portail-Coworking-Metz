@@ -121,12 +121,12 @@ if (!empty($_FILES['photo'])) {
                 </p>
                 <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
                     <label for="polaroid_description">Description</label>
-                    <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" required pattern=".*\S+.*" name="polaroid[description]" id="polaroid_description" value="<?= htmlspecialchars($polaroid['description']); ?>" maxlength="40">
+                    <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" required pattern=".*\S+.*" name="polaroid[description]" id="polaroid_description" maxlength="28" value="<?= htmlspecialchars($polaroid['description']); ?>" maxlength="40">
                     <small>Pour décrire votre métier, votre intitulé de poste, etc.</small>
                 </p>
                 <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
                     <label for="polaroid_complement">Ligne complémentaire (facultatif)</label>
-                    <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="polaroid[complement]" id="polaroid_complement" value="<?= htmlspecialchars($polaroid['complement']); ?>" maxlength="40">
+                    <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" maxlength="28" name="polaroid[complement]" id="polaroid_complement" value="<?= htmlspecialchars($polaroid['complement']); ?>" maxlength="40">
                     <small>Si vous avez encore des choses à dire</small>
                 </p>
 

@@ -82,7 +82,7 @@ $nbInvalides = 0;
                     <td>
                         <code><?= $device['macAddress']; ?></code>
                         <?php if (isMacAddressRandomized($device['macAddress'])) {
-                            $nbInvalides++; ?> <span title="Cette adresse MAC est randomisée, elle est incompatible avec le système de détection des présences du coworking">🔮</span>
+                            $nbInvalides++; ?> <span title="Cette adresse MAC est virtuelle, elle peut ne pas être compatible avec le système de détection des présences du coworking">🔮</span>
                         <?php } ?>
                     </td>
                     <td>
