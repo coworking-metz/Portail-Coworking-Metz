@@ -1,6 +1,40 @@
 <?php
 
 /**
+ * Récupère toutes les commandes d'un utilisateur contenant un produit d'une catégorie donnée.
+ *
+ * @param int $user_id ID de l'utilisateur.
+ * @param string $category_slug Slug de la catégorie produit.
+ * @return array Liste des objets commandes correspondant.
+ */
+function get_user_orders_with_product_category($user_id, $category_slug) {
+    if (!$user_id) {
+        return [];
+    }
+
+    $orders = wc_get_orders([
+        'customer_id' => $user_id,
+        'status'      => ['wc-completed', 'wc-processing', 'wc-on-hold'], // Statuts pertinents
+        'limit'       => -1,
+    ]);
+
+    $filtered_orders = [];
+
+    foreach ($orders as $order) {
+        foreach ($order->get_items() as $item) {
+            $product_id = $item->get_product_id();
+            if (has_term($category_slug, 'product_cat', $product_id)) {
+                $filtered_orders[] = $order;
+                break;
+            }
+        }
+    }
+
+    return $filtered_orders;
+}
+
+
+/**
  * Get the number of WooCommerce orders made by the current connected user
  *
  * @return int The number of orders

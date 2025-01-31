@@ -28,6 +28,13 @@ add_action(
                 }
                 $response['visites'] = $visites;
 
+                $nomades = [];
+                $users = fetch_nomades_for_today();
+                foreach($users as $user) {
+                    $nomades[] = ['wpUserId'=>$user->ID, 'name'=>$user->display_name, 'nomade'=>true];
+                }
+                $response['nomades'] = $nomades;
+
                 return rest_ensure_response($response);
             },
         ));
