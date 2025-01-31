@@ -152,6 +152,11 @@ function polaroid_get($uid = null, $defaults = true)
     // $file = get_gravatar_url($user_info->user_email);
     $visite = false;
 
+    if(isNomade($user_info)) {
+        $description='Coworker/euse nomade';    
+        $complement='';
+    }
+
     if(is_visiteur($user_info)) {
         if($defaults) {
             $file = ABSPATH . 'polaroid/images/poussin.jpg';
@@ -162,7 +167,7 @@ function polaroid_get($uid = null, $defaults = true)
     }
     $alpha = get_alpha_polaroid($uid, $file);
     
-    return ['photo' => $file, 'alpha' => $alpha, 'nom' => $nom, 'description' => $description, 'complement' => $complement, 'visite'=>$visite];
+    return ['photo' => $file, 'alpha' => $alpha, 'nom' => $nom, 'description' => $description, 'complement' => $complement, 'visite'=>$visite, 'nomade'=>isNomade($user_info)];
 }
 function polaroid_tmpphoto($uid = null)
 {
