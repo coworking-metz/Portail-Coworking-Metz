@@ -46,6 +46,8 @@ add_action(
 
                 if($response['photo']) {
                     $response['photo'] = pathTourl($response['photo']);
+                } else if($response['nomade']) {
+                    $response['photo'] = $response['options']['photo_nomade'];
                 } else if($response['visite']) {
                     $response['photo'] = $response['options']['photo_visiteur'];
                 } else {
