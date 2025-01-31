@@ -285,6 +285,34 @@ function fetch_users_with_visite_for_date($date)
 }
 
 
+function fetch_nomades_for_today() {
+	return fetch_nomades_for_date(date('Y-m-d'));
+}
+
+/**
+ * Obtenir et stocker les utilisateurs avec des visites aujourd'hui
+ *
+ * @return array Retourne une liste des utilisateurs avec des visites ce jour
+ */
+function fetch_nomades_for_date($date)
+{
+    $args = [
+        'meta_key' => 'nomade',
+        'meta_value' => '1',
+        'meta_compare' => '=',
+    ];
+    $users = get_users($args);
+
+    $out = [];
+    foreach ($users as $user) {
+        $user->datesNomades = get_dates_nomades_user($user->ID);
+		if(!in_array($date, $user->datesNomades)) continue;
+        $out[] = $user;
+    }
+    return $out;
+}
+
+
 /**
  * Obtenir et stocker les utilisateurs avec des visites futures dans un transitoire
  *
@@ -309,6 +337,24 @@ function fetch_users_with_future_visite()
     return $out;
 }
 
+function get_dates_nomades_user($user_id) {
+	$orders = get_user_orders_with_product_category($user_id, 'tickets-nomades');
+	$dates=[];
+	foreach($orders as $order) {
+		foreach ($order->get_items() as $item) {
+			$tmcp_data = $item->get_meta('_tmdata', true);
+			foreach ($tmcp_data as $data) {
+                if (isset($data['tmcp_post_fields']['tmcp_date_0'])) {
+                    $dates[]= DateTime::createFromFormat('d/m/Y', $data['tmcp_post_fields']['tmcp_date_0'])->format('Y-m-d');
+                    break;
+                }
+            }
+		}
+	}
+
+	return $dates;
+
+}
 /**
  * Envoyer un mail d'alerte à un utilisateur
  * le mail ne peut pas etre envoyé plusieurs fois à un même 
