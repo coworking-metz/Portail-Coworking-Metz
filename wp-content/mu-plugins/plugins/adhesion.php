@@ -8,18 +8,16 @@ define('PRODUIT_ADHESION', 3063);
 add_action('wp_footer', function () {
     if (is_order_received_page()) return;
 
-    if (is_checkout() || is_cart()) {
-        if (is_product_in_cart(PRODUIT_ADHESION)) return;
+  	$uid = get_current_user_id();
+	if(!$uid) return;
+	
+	if(is_adhesion_in_cart()) {
+		return;
+	}
 
-		$uid = get_current_user_id();
-        if(!$uid) return;
-        $json = file_get_contents(TICKET_BASE_URL.'/members/'.$uid.'?key='.API_KEY_TICKET); // actifs dans les 6 derniers moois
-		$member = json_decode($json, true);
+	if (is_checkout() || is_cart()) {
 
-
-		$lastMembership = $member['lastMembership']??false;
-
-		if($lastMembership == date('Y')) return;
+		if(has_valid_membership($uid)) return;
 
 		echo generateNotification([
 			'titre' => 'Vous n\'êtes pas à jour de votre adhésion',
@@ -36,7 +34,7 @@ add_action('wp_footer', function () {
 
 
 
-if (isset($_GET['adhesion'])) {
+if (!empty($_GET['adhesion'])) {
     /**
      * Ajouter le café au panier
      */
