@@ -8,19 +8,21 @@ add_action('wp_loaded', function () {
     }
 
 	$uri = $_SERVER['REQUEST_URI']??'';
-	if(!strstr($uri, 'panier') && !strstr($uri, 'boutique')) return;
+	if(!is_checkout() && !is_cart() && !strstr($uri, 'panier')) return;
 
 	$user_id = get_current_user_id();
 	if(!$user_id) return;
+
 	
 	if(has_valid_membership($user_id)) return; 
 
+
+	if(is_adhesion_in_cart()) {
+		return;
+	}
+
     // Check if the cart already contains the product.
     $product_id = get_latest_adhesion_product_id();
-
-    if (!$product_id) return;
-
-	if(WC()->cart->find_product_in_cart(WC()->cart->generate_cart_id($product_id))) return;
 
     // Add the product to the cart.
     WC()->cart->add_to_cart($product_id);

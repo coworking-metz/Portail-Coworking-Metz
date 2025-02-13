@@ -14,20 +14,20 @@ function api_purchase_start_stop_abo()
 
         $orders = get_orders_by_custom_order_numbers(array_column($abos, 'orderReference'), true);
         foreach ($abos as $abo) {
-            $abo_purchase = strtotime($abo->purchased);
-            $abo_start = strtotime($abo->started);
-            $abo_end = strtotime($abo->ended);
-            $order = $orders[$abo->orderReference] ?? false;
+            $abo_purchase = strtotime($abo['purchased']);
+            $abo_start = strtotime($abo['started']);
+            $abo_end = strtotime($abo['ended']);
+            $order = $orders[$abo['orderReference']] ?? false;
             $abo_current = '';
-            // $abo_current = ($abo->current == true) ? '<br><span class="current-abo">Abonnement en cours...</span>' : ''; TODO
+            // $abo_current = ($abo['current'] == true) ? '<br><span class="current-abo">Abonnement en cours...</span>' : ''; TODO
             $html .= '<tr>';
             $html .= '<td class="purchase-abo"><span>' . date_i18n('d M Y', $abo_purchase) . '</span></td>';
             $html .= '<td class="purchase-start"><span>' . date_i18n('D d M Y', $abo_start) . $abo_current . '</span></td>';
             $html .= '<td class="purchase-end">' . date_i18n('D d M Y', $abo_end) . $abo_current . '</td>';
             if ($order) {
-                $html .= '<td class="order-reference"><a href="' . $order->get_view_order_url() . '">' . $abo->orderReference . '</a></td>';
+                $html .= '<td class="order-reference"><a href="' . $order->get_view_order_url() . '">' . $abo['orderReference'] . '</a></td>';
             } else {
-                $html .= '<td class="order-reference">' . $abo->orderReference . '</td>';
+                $html .= '<td class="order-reference">' . $abo['orderReference'] . '</td>';
             }
             $html .= '</tr>';
         }

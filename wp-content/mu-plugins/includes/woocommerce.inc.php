@@ -1,5 +1,41 @@
 <?php
 
+
+
+/**
+ * Vérifie si un produit dans le panier a le méta 'adhesion_inclue' égal à 1.
+ *
+ * @return bool Retourne true si un produit correspondant est trouvé, sinon false.
+ */
+function is_adhesion_in_cart() {
+    if (WC()->cart && WC()->cart->get_cart()) {
+        foreach (WC()->cart->get_cart() as $cart_item) {
+            $adhesion_inclue = get_post_meta($cart_item['product_id'], 'adhesion_inclue', true);
+            if ($adhesion_inclue) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+/**
+ * Supprime un produit du panier à partir de son ID produit.
+ *
+ * @param int $product_id L'ID du produit à supprimer du panier.
+ */
+function remove_product_from_cart($product_id) {
+    if (WC()->cart && WC()->cart->get_cart()) {
+        foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+            if ($cart_item['product_id'] == $product_id) {
+                WC()->cart->remove_cart_item($cart_item_key);
+                break;
+            }
+        }
+    }
+}
+
+
 /**
  * Récupère toutes les commandes d'un utilisateur contenant un produit d'une catégorie donnée.
  *
