@@ -72,3 +72,51 @@ add_filter('woocommerce_webhook_payload', function ($payload, $resource, $resour
     }
     return $payload;
 }, 10, 4);
+
+
+
+// Génère automatiquement des balises méta pour les produits WooCommerce
+add_action('wp_head', function() {
+    if (!is_product()) return;
+
+    global $post;
+    $product = wc_get_product($post->ID);
+
+    if (!$product) return;
+
+    $title = esc_attr($product->get_name());
+	$description_full = wp_strip_all_tags($product->get_short_description() ?: $product->get_description());
+    $description = esc_attr(mb_substr($description_full, 0, 200));
+    $url = get_permalink($product->get_id());
+    $image = wp_get_attachment_url($product->get_image_id());
+    $site_name = esc_attr(get_bloginfo('name'));
+    $locale = esc_attr(get_locale());
+
+    if (!$image) {
+        $image = esc_url(get_site_icon_url());
+    }
+
+    ?>
+    <link rel="original_image_src" href="<?= esc_url($image); ?>" />
+    <link rel="image_src" href="<?= esc_url($image); ?>" />
+
+    <meta name="description" content="<?= $description; ?>" />
+    <meta name="title" content="<?= $title; ?>" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="<?= $title; ?>" />
+    <meta name="twitter:description" content="<?= $description; ?>" />
+    <meta name="twitter:image" content="<?= esc_url($image); ?>" />
+
+    <meta property="og:type" content="product" />
+    <meta property="og:title" content="<?= $title; ?>" />
+    <meta property="og:description" content="<?= $description; ?>" />
+    <meta property="og:url" content="<?= esc_url($url); ?>" />
+    <meta property="og:image" content="<?= esc_url($image); ?>" />
+    <meta property="og:image:secure_url" content="<?= esc_url($image); ?>" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:alt" content="<?= $title; ?>" />
+    <meta property="og:site_name" content="<?= $site_name; ?>" />
+    <meta property="og:locale" content="<?= $locale; ?>" />
+    <?php
+});
