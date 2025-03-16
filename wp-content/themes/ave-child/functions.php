@@ -62,7 +62,7 @@ function keep_me_logged_in_for_1_year( $expirein ) {
  * Remove Sitemap.xml
  */
 add_action( 'init', function() {
-    remove_action( 'init', 'wp_sitemaps_get_server' );
+//    remove_action( 'init', 'wp_sitemaps_get_server' );
     }, 5 );
 
 /**
