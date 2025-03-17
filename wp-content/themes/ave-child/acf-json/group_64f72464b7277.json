@@ -1,0 +1,151 @@
+{
+    "key": "group_64f72464b7277",
+    "title": "Polaroid",
+    "fields": [
+        {
+            "key": "field_64f72464bf502",
+            "label": "Votre photo",
+            "name": "votre_photo",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "only_front": 0,
+            "frontend_admin_display_mode": "edit",
+            "no_values_message": "",
+            "return_format": "id",
+            "library": "all",
+            "no_file_text": "",
+            "button_text": "",
+            "custom_directory": 0,
+            "hide_from_library": 0,
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_65402c4ea51bf",
+            "label": "Votre photo alpha",
+            "name": "votre_photo_alpha",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_64f7248340503",
+            "label": "Nom sur le polaroid",
+            "name": "polaroid_nom",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "only_front": 0,
+            "frontend_admin_display_mode": "edit",
+            "no_values_message": "",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_64f8404e4992b",
+            "label": "Description sur le polaroid",
+            "name": "polaroid_description",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "only_front": 0,
+            "frontend_admin_display_mode": "edit",
+            "no_values_message": "",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_64f8405d4992c",
+            "label": "Complement sur le polaroid",
+            "name": "polaroid_complement",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "only_front": 0,
+            "frontend_admin_display_mode": "edit",
+            "no_values_message": "",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "user_form",
+                "operator": "==",
+                "value": "all"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Informations pour l'affichage polaroïd",
+    "show_in_rest": 0,
+    "modified": 1742114272
+}

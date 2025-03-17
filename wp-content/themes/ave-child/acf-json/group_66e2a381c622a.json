@@ -1,0 +1,69 @@
+{
+    "key": "group_66e2a381c622a",
+    "title": "Coupons repas",
+    "fields": [
+        {
+            "key": "field_66e2a35f9bfd9",
+            "label": "Nombre de coupons repas inclus",
+            "name": "coupons_repas",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 0,
+            "min": "",
+            "max": "",
+            "placeholder": "",
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_66e2a5d4c1905",
+            "label": "Prix d'un repas",
+            "name": "prix_repas",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 11,
+            "min": "",
+            "max": "",
+            "placeholder": "",
+            "step": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "product"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1742114304
+}

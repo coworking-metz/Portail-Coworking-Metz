@@ -1,0 +1,63 @@
+{
+    "key": "group_619e67c1175a3",
+    "title": "Données coworkers",
+    "fields": [
+        {
+            "key": "field_655350e78cae7",
+            "label": "Date de naissance",
+            "name": "date_naissance",
+            "aria-label": "",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d\/m\/Y",
+            "return_format": "Y-m-d",
+            "first_day": 1
+        },
+        {
+            "key": "field_65e795b8f6df3",
+            "label": "Candidat au CA à la prochaine AG",
+            "name": "candidat_au_ca",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "user_role",
+                "operator": "==",
+                "value": "all"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 1,
+    "modified": 1742114277
+}

@@ -1,0 +1,73 @@
+{
+    "key": "group_6618ed45118aa",
+    "title": "Tickets - Type de produit",
+    "fields": [
+        {
+            "key": "field_6618ed47ad2e2",
+            "label": "Type de produit",
+            "name": "productType",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Permet à l'API ticket d'identifier le type de produit acheté",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "ticket-unite": "Ticket à l'unité",
+                "carnet-tickets": "Carnet de 10 tickets",
+                "abonnement": "Abonnement d'un mois",
+                "adhesion": "Adhésion"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 1,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_67ae0383f3cb6",
+            "label": "Adhésion inclue",
+            "name": "adhesion_inclue",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "product"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1742114269
+}

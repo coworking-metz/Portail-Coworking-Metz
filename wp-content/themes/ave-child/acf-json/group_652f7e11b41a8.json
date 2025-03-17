@@ -1,0 +1,68 @@
+{
+    "key": "group_652f7e11b41a8",
+    "title": "Users - Visite",
+    "fields": [
+        {
+            "key": "field_652f7e0ef2511",
+            "label": "Visite",
+            "name": "visite",
+            "aria-label": "",
+            "type": "date_time_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "Y-m-d H:i",
+            "return_format": "Y-m-d H:i",
+            "first_day": 1
+        },
+        {
+            "key": "field_65d5c7981eea9",
+            "label": "Activité",
+            "name": "activite",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "user_form",
+                "operator": "==",
+                "value": "all"
+            },
+            {
+                "param": "current_user_role",
+                "operator": "==",
+                "value": "administrator"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1742114266
+}
