@@ -33,8 +33,8 @@ class Liquid_ThemeBlog extends LD_Blog {
 	public function render( $atts, $content = '' ) {
 
 		extract($atts);
+		$style = $style ?: 'classic-full';
 
-		// check
 		$located = locate_template( "templates/blog/tmpl-$style.php" );
 		if ( ! file_exists( $located ) ) {
 			return;
