@@ -15,7 +15,16 @@
 	<meta name="theme-color" content="<?=COULEUR_PRINCIPALE;?>">
 	<link rel="profile" href="http://gmpg.org/xfn/11">
 	<?php wp_head(); ?>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-10896549940">
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'AW-10896549940');
+</script>
 </head>
 
 <body <?php body_class(); ?> <?php liquid_helper()->attr( 'body' ); ?>>
