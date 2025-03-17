@@ -4,18 +4,21 @@ use function Crontrol\Event\pause;
 
 function brevo_getTemplates()
 {
+
+    if (isset($GLOBALS['brevo_getTemplates'])) return $GLOBALS['brevo_getTemplates'];
     if (!class_exists('SendinblueApiClient')) {
         return;
     }
 
-    $templates = get_transient('brevo-templates');
-    if (!$templates) {
-        $apiClient = new SendinblueApiClient();
+    // $templates = get_transient('brevo-templates');
+    // if (!$templates) {
+    $apiClient = new SendinblueApiClient();
 
-        $templates = $apiClient->getAllEmailTemplates()['templates'] ?? [];
-        set_transient('brevo-templates', $templates, HOUR_IN_SECONDS);
-    }
+    $templates = $apiClient->getAllEmailTemplates()['templates'] ?? [];
+    //     set_transient('brevo-templates', $templates, HOUR_IN_SECONDS);
+    // }
 
+    $GLOBALS['brevo_getTemplates'] = $templates;
     return $templates;
 }
 
