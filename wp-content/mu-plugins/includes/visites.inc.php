@@ -2,16 +2,17 @@
 
 
 
-function isNomade($user=false) {
-	$user_id = get_post_id($user);
+function isNomade($user = false)
+{
+    $user_id = get_post_id($user);
 
-	if(!$user_id) {
-		$user_id = get_current_user_id();
-	}
+    if (!$user_id) {
+        $user_id = get_current_user_id();
+    }
 
-	if(!$user_id) return;
+    if (!$user_id) return;
 
-	return !empty(get_user_meta($user_id, 'nomade',true));
+    return !empty(get_user_meta($user_id, 'nomade', true));
 }
 function get_users_with_visit_no_orders()
 {
@@ -37,8 +38,8 @@ function get_users_with_visit_no_orders()
         if (empty($orders)) {
             // Récupérer la valeur de la meta 'visite' pour tri ultérieur
             $user->visite_sort = strtotime(get_user_meta($user->ID, 'visite', true));
-            if(!$user->visite_sort) continue;
-            if($user->visite_sort > time()) continue;
+            if (!$user->visite_sort) continue;
+            if ($user->visite_sort > time()) continue;
             $filtered_users[] = $user;
         }
     }
@@ -285,8 +286,9 @@ function fetch_users_with_visite_for_date($date)
 }
 
 
-function fetch_nomades_for_today() {
-	return fetch_nomades_for_date(date('Y-m-d'));
+function fetch_nomades_for_today()
+{
+    return fetch_nomades_for_date(date('Y-m-d'));
 }
 
 /**
@@ -306,7 +308,7 @@ function fetch_nomades_for_date($date)
     $out = [];
     foreach ($users as $user) {
         $user->datesNomades = get_dates_nomades_user($user->ID);
-		if(!in_array($date, $user->datesNomades)) continue;
+        if (!in_array($date, $user->datesNomades)) continue;
         $out[] = $user;
     }
     return $out;
@@ -337,24 +339,67 @@ function fetch_users_with_future_visite()
     return $out;
 }
 
-function get_dates_nomades_user($user_id) {
-	$orders = get_user_orders_with_product_category($user_id, 'tickets-nomades');
-	$dates=[];
-	foreach($orders as $order) {
-		foreach ($order->get_items() as $item) {
-			$tmcp_data = $item->get_meta('_tmdata', true);
-			foreach ($tmcp_data as $data) {
+function get_dates_nomades_user($user_id)
+{
+    $orders = get_user_orders_with_product_category($user_id, 'tickets-nomades');
+    $dates = [];
+    foreach ($orders as $order) {
+        foreach ($order->get_items() as $item) {
+            $tmcp_data = $item->get_meta('_tmdata', true);
+            foreach ($tmcp_data as $data) {
                 if (isset($data['tmcp_post_fields']['tmcp_date_0'])) {
-                    $dates[]= DateTime::createFromFormat('d/m/Y', $data['tmcp_post_fields']['tmcp_date_0'])->format('Y-m-d');
+                    $dates[] = DateTime::createFromFormat('d/m/Y', $data['tmcp_post_fields']['tmcp_date_0'])->format('Y-m-d');
                     break;
                 }
             }
-		}
-	}
+        }
+    }
 
-	return $dates;
-
+    return $dates;
 }
+
+
+function envoyerMailAlerteNomade($user_id, $autres_codes = [])
+{
+
+    $data = get_userdata($user_id);
+    if (!$data)
+        return;
+    $template_id = get_field('email_alerte_cowo_nomade', 'option');
+    // $visite = get_user_meta($user_id, 'visite', true);
+
+    // $key = 'email-alerte-nomade-' . $user_id;
+    // if (get_user_meta($user_id, $key, true))
+    //     return;
+    // update_user_meta($user_id, $key, true);
+
+
+    $codes = [
+        ['{_user_id}' => $data->ID],
+        ['{user_name}' => $data->display_name],
+        ['{_user_email}' => $data->user_email],
+        ['{activite}' => get_visiteur_activite($user_id)],
+        ['{date_presence}' => date_francais($autres_codes['all_dates'][0])],
+        ['{url_commandes_user}' => admin_url('edit.php?s&post_status=all&post_type=shop_order&_customer_user=' . $user_id)],
+        ['{url_fiche_user}' => admin_url('user-edit.php?user_id=' . $user_id)],
+        ['{_admin_url}' => admin_url()],
+
+    ];
+
+    foreach ($autres_codes as $k => $v) {
+        $codes[] = ['{' . $k . '}' => $v];
+    }
+    $mail = charger_template_mail($template_id, $codes);
+    // echo $mail['message'];exit;
+    $to = get_field('destinataire_alerte', 'option');
+
+    if (wp_get_environment_type() == 'local')
+        $to = DEFAULT_TO_EMAIL;
+
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+    return wp_mail($to, $mail['subject'], $mail['message'], $headers);
+}
+
 /**
  * Envoyer un mail d'alerte à un utilisateur
  * le mail ne peut pas etre envoyé plusieurs fois à un même 
@@ -365,8 +410,6 @@ function get_dates_nomades_user($user_id) {
  */
 function envoyerMailAlerte($user_id, $autres_codes = [])
 {
-    if (wp_get_environment_type() == 'local')
-        return;
 
     $data = get_userdata($user_id);
     if (!$data)
@@ -398,6 +441,10 @@ function envoyerMailAlerte($user_id, $autres_codes = [])
     $mail = charger_template_mail($template_id, $codes);
     // echo $mail['message'];exit;
     $to = get_field('destinataire_alerte', 'option');
+
+    if (wp_get_environment_type() == 'local')
+        $to = DEFAULT_TO_EMAIL;
+
     $headers = array('Content-Type: text/html; charset=UTF-8');
     return wp_mail($to, $mail['subject'], $mail['message'], $headers);
 }
@@ -511,8 +558,6 @@ function envoyerMailRecapVisite($user_id, $autres_codes = [])
 function envoyerMailVisite($user_id, $visite = null, $autres_codes = [])
 {
 
-    if (wp_get_environment_type() == 'local')
-        return;
     $user = get_userdata($user_id);
     if (!$user)
         return;
@@ -543,6 +588,55 @@ function envoyerMailVisite($user_id, $visite = null, $autres_codes = [])
     $mail = charger_template_mail($template_id, $codes);
 
     $to = $user->user_email;
+    if (wp_get_environment_type() == 'local')
+        $to = DEFAULT_TO_EMAIL;
+
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+
+    return wp_mail($to, $mail['subject'], $mail['message'], $headers);
+}
+
+
+function envoyerMailNomade($user_id, $datesPresence = null, $autres_codes = [])
+{
+
+    $user = get_userdata($user_id);
+    if (!$user)
+        return;
+
+    $datePresence = $datesPresence[0] ?? false;
+
+    $all_dates_txt = '';
+    if (count($datesPresence) > 1) {
+        $all_dates = array_map(function ($date) {
+            return date_francais($date);
+        }, $datesPresence);
+        $all_dates_txt = '(Détail des dates réservées: '.implode(', ', $all_dates).')';
+    }
+
+    // $key = 'email-nomade-' . $user_id;
+    // if (get_user_meta($user_id, $key, true))
+    //     return;
+    // update_user_meta($user_id, $key, true);
+
+
+
+    $template_id = get_field('email_confirmation_nomade', 'option');
+    $codes = [
+        ['{date_presence}' => date_francais($datePresence)],
+        ['{dates_presences}' => $all_dates_txt],
+        ['{buy_ticket_link}' => site_url('/boutique/ticket-journee-nomade/?al_id=' . $user_id . '&startDate=' . $datePresence)],
+        ['{app_login_link}' => app_login_link($user_id)],
+    ];
+
+    foreach ($autres_codes as $k => $v) {
+        $codes[] = ['{' . $k . '}' => $v];
+    }
+    $mail = charger_template_mail($template_id, $codes);
+    $to = $user->user_email;
+    if (wp_get_environment_type() == 'local')
+        $to = DEFAULT_TO_EMAIL;
+
     $headers = array('Content-Type: text/html; charset=UTF-8');
 
     return wp_mail($to, $mail['subject'], $mail['message'], $headers);
