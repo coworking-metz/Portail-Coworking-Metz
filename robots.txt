@@ -11,5 +11,7 @@ Disallow: /?s=
 Disallow: /*?replytocom
 Disallow: /?s=
 Disallow: /*?*
+Disallow: /tv
+Disallow: /author
 
 Sitemap: https://www.coworking-metz.fr/wp-sitemap.xml
