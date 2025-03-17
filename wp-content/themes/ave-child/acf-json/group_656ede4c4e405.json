@@ -1,0 +1,65 @@
+{
+    "key": "group_656ede4c4e405",
+    "title": "Options Woocommerce",
+    "fields": [
+        {
+            "key": "field_656ede4dd4a83",
+            "label": "Cette personne peut payer par virement bancaire",
+            "name": "payer_en_virement",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Le mode de paiement 'Virement' ne sera pas affiché pour ce user si la case n'est pas cochée (sauf les admins).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_662a0a90b6a26",
+            "label": "Cette personne est éligible aux tarifs réduits sur les abonnements et tickets",
+            "name": "tarifs_reduits_ok",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Les produits classés dans la catégorie 'Tarifs réduits' ne seront pas achetable par ce user si la case n'est pas cochée (sauf les admins).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "user_form",
+                "operator": "==",
+                "value": "edit"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1742114273
+}

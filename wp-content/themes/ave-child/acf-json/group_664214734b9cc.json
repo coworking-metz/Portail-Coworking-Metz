@@ -1,0 +1,104 @@
+{
+    "key": "group_664214734b9cc",
+    "title": "Users - Infos pro",
+    "fields": [
+        {
+            "key": "field_6642146ce1e80",
+            "label": "Statut juridique",
+            "name": "statut_juridique",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Association": "Association",
+                "Entreprise individuelle": "Entreprise individuelle",
+                "Salarié détaché": "Salarié détaché",
+                "Société": "Société",
+                "Autre": "Autre \/ Sans objet \/ Non applicable"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 1,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_664214b4e1e81",
+            "label": "Type d'activité",
+            "name": "type_activite",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Art": "Art",
+                "Artisanat": "Artisanat",
+                "Artisanat d'art": "Artisanat d'art",
+                "Arts visuels": "Arts visuels",
+                "Audiovisuel": "Audiovisuel",
+                "Commerce": "Commerce",
+                "Design": "Design",
+                "Environnement": "Environnement",
+                "Evénementiel": "Evénementiel",
+                "Formation": "Formation",
+                "Immobilier": "Immobilier",
+                "Industrie": "Industrie",
+                "Jeu vidéo": "Jeu vidéo",
+                "Logistique": "Logistique",
+                "Média": "Média",
+                "Restauration": "Restauration",
+                "Social": "Social",
+                "Spectacle vivant": "Spectacle vivant",
+                "Tech": "Tech",
+                "Web": "Web",
+                "Autre": "Autre \/ Sans objet \/ Non applicable"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 1,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "user_form",
+                "operator": "==",
+                "value": "all"
+            },
+            {
+                "param": "current_user_role",
+                "operator": "==",
+                "value": "administrator"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1742114268
+}

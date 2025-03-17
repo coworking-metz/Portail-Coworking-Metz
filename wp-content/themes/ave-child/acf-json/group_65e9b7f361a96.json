@@ -1,0 +1,200 @@
+{
+    "key": "group_65e9b7f361a96",
+    "title": "Assemblée générale",
+    "fields": [
+        {
+            "key": "field_65e9b7f427ecf",
+            "label": "Assemblée générale",
+            "name": "assemblee_generale",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_65e9bab5b5997",
+                    "label": "Détails",
+                    "name": "",
+                    "aria-label": "",
+                    "type": "tab",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "placement": "top",
+                    "endpoint": 0
+                },
+                {
+                    "key": "field_65e9bac3b5998",
+                    "label": "Détails",
+                    "name": "details",
+                    "aria-label": "",
+                    "type": "group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_65e9bac3b599b",
+                            "label": "Date de l'AG et du vote du CA",
+                            "name": "ag_date",
+                            "aria-label": "",
+                            "type": "date_picker",
+                            "instructions": "<a href=\"\/wp-admin\/options-general.php?purge-votes-ca\">Purger les votes pour cette AG<\/a>",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "display_format": "d\/m\/Y",
+                            "return_format": "Y-m-d",
+                            "first_day": 1
+                        }
+                    ]
+                },
+                {
+                    "key": "field_65e9ba9315d53",
+                    "label": "Scrutin",
+                    "name": "",
+                    "aria-label": "",
+                    "type": "tab",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "placement": "top",
+                    "endpoint": 0
+                },
+                {
+                    "key": "field_65e9b80b27ed0",
+                    "label": "Scrutin",
+                    "name": "scrutin",
+                    "aria-label": "",
+                    "type": "group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_65e9bb06b5aaf",
+                            "label": "Etat du vote",
+                            "name": "etat_vote",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "<a target=\"_blank\" href=\"\/election-ca?depouillement\">Visualiser le dépouillement de ce vote<\/a>",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "open": "Ouvert",
+                                "closed": "Fermé"
+                            },
+                            "default_value": "",
+                            "return_format": "value",
+                            "allow_null": 0,
+                            "other_choice": 0,
+                            "layout": "vertical",
+                            "save_other_choice": 0
+                        },
+                        {
+                            "key": "field_65e9b81827ed1",
+                            "label": "Nombre minimal de membres au ca",
+                            "name": "ca_min",
+                            "aria-label": "",
+                            "type": "number",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": 3,
+                            "min": "",
+                            "max": "",
+                            "placeholder": "",
+                            "step": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_65e9b95a27ed2",
+                            "label": "Nombre maximal de membres au ca",
+                            "name": "ca_max",
+                            "aria-label": "",
+                            "type": "number",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": 9,
+                            "min": "",
+                            "max": "",
+                            "placeholder": "",
+                            "step": "",
+                            "prepend": "",
+                            "append": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "assemblee-generale"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1742114282
+}

@@ -1,0 +1,734 @@
+{
+    "key": "group_653fb71593d7e",
+    "title": "Réglages trombi",
+    "fields": [
+        {
+            "key": "field_6546a92fe9a21",
+            "label": "Thème",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_653fc3786f53f",
+            "label": "Appliquer un thème sur le trombi",
+            "name": "activer_theme_trombi",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_66dec745d6aad",
+            "label": "Couleur du texte",
+            "name": "couleur_du_texte",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_653fc3786f53f",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "#333333",
+            "enable_opacity": 0,
+            "return_format": "string"
+        },
+        {
+            "key": "field_653fb73166772",
+            "label": "Image de fond de chaque pola",
+            "name": "image_fond_pola",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_653fc3786f53f",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "liquid-thumbnail"
+        },
+        {
+            "key": "field_653fc03a2ddaf",
+            "label": "Fond du trombi",
+            "name": "fond_trombi",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_653fc3786f53f",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_653fb71066771",
+                    "label": "Image de fond sur le trombi",
+                    "name": "image",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "url",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "preview_size": "liquid-thumbnail"
+                },
+                {
+                    "key": "field_653fb797d07ab",
+                    "label": "Mode d'affichage du fond",
+                    "name": "mode",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_653fb71066771",
+                                "operator": "!=empty"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "cover": "Couverture",
+                        "contain": "contenir",
+                        "pattern": "Motif"
+                    },
+                    "default_value": "cover",
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_653fc1176771e",
+                    "label": "Opacite",
+                    "name": "opacity",
+                    "aria-label": "",
+                    "type": "range",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_653fb71066771",
+                                "operator": "!=empty"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "0.5",
+                    "min": 0,
+                    "max": 1,
+                    "step": "0.1",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_653fc13c6771f",
+                    "label": "Couleur de transparence",
+                    "name": "couleur",
+                    "aria-label": "",
+                    "type": "color_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_653fc1176771e",
+                                "operator": "!=",
+                                "value": "1"
+                            },
+                            {
+                                "field": "field_653fb71066771",
+                                "operator": "!=empty"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "#000000",
+                    "enable_opacity": 0,
+                    "return_format": "string"
+                }
+            ]
+        },
+        {
+            "key": "field_6546a944a1f3b",
+            "label": "Avent",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_6546a950a1f3c",
+            "label": "Activer le calendrier de l'avent",
+            "name": "activer_avent",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_6546a9d048ba0",
+            "label": "Avent",
+            "name": "avent",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6546a950a1f3c",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_6546a966a1f3d",
+                    "label": "Début de l'avent",
+                    "name": "debut_avent",
+                    "aria-label": "",
+                    "type": "date_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "d\/m\/Y",
+                    "return_format": "d\/m\/Y",
+                    "first_day": 1
+                },
+                {
+                    "key": "field_6546a978a1f3e",
+                    "label": "Fin de l'avent",
+                    "name": "fin_avent",
+                    "aria-label": "",
+                    "type": "date_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "d\/m\/Y",
+                    "return_format": "d\/m\/Y",
+                    "first_day": 1
+                },
+                {
+                    "key": "field_6546b857e9f37",
+                    "label": "Heure du tirage",
+                    "name": "heure_tirage",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "H:i",
+                    "return_format": "H:i"
+                },
+                {
+                    "key": "field_6546b5772e088",
+                    "label": "Picto affiché sur le lauréat du jour",
+                    "name": "picto_avent",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "url",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "preview_size": "medium"
+                },
+                {
+                    "key": "field_6565c3348823b",
+                    "label": "Prevenir le lauréat par email",
+                    "name": "envoyer_email_alerte",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "ui": 0,
+                    "ui_on_text": "",
+                    "ui_off_text": ""
+                },
+                {
+                    "key": "field_6546aa10739b7",
+                    "label": "Adresse email d'alerte",
+                    "name": "adresse_email_alerte",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Un mail d'alerte sera envoyé à cette adresse, en plus d'être envoyé au lauréat de chaque tirage",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_6565c3348823b",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "contact@coworking-metz.fr",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_654749089824b",
+                    "label": "Modèle de l'email d'alerte",
+                    "name": "email_alerte_avent",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_6565c3348823b",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "0": "",
+                        "brevo-23": "Brevo - #023 - Email de confirmation de journée nomade",
+                        "brevo-19": "Brevo - #019 - Email de confirmation de visite sans app",
+                        "brevo-16": "Brevo - #016 - Invitation équipe",
+                        "brevo-14": "Brevo - #014 - Email de rappel de visite",
+                        "brevo-10": "Brevo - #010 - Email de confirmation de visite",
+                        "brevo-9": "Brevo - #009 - Email récapitulatif de journée d'éssai",
+                        "35313": "Wordpress - #35313 - {user_name}, suite à votre visite du Coworking...",
+                        "31131": "Wordpress - #31131 - {user_name}, tu as gagné le tirage du calendrier de l'avent du {date_du_jour} !",
+                        "28646": "Wordpress - #28646 - {user_name} visitera le coworking le {date_visite} - Infos et démarches",
+                        "28642": "Wordpress - #28642 - Votre visite à venir au Coworking",
+                        "27040": "Wordpress - #27040 - Copy of Votre compte utilisateur du Poulailler - Coworking Metz",
+                        "26656": "Wordpress - #26656 - Your account has been created on Le Poulailler - Coworking Metz",
+                        "26655": "Wordpress - #26655 - Votre compte adhérent",
+                        "26654": "Wordpress - #26654 - Note added to your order {order_date} on Le Poulailler - Coworking Metz",
+                        "26653": "Wordpress - #26653 - Le Poulailler - Coworking Metz invoice",
+                        "26652": "Wordpress - #26652 - Invoice for order #{order_number} on Le Poulailler - Coworking Metz",
+                        "26651": "Wordpress - #26651 - {first_name}, votre commande {order_number} a été partiellement remboursée.",
+                        "26650": "Wordpress - #26650 - {first_name}, votre commande {order_number} a été remboursée.",
+                        "26649": "Wordpress - #26649 - {first_name}, votre facture {order_number} en pièce jointe",
+                        "26648": "Wordpress - #26648 - Hi {customer_name}, Your order {order_number} has been received!",
+                        "26647": "Wordpress - #26647 - Hi {customer_name}, Your order {order_number} has been received!",
+                        "26646": "Wordpress - #26646 - {first_name}, la commande #{order_number} a échoué",
+                        "26645": "Wordpress - #26645 - {customer_name} has cancelled order #{order_number} on your store",
+                        "26644": "Wordpress - #26644 - {first_name} {last_name} a passé la commande #{order_number}",
+                        "26643": "Wordpress - #26643 - This template will be used in the case of none detected template and the subject will be get from original email"
+                    },
+                    "default_value": false,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
+                }
+            ]
+        },
+        {
+            "key": "field_6565c4c411ecd",
+            "label": "Tirages",
+            "name": "avent_tirages",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6546a950a1f3c",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_6558b4dd86918",
+            "label": "Polaroïds",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_6558b4ee86919",
+            "label": "Polaroïds",
+            "name": "polaroids",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_6558b5398691a",
+                    "label": "Cadre par défaut",
+                    "name": "cadre",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "url",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "preview_size": "liquid-widget"
+                },
+                {
+                    "key": "field_66158bc09df8c",
+                    "label": "Photo par défaut",
+                    "name": "photo_par_defaut",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "Photo affichée dans le polaroid si le coworker n'a pas sélectionné de photo",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "url",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "preview_size": "liquid-widget"
+                },
+                {
+                    "key": "field_66158bd89df8d",
+                    "label": "Photo pour les visiteurs",
+                    "name": "photo_visiteur",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "Photo affichée dans le polaroid pour les visiteurs",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "url",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "preview_size": "liquid-widget"
+                },
+                {
+                    "key": "field_679cd94685773",
+                    "label": "Photo pour les nomades",
+                    "name": "photo_nomade",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "Photo affichée dans le polaroid pour les visiteurs",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "url",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "preview_size": "liquid-widget"
+                }
+            ]
+        },
+        {
+            "key": "field_6558b6472079e",
+            "label": "Divers",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_6558b65f2079f",
+            "label": "Divers",
+            "name": "divers",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_6558b66c207a0",
+                    "label": "Picto d'anniversaire",
+                    "name": "picto_anniversaire",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "url",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "preview_size": "liquid-widget"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "reglages-comptes"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1742114270
+}

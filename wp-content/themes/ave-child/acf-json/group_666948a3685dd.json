@@ -1,0 +1,98 @@
+{
+    "key": "group_666948a3685dd",
+    "title": "Équipes",
+    "fields": [
+        {
+            "key": "field_66694882e95ae",
+            "label": "Membres",
+            "name": "membres",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Ajouter un élément",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_66694ba9e6949",
+                    "label": "Membre",
+                    "name": "membre",
+                    "aria-label": "",
+                    "type": "user",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "role": "",
+                    "return_format": "array",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "bidirectional": 0,
+                    "bidirectional_target": [],
+                    "parent_repeater": "field_66694882e95ae"
+                },
+                {
+                    "key": "field_66694bb3e694a",
+                    "label": "Role",
+                    "name": "role",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "admin": "Gestionnaire",
+                        "member": "Membre"
+                    },
+                    "default_value": "member",
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "parent_repeater": "field_66694882e95ae"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "equipe"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1742114274
+}
