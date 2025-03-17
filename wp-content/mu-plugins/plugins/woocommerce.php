@@ -56,6 +56,8 @@ add_filter('woocommerce_available_payment_gateways', function ($available_gatewa
 
     if (get_field('payer_en_virement', $user)) return $available_gateways;
 
+    if (wp_get_environment_type() == 'local') return $available_gateways;
+
     unset($available_gateways['bacs']); // 'bacs' is the id for bank transfer
 
     return $available_gateways;
