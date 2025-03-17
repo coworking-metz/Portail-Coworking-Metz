@@ -21,10 +21,10 @@ add_action('wp_head', function () { ?>
         })
     </script>
 <?php });
-// Ajouter le lien "Recevoir un lien de connexion par mail" sur la page de connexion WP et WooCommerce
-add_action('login_form', function () {
-    echo '<div><a class="login-link woocommerce-button button woocommerce-form-login__submit wp-element-button" href="/wp-login.php?login-link-email=">🔓 Recevoir un lien de connexion par mail</a></div><div style="clear:both"></div><hr>';
-});
+// // Ajouter le lien "Recevoir un lien de connexion par mail" sur la page de connexion WP et WooCommerce
+// add_action('login_form', function () {
+//     echo '<div><a class="login-link woocommerce-button button woocommerce-form-login__submit wp-element-button" href="/wp-login.php?login-link-email=">🔓 Recevoir un lien de connexion par mail</a></div><div style="clear:both"></div><hr>';
+// });
 
 add_action('woocommerce_login_form_start', function () {
     echo '<div><a class="login-link woocommerce-button button woocommerce-form-login__submit wp-element-button" href="/wp-login.php?login-link-email=">🔓 Recevoir un lien de connexion par mail</a></div><div style="clear:both"></div><hr>';
