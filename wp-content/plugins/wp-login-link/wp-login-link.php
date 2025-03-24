@@ -27,7 +27,8 @@ add_action('wp_head', function () { ?>
 // });
 
 add_action('woocommerce_login_form_start', function () {
-    echo '<div><a class="login-link woocommerce-button button woocommerce-form-login__submit wp-element-button" href="/wp-login.php?login-link-email=">🔓 Recevoir un lien de connexion par mail</a></div><div style="clear:both"></div><hr>';
+	$redirect = $_GET['redirect'] ?? false;
+    echo '<div><a class="login-link woocommerce-button button woocommerce-form-login__submit wp-element-button" href="/wp-login.php?redirect='.urlencode($redirect).'&login-link-email=">🔓 Recevoir un lien de connexion par mail</a></div><div style="clear:both"></div><hr>';
 });
 
 // // Affichage du formulaire pour entrer l'email
@@ -52,9 +53,9 @@ if ($_GET['login-link-email'] ?? false) {
     add_action('init', function () {
         $user_email = sanitize_email($_GET['login-link-email']);
         $user = get_user_by('email', $user_email);
-
+		$redirect = $_GET['redirect']??false;
         if (!$user) {
-            wp_redirect_notification('/mon-compte/', ['type' => 'error', 'titre' => 'Aucun utilisateur trouvé avec cet email.', 'texte' => 'En cas de question, vous pouvez <a href="#ouvrir-brevo">nous contacter ici</a>']);
+            wp_redirect_notification('/mon-compte/?redirect='.urlencode($redirect), ['type' => 'error', 'titre' => 'Aucun utilisateur trouvé avec cet email.', 'texte' => 'En cas de question, vous pouvez <a href="#ouvrir-brevo">nous contacter ici</a>']);
         }
         $token = bin2hex(random_bytes(16));
         $expire = time() + HOUR_IN_SECONDS;
@@ -63,9 +64,12 @@ if ($_GET['login-link-email'] ?? false) {
         update_user_meta($user->ID, '_email_login_expire', $expire);
 
         $login_url = add_query_arg([
+			'redirect'=>$redirect,
             'user_id' => $user->ID,
             'token' => $token
         ], wp_login_url());
+
+		me($login_url);
         $to = $user->user_email;
 
         if (wp_get_environment_type() == 'local')
@@ -86,6 +90,10 @@ add_action('init', function () {
         $stored_token = get_user_meta($user_id, '_email_login_token', true);
         $expire = get_user_meta($user_id, '_email_login_expire', true);
 
+		$redirect = $_GET['redirect']??false;
+		if(!$redirect) {
+			$redirect = '/mon-compte';
+		}
         if ($token === $stored_token && time() < $expire) {
             wp_clear_auth_cookie();
             wp_set_current_user($user_id);
@@ -94,7 +102,7 @@ add_action('init', function () {
             delete_user_meta($user_id, '_email_login_token');
             delete_user_meta($user_id, '_email_login_expire');
 
-            wp_redirect_notification('/mon-compte/', ['type' => 'success', 'titre' => 'Connexion effectuée.', 'texte' => 'Vous êtes à présent connecté avec le compte <b>'.get_userdata($user_id)->user_email.'</b>.']);
+            wp_redirect_notification($redirect, ['type' => 'success', 'titre' => 'Connexion effectuée.', 'texte' => 'Vous êtes à présent connecté avec le compte <b>'.get_userdata($user_id)->user_email.'</b>.']);
 
             exit;
         } else {

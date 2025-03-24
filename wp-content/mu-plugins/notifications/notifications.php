@@ -52,13 +52,13 @@ function generateNotification($data)
 
 function wp_redirect_notification($uri, $notification)
 {
-    wp_redirect($uri . '?notification=' . urlencode(json_encode($notification)));
+    wp_redirect($uri . (strstr($uri,'?') ? '&' :'?' ) . 'notification=' . urlencode(json_encode($notification)));
     exit;
 }
 
 function custom_redirect_notification($uri, $notification)
 {
-    custom_redirect($uri . '?notification=' . urlencode(json_encode($notification)));
+    custom_redirect($uri . (strstr($uri,'?') ? '&' :'?' ) . 'notification=' . urlencode(json_encode($notification)));
 }
 
 function sendNotification($data)
