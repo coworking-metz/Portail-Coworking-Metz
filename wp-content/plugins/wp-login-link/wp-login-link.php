@@ -69,7 +69,7 @@ if ($_GET['login-link-email'] ?? false) {
             'token' => $token
         ], wp_login_url());
 
-		me($login_url);
+//		me($login_url);
         $to = $user->user_email;
 
         if (wp_get_environment_type() == 'local')
