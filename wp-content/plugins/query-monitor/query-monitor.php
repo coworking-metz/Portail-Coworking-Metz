@@ -5,18 +5,18 @@
  * @package   query-monitor
  * @link      https://github.com/johnbillion/query-monitor
  * @author    John Blackbourn
- * @copyright 2009-2024 John Blackbourn
+ * @copyright 2009-2025 John Blackbourn
  * @license   GPL v2 or later
  *
  * Plugin Name:  Query Monitor
  * Description:  The developer tools panel for WordPress.
- * Version:      3.16.2
+ * Version:      3.17.2
  * Plugin URI:   https://querymonitor.com/
  * Author:       John Blackbourn
  * Author URI:   https://querymonitor.com/
  * Text Domain:  query-monitor
  * Domain Path:  /languages/
- * Requires at least: 5.7
+ * Requires at least: 5.9
  * Requires PHP: 7.4
  * License URI:  https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * License:      GPL v2 or later
@@ -36,24 +36,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'QM_VERSION', '3.16.2' );
-
-$qm_dir = dirname( __FILE__ );
+define( 'QM_VERSION', '3.17.2' );
 
 // This must be required before vendor/autoload.php so QM can serve its own message about PHP compatibility.
-require_once "{$qm_dir}/classes/PHP.php";
+require_once __DIR__ . '/classes/PHP.php';
 
 if ( ! QM_PHP::version_met() ) {
 	add_action( 'all_admin_notices', 'QM_PHP::php_version_nope' );
 	return;
 }
 
-if ( ! file_exists( "{$qm_dir}/vendor/autoload.php" ) ) {
+if ( ! file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	add_action( 'all_admin_notices', 'QM_PHP::vendor_nope' );
 	return;
 }
 
-require_once "{$qm_dir}/vendor/autoload.php";
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Safety check to ensure the autoloader is operational.
+if ( ! class_exists( 'QM_Activation' ) ) {
+	return;
+}
 
 QM_Activation::init( __FILE__ );
 
@@ -90,7 +93,5 @@ if ( is_admin() ) {
 		return;
 	}
 }
-
-unset( $qm_dir );
 
 QueryMonitor::init( __FILE__ )->set_up();
