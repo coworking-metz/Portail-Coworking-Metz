@@ -1,10 +1,10 @@
 === Newsletter, SMTP, Email marketing and Subscribe forms by Brevo (formely Sendinblue) ===
-Contributors: neeraj_slit
-Tags: Email Marketing, Newsletter, Sendinblue, Brevo, Forms, smtp, marketing automation, email campaign, WordPress smtp, subscription form, email, marketing, signup form
+ Contributors: neeraj_slit
+Tags: smtp, email, form, newsletter, subscribe
 Requires at least: 4.4
-Tested up to: 6.3
+Tested up to: 6.7.1
 Requires PHP: 5.6
-Stable tag: 3.1.71
+Stable tag: 3.1.94
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,6 +113,77 @@ In order to create a signup form, you need to:
 2. Integrate the form in a sidebar using a widget from WP panel > Appearance > Widgets. The Brevo widget form should appear in your widgets list, you just to have to drag and drop the widget into the sidebar of your choice.
 
 == Changelog ==
+= 3.1.94 =
+* Updated the default form to use separate FIRSTNAME and LASTNAME fields instead of NAME.
+
+= 3.1.93 =
+* Removed workflow tab 
+* Improvements related to enabling marketing automation
+* Added support for Brevo WebPush
+
+= 3.1.92 =
+* Plugin code enhancements to extend the success message display duration after form submission.
+
+= 3.1.91 =
+* Plugin code enhancements to handle logout flows
+
+= 3.1.90 =
+* Plugin made compatible with Wordpress v6.7.1
+
+= 3.1.89 =
+* Enhancements to Brevo tracking script for automation events and syncing
+
+= 3.1.88 =
+* Fix vulnerability related to logout
+
+= 3.1.87 =
+* Enhancement in template language
+
+= 3.1.86 =
+* Plugin made compatible with Wordpress v6.6.2
+
+= 3.1.85 =
+* Plugin enhancements to improve plugin registration flow on Brevo with connection ID instead of name
+
+= 3.1.84 =
+* Fix to resolve issue around DOI confirmation email being sent twice
+
+= 3.1.83 =
+* Fix vulnerability related to forms
+
+= 3.1.82 =
+* Plugin is now compatible with Wordpress v6.5.4
+* Improvement in query for table update
+
+= 3.1.81 =
+* Included ability to set light/dark theme for Cloudflare Capthca
+
+= 3.1.80 =
+* Plugin made compatible with Wordpress v6.5.2
+
+= 3.1.79 =
+* Enhancements in Brevo Forms
+
+= 3.1.78 =
+* Plugin enhancements related to security
+
+= 3.1.77 =
+* Rebranded plugin from old Sendinblue brand to new Brevo brand
+
+= 3.1.76 =
+* Added support for Cloudflare Turnstile Captcha to be used with Brevo Forms in the plugin
+
+= 3.1.75 =
+* Updated default sender for test emails to use customer’s domain instead of Brevo domain
+
+= 3.1.74 =
+* Plugin made compatible with Wordpress v6.4
+
+= 3.1.73 =
+* Plugin security enhancements
+
+= 3.1.72 =
+* Plugin Enhancements related to Multi Language support
 
 = 3.1.71 =
 * Fixed issue in "Required fields" error message in forms

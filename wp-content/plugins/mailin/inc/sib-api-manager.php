@@ -59,16 +59,6 @@ if ( ! class_exists( 'SIB_API_Manager' ) ) {
 				if ($client->getLastResponseCode() == 200) {
 					$status = $account['relay']['enabled'] ? 'enabled' : 'disabled';
 					set_transient( 'sib_smtp_status_' . md5( SIB_Manager::$access_key ), $status, self::DELAYTIME );
-
-					// get Marketing Automation API key.
-					if ( isset( $account['marketingAutomation']['enabled'] ) && true == $account['marketingAutomation']['enabled'] ) {
-						$ma_key = $account['marketingAutomation']['key'];
-					} else {
-						$ma_key = '';
-					}
-					$general_settings = get_option( SIB_Manager::MAIN_OPTION_NAME, array() );
-					$general_settings['ma_key'] = $ma_key;
-					update_option( SIB_Manager::MAIN_OPTION_NAME, $general_settings );
 				}
 			}
 			return $status;
@@ -156,7 +146,7 @@ if ( ! class_exists( 'SIB_API_Manager' ) ) {
 			// get lists.
 			$lists = get_transient( 'sib_list_' . md5( SIB_Manager::$access_key ) );
 			if ( false === $lists || false == $lists ) {
-				
+
 				$mailin = new SendinblueApiClient();
 				$lists = array();
 				$list_data = $mailin->getAllLists();
@@ -459,7 +449,7 @@ if ( ! class_exists( 'SIB_API_Manager' ) ) {
 						'unlinkListIds' => $list_unlink,
 						'updateEnabled' => true
 					];
-				} else { 	
+				} else {
 						if($info['DOUBLE_OPT-IN'] == '1'){
 							$data = [
 								'email' => $email,
@@ -480,7 +470,7 @@ if ( ! class_exists( 'SIB_API_Manager' ) ) {
 								'unlinkListIds' => $list_unlink,
 								'updateEnabled' => true
 							];
-						}		
+						}
 				}
                 $mailin->createUser( $data );
                 $exist = $mailin->getLastResponseCode() == 204 ? 'success' : '' ;
@@ -537,7 +527,7 @@ if ( ! class_exists( 'SIB_API_Manager' ) ) {
 				$sender_name = trim( get_bloginfo( 'name' ) );
 			}
 			if ( '' == $sender_email ) {
-				$sender_email = __( 'no-reply@brevo.com', 'mailin' );
+				$sender_email = __( 'no-reply@' . parse_url(get_site_url(), PHP_URL_HOST), 'mailin' );
 				$sender_name = __( 'Brevo', 'mailin' );
 			}
 
@@ -702,9 +692,10 @@ if ( ! class_exists( 'SIB_API_Manager' ) ) {
                     $unlinkedLists = $info['unlinkedLists'];
                     unset($info['unlinkedLists']);
                 }
-                if ( '1' == $current_form['isDopt'] )
+                if ( '1' == $current_form['isDopt'] && (isset($contact_info['doi_sent']) && $contact_info['doi_sent'] != 1 ))
                 {
                     SIB_API_Manager::send_comfirm_email( $email, 'confirm', $current_form['confirmID'], $info );
+                    SIB_Model_Users::make_doi_sent( $contact_info['email'] );
                 }
 
                 if( $unlinkedLists != null ) {
@@ -828,7 +819,7 @@ if ( ! class_exists( 'SIB_API_Manager' ) ) {
 		public static function create_default_dopt() {
 
 			$mailin = new SendinblueApiClient();
-			
+
 			// add attribute.
 			$isEmpty = false;
 			$ret = $mailin->getAttributes();
