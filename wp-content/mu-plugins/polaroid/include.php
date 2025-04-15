@@ -122,7 +122,21 @@ function polaroid_existe($uid = null)
 
     // return $ret;
 }
+function polaroid_clear_cache($uid) {
+		$photos = json_decode(file_get_contents('https://photos.coworking-metz.fr/'.$uid.'.json'), true);
+	if(!$photos) return;
+	$urls=[];
+	foreach($photos as $type => $data) {
+		if(is_array($data)) {
+			$urls = array_merge($urls,array_values($data));
+		} else {
+			$urls[] = $data;
+		}
+	}
 
+    CoworkingMetz\CloudFlare::purgeUrls($urls);
+
+}
 function polaroid_get($uid = null, $defaults = true)
 {
     if (!$uid) {
