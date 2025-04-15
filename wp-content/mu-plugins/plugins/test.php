@@ -5,6 +5,6 @@ if (isset($_GET['test'])) {
     add_action('init', function () {
 
 
-		me(fetch_nomades_for_today());
+		me(polaroid_clear_cache(225));
     });
 }
