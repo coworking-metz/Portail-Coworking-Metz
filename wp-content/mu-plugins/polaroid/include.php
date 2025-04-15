@@ -126,6 +126,7 @@ function polaroid_clear_cache($uid) {
 		$photos = json_decode(file_get_contents('https://photos.coworking-metz.fr/'.$uid.'.json'), true);
 	if(!$photos) return;
 	$urls=[];
+
 	foreach($photos as $type => $data) {
 		if(is_array($data)) {
 			$urls = array_merge($urls,array_values($data));
@@ -133,6 +134,12 @@ function polaroid_clear_cache($uid) {
 			$urls[] = $data;
 		}
 	}
+	$urls = array_filter($urls);
+
+    $data = file_get_contents('https://www.coworking-metz.fr/api-json-wp/cowo/v1/trombi');
+    $reglages = json_decode($data, true);
+	$hash = '?'.md5(json_encode($reglages));
+	$urls = array_merge($urls,array_map(function($url) use($hash) { return $url.$hash; },$urls));
 
     CoworkingMetz\CloudFlare::purgeUrls($urls);
 
