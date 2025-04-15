@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.querySelector('.product-template-default')) {
 
         const addToCart = queryGet('add-to-cart');
-        if (Number(addToCart) != addToCart) {
+        if (addToCart && Number(addToCart) != addToCart) {
             window.addEventListener('load', () => {
                 document.querySelector('.single_add_to_cart_button').click()
             })

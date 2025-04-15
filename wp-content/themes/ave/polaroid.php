@@ -38,7 +38,7 @@ if (isset($_POST['valider-polaroid'])) {
     update_field('votre_photo', $aid, $key);
 
     update_field('url_image_trombinoscope', '', $key);
-
+	polaroid_clear_cache($uid);
     custom_redirect('/mon-compte/polaroid/');
     exit;
 }
