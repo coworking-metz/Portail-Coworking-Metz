@@ -11,23 +11,26 @@
 			$blankslate = $product_screen.find( '.woocommerce-BlankState' );
 
 		if ( 0 === $blankslate.length ) {
+			if ( woocommerce_admin.urls.add_product ) {
+				$title_action
+					.first()
+					.attr( 'href', woocommerce_admin.urls.add_product );
+			}
 			if ( woocommerce_admin.urls.export_products ) {
-				$title_action.after(
-					'<a href="' +
-						woocommerce_admin.urls.export_products +
-						'" class="page-title-action">' +
-						woocommerce_admin.strings.export_products +
-						'</a>'
-				);
+				const exportLink = document.createElement('a');
+				exportLink.href = woocommerce_admin.urls.export_products;
+				exportLink.className = 'page-title-action';
+				exportLink.textContent = woocommerce_admin.strings.export_products;
+
+				$title_action.after(exportLink);
 			}
 			if ( woocommerce_admin.urls.import_products ) {
-				$title_action.after(
-					'<a href="' +
-						woocommerce_admin.urls.import_products +
-						'" class="page-title-action">' +
-						woocommerce_admin.strings.import_products +
-						'</a>'
-				);
+				const importLink = document.createElement('a');
+				importLink.href = woocommerce_admin.urls.import_products;
+				importLink.className = 'page-title-action';
+				importLink.textContent = woocommerce_admin.strings.import_products;
+
+				$title_action.after(importLink);
 			}
 		} else {
 			$title_action.hide();
@@ -287,13 +290,49 @@
 							'i18n_sale_less_than_regular_error',
 						] );
 					} else {
-						$(
-							document.body
-						).triggerHandler( 'wc_remove_error_tip', [
-							$( this ),
-							'i18n_sale_less_than_regular_error',
-						] );
+						$( document.body ).triggerHandler(
+							'wc_remove_error_tip',
+							[ $( this ), 'i18n_sale_less_than_regular_error' ]
+						);
 					}
+				}
+			)
+
+			.on(
+				'keyup',
+				'input[type=text][name*=_global_unique_id]',
+				function () {
+					var global_unique_id = $( this ).val();
+
+					if ( /[^0-9\-]/.test( global_unique_id ) ) {
+						$( document.body ).triggerHandler( 'wc_add_error_tip', [
+							$( this ),
+							'i18n_global_unique_id_error',
+						] );
+					} else {
+						$( document.body ).triggerHandler(
+							'wc_remove_error_tip',
+							[ $( this ), 'i18n_global_unique_id_error' ]
+						);
+					}
+				}
+			)
+
+			.on(
+				'change',
+				'input[type=text][name*=_global_unique_id]',
+				function () {
+					var global_unique_id = $( this ).val();
+					$( this ).val(
+						global_unique_id
+							.replace( /[^0-9\-]/g, '' )
+							.replace( /^-+|-+$/g, '' )
+					);
+
+					$( document.body ).triggerHandler(
+						'wc_remove_error_tip',
+						[ $( this ), 'i18n_global_unique_id_error' ]
+					);
 				}
 			)
 
@@ -660,4 +699,141 @@
 			);
 		}
 	} );
+
+	$( function() {
+		/**
+		 * Handles heartbeat integration of order locking when HPOS is enabled.
+		 */
+		var wc_order_lock = {
+			init: function() {
+				// Order screen.
+				this.$lock_dialog = $( '.woocommerce_page_wc-orders #post-lock-dialog.order-lock-dialog' );
+				if ( 0 !== this.$lock_dialog.length && 'undefined' !== typeof woocommerce_admin_meta_boxes ) {
+					// We do not want WP's lock to interfere.
+					$( document ).off( 'heartbeat-send.refresh-lock' );
+					$( document ).off( 'heartbeat-tick.refresh-lock' );
+
+					$( document ).on( 'heartbeat-send', this.refresh_order_lock );
+					$( document ).on( 'heartbeat-tick', this.check_order_lock );
+				}
+
+				// Orders list table.
+				this.$list_table = $( '.woocommerce_page_wc-orders table.wc-orders-list-table' );
+				if ( 0 !== this.$list_table.length ) {
+					$( document ).on( 'heartbeat-send', this.send_orders_in_list );
+					$( document ).on( 'heartbeat-tick', this.check_orders_in_list );
+				}
+			},
+
+			refresh_order_lock: function( e, data ) {
+				delete data['wp-refresh-post-lock'];
+				data['wc-refresh-order-lock'] = woocommerce_admin_meta_boxes.post_id;
+			},
+
+			check_order_lock: function( e, data ) {
+				var lock_data = data['wc-refresh-order-lock'];
+
+				if ( ! lock_data || ! lock_data.error ) {
+					// No lock request in heartbeat or lock refreshed ok.
+					return;
+				}
+
+				if ( wc_order_lock.$lock_dialog.is( ':visible' ) ) {
+					return;
+				}
+
+				if ( lock_data.error.user_avatar_src ) {
+					wc_order_lock.$lock_dialog.find( '.post-locked-avatar' ).empty().append(
+						$(
+							'<img />',
+							{
+								'class': 'avatar avatar-64 photo',
+								width: 64,
+								height: 64,
+								alt: '',
+								src: lock_data.error.user_avatar_src,
+								srcset: lock_data.error.user_avatar_src_2x ? lock_data.error.user_avatar_src_2x + ' 2x' : undefined
+							}
+						)
+					);
+				}
+
+				wc_order_lock.$lock_dialog.find( '.currently-editing' ).text( lock_data.error.message );
+				wc_order_lock.$lock_dialog.show();
+				wc_order_lock.$lock_dialog.find( '.wp-tab-first' ).trigger( 'focus' );
+			},
+
+			send_orders_in_list: function( e, data ) {
+				data['wc-check-locked-orders'] = wc_order_lock.$list_table.find( 'tr input[name="id[]"]' ).map(
+					function() { return this.value; }
+				).get();
+			},
+
+			check_orders_in_list: function( e, data ) {
+				var locked_orders = data['wc-check-locked-orders'] || {};
+
+				wc_order_lock.$list_table.find( 'tr' ).each( function( i, tr ) {
+					var $tr      = $( tr );
+					var order_id = $tr.find( 'input[name="id[]"]' ).val();
+
+					if ( locked_orders[ order_id ] ) {
+						if ( ! $tr.hasClass( 'wp-locked' ) ) {
+							$tr.find( '.check-column checkbox' ).prop( 'checked', false );
+							$tr.addClass( 'wp-locked' );
+						}
+					} else {
+						$tr.removeClass( 'wp-locked' ).find( '.locked-info span' ).empty();
+					}
+				} );
+			}
+		};
+
+		wc_order_lock.init();
+	} );
+
+	// Function to handle selected product export
+	$( function () {
+		const $exportButton = $( 'a.page-title-action[href*="page=product_exporter"]');
+		// bail out early.
+		if ( !$exportButton.length ) {
+			return;
+		}
+
+		const originalExportHref = $exportButton.attr( 'href' );
+		const originalExportText = $exportButton.text();
+
+		// Use event delegation on the form containing the list table.
+		$( '#posts-filter' ).on(
+			'change',
+			'#the-list input[type="checkbox"][name="post[]"], #cb-select-all-1, #cb-select-all-2',
+			function () {
+				// Use a minimal timeout to ensure the checked state is updated in the DOM.
+				setTimeout( function () {
+					const selectedProductIds = $(
+						'#the-list input[type="checkbox"][name="post[]"]:checked'
+					)
+						.map( function () {
+							return $( this ).val();
+						} )
+						.get(); // .get() converts the jQuery object to a standard array.
+
+					// Update Export button.
+					if ( selectedProductIds.length > 0 ) {
+						// Construct the new href with product_ids and nonce.
+						const url = new URL( originalExportHref );
+						url.searchParams.set( 'product_ids', selectedProductIds.join(','));
+						url.searchParams.set( '_wpnonce', woocommerce_admin.nonces.export_selected_products_nonce);
+						const newHref = url.toString();
+						// Construct the text with the count of selected products.
+						const count      = selectedProductIds.length;
+						const buttonText = woocommerce_admin.strings.export_selected_products.replace( '%d', count );
+						$exportButton.text( buttonText ).attr( 'href', newHref );
+					} else {
+						$exportButton.text( originalExportText ).attr( 'href', originalExportHref );
+					}
+				}, 0 );
+			}
+		);
+	} );
+
 } )( jQuery, woocommerce_admin );

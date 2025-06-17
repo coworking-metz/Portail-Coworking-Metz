@@ -23,7 +23,10 @@ class TourInAppMarketplace extends Task {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Tour the WooCommerce Marketplace', 'woocommerce' );
+		return __(
+			'Discover ways of extending your store with a tour of the Woo Marketplace',
+			'woocommerce'
+		);
 	}
 
 	/**
@@ -59,7 +62,7 @@ class TourInAppMarketplace extends Task {
 	 * @return string
 	 */
 	public function get_action_url() {
-		return admin_url( 'admin.php?page=wc-addons&tutorial=true' );
+		return admin_url( 'admin.php?page=wc-admin&path=%2Fextensions&tutorial=true' );
 	}
 
 	/**
