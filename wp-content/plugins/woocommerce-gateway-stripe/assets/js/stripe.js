@@ -1,6 +1,6 @@
-/* global wc_stripe_params */
+/* global wc_stripe_params, Stripe */
 
-jQuery( function( $ ) {
+jQuery( function($ ) {
 	'use strict';
 
 	try {
@@ -92,7 +92,7 @@ jQuery( function( $ ) {
 			elementClasses = wc_stripe_params.elements_classes ? wc_stripe_params.elements_classes : elementClasses;
 
 			if ( 'yes' === wc_stripe_params.inline_cc_form ) {
-				stripe_card = elements.create( 'card', { style: elementStyles, hidePostalCode: true } );
+				stripe_card = elements.create( 'card', { style: elementStyles, hidePostalCode: true, hideIcon: true } );
 
 				stripe_card.addEventListener( 'change', function( event ) {
 					wc_stripe_form.onCCFormChange();
@@ -102,7 +102,7 @@ jQuery( function( $ ) {
 					}
 				} );
 			} else {
-				stripe_card = elements.create( 'cardNumber', { style: elementStyles, classes: elementClasses } );
+				stripe_card = elements.create( 'cardNumber', { style: elementStyles, classes: elementClasses, showIcon: false } );
 				stripe_exp  = elements.create( 'cardExpiry', { style: elementStyles, classes: elementClasses } );
 				stripe_cvc  = elements.create( 'cardCvc', { style: elementStyles, classes: elementClasses } );
 
@@ -565,7 +565,9 @@ jQuery( function( $ ) {
 
 			wc_stripe_form.reset();
 
-			const payment_method_id = response?.paymentMethod?.id ?? response?.source?.id;
+			// TODO: This can be restored to the optional chaining and nullish coalescing operators version, when we move
+			// this file to the building pipeline: response?.paymentMethod?.id ?? response?.source?.id
+			var payment_method_id = response.paymentMethod && response.paymentMethod.id ? response.paymentMethod.id : response.source && response.source.id ? response.source.id : undefined;
 
 			wc_stripe_form.form.append(
 				$( '<input type="hidden" />' )
@@ -594,7 +596,9 @@ jQuery( function( $ ) {
 				}
 			};
 
-			const payment_method_id = response?.paymentMethod?.id ?? response?.source?.id;
+			// TODO: This can be restored to the optional chaining and nullish coalescing operators version, when we move
+			// this file to the building pipeline: response?.paymentMethod?.id ?? response?.source?.id
+			var payment_method_id = response.paymentMethod && response.paymentMethod.id ? response.paymentMethod.id : response.source && response.source.id ? response.source.id : undefined;
 
 			$.post( {
 				url: wc_stripe_form.getAjaxURL( 'create_setup_intent'),
@@ -715,6 +719,7 @@ jQuery( function( $ ) {
 			if( wc_stripe_form.form.attr('id') === 'order_review' ) {
 				formFields._ajax_nonce = wc_stripe_params.updatePaymentIntentNonce;
 				formFields.order_id = wc_stripe_params.orderId;
+				formFields.stripe_order_key = wc_stripe_params.stripe_order_key;
 
 				$.ajax( {
 					url: wc_stripe_form.getAjaxURL( payment_method + '_update_payment_intent' ),
@@ -825,7 +830,7 @@ jQuery( function( $ ) {
 		 */
 		onError: function( e, result ) {
 			var message = result.error.message;
-			var selectedMethodElement = wc_stripe_form.getSelectedPaymentElement().closest( 'li' );
+			var selectedMethodElement = wc_stripe_form.getSelectedPaymentElement().closest( '.wc_payment_method' );
 			var savedTokens = selectedMethodElement.find( '.woocommerce-SavedPaymentMethods-tokenInput' );
 			var errorContainer;
 
@@ -880,8 +885,13 @@ jQuery( function( $ ) {
 				message = wc_stripe_params.invalid_request_error;
 			}
 
-			if ( wc_stripe_params.hasOwnProperty(result.error.code) ) {
+			if ( wc_stripe_params.hasOwnProperty( result.error.code ) ) {
 				message = wc_stripe_params[ result.error.code ];
+			}
+
+			// Correctly sets the insufficient funds message.
+			if ( 'card_declined' === result.error.code && 'insufficient_funds' === result.error?.decline_code ) {
+				message = wc_stripe_params.insufficient_funds;
 			}
 
 			wc_stripe_form.reset();
