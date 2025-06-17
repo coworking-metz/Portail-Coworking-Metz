@@ -14,12 +14,9 @@ if (PHP_VERSION_ID < 50600) {
             echo $err;
         }
     }
-    trigger_error(
-        $err,
-        E_USER_ERROR
-    );
+    throw new RuntimeException($err);
 }
 
 require_once __DIR__ . '/composer/autoload_real.php';
 
-return ComposerAutoloaderInit62e0e156461f136eb1f6faca04e5a55f::getLoader();
+return ComposerAutoloaderInit2faf325c22909c96932683ab1c2f3ce2::getLoader();

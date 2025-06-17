@@ -11,7 +11,6 @@ require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
  * Cron schedule list table class.
  */
 class Schedule_List_Table extends \WP_List_Table {
-
 	/**
 	 * Array of cron event schedules that are added by WordPress core.
 	 *
@@ -76,9 +75,9 @@ class Schedule_List_Table extends \WP_List_Table {
 	public function get_columns() {
 		return array(
 			'crontrol_icon'     => '',
-			'crontrol_name'     => __( 'Internal Name', 'wp-crontrol' ),
-			'crontrol_interval' => __( 'Interval', 'wp-crontrol' ),
-			'crontrol_display'  => __( 'Display Name', 'wp-crontrol' ),
+			'crontrol_name'     => esc_html__( 'Internal Name', 'wp-crontrol' ),
+			'crontrol_interval' => esc_html__( 'Interval', 'wp-crontrol' ),
+			'crontrol_display'  => esc_html__( 'Display Name', 'wp-crontrol' ),
 		);
 	}
 
@@ -122,7 +121,7 @@ class Schedule_List_Table extends \WP_List_Table {
 			$links[] = "<span class='crontrol-in-use'>" . esc_html__( 'This custom schedule is in use and cannot be deleted', 'wp-crontrol' ) . '</span>';
 		} else {
 			$link = add_query_arg( array(
-				'page'            => 'crontrol_admin_options_page',
+				'page'            => 'wp-crontrol-schedules',
 				'crontrol_action' => 'delete-schedule',
 				'crontrol_id'     => rawurlencode( $schedule['name'] ),
 			), admin_url( 'options-general.php' ) );
@@ -159,7 +158,7 @@ class Schedule_List_Table extends \WP_List_Table {
 	}
 
 	/**
-	 * Returns the output for the schdule name cell of a table row.
+	 * Returns the output for the schedule name cell of a table row.
 	 *
 	 * @phpstan-param array{
 	 *   interval: int,
@@ -190,7 +189,7 @@ class Schedule_List_Table extends \WP_List_Table {
 		$interval = sprintf(
 			'%s (%s)',
 			esc_html( "{$schedule['interval']}" ),
-			esc_html( interval( $schedule['interval'] ) )
+			esc_html( interval( $schedule['interval'], true ) )
 		);
 
 		if ( $schedule['is_too_frequent'] ) {
@@ -233,5 +232,4 @@ class Schedule_List_Table extends \WP_List_Table {
 	public function no_items() {
 		esc_html_e( 'There are no schedules.', 'wp-crontrol' );
 	}
-
 }
