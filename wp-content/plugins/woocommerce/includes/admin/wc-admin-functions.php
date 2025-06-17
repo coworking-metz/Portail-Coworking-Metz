@@ -6,6 +6,9 @@
  * @version  2.4.0
  */
 
+use Automattic\WooCommerce\Enums\OrderStatus;
+use Automattic\WooCommerce\Utilities\OrderUtil;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -16,8 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return array
  */
 function wc_get_screen_ids() {
-
-	$wc_screen_id = sanitize_title( __( 'WooCommerce', 'woocommerce' ) );
+	$wc_screen_id = 'woocommerce';
 	$screen_ids   = array(
 		'toplevel_page_' . $wc_screen_id,
 		$wc_screen_id . '_page_wc-orders',
@@ -39,12 +41,12 @@ function wc_get_screen_ids() {
 		'edit-product_tag',
 		'profile',
 		'user-edit',
-		wc_get_page_screen_id( 'shop-order' ),
 	);
 
 	foreach ( wc_get_order_types() as $type ) {
 		$screen_ids[] = $type;
 		$screen_ids[] = 'edit-' . $type;
+		$screen_ids[] = wc_get_page_screen_id( $type );
 	}
 
 	$attributes = wc_get_attribute_taxonomies();
@@ -68,11 +70,18 @@ function wc_get_screen_ids() {
  * @return string Page ID. Empty string if resource not found.
  */
 function wc_get_page_screen_id( $for ) {
-	switch ( $for ) {
-		case 'shop-order':
-			return 'woocommerce_page_wc-orders';
+	$screen_id = '';
+	$for       = str_replace( '-', '_', $for );
+
+	if ( in_array( $for, wc_get_order_types( 'admin-menu' ), true ) ) {
+		if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+			$screen_id = 'woocommerce_page_wc-orders' . ( 'shop_order' === $for ? '' : '--' . $for );
+		} else {
+			$screen_id = $for;
+		}
 	}
-	return '';
+
+	return $screen_id;
 }
 
 /**
@@ -242,8 +251,6 @@ function wc_maybe_adjust_line_item_product_stock( $item, $item_quantity = -1 ) {
 	$item_quantity          = wc_stock_amount( $item_quantity >= 0 ? $item_quantity : $item->get_quantity() );
 	$already_reduced_stock  = wc_stock_amount( $item->get_meta( '_reduced_stock', true ) );
 	$restock_refunded_items = wc_stock_amount( $item->get_meta( '_restock_refunded_items', true ) );
-	$order                  = $item->get_order();
-	$refunded_item_quantity = $order->get_qty_refunded_for_item( $item->get_id() );
 
 	$diff = $item_quantity - $restock_refunded_items - $already_reduced_stock;
 
@@ -375,7 +382,7 @@ function wc_save_order_items( $order_id, $items ) {
 
 			$item->save();
 
-			if ( in_array( $order->get_status(), array( 'processing', 'completed', 'on-hold' ), true ) ) {
+			if ( in_array( $order->get_status(), array( OrderStatus::PROCESSING, OrderStatus::COMPLETED, OrderStatus::ON_HOLD ), true ) ) {
 				$changed_stock = wc_maybe_adjust_line_item_product_stock( $item );
 				if ( $changed_stock && ! is_wp_error( $changed_stock ) ) {
 					$qty_change_order_notes[] = $item->get_name() . ' (' . $changed_stock['from'] . '&rarr;' . $changed_stock['to'] . ')';
@@ -500,18 +507,20 @@ function wc_render_invalid_variation_notice( $product_object ) {
 
 	// Check if a variation exists without pricing data.
 	// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
-	$invalid_variation_count = $wpdb->get_var(
+	$valid_variation_count = $wpdb->get_var(
 		"
 		SELECT count(post_id) FROM {$wpdb->postmeta}
 		WHERE post_id in (" . implode( ',', array_map( 'absint', $variation_ids ) ) . ")
 		AND ( meta_key='_subscription_sign_up_fee' OR meta_key='_price' )
-		AND meta_value > 0
+		AND meta_value >= 0
 		AND meta_value != ''
 		"
 	);
 	// phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
 
-	if ( 0 < ( $variation_count - $invalid_variation_count ) ) {
+	$invalid_variation_count = $variation_count - $valid_variation_count;
+
+	if ( 0 < $invalid_variation_count ) {
 		?>
 		<div id="message" class="inline notice notice-warning woocommerce-message woocommerce-notice-invalid-variation">
 			<p>
@@ -519,8 +528,8 @@ function wc_render_invalid_variation_notice( $product_object ) {
 			echo wp_kses_post(
 				sprintf(
 					/* Translators: %d variation count. */
-					_n( '%d variation does not have a price.', '%d variations do not have prices.', ( $variation_count - $invalid_variation_count ), 'woocommerce' ),
-					( $variation_count - $invalid_variation_count )
+					_n( '%d variation does not have a price.', '%d variations do not have prices.', $invalid_variation_count, 'woocommerce' ),
+					$invalid_variation_count
 				) . '&nbsp;' .
 				__( 'Variations (and their attributes) that do not have prices will not be shown in your store.', 'woocommerce' )
 			);
@@ -552,4 +561,30 @@ function wc_get_current_admin_url() {
 	}
 
 	return remove_query_arg( array( '_wpnonce', '_wc_notice_nonce', 'wc_db_update', 'wc_db_update_nonce', 'wc-hide-notice' ), admin_url( $uri ) );
+}
+
+/**
+ * Get default product type options.
+ *
+ * @internal
+ * @since 7.9.0
+ * @return array
+ */
+function wc_get_default_product_type_options() {
+	return array(
+		'virtual'      => array(
+			'id'            => '_virtual',
+			'wrapper_class' => 'show_if_simple',
+			'label'         => __( 'Virtual', 'woocommerce' ),
+			'description'   => __( 'Virtual products are intangible and are not shipped.', 'woocommerce' ),
+			'default'       => 'no',
+		),
+		'downloadable' => array(
+			'id'            => '_downloadable',
+			'wrapper_class' => 'show_if_simple',
+			'label'         => __( 'Downloadable', 'woocommerce' ),
+			'description'   => __( 'Downloadable products give access to a file upon purchase.', 'woocommerce' ),
+			'default'       => 'no',
+		),
+	);
 }

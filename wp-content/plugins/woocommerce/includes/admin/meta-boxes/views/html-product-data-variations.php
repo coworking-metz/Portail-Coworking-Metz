@@ -5,21 +5,37 @@
  * @package WooCommerce\Admin\Metaboxes\Views
  */
 
+use Automattic\WooCommerce\Internal\CostOfGoodsSold\CostOfGoodsSoldController;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+$add_attributes_img_url = WC_ADMIN_IMAGES_FOLDER_URL . '/icons/info.svg';
+$background_img_url     = WC_ADMIN_IMAGES_FOLDER_URL . '/product_data/no-variation-background-image.svg';
+$arrow_img_url          = WC_ADMIN_IMAGES_FOLDER_URL . '/product_data/no-variation-arrow.svg';
 ?>
 <div id="variable_product_options" class="panel wc-metaboxes-wrapper hidden">
 	<div id="variable_product_options_inner">
+		<?php if ( ! isset( $variation_attributes ) || ! is_array( $variation_attributes ) || count( $variation_attributes ) === 0 ) : ?>
 
-		<?php if ( ! count( $variation_attributes ) ) : ?>
-
-			<div id="message" class="inline notice woocommerce-message">
-				<p><?php echo wp_kses_post( __( 'Before you can add a variation you need to add some variation attributes on the <strong>Attributes</strong> tab.', 'woocommerce' ) ); ?></p>
-				<?php /* phpcs:disable WooCommerce.Commenting.CommentHooks.MissingHookComment */ ?>
-				<p><a class="button-primary" href="<?php echo esc_url( apply_filters( 'woocommerce_docs_url', 'https://docs.woocommerce.com/document/variable-product/', 'product-variations' ) ); ?>" target="_blank"><?php esc_html_e( 'Learn more', 'woocommerce' ); ?></a></p>
-				<?php /* phpcs:enable */ ?>
+		<div class="add-attributes-container">
+			<div class="add-attributes-message">
+				<img src="<?php echo esc_url( $add_attributes_img_url ); ?>" />
+				<p>
+					<?php
+						echo wp_kses_post(
+							sprintf(
+								/* translators: %1$s: url for attributes tab, %2$s: url for variable product documentation */
+								__( 'Add some attributes in the <a class="variations-add-attributes-link" href="%1$s">Attributes</a> tab to generate variations. Make sure to check the <b>Used for variations</b> box. <a class="variations-learn-more-link" href="%2$s" target="_blank" rel="noreferrer">Learn more</a>', 'woocommerce' ),
+								esc_url( '#product_attributes' ),
+								esc_url( 'https://woocommerce.com/document/variable-product/' )
+							)
+						);
+					?>
+				</p>
 			</div>
+		</div>
 
 		<?php else : ?>
 
@@ -59,9 +75,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php /* phpcs:enable */ ?>
 
 			<div class="toolbar toolbar-top">
-				<select id="field_to_edit" class="variation_actions">
-					<option data-global="true" value="add_variation"><?php esc_html_e( 'Add variation', 'woocommerce' ); ?></option>
-					<option data-global="true" value="link_all_variations"><?php esc_html_e( 'Create variations from all attributes', 'woocommerce' ); ?></option>
+				<button type="button" class="button generate_variations"><?php esc_html_e( 'Generate variations', 'woocommerce' ); ?></button>
+				<button type="button" class="button add_variation_manually"><?php esc_html_e( 'Add manually', 'woocommerce' ); ?></button>
+				<select id="field_to_edit" class="select variation_actions hidden">
+					<option value="bulk_actions" disabled>Bulk actions</option>
 					<option value="delete_all"><?php esc_html_e( 'Delete all variations', 'woocommerce' ); ?></option>
 					<optgroup label="<?php esc_attr_e( 'Status', 'woocommerce' ); ?>">
 						<option value="toggle_enabled"><?php esc_html_e( 'Toggle &quot;Enabled&quot;', 'woocommerce' ); ?></option>
@@ -77,6 +94,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<option value="variable_sale_price_decrease"><?php esc_html_e( 'Decrease sale prices (fixed amount or percentage)', 'woocommerce' ); ?></option>
 						<option value="variable_sale_schedule"><?php esc_html_e( 'Set scheduled sale dates', 'woocommerce' ); ?></option>
 					</optgroup>
+					<?php if ( wc_get_container()->get( CostOfGoodsSoldController::class )->feature_is_enabled() ) : ?>
+						<optgroup label="<?php esc_attr_e( 'Cost of goods', 'woocommerce' ); ?>">
+							<option value="variable_unset_cogs_value"><?php esc_html_e( 'Remove custom costs', 'woocommerce' ); ?></option>
+						</optgroup>
+					<?php endif; ?>
 					<optgroup label="<?php esc_attr_e( 'Inventory', 'woocommerce' ); ?>">
 						<option value="toggle_manage_stock"><?php esc_html_e( 'Toggle &quot;Manage stock&quot;', 'woocommerce' ); ?></option>
 						<option value="variable_stock"><?php esc_html_e( 'Stock', 'woocommerce' ); ?></option>
@@ -99,10 +121,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php do_action( 'woocommerce_variable_product_bulk_edit_actions' ); ?>
 					<?php /* phpcs:enable */ ?>
 				</select>
-				<a class="button bulk_edit do_variation_action"><?php esc_html_e( 'Go', 'woocommerce' ); ?></a>
 
 				<div class="variations-pagenav">
 					<?php /* translators: variations count */ ?>
+					<span class="displaying-num"><?php echo esc_html( sprintf( _n( '%s item', '%s items', $variations_count, 'woocommerce' ), $variations_count ) ); ?></span>
 					<span class="expand-close">
 						(<a href="#" class="expand_all"><?php esc_html_e( 'Expand', 'woocommerce' ); ?></a> / <a href="#" class="close_all"><?php esc_html_e( 'Close', 'woocommerce' ); ?></a>)
 					</span>
@@ -127,6 +149,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="clear"></div>
 			</div>
 
+			<div class="add-variation-container">
+				<div class="arrow-image-wrapper">
+					<img src="<?php echo esc_url( $arrow_img_url ); ?>" />
+				</div>
+				<img src="<?php echo esc_url( $background_img_url ); ?>" />
+				<p>
+					<?php
+					esc_html_e(
+						'No variations yet. Generate them from all added attributes or add a new variation manually.',
+						'woocommerce'
+					);
+					?>
+				</p>
+			</div>
+
 			<?php /* phpcs:disable WooCommerce.Commenting.CommentHooks.MissingHookComment */ ?>
 			<div class="woocommerce_variations wc-metaboxes" data-attributes="<?php echo wc_esc_json( wp_json_encode( wc_list_pluck( $variation_attributes, 'get_data' ) ) ); // WPCS: XSS ok. ?>" data-total="<?php echo esc_attr( $variations_count ); ?>" data-total_pages="<?php echo esc_attr( $variations_total_pages ); ?>" data-page="1" data-edited="false"></div>
 			<?php /* phpcs:enable */ ?>
@@ -137,6 +174,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				<div class="variations-pagenav">
 					<?php /* translators: variations count*/ ?>
+					<span class="displaying-num"><?php echo esc_html( sprintf( _n( '%s item', '%s items', $variations_count, 'woocommerce' ), $variations_count ) ); ?></span>
 					<span class="expand-close">
 						(<a href="#" class="expand_all"><?php esc_html_e( 'Expand', 'woocommerce' ); ?></a> / <a href="#" class="close_all"><?php esc_html_e( 'Close', 'woocommerce' ); ?></a>)
 					</span>

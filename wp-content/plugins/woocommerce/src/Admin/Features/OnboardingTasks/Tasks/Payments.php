@@ -2,8 +2,8 @@
 
 namespace Automattic\WooCommerce\Admin\Features\OnboardingTasks\Tasks;
 
-use Automattic\WooCommerce\Admin\Features\Features;
 use Automattic\WooCommerce\Admin\Features\OnboardingTasks\Task;
+use Automattic\WooCommerce\Internal\Admin\Settings\Payments as SettingsPaymentsService;
 
 /**
  * Payments Task
@@ -12,6 +12,7 @@ class Payments extends Task {
 
 	/**
 	 * Used to cache is_complete() method result.
+	 *
 	 * @var null
 	 */
 	private $is_complete_result = null;
@@ -31,13 +32,7 @@ class Payments extends Task {
 	 * @return string
 	 */
 	public function get_title() {
-		if ( true === $this->get_parent_option( 'use_completed_title' ) ) {
-			if ( $this->is_complete() ) {
-				return __( 'You set up payments', 'woocommerce' );
-			}
-			return __( 'Set up payments', 'woocommerce' );
-		}
-		return __( 'Set up payments', 'woocommerce' );
+		return __( 'Get paid', 'woocommerce' );
 	}
 
 	/**
@@ -80,8 +75,8 @@ class Payments extends Task {
 	 * @return bool
 	 */
 	public function can_view() {
-		$woocommerce_payments = $this->task_list->get_task( 'woocommerce-payments' );
-		return Features::is_enabled( 'payment-gateway-suggestions' ) && ! $woocommerce_payments->can_view();
+		// The task is always visible.
+		return true;
 	}
 
 	/**
@@ -90,14 +85,26 @@ class Payments extends Task {
 	 * @return bool
 	 */
 	public static function has_gateways() {
-		$gateways         = WC()->payment_gateways->get_available_payment_gateways();
+		$gateways         = WC()->payment_gateways()->payment_gateways;
 		$enabled_gateways = array_filter(
 			$gateways,
 			function( $gateway ) {
-				return 'yes' === $gateway->enabled && 'woocommerce_payments' !== $gateway->id;
+				return 'yes' === $gateway->enabled;
 			}
 		);
 
 		return ! empty( $enabled_gateways );
+	}
+
+	/**
+	 * The task action URL.
+	 *
+	 * Empty string means the task linking will be handled by the JS logic.
+	 *
+	 * @return string
+	 */
+	public function get_action_url() {
+		// Link to the Payments settings page.
+		return admin_url( 'admin.php?page=wc-settings&tab=checkout&from=' . SettingsPaymentsService::FROM_PAYMENTS_TASK );
 	}
 }
