@@ -1,7 +1,7 @@
 {
 	"name": "johnbillion/wp-crontrol",
-	"description": "WP Crontrol lets you view and control what's happening in the WP-Cron system.",
-	"homepage": "https://github.com/johnbillion/wp-crontrol/",
+	"description": "Take control of the cron events on your WordPress website",
+	"homepage": "https://wp-crontrol.com",
 	"license": "GPL-2.0-or-later",
 	"type": "wordpress-plugin",
 	"authors": [
@@ -27,18 +27,19 @@
 	},
 	"require-dev": {
 		"codeception/module-asserts": "^1.0",
-		"codeception/module-filesystem": "^1.0",
+		"codeception/module-db": "^1.0",
 		"codeception/module-webdriver": "^1.0",
 		"codeception/util-universalframework": "^1.0",
 		"dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
-		"lucatume/wp-browser": "^3.0",
-		"phpcompatibility/phpcompatibility-wp": "2.1.2",
-		"phpstan/phpstan": "^1.7",
-		"phpunit/phpunit": "^9.0",
-		"roots/wordpress-core-installer": "^1.0.0",
+		"johnbillion/plugin-infrastructure": "dev-trunk",
+		"johnbillion/wp-compat": "^1.2",
+		"lucatume/wp-browser": "3.2.1",
+		"phpcompatibility/phpcompatibility-wp": "2.1.6",
+		"phpstan/phpstan": "2.1.12",
+		"roots/wordpress-core-installer": "1.100.0",
 		"roots/wordpress-full": "*",
-		"szepeviktor/phpstan-wordpress": "^1.0",
-		"wp-coding-standards/wpcs": "2.3.0"
+		"szepeviktor/phpstan-wordpress": "2.0.1",
+		"wp-coding-standards/wpcs": "3.1.0"
 	},
 	"require": {
 		"php": ">=7.4",
@@ -50,39 +51,36 @@
 		]
 	},
 	"extra": {
-		"wordpress-install-dir": "tests/wordpress"
+		"wordpress-install-dir": "vendor/wordpress/wordpress"
 	},
 	"scripts": {
-		"test:cs": [
-			"phpcs -nps --colors --report-code --report-summary --report-width=80 --cache=tests/cache/phpcs56.json --basepath=./ --standard=phpcs56.xml",
-			"phpcs -nps --colors --report-code --report-summary --report-width=80 --cache=tests/cache/phpcs.json --basepath=./ ."
-		],
-		"test:cs2pr": [
-			"phpcs -nsq --report=checkstyle --cache=tests/cache/phpcs . | cs2pr"
-		],
-		"test:analyze": [
-			"phpstan analyze --memory-limit=1024M"
-		],
-		"test:start": [
-			"docker compose up -d"
-		],
-		"test:acceptance": [
-			"bin/test.sh"
-		],
-		"test:stop": [
-			"docker compose down"
+		"build-vendor": [
+			"build-vendor"
 		],
 		"test": [
-			"composer validate --strict",
-			"@test:cs",
-			"@test:analyze",
-			"@test:acceptance"
+			"@composer validate --strict --no-check-lock",
+			"@test:phpstan",
+			"@test:phpcs",
+			"tests-start",
+			"@test:acceptance",
+			"tests-stop"
+		],
+		"test:acceptance": [
+			"acceptance-tests"
+		],
+		"test:phpcs": [
+			"phpcs -nps --colors --report-code --report-summary --report-width=80 --cache=tests/cache/phpcs.json --basepath=./ ."
+		],
+		"test:phpstan": [
+			"codecept build #",
+			"phpstan analyze -v --memory-limit=1024M"
 		]
 	},
 	"support": {
 		"issues": "https://github.com/johnbillion/wp-crontrol/issues",
 		"forum": "https://wordpress.org/support/plugin/wp-crontrol",
-		"source": "https://github.com/johnbillion/wp-crontrol"
+		"source": "https://github.com/johnbillion/wp-crontrol",
+		"security": "https://patchstack.com/database/vdp/wp-crontrol"
 	},
 	"funding": [
 		{
