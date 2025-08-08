@@ -13,16 +13,18 @@ add_action('wp_head', function () {
 
     $uri = get_current_uri();
 
-    if (is_product()) {
+
+	$produits_tickets = get_produits_tickets();
+
+	if (is_product()) {
         global $post;
-        if ($post->ID == PRODUIT_TICKET_UNITE) return;
-        if ($post->ID == PRODUIT_CARNET_TICKETS) return;
+        if (in_array($post->ID, $produits_tickets)) return;
     }
 
 
-    if (is_product_in_cart(PRODUIT_TICKET_UNITE)) return;
-    if (is_product_in_cart(PRODUIT_CARNET_TICKETS)) return;
-
+	foreach($produits_tickets  as $produit_tickets) {
+		if (is_product_in_cart($produit_tickets)) return;
+	}
 
 
     $stats = get_user_balance($uid);
@@ -82,3 +84,36 @@ add_action('wp_head', function () {
 
     sendNotification($data);
 });
+
+
+
+function get_produits_tickets()
+{
+	$data = get_transient('get_produits_tickets');
+	if(!$data) {
+		$query = new WP_Query([
+			'post_type'      => 'product',
+			'post_status'    => 'publish',
+			'meta_query'     => [
+				'relation' => 'OR',
+				[
+					'key'   => 'productType',
+					'value' => 'ticket-unite',
+				],
+				[
+					'key'   => 'productType',
+					'value' => 'carnet-tickets',
+				],
+			],
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+		]);
+
+		if ($query->have_posts()) {
+			$data = array_column($query->posts,'ID');
+			set_transient('get_produits_tickets',$data, DAY_IN_SECONDS);
+			wp_reset_postdata();
+		}
+	}
+	return $data;	
+}

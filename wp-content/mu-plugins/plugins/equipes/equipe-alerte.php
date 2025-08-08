@@ -16,16 +16,18 @@ add_action('wp_footer', function () {
     $debiteurs = [];
 
     foreach ($equipe['membres'] as $membre) {
+        if($membre['ID'] == $uid) continue;
         $balance = $membre['balance']['balance'];
         $aboActif = isAboEnCours($membre['balance']['lastAboEnd']??'');
         if ($aboActif) continue;
         if ($balance > 0) continue;
         $debiteurs[] = $membre;
     }
+
     if (!count($debiteurs)) return;
     echo generateNotification([
         // 'type' => 'warning',
-        'titre' => 'Alerte abonnement / tickets',
+        'titre' => 'Alerte abonnement / tickets '.time(),
         'texte' => 'Les personnes suivantes de votre équipe '.$equipe->post_title.' présentent un compte débiteur: <b>' . implode('</b>, <b>', array_column($debiteurs, 'display_name')).'</b>',
         'cta' => [
             'url' => '/mon-compte/equipe/',
