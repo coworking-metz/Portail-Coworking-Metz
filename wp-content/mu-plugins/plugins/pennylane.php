@@ -89,8 +89,8 @@ function pennylane_check_transactions_callback() {
 	$cc = 'pennylane@coworking-metz.fr';
     $is_cli = (defined('WP_CLI') && WP_CLI);
 
-	$order = wc_get_order(37026);
-	$order->update_status('wc-pending', 'Order testing');
+//	$order = wc_get_order(37026);
+//	$order->update_status('wc-pending', 'Order testing');
 
     echo('--- Début de l’exécution ---'.PHP_EOL);
 
