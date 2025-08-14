@@ -8,6 +8,29 @@ include __DIR__ . '/app-user-exists.php';
 include __DIR__ . '/app-nouvelle-visite.php';
 include __DIR__ . '/app-visite-ics.php';
 
+/**
+ * Vérifie si une date est hier ou plus ancienne.
+ *
+ * @param string $date Date au format "Y-m-d"
+ * @return bool true si la date <= hier
+ */
+function isYesterdayOrEarlier($date) {
+    $yesterday = new DateTime('yesterday');
+    $checkDate = new DateTime($date);
+    return $checkDate <= $yesterday;
+}
+/**
+ * Vérifie si une date est au moins un mois après aujourd'hui.
+ *
+ * @param string $date Date au format "Y-m-d"
+ * @return bool true si la date est >= un mois après aujourd'hui
+ */
+function isAtLeastOneMonthAfterToday($date) {
+    $today = new DateTime();
+    $oneMonthLater = (clone $today)->modify('+1 month');
+    $checkDate = new DateTime($date);
+    return $checkDate >= $oneMonthLater;
+}
 
 function coworking_app_settings()
 {
@@ -24,7 +47,14 @@ function coworking_app_settings()
 
     $mentions  = get_field_raw('mentions', 'option');
 
+	$allFeries = (array) json_decode(file_get_contents('https://etalab.github.io/jours-feries-france-data/json/metropole.json'), true);
+	foreach($allFeries as $date=>$nom) {
+		if(isYesterdayOrEarlier($date)) continue;
+		if(isAtLeastOneMonthAfterToday($date)) continue;
+		$exclude[] = $date;
+	}
     $mentions = [
+
         'visite' => $mentions['mentions-page-visite'],
         'recap' => $mentions['mentions-page-recap'],
         'infos' => $mentions['mentions-page-infos']
@@ -46,7 +76,7 @@ function coworking_app_settings()
         'fermer_vacances' => $fermer_vacances,
         'fermer_visites' => visites_fermees(),
         'empecher_visites' => $exclude,
-        'dates' => $dates
+		'dates' => $dates
     ];
     $settings = [
 		'acces-nomades'=>!!get_field('acces-nomades', 'option'),
