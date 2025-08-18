@@ -35,7 +35,7 @@ function devices_get_erreur($id_erreur)
         return "Cette adresse MAC est déjà associée à votre compte";
     }
     if (strstr($id_erreur, 'mac-random')) {
-        $erreur = ['erreur' => 'Adresse MAC virtuelle', 'type' => 'warning', 'titre' => 'Appareil potentiellement incompatible', 'texte' => "L'adresse MAC de l'appareil semble être une adresse virtuelle, potentiellement incompatible avec la système de détection du coworking. <a href='https://www.coworking-metz.fr/comment-desactiver-les-adresses-mac-aleatoires/' target='_blank'>Comment désactiver cette fonctionnalité ?</a>", 'cta' => ['url' => '#ouvrir-brevo', 'caption' => 'Demander de l\'aide'], 'id' => 'random'];
+        $erreur = ['erreur' => 'Adresse MAC virtuelle', 'type' => 'warning', 'titre' => 'Appareil potentiellement incompatible', 'texte' => "L'adresse MAC de l'appareil semble être une adresse virtuelle, potentiellement incompatible avec la système de détection du coworking. Vérifiez que cette adresse MAc est bien fixe. <a href='https://www.coworking-metz.fr/comment-desactiver-les-adresses-mac-aleatoires/' target='_blank'>En savoir plus</a>", 'cta' => ['url' => '#ouvrir-brevo', 'caption' => 'Demander de l\'aide'], 'id' => 'random'];
         if ($id_erreur == 'mac-random') {
             return $erreur;
         }
