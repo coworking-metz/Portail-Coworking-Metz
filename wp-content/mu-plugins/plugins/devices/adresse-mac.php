@@ -1,7 +1,7 @@
 <?php
 
 
-$adresseMac = $_POST['adresse-mac'] ?? false;
+$adresseMac = $_POST['adresse-mac'] ?? $_GET['adresse-mac'] ?? false;
 if ($adresseMac) {
     add_action('init', function () use ($adresseMac) {
 

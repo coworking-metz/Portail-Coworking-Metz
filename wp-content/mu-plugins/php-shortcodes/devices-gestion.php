@@ -40,6 +40,7 @@ if ($status == 'device-added-random') {
 }
 
 $devices = getDevices();
+
 $okToDelete = count($devices) > 1;
 
 
@@ -49,9 +50,10 @@ $nbInvalides = 0;
 <p>Vous pouvez gérer ici la liste des appareils associés à votre compte Coworking.</p>
 
 <div class="<?= $formOpen ? 'hide' : ''; ?> cta-devices">
-    <p><strong>Associer au moins un appareil est nécéssaire</strong> pour que vos présences au coworking soient détectées. Si vous <strong>changez d'ordinateur</strong>, ou si <strong>vous utilisez parfois en alternance une tablette</strong> en plus de votre ordinateur principal, vous devez ajouter tous ces appareils à votre compte.</p>
+<?php if (!$devices) { ?>
+    <p><strong>Associer au moins un appareil est nécéssaire</strong> pour que vos présences au coworking soient détectées.</p>
+<?php  } ?>
 
-    <p><button type="button" data-action="ajouter-appareil" class="woocommerce-Button button wp-element-button">Ajouter un appareil&hellip;</button></p>
 </div>
 <form method="post" action="/mon-compte/appareils/" class="<?= $formOpen ? '' : 'hide'; ?> woocommerce-EditAccountForm edit-account">
     <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
@@ -89,7 +91,7 @@ $nbInvalides = 0;
                         <?= date_francais($device['heartbeat'] ?? '', true) ?: 'Jamais'; ?>
                     </td>
                     <td>
-                        <?= ($device['heartbeat'] ?? false) ? ucfirst(str_replace('-', '', ($device['location'] ?: 'poulailler'))) : ''; ?>
+                        <?= ($device['heartbeat'] ?? false) ? ucfirst(str_replace('-', ' ', ($device['location'] ?: 'poulailler'))) : ''; ?>
                     </td>
                     <th>
                         <?php if ($okToDelete) { ?>
@@ -103,8 +105,11 @@ $nbInvalides = 0;
 
         </tbody>
     </table>
+	<p> Si vous <strong>changez d'ordinateur</strong>, ou si <strong>vous utilisez parfois en alternance une tablette</strong> en plus de votre ordinateur principal, associez tous ces appareils à votre compte.</p>
+
     <?php if ($nbInvalides > 0) { ?>
         <!-- <b>Légende</b><br> -->
         <span>🔮</span>: <?= devices_get_erreur('mac-random-legende'); ?>
     <?php } ?>
 <?php } ?>
+<p><button type="button" data-action="ajouter-appareil" class="woocommerce-Button button wp-element-button">Ajouter un appareil&hellip;</button></p>
