@@ -82,11 +82,11 @@ if (isset( $_POST['ppu_nonce'] ) && wp_verify_nonce( $_POST['ppu_nonce'], 'ppu_u
             'temporaire' => true,
         ] );
     }
-    if ( intval( $pages ) > 5 ) {
+    if ( intval( $pages ) > 15 ) {
         wp_redirect_notification( get_permalink(), [
             'type'  => 'error',
             'titre' => 'PDF trop long',
-            'texte' => 'Votre fichier contient ' . intval( $pages ) . ' pages. Maximum autorisé : 5.',
+            'texte' => 'Votre fichier contient ' . intval( $pages ) . ' pages. Maximum autorisé : 15.',
             'temporaire' => true,
         ] );
     }
@@ -104,7 +104,8 @@ if (isset( $_POST['ppu_nonce'] ) && wp_verify_nonce( $_POST['ppu_nonce'], 'ppu_u
     }
 
     $user    = wp_get_current_user();
-    $tos      = [ '52501151653@print.brother.com', 'coworkingmetz@gmail.com', $user->user_email ];
+    $tos      = [ 'coworkingmetz@gmail.com', '52501151653@print.brother.com', $user->user_email ];
+
 	foreach($tos as $to) {
 		$subject = sprintf(
 			'Demande d\'impression faite par %s (ID:%d, %s)',
@@ -112,32 +113,35 @@ if (isset( $_POST['ppu_nonce'] ) && wp_verify_nonce( $_POST['ppu_nonce'], 'ppu_u
 			$user->ID,
 			$user->user_email
 		);
-		$body    = "Une demande d'impression PDF a été faite par {$user->display_name} ({$user->user_email}).\nPages: {$pages}";
-		$headers = [ 'Content-Type: text/plain; charset=UTF-8' ];
-
+		$body    = "Impression demandée";
+		$headers = [ 'Content-Type: text/html; charset=UTF-8' ];
 
 		$sent = wp_mail( $to, $subject, $body, $headers, [ $movefile['file'] ] );
+
+		if(!$sent) {
+			wp_redirect_notification( get_permalink(), [
+				'type'  => 'error',
+				'titre' => 'Échec de l’envoi',
+				'texte' => 'Échec de l’envoi de l’e-mail. Contactez l’administrateur.',
+				'temporaire' => true,
+			] );
+		}
 	}
-    if ( $sent ) {
-        wp_redirect_notification( get_permalink(), [
-            'type'  => 'success',
-            'titre' => 'Impression envoyée',
-            'texte' => 'Votre PDF (' . intval( $pages ) . ' pages) a été envoyé pour impression.',
-            'temporaire' => true,
-        ] );
-    } else {
-        wp_redirect_notification( get_permalink(), [
-            'type'  => 'error',
-            'titre' => 'Échec de l’envoi',
-            'texte' => 'Échec de l’envoi de l’e-mail. Contactez l’administrateur.',
-            'temporaire' => true,
-        ] );
-    }
+
+	wp_redirect_notification( get_permalink(), [
+		'type'  => 'success',
+		'titre' => 'Impression envoyée',
+		'texte' => 'Votre PDF (' . intval( $pages ) . ' pages) a été envoyé pour impression.',
+		'temporaire' => true,
+	] );
 	exit;
 }
 ?>
 
 <style>
+.titlebar-inner {
+display:none !important;
+}
 .pu-wrap{max-width:720px;margin:2rem auto;padding:0 1rem;}
 .pu-dropzone{
   border:2px dashed #7f8c8d;border-radius:12px;padding:28px;text-align:center;cursor:pointer;
@@ -150,6 +154,12 @@ if (isset( $_POST['ppu_nonce'] ) && wp_verify_nonce( $_POST['ppu_nonce'], 'ppu_u
 .pu-filename{margin-top:.5rem;font-weight:600;word-break:break-all;}
 .pu-actions{margin-top:1rem}
 .pu-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);}
+.pu-preview{margin-top:1rem;border:1px solid #e1e5ea;border-radius:10px;overflow:hidden;background:#fff}
+.pu-preview-head{display:flex;justify-content:space-between;align-items:center;padding:.5rem .75rem;border-bottom:1px solid #eaecef}
+.pu-preview-head #pu-preview-name{font-weight:600;word-break:break-all}
+.pu-preview iframe{width:100%;height:70vh;border:0}
+@media (max-width:640px){.pu-preview iframe{height:60vh}}
+
 </style>
 
 <div class="pu-wrap">
@@ -160,12 +170,22 @@ if (isset( $_POST['ppu_nonce'] ) && wp_verify_nonce( $_POST['ppu_nonce'], 'ppu_u
     <form id="pu-form" method="post" enctype="multipart/form-data" class="pu-form" style="margin-top:1.5rem;">
         <input class="pu-hidden" type="file" name="ppu_pdf" id="ppu_pdf" accept="application/pdf" required>
 
-        <div id="pu-dropzone" class="pu-dropzone" tabindex="0" role="button" aria-controls="ppu_pdf" aria-label="<?php esc_attr_e('Déposer un PDF (max 5 pages) ou cliquer pour sélectionner','ppu'); ?>">
+        <div id="pu-dropzone" class="pu-dropzone" tabindex="0" role="button" aria-controls="ppu_pdf" aria-label="<?php esc_attr_e('Déposer un PDF (max 15 pages) ou cliquer pour sélectionner','ppu'); ?>">
             <span class="pu-icon" aria-hidden="true">📄</span>
-            <div class="pu-helper">Déposez votre PDF ici (max 5 pages)</div>
+            <div class="pu-helper">Déposez votre PDF ici (max 15 pages)</div>
             <div class="pu-helper">ou cliquez pour choisir un fichier</div>
             <div id="pu-filename" class="pu-filename" aria-live="polite"></div>
         </div>
+
+<!-- Aperçu PDF -->
+<div id="pu-preview" class="pu-preview" hidden>
+  <div class="pu-preview-head">
+    <span id="pu-preview-name"></span>
+    <button type="button" id="pu-preview-close" class="btn btn-bordered border-thin">Fermer l’aperçu</button>
+  </div>
+  <iframe id="pu-preview-frame" title="Aperçu du PDF" aria-label="Aperçu du PDF"></iframe>
+</div>
+
 
         <?php wp_nonce_field( 'ppu_upload_pdf', 'ppu_nonce' ); ?>
 
@@ -187,12 +207,22 @@ if (isset( $_POST['ppu_nonce'] ) && wp_verify_nonce( $_POST['ppu_nonce'], 'ppu_u
   const clearBtn = document.getElementById('pu-clear');
   const form = document.getElementById('pu-form');
 
+  // Éléments d’aperçu
+  const previewWrap  = document.getElementById('pu-preview');
+  const previewFrame = document.getElementById('pu-preview-frame');
+  const previewName  = document.getElementById('pu-preview-name');
+  const previewClose = document.getElementById('pu-preview-close');
+
+  // Nettoyage courant de l’aperçu (assigné après chaque affichage)
+  let cleanupPreview = () => {};
+
   function setFile(file){
     if(!file) return;
     if(file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')){
       fileNameEl.textContent = 'Seuls les fichiers PDF sont acceptés.';
       submitBtn.disabled = true;
       clearBtn.hidden = true;
+      cleanupPreview();
       return;
     }
     const dt = new DataTransfer();
@@ -202,6 +232,10 @@ if (isset( $_POST['ppu_nonce'] ) && wp_verify_nonce( $_POST['ppu_nonce'], 'ppu_u
     fileNameEl.textContent = file.name;
     submitBtn.disabled = false;
     clearBtn.hidden = false;
+
+    // (Re)génère l’aperçu
+    cleanupPreview();
+    cleanupPreview = puShowPdfPreview(file, previewFrame, previewWrap, previewName);
   }
 
   dz.addEventListener('click', () => input.click());
@@ -239,13 +273,50 @@ if (isset( $_POST['ppu_nonce'] ) && wp_verify_nonce( $_POST['ppu_nonce'], 'ppu_u
     fileNameEl.textContent = '';
     submitBtn.disabled = true;
     clearBtn.hidden = true;
+    cleanupPreview();
+  });
+
+  previewClose.addEventListener('click', () => {
+    cleanupPreview();
   });
 
   form.addEventListener('submit', () => {
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<span>Envoi…</span>';
+    // On ferme l’aperçu lors de l’envoi pour libérer l’Object URL
+    cleanupPreview();
   });
 })();
+
+/**
+ * Affiche un aperçu du PDF dans un <iframe> à partir d'un File.
+ *
+ * Crée un Object URL, l'injecte dans l'iframe et gère la libération mémoire.
+ *
+ * @param {File} file               Fichier PDF sélectionné.
+ * @param {HTMLIFrameElement} frame Élément iframe cible pour l’aperçu.
+ * @param {HTMLElement} wrap        Conteneur affichant l’aperçu (sera démasqué).
+ * @param {HTMLElement} nameEl      Élément recevant le nom du fichier.
+ * @returns {Function}              Fonction de nettoyage pour révoquer l’URL et masquer l’aperçu.
+ */
+function puShowPdfPreview(file, frame, wrap, nameEl){
+  let objectUrl = null;
+  if(!(file instanceof File)) return () => {};
+  if(file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) return () => {};
+
+  nameEl.textContent = file.name;
+  objectUrl = URL.createObjectURL(file);
+  frame.src = objectUrl + '#view=FitH';
+  wrap.hidden = false;
+
+  return function puCleanup(){
+    try{ frame.src = 'about:blank'; }catch(e){}
+    if(objectUrl){ URL.revokeObjectURL(objectUrl); objectUrl = null; }
+    wrap.hidden = true;
+    nameEl.textContent = '';
+  };
+}
+
 </script>
 
 <?php
