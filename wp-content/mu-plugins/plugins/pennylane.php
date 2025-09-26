@@ -9,10 +9,19 @@ add_filter('cron_schedules', function ($schedules) {
     return $schedules;
 });
 
+// Ajouter un intervalle personnalisé d'une minute au cron WP
+add_filter('cron_schedules', function($schedules) {
+    $schedules['every_minute'] = [
+        'interval' => 60,
+        'display'  => __('Every Minute')
+    ];
+    return $schedules;
+});
+
 // Schedule event if not yet scheduled
 add_action('wp', function () {
     if (!wp_next_scheduled('pennylane_check_transactions')) {
-        wp_schedule_event(time(), 'every_five_minutes', 'pennylane_check_transactions');
+        wp_schedule_event(time(), 'every_minute', 'pennylane_check_transactions');
     }
 });
 
@@ -102,12 +111,13 @@ function pennylane_check_transactions_callback() {
     $three_months_ago = (new DateTime('-3 months'))->format('Y-m-d H:i:s');
     echo("Recherche des commandes 'pending' depuis le $three_months_ago...".PHP_EOL);
 
-    $orders = wc_get_orders([
-        'status'       => 'wc-pending',
-        'date_created' => '>' . $three_months_ago,
-        'limit'        => -1,
-        'return'       => 'objects'
-    ]);
+	$orders = wc_get_orders([
+		'status'       => ['wc-pending', 'wc-on-hold'],
+		'date_created' => '>' . $three_months_ago,
+		'limit'        => -1,
+		'return'       => 'objects'
+	]);
+
 
     echo(count($orders) . ' commandes trouvées.'.PHP_EOL);
 
