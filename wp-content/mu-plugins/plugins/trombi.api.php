@@ -27,6 +27,7 @@ add_action(
                     $visites[] = ['wpUserId'=>$user->ID, 'name'=>$user->display_name, 'visite'=>$user->visite];
                 }
                 $response['visites'] = $visites;
+				$response['cafe']=get_users_with_contribution_cafe_the_last_30_days();
 
                 $nomades = [];
                 $users = fetch_nomades_for_today();
