@@ -1,6 +1,145 @@
 <?php
 
+function get_contributions_cafe() {
 
+   $product_query = new WP_Query([
+    'post_type'      => 'product',
+    'posts_per_page' => -1,
+	'meta_query' => [
+		'relation' => 'AND',
+		[
+			'key'     => 'contribution-cafe-the',
+			'compare' => 'EXISTS',
+		],
+		[
+			'key'     => 'contribution-cafe-the',
+			'value'   => ['','0',0,null],
+			'compare' => 'NOT IN', // exclut vide et zéro
+		],
+	],
+
+    'fields' => 'ids',
+]);
+
+return $product_query->posts ?? [];
+
+}
+function get_last_order_per_user($options = []) {
+    global $wpdb;
+
+    $days         = $options['days'] ?? false;
+    $products_ids = !empty($options['products_ids']) ? array_map('intval', $options['products_ids']) : [];
+
+    $date_condition = '';
+    if ($days > 0) {
+        $since = date('Y-m-d H:i:s', strtotime("-{$days} days"));
+        $date_condition = $wpdb->prepare("AND post_date >= %s", $since);
+    }
+
+    // Get all orders for relevant users, ordered by date DESC
+    $orders = $wpdb->get_results("
+        SELECT p.ID as order_id, p.post_date as order_date, pm.meta_value as user_id
+        FROM {$wpdb->posts} p
+        INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+        WHERE p.post_type = 'shop_order'
+          AND p.post_status IN ('wc-completed','wc-processing','wc-on-hold')
+          AND pm.meta_key = '_customer_user'
+          AND pm.meta_value != 0
+          $date_condition
+        ORDER BY pm.meta_value ASC, p.post_date DESC
+    ");
+
+    // Group orders by user
+    $orders_by_user = [];
+    foreach ($orders as $o) {
+        $orders_by_user[$o->user_id][] = $o;
+    }
+
+    $filtered_orders = [];
+
+    // Process each user's orders
+    foreach ($orders_by_user as $user_id => $user_orders) {
+        $selected_order = null;
+
+        // Iterate through orders from newest to oldest
+        foreach ($user_orders as $order_obj) {
+            // Get products in this order
+            $order_items = $wpdb->get_results($wpdb->prepare("
+                SELECT oi.meta_value AS product_id,
+                       qty.meta_value AS quantity
+                FROM {$wpdb->prefix}woocommerce_order_items woi
+                INNER JOIN {$wpdb->prefix}woocommerce_order_itemmeta oi 
+                    ON woi.order_item_id = oi.order_item_id 
+                    AND oi.meta_key = '_product_id'
+                INNER JOIN {$wpdb->prefix}woocommerce_order_itemmeta qty 
+                    ON woi.order_item_id = qty.order_item_id 
+                    AND qty.meta_key = '_qty'
+                WHERE woi.order_id = %d
+            ", $order_obj->order_id));
+
+            $products     = [];
+            $products_ids_in_order = [];
+            $quantities   = [];
+            $has_required_product = false;
+
+            foreach ($order_items as $item) {
+                $pid   = (int) $item->product_id;
+                $title = get_the_title($pid);
+
+                $products[] = [
+                    'id'       => $pid,
+                    'title'    => $title,
+                    'quantity' => (int) $item->quantity
+                ];
+
+                $products_ids_in_order[] = $pid;
+                $quantities[$pid]        = (int) $item->quantity;
+
+                if (!empty($products_ids) && in_array($pid, $products_ids, true)) {
+                    $has_required_product = true;
+                }
+            }
+
+            // If no filter is provided, or this order contains at least one required product
+            if (empty($products_ids) || $has_required_product) {
+                $user = get_userdata($user_id);
+
+                $selected_order = [
+                    'user_id'      => $user_id,
+                    'user_email'   => $user ? $user->user_email : '',
+                    'order_id'     => $order_obj->order_id,
+                    'order_date'   => $order_obj->order_date,
+                    'products'     => $products,
+                    'products_ids' => $products_ids_in_order,
+                    'quantities'   => $quantities
+                ];
+                break; // stop at first matching order (newest valid one)
+            }
+        }
+
+        if ($selected_order) {
+            $filtered_orders[] = $selected_order;
+        }
+    }
+
+    return $filtered_orders;
+}
+
+
+function getProductsOfType($productType) {
+    $product_query = new WP_Query([
+        'post_type'      => 'product',
+        'posts_per_page' => -1,
+        'meta_query'     => [
+            [
+                'key'     => 'productType',
+                'compare' => '=',
+                'value'   => $productType
+            ]
+        ]
+    ]);
+	return $product_query->posts??[];
+}
 
 /**
  * Vérifie si un produit dans le panier a le méta 'adhesion_inclue' égal à 1.
