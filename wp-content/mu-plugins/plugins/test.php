@@ -5,6 +5,6 @@ if (isset($_GET['test'])) {
     add_action('init', function () {
 
 
-		me(polaroid_clear_cache(225));
+		me(get_users_with_contribution_cafe_active(365));
     });
 }

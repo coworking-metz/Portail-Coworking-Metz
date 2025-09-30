@@ -1,49 +1,55 @@
 <?php
-function get_users_with_contribution_cafe_the_last_30_days() {
-    // Step 1: Get products with the meta key
-    $product_query = new WP_Query([
-        'post_type'      => 'product',
-        'posts_per_page' => -1,
-        'meta_query'     => [
-            [
-                'key'     => 'contribution-cafe-the',
-                'compare' => '!=',
-                'value'   => ''
-            ]
-        ],
-        'fields' => 'ids',
-    ]);
+	
+function get_users_with_contribution_cafe_active() {
 
-    $product_ids = $product_query->posts;
+    // Check transient
+    $cached = get_transient('users_with_contribution_cafe_active');
 
-    if (empty($product_ids)) {
-        return [];
+    if ($cached !== false) {
+        return $cached;
     }
 
-    // Step 2: Get orders from last 30 days
-    $date_30_days_ago = (new DateTime('-30 days'))->format('Y-m-d H:i:s');
+    $abonnements = getProductsOfType('abonnement');
+    $carnets = getProductsOfType('carnet-tickets');
+    $cafes = get_contributions_cafe();
+	$pids = array_merge(array_column($abonnements,'ID'), array_column($carnets,'ID'));
 
-    $orders = wc_get_orders([
-        'status' => ['wc-completed', 'wc-processing'],
-        'date_created' => '>' . $date_30_days_ago,
-        'limit'  => -1,
-    ]);
+    $commandes = get_last_order_per_user(['products_ids'=>$pids]);
+	// garder seulement les commandes avec café
+    $commandes = array_filter($commandes, function($commande) use($cafes) {
+        foreach($cafes as $cafe_id) {
+            if (in_array($cafe_id, $commande['products_ids'])) return true;
+        }
+        return false;
+    });
 
-    if (empty($orders)) {
-        return [];
-    }
 
-    // Step 3: Collect user IDs from orders containing these products
-    $user_ids = [];
-
-    foreach ($orders as $order) {
-        foreach ($order->get_items() as $item) {
-            if (in_array($item->get_product_id(), $product_ids, true)) {
-                $user_ids[] = $order->get_user_id();
-                break;
+    $commandes = array_filter(array_map(function($commande) use ($abonnements, $carnets) {
+        foreach ($abonnements as $abonnement) {
+            if (in_array($abonnement->ID, $commande['products_ids'])) {
+                $commande['abonnement'] = $commande['quantities'][$abonnement->ID];
             }
         }
+        foreach ($carnets as $carnet) {
+            if (in_array($carnet->ID, $commande['products_ids'])) {
+                $commande['tickets'] = $commande['quantities'][$carnet->ID];
+            }
+        }
+        if (empty($commande['tickets']) && empty($commande['abonnement'])) return false;
+
+        return $commande;
+    }, $commandes));
+
+    // Collect user IDs
+    $user_ids = [];
+    foreach ($commandes as $commande) {
+        $user_ids[] = $commande['user_id'];
     }
 
-    return array_unique(array_filter($user_ids));
+    $result = array_values(array_unique(array_filter($user_ids)));
+
+    // Cache the result for 1 day
+    set_transient('users_with_contribution_cafe_active', $result, DAY_IN_SECONDS);
+
+    return $result;
 }
