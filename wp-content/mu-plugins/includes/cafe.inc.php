@@ -15,7 +15,7 @@ function get_users_with_contribution_cafe_active() {
 	$pids = array_merge($cafes,array_column($abonnements,'ID'), array_column($carnets,'ID'));
 
     $commandes = get_last_order_per_user(['products_ids'=>$pids]);
-	// garder seulement les commandes avec café
+	// garder seulement les commandes avec cafÃ©
     $commandes = array_filter($commandes, function($commande) use($cafes) {
         foreach($cafes as $cafe_id) {
             if (in_array($cafe_id, $commande['products_ids'])) return true;
@@ -25,7 +25,7 @@ function get_users_with_contribution_cafe_active() {
 
 	$commandes = array_filter(array_map(function($commande) use ($abonnements, $carnets, $cafes) {
 
-		// Café
+		// CafÃ©
 		foreach ($cafes as $cafe) {
 			if (in_array($cafe, $commande['products_ids'])) {
 				$commande['cafe'] = $commande['quantities'][$cafe];
@@ -48,17 +48,17 @@ function get_users_with_contribution_cafe_active() {
 
 		// If neither abonnement nor tickets
 		if (empty($commande['tickets']) && empty($commande['abonnement'])) {
-			// Must be café and within the last month
+			// Must be cafÃ© and within the last month
 			if (!empty($commande['cafe'])) {
 				$order_time    = strtotime($commande['order_date']);
 				$one_month_ago = strtotime('-1 month');
 
 				if ($order_time < $one_month_ago) {
-					return false; // Café but too old
+					return false; // CafÃ© but too old
 				}
 
 			} else {
-				return false; // Neither café nor abonnement/tickets
+				return false; // Neither cafÃ© nor abonnement/tickets
 			}
 		}
 
