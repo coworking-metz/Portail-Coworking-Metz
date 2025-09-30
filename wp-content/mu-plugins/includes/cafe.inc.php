@@ -12,7 +12,7 @@ function get_users_with_contribution_cafe_active() {
     $abonnements = getProductsOfType('abonnement');
     $carnets = getProductsOfType('carnet-tickets');
     $cafes = get_contributions_cafe();
-	$pids = array_merge(array_column($abonnements,'ID'), array_column($carnets,'ID'));
+	$pids = array_merge($cafes,array_column($abonnements,'ID'), array_column($carnets,'ID'));
 
     $commandes = get_last_order_per_user(['products_ids'=>$pids]);
 	// garder seulement les commandes avec café
@@ -23,22 +23,49 @@ function get_users_with_contribution_cafe_active() {
         return false;
     });
 
+	$commandes = array_filter(array_map(function($commande) use ($abonnements, $carnets, $cafes) {
 
-    $commandes = array_filter(array_map(function($commande) use ($abonnements, $carnets) {
-        foreach ($abonnements as $abonnement) {
-            if (in_array($abonnement->ID, $commande['products_ids'])) {
-                $commande['abonnement'] = $commande['quantities'][$abonnement->ID];
-            }
-        }
-        foreach ($carnets as $carnet) {
-            if (in_array($carnet->ID, $commande['products_ids'])) {
-                $commande['tickets'] = $commande['quantities'][$carnet->ID];
-            }
-        }
-        if (empty($commande['tickets']) && empty($commande['abonnement'])) return false;
+		// Café
+		foreach ($cafes as $cafe) {
+			if (in_array($cafe, $commande['products_ids'])) {
+				$commande['cafe'] = $commande['quantities'][$cafe];
+			}
+		}
 
-        return $commande;
-    }, $commandes));
+		// Abonnements
+		foreach ($abonnements as $abonnement) {
+			if (in_array($abonnement->ID, $commande['products_ids'])) {
+				$commande['abonnement'] = $commande['quantities'][$abonnement->ID];
+			}
+		}
+
+		// Carnets
+		foreach ($carnets as $carnet) {
+			if (in_array($carnet->ID, $commande['products_ids'])) {
+				$commande['tickets'] = $commande['quantities'][$carnet->ID];
+			}
+		}
+
+		// If neither abonnement nor tickets
+		if (empty($commande['tickets']) && empty($commande['abonnement'])) {
+			// Must be café and within the last month
+			if (!empty($commande['cafe'])) {
+				$order_time    = strtotime($commande['order_date']);
+				$one_month_ago = strtotime('-1 month');
+
+				if ($order_time < $one_month_ago) {
+					return false; // Café but too old
+				}
+
+			} else {
+				return false; // Neither café nor abonnement/tickets
+			}
+		}
+
+		return $commande;
+	}, $commandes));
+
+
 
     // Collect user IDs
     $user_ids = [];
