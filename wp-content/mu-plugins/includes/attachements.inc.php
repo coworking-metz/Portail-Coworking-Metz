@@ -19,6 +19,7 @@ function insert_attachment_from_file($file_path, $data = [], $meta = [], $width 
         return false;
     }
 
+
     $hash = md5_file($file_path);
 
     if ($attach = get_attachement_by_hash($hash)) {
