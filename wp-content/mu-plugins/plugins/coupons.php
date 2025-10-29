@@ -5,6 +5,7 @@
  * et affiche des messages d'erreur explicites en français.
  */
 add_filter('woocommerce_coupon_is_valid', function($valid, $coupon, $discounts) {
+	return $valid;
     if (!$valid) return false;
 
     if ($coupon->get_code() !== 'BIENVENUE') return $valid;
@@ -27,3 +28,4 @@ add_filter('woocommerce_coupon_is_valid', function($valid, $coupon, $discounts) 
 
     return true;
 }, 10, 3);
+
