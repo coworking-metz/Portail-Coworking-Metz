@@ -82,7 +82,7 @@ if (isset( $_POST['ppu_nonce'] ) && wp_verify_nonce( $_POST['ppu_nonce'], 'ppu_u
             'temporaire' => true,
         ] );
     }
-    if ( intval( $pages ) > 15 ) {
+    if ( intval( $pages ) > 150 ) {
         wp_redirect_notification( get_permalink(), [
             'type'  => 'error',
             'titre' => 'PDF trop long',
