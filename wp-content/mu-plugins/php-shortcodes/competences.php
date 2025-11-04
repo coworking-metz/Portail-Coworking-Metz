@@ -1,0 +1,2 @@
+<?php
+competences_form();
