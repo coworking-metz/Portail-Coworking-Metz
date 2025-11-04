@@ -517,12 +517,13 @@ function envoyerMailRecapVisite($user_id, $autres_codes = [])
     $user = get_userdata($user_id);
     if (!$user)
         return;
+
     $template_id = get_field('email_recap_visite', 'option');
 
     $visite = get_user_meta($user_id, 'visite', true);
     if (!$visite) return;
-
     $key = 'email-recap-visite-' . $user_id;
+
     if (get_user_meta($user_id, $key, true))
         return;
     update_user_meta($user_id, $key, true);

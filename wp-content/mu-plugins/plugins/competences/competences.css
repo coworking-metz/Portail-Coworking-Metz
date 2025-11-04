@@ -1,0 +1,5 @@
+.edit-competences:not(:has([name="annuaire_optin"]:checked)) {
+	.details-competences {
+		display: none !important;
+	}
+}
