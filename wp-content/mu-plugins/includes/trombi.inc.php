@@ -11,6 +11,7 @@ function avent_email_alerte($user_id, $dateDuJour)
 
     $data = get_userdata($user_id);
     if (!$data) return;
+
     $envoyer_email_alerte = get_field('avent', 'option')['envoyer_email_alerte'];
 
     if(!$envoyer_email_alerte) return;
@@ -19,9 +20,8 @@ function avent_email_alerte($user_id, $dateDuJour)
     $adresse_email_alerte = get_field('avent', 'option')['adresse_email_alerte'];
 
 
-    $key = 'email-alerte-avent-' . $user_id;
-    if (get_user_meta($user_id, $key, true)) return;
-    update_user_meta($user_id, $key, true);
+    $key = 'email-alerte-avent-' . $user_id.'_'.date('Y');
+	if (get_user_meta($user_id, $key, true)) return;
 
     $codes = [
         ['{user_id}' => $user_id],
@@ -37,7 +37,11 @@ function avent_email_alerte($user_id, $dateDuJour)
     if ($adresse_email_alerte) {
         $headers[] = 'Bcc: ' . $adresse_email_alerte;
     }
-    return wp_mail($to, $mail['subject'], $mail['message'], $headers);
+
+	if(wp_mail($to, $mail['subject'], $mail['message'], $headers)) {
+		update_user_meta($user_id, $key, true);
+		return true;
+	}
 }
 
 /**

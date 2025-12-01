@@ -54,9 +54,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+	async function hashNotif(obj) {
+	  const json = JSON.stringify(obj);
+	  const buffer = new TextEncoder().encode(json);
+	  const digest = await crypto.subtle.digest('SHA-256', buffer);
+
+	  return [...new Uint8Array(digest)]
+		.map(b => b.toString(16).padStart(2, '0'))
+		.join('');
+	}
+
     function generateNotification(data) {
 
-
+		if(data.id === 'auto') {
+			data.id = hashNotif(data);
+		}
         const id = 'notification-' + (data.id || Number(Math.random() * 100));
         console.log('[data-id="' + id + "']")
         if (document.querySelector('[data-id="' + id + '"]')) return;
