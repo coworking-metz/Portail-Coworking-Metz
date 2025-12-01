@@ -13,8 +13,9 @@ add_action('wp_footer', function () {
         $cafe_ids = get_products_with_contribution_cafe_the(true);
         if (commande_recente($cafe_ids)) return;
         if (!is_product_in_cart($cafe_ids)) {
-            echo generateNotification([
-                'once'=>true,
+
+			$data = [
+//                'once'=>true,
                 'titre' => 'Vous consommez du café ou du thé ?',
                 'texte' => 'Pensez à ajouter l\'option payante café/thé afin de participer aux frais. <a href="/boutique/contribution-cafe-the/" target="_blank">En savoir plus</a>.',
                 'cta' => [
@@ -22,7 +23,9 @@ add_action('wp_footer', function () {
                     'caption' => 'Ajouter l\'option café/thé à 5€'
                 ],
                 'image' => '/images/cafe.jpg'
-            ]);
+            ];
+			$data['id'] = md5(json_encode($data).date('Y-m-d'));
+            echo generateNotification($data);
         }
     }
 }, 99);

@@ -38,12 +38,12 @@ add_action('wp_head', function () {
     $total = round(abs($stats['balance']));
     if ($abos_en_cours || $total > 3) {
         // $blocked = true;
-        $fermer = false;
+        //$fermer = false;
         $type = 'error';
-        $texte .= ' Vous devez acheter des tickets à l\'unité pour régulariser la situation. <a href="/mon-compte/">En savoir plus</a>.';
+        $texte .= ' Vous devez faire un achat (tickets ou abonnement) pour régulariser la situation. <a href="/mon-compte/">En savoir plus</a>.';
         $cta = ['url' => '/boutique/ticket-1-journee/?quantite=' . $total, 'caption' => 'Acheter des tickets'];
     } else {
-        $texte .= ' Vous pouvez commander <a href="/boutique/ticket-1-journee/">un carnet de tickets</a> pour régulariser la situation.';
+        $texte .= ' Vous pouvez commander <a href="/boutique/ticket-1-journee/">un carnet de tickets</a> ou prendre un abonnemlent pour régulariser la situation.';
         $cta = ['url' => '/mon-compte/', 'caption' => 'En savoir plus'];
     }
     $data = [
@@ -81,7 +81,7 @@ add_action('wp_head', function () {
         </script>
 <?php
     }
-
+	$data['id'] = md5(json_encode($data).date('Y-m-d'));
     sendNotification($data);
 });
 

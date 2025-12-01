@@ -8,17 +8,22 @@ if (isset($_GET['export-users'])) {
         $visiteSansCommande = isset($_GET['visite-sans-commande']);
         $recents = isset($_GET['recents']);
         $voting = isset($_GET['voting']);
-
+        $adhesions = isset($_GET['adhesions']);
+		$year = $_GET['year']?:date('Y');
         $args = ['fields' => ['ID']];
         $usersactifs = [];
+        if ($adhesions) {
+			$users = get_users_with_adhesion_orders($year);
+		} else
         if ($visiteSansCommande) {
             $name = "visite-sans-commande";
             $users = get_users_with_visit_no_orders();
         } else if ($recents) {
 
             $name = 'recents';
+			$mois = $_GET['mois']??6;
 
-            $date_six_months_ago = date('Y-m-d', strtotime('-6 months'));
+            $date_six_months_ago = date('Y-m-d', strtotime('-'.$mois.' months'));
             $args = [
                 'fields' => ['ID'],
                 'meta_query' => [
@@ -110,6 +115,54 @@ if (isset($_GET['export-users'])) {
     });
 }
 
+
+function get_users_with_adhesion_orders($year) {
+    $products = get_posts([
+        'post_type'   => 'product',
+        'numberposts' => -1,
+        'fields'      => 'ids',
+        'meta_query'  => [
+            [
+                'key'   => 'productType',
+                'value' => 'adhesion'
+            ]
+        ]
+    ]);
+
+    if (!$products) return [];
+
+    $start = $year . '-01-01 00:00:00';
+    $end   = $year . '-12-31 23:59:59';
+
+    $orders = wc_get_orders([
+        'status'        => ['wc-completed', 'wc-processing'],
+        'limit'         => -1,
+        'date_created'  => $start . '...' . $end,
+        'return'        => 'ids'
+    ]);
+
+    if (!$orders) return [];
+
+    $users = [];
+
+    foreach ($orders as $order_id) {
+        $order = wc_get_order($order_id);
+        if (!$order) continue;
+
+        foreach ($order->get_items() as $item) {
+            if (!in_array($item->get_product_id(), $products)) continue;
+            $users[] = $order->get_user_id();
+            break;
+        }
+    }
+
+    $ids = array_values(array_unique(array_filter($users)));
+
+	return get_users([
+        'include' => $ids,
+        'fields'  => 'all'
+    ]);
+}
 
 
 /**

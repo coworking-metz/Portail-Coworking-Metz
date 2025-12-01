@@ -22,6 +22,7 @@ function competences_form() {
 			<span>Si vous cochez cette case, vous consentez à apparaître dans l'annuaire réservé aux adhérent(e)s et d'être démarché</span>
 		</p>
 
+		<p><strong>Nous vous conseillons fortement d'ajouter une photo de vous (si ce n'est pas déjà fait) sur la page <a href="/mon-compte/polaroid/">Mon polaroid</a> afin de permettre aux autres adhérent(e)s de savoir qui vous êtes !<strong></p>
 		<div class="details-competences">
 		<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
 			<label for="annuaire_competences">Adresse de contact</label>

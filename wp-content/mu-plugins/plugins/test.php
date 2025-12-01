@@ -3,8 +3,7 @@
 if (isset($_GET['test'])) {
     $_GET['debug'] = true;
     add_action('init', function () {
+me(avent_email_alerte(476,'01/12/2025'));
 
-
-		me(get_users_with_contribution_cafe_active(365));
     });
 }

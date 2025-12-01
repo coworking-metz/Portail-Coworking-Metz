@@ -21,6 +21,9 @@ if ($_GET['notification'] ?? false) {
 function generateNotification($data)
 {
 
+	if($data['id']=='auto') {
+		$data['id'] = md5(json_encode($data).date('Y-m-d-H'));
+	}
     $GLOBALS['notification'] = $GLOBALS['notification'] ?? 0;
 
     if ($GLOBALS['notification']) return;
