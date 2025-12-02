@@ -5,6 +5,7 @@
  * Afficher une notif lors du checkout pour inviter les gens a ajouter le café dans leur panier s'il n'y est pas déja
  */
 add_action('wp_footer', function () {
+	return;
     if (is_order_received_page() || strstr($_SERVER['REQUEST_URI'],'/mon-compte/')!==false) {
 
 

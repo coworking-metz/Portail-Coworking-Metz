@@ -11,7 +11,8 @@ add_action('wp_head', function () { ?>
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('a.login-link').forEach(link => link.addEventListener('click', function(e) {
                 e.preventDefault();
-                const email = prompt('Adresse e-mail de votre compte');
+				const saisie = document.querySelector('#username')?.value || '';
+                const email = prompt('Adresse e-mail de votre compte', saisie);
 
                 if (!email) return
 
