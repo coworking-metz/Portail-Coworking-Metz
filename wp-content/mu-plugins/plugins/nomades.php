@@ -30,60 +30,60 @@ add_action('woocommerce_order_status_completed', function ($order_id) {
     }
 });
 
-function get_all_dates_nomade(array $bookings)
-{
-    $all_dates = [];
+/**
+ * Clear cached nomade orders when any order is created or updated
+ */
+add_action('woocommerce_checkout_order_processed', function() {
+    delete_nomade_order_transients();
+});
 
-    foreach ($bookings as $booking) {
-        $date = DateTime::createFromFormat('d/m/Y', $booking['date']);
-        for ($i = 0; $i < $booking['quantity']; $i++) {
-            $all_dates[] = $date->format('d/m/Y');
-            $date->modify('+1 day');
-        }
+add_action('woocommerce_order_status_changed', function() {
+    delete_nomade_order_transients();
+});
+
+add_action('pre_get_users', function ($query) {
+    if (!is_admin()) return;
+    if (!isset($_GET['nomadesOnly'])) return;
+
+    $flag = $_GET['nomadesOnly'];
+    if ($flag !== 'true' && $flag !== '1') return;
+
+    // 1 — Get all nomade orders
+    $orders = get_orders_with_nomade_products();
+    if (empty($orders)) {
+        $query->set('include', [0]);
+        return;
     }
 
-    return $all_dates;
-}
+    // 2 — Extract user IDs
+    $temp_ids = [];
+    foreach ($orders as $order) {
+        $uid = $order->get_user_id();
+        if ($uid) $temp_ids[$uid] = true;
+    }
+
+    if (empty($temp_ids)) {
+        $query->set('include', [0]);
+        return;
+    }
+
+    // 3 — Only test these user IDs with isNomade()
+    $final_ids = [];
+    foreach (array_keys($temp_ids) as $uid) {
+        if (isNomade($uid)) $final_ids[] = $uid;
+    }
+
+    if (empty($final_ids)) {
+        $query->set('include', [0]);
+        return;
+    }
+
+    // 4 — Apply filtered list
+    $query->set('include', $final_ids);
+});
 
 
-/**
- * Filtrer la page des visites pour ne garder que les users ayant une visite future (et on met aussi toutes les visites de la semaine passée)
- */
-if (isset($_GET['nomadesOnly'])) {
-    /*    add_action('pre_get_users', function ($query) {
-        if (is_admin()) {
-            $query->set('meta_key', 'nomade');
-            $query->set('meta_value', '');
-            $query->set('meta_compare', '!=');
-        }
-    });*/
 
-
-    add_action('pre_get_users', function ($query) {
-        if (is_admin()) {
-            global $wpdb;
-            $user_ids = $wpdb->get_col("
-            SELECT DISTINCT postmeta.meta_value 
-            FROM {$wpdb->posts} AS posts
-            INNER JOIN {$wpdb->postmeta} AS postmeta ON posts.ID = postmeta.post_id
-            WHERE posts.post_type = 'shop_order'
-            AND posts.post_status IN ('wc-completed', 'wc-processing', 'wc-on-hold')
-            AND postmeta.meta_key = '_customer_user'
-            AND postmeta.meta_value != '0'
-        ");
-
-            if (!empty($user_ids)) {
-                $query->query_vars['include'] = $user_ids;
-            } else {
-                $query->query_vars['include'] = [0]; // Empêche d'afficher des utilisateurs
-            }
-
-            $query->set('meta_key', 'nomade');
-            $query->set('meta_value', '1');
-            $query->set('meta_compare', '=');
-        }
-    });
-}
 
 add_filter('manage_users_columns', function ($columns) {
     return array_slice($columns, 0, 2, true)
@@ -98,7 +98,7 @@ add_filter('manage_users_custom_column', function ($output, $column_name, $user_
         if ($u instanceof \WP_User) {
             // Default output
             $output .= "$u->first_name $u->last_name";
-            if (get_field('nomade', 'user_' . $user_id)) {
+            if (isNomade($user_id)) {
                 // Extra output
                 $output .= "<br><b>🕰️ nomade</b>";
             }

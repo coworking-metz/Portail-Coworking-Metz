@@ -24,6 +24,7 @@ add_action('rest_api_init', function () {
             if (!$payload) return;
 
             $params = json_decode(stripslashes($payload), true);
+
             $modeTest = $params['modeTest'] ?? false;
             $user = $params['user'] ?? false;
 
@@ -37,7 +38,7 @@ add_action('rest_api_init', function () {
             }
             if ($user['nomade']) {
                 $user['role'] = 'customer';
-                $user_id = create_wp_user_if_not_exists($user, ['nomade' => true, 'activite' => $activite]);
+                $user_id = create_wp_user_if_not_exists($user, ['activite' => $activite]);
                 if ($user_id) {
 					// TODO : envoyer un mail à la personne
                     set_transient('auto_login_' . $user_id, true, ONE_DAY);
