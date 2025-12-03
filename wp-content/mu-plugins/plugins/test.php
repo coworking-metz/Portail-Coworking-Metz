@@ -4,7 +4,7 @@ if (isset($_GET['test'])) {
     $_GET['debug'] = true;
     add_action('init', function () {
 
-$nomade = '0';
-me(empty($nomade));
+me(avent_email_alerte(1251,"2025-12-03"));
+
     });
 }

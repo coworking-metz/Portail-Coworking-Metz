@@ -9,6 +9,7 @@
 function avent_email_alerte($user_id, $dateDuJour)
 {
 
+
     $data = get_userdata($user_id);
     if (!$data) return;
 
@@ -27,7 +28,7 @@ function avent_email_alerte($user_id, $dateDuJour)
         ['{user_id}' => $user_id],
         ['{user_name}' => $data->display_name],
         ['{date_du_jour}' => $dateDuJour],
-        ['{date_du_jour_fr}' => date_francais(date('Y-m-d', DateTime::createFromFormat('d/m/Y', $dateDuJour)->getTimestamp()))],
+        ['{date_du_jour_fr}' => date_francais(date('Y-m-d', strtotime($dateDuJour)))],
     ];
 
     $mail = charger_template_mail($template_id, $codes);
