@@ -5,46 +5,37 @@
 if (isset($_GET['export-stats'])) {
     add_action('admin_init', function () {
 
+		$cache=true;
         $annee = $_GET['annee'] ?? date('Y') - 1;
         if ($annee == 'current') {
+			$cache=false;
             $annee = date('Y');
         }
-        $limit = $_GET['limit'] ?? 70;
-        $members = get_json(TICKET_BASE_URL . '/members?key=' . API_KEY_TICKET);
+        $limit = intval($_GET['limit'] ?? 70);
+        $members = tickets('/members');
 
+
+		$all_members = [];
         $curation = [];
         foreach ($members as $member) {
-            $lastSeen = explode('-', $member['lastSeen'])[0] ?? false;
+            $lastSeen = explode('-', $member['lastSeen']??'')[0] ?? false;
             if ($lastSeen < $annee) continue;
-            $curation[] = $member;
+            $all_members[] = $member;
         }
 
-        foreach ($curation as &$member) {
+        foreach ($all_members as $member) {
             $uid = $member['wpUserId'];
-            $activity = get_json(TICKET_BASE_URL . '/members/' . $uid . '/activity?key=' . API_KEY_TICKET);
-            $jours = 0;
-            foreach ($activity as $presence) {
-                if (!isWorkDay($presence['date'])) continue;
-                if (strstr($presence['date'], $annee)) {
-                    $jours += $presence['value'];
-                }
-            }
-            $member['jours'] = $jours;
+            $jours = get_jours_presence_par_annee($member, $annee);
+
             if ($jours > $limit) {
                 $member['statut_juridique'] = get_field('statut_juridique', 'user_' . $uid);
                 $member['type_activite'] = get_field('type_activite', 'user_' . $uid);
+				$member['jours']=$jours;
+				$curation[] = $member;
             }
         }
 
-        $curation = array_filter($curation, function ($item) use ($limit) {
-            return $item['jours'] > $limit;
-        });
-        // Sort the filtered array by the 'jours' value
-        usort($curation, function ($a, $b) {
-            return $a['jours'] <=> $b['jours'];
-        });
-        $curation = array_reverse($curation);
-
+		usort($curation, fn ($a, $b) => $b['jours'] <=> $a['jours']);
         header('Content-Type: text/csv; charset=utf-8');
         header('Content-Disposition: attachment; filename=coworking-stats-' . $annee . '-' . wp_date('Y-m-d-H-i-s') . '.csv');
 
@@ -54,6 +45,7 @@ if (isset($_GET['export-stats'])) {
         unset($first['_id']);
         unset($first['wpUserId']);
         unset($first['thumbnail']);
+        unset($first['activeSubscriptions']);
         $keys = array_keys($first);
         fputcsv($output, $keys);
 
@@ -64,6 +56,7 @@ if (isset($_GET['export-stats'])) {
             foreach ($keys as $key) {
                 $line[$key] = $member[$key] ?? '';
             }
+
             fputcsv($output, $line);
         }
         fclose($output);

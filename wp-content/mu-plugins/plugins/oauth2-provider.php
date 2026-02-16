@@ -58,6 +58,7 @@ add_filter('wo_me_resource_return', function ($data, $token) {
 
     $data['visite'] = $tab['visite']??null;
   }
+  $data['email'] = $data['user_email'];
   // print_r([$data, $token]);
   return $data;
 }, 10, 2);

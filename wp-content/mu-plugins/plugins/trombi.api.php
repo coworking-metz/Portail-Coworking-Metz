@@ -32,7 +32,11 @@ add_action(
                 $nomades = [];
                 $users = fetch_nomades_for_today();
                 foreach($users as $user) {
-                    $nomades[] = ['wpUserId'=>$user->ID, 'name'=>$user->display_name, 'nomade'=>true];
+					if($user->beneficiaire) {
+	                    $nomades[] = ['wpUserId'=>numeric_hash($user->beneficiaire), 'name'=>$user->beneficiaire, 'nomade'=>true];
+					} else {
+	                    $nomades[] = ['wpUserId'=>$user->ID, 'name'=>$user->display_name, 'nomade'=>true];
+					}
                 }
                 $response['nomades'] = $nomades;
 

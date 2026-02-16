@@ -134,3 +134,11 @@ Captions
 .gallery-caption {
 	display: block;
 }
+
+
+.beneficiaire .fullwidth {
+  left: initial;
+  right: initial;
+  margin-left: initial;
+  margin-right: initial;
+}

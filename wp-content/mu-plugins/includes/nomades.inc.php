@@ -72,13 +72,16 @@ function fetch_nomades_for_date($date)
     foreach ($orders as $order) {
         $uid = $order->get_user_id();
         if (!$uid) continue;
-        $user_ids[$uid] = true; // unique by array keys
+        $user_ids[$uid] = ['beneficiaire'=>$order->beneficiaire]; // unique by array keys
     }
 
     $users = [];
-    foreach (array_keys($user_ids) as $uid) {
+    foreach ($user_ids as $uid => $tmp) {
         $user = get_userdata($uid);
-        if ($user) $users[] = $user;
+        if ($user) {
+			$user->beneficiaire = $tmp['beneficiaire'];
+			$users[] = $user;
+		}
     }
 
     return $users;
@@ -97,13 +100,15 @@ function get_orders_with_nomade_products_for_date($date)
             if (empty($tmcp_data)) continue;
 
             foreach ($tmcp_data as $data) {
+
                 $fields = $data['tmcp_post_fields'] ?? [];
                 if (!isset($fields['tmcp_date_0'])) continue;
-
                 $parsed = DateTime::createFromFormat('d/m/Y', $fields['tmcp_date_0']);
                 if (!$parsed) continue;
 
                 if ($parsed->format('Y-m-d') === $date) {
+					$beneficiaire = stristr($fields['tmcp_select_1'],'Une autre personne') ? $fields['tmcp_textfield_2'] : false ;
+					$order->beneficiaire = $beneficiaire;
                     $result[] = $order;
                     continue 3; // skip to next order
                 }

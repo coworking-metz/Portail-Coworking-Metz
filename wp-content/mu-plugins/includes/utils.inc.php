@@ -235,6 +235,15 @@ function allow_cors()
         exit(0);
     }
 }
+
+function numeric_hash($value)
+{
+    if ($value === '')
+        return 0;
+
+    return (int) sprintf('%u', crc32($value));
+}
+
 /**
  * Obtenir l'URL du Gravatar pour une adresse e-mail donnée.
  *
