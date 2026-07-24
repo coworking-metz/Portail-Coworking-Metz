@@ -26,7 +26,7 @@ define('WP_CACHE', false); // Added by WP Rocket
 define('WP_POST_REVISIONS', 10);
 define('AUTOSAVE_INTERVAL', 180); // Seconds
 define('DISALLOW_FILE_EDIT', true);
-define('API_KEY_TICKET', 'bupNanriCit1');
+define('API_KEY_TICKET', '');
 // ** Réglages MySQL - Votre hébergeur doit vous fournir ces informations. ** //
 /** Nom de la base de données de WordPress. */
 define('DB_NAME', 'coworking');

@@ -87,10 +87,10 @@ function get_user_ranking($uid) {
 
     $rankings = get_transient('user_rankings');
     if(!$rankings) {
-        $api = TICKET_BASE_URL.'/users-stats?key=bupNanriCit1&period=last-365-days&sort=createdAt';
-        $data = file_get_contents($api);
-
-        $users = json_decode($data, true);
+        $users = tickets('/users-stats', ['payload' => [
+            'period' => 'last-365-days',
+            'sort'   => 'createdAt',
+        ]]);
 
         $rankings=[];
         foreach($users as $user) {
@@ -121,12 +121,9 @@ function get_user_balance($user) {
     if (!$user) return;
 
 
-	$response = file_get_contents(TICKET_BASE_URL.'/members/'.$uid.'?key='.API_KEY_TICKET); 
+    $result = tickets('/members/'.$uid);
 
-
-    if (!$response) return;
-
-    $result = json_decode($response, true);
+    if (!$result) return;
 
     // Stocker le résultat dans un transient pour 1 heure
     set_transient('user_balance_' . $uid, $result, HOUR_IN_SECONDS);
