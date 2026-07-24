@@ -45,3 +45,7 @@ wp-content/db.php
 wp-content/plugins/query-monitor/wp-content/db.php
 wp-content/mu-plugins/_recette.php
 wp-content/mu-plugins/local.php
+
+# Documentation interne de l'association (donnees financieres, fiscales, juridiques)
+ASSO.md
+efacture.md
