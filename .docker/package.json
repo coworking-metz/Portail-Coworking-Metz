@@ -1,0 +1,10 @@
+{
+    "name": "docker",
+    "url": "https://site-template.netlify.app/",
+    "scripts": {
+        "up": ".\\bin\\docker.bat up",
+        "down": ".\\bin\\docker.bat down",
+        "import-db": ".\\bin\\docker.bat seed",
+        "reset": ".\\bin\\docker.bat reset"
+    }
+}
