@@ -17,7 +17,8 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_653fc3786f53f",
@@ -63,7 +64,10 @@
             },
             "default_value": "#333333",
             "enable_opacity": 0,
-            "return_format": "string"
+            "return_format": "string",
+            "custom_palette_source": "",
+            "palette_colors": "",
+            "show_color_wheel": true
         },
         {
             "key": "field_653fb73166772",
@@ -179,7 +183,9 @@
                     "allow_null": 0,
                     "ui": 0,
                     "ajax": 0,
-                    "placeholder": ""
+                    "placeholder": "",
+                    "create_options": 0,
+                    "save_options": 0
                 },
                 {
                     "key": "field_653fc1176771e",
@@ -237,7 +243,10 @@
                     },
                     "default_value": "#000000",
                     "enable_opacity": 0,
-                    "return_format": "string"
+                    "return_format": "string",
+                    "custom_palette_source": "",
+                    "palette_colors": "",
+                    "show_color_wheel": true
                 }
             ]
         },
@@ -256,7 +265,8 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_6546a950a1f3c",
@@ -318,7 +328,8 @@
                     },
                     "display_format": "d\/m\/Y",
                     "return_format": "d\/m\/Y",
-                    "first_day": 1
+                    "first_day": 1,
+                    "default_to_current_date": 0
                 },
                 {
                     "key": "field_6546a978a1f3e",
@@ -336,7 +347,8 @@
                     },
                     "display_format": "d\/m\/Y",
                     "return_format": "d\/m\/Y",
-                    "first_day": 1
+                    "first_day": 1,
+                    "default_to_current_date": 0
                 },
                 {
                     "key": "field_6546b857e9f37",
@@ -452,12 +464,13 @@
                     },
                     "choices": {
                         "0": "",
-                        "brevo-23": "Brevo - #023 - Email de confirmation de journée nomade",
+                        "brevo-26": "Brevo - #026 - Email de confirmation de journée nomade",
                         "brevo-19": "Brevo - #019 - Email de confirmation de visite sans app",
                         "brevo-16": "Brevo - #016 - Invitation équipe",
                         "brevo-14": "Brevo - #014 - Email de rappel de visite",
                         "brevo-10": "Brevo - #010 - Email de confirmation de visite",
                         "brevo-9": "Brevo - #009 - Email récapitulatif de journée d'éssai",
+                        "36687": "Wordpress - #36687 - {user_name} fera une journée nomade le {date_presence} - Infos et démarches",
                         "35313": "Wordpress - #35313 - {user_name}, suite à votre visite du Coworking...",
                         "31131": "Wordpress - #31131 - {user_name}, tu as gagné le tirage du calendrier de l'avent du {date_du_jour} !",
                         "28646": "Wordpress - #28646 - {user_name} visitera le coworking le {date_visite} - Infos et démarches",
@@ -484,7 +497,9 @@
                     "allow_null": 0,
                     "ui": 0,
                     "ajax": 0,
-                    "placeholder": ""
+                    "placeholder": "",
+                    "create_options": 0,
+                    "save_options": 0
                 }
             ]
         },
@@ -531,7 +546,8 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_6558b4ee86919",
@@ -666,7 +682,8 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_6558b65f2079f",
@@ -730,5 +747,6 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1742114270
+    "display_title": "",
+    "modified": 1738332528
 }

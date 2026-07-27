@@ -1,13 +1,13 @@
 {
-    "key": "group_652f7e11b41a8",
-    "title": "Users - Visite",
+    "key": "group_66e2a381c622a",
+    "title": "Coupons repas",
     "fields": [
         {
-            "key": "field_652f7e0ef2511",
-            "label": "Visite",
-            "name": "visite",
+            "key": "field_66e2a35f9bfd9",
+            "label": "Nombre de coupons repas inclus",
+            "name": "coupons_repas",
             "aria-label": "",
-            "type": "date_time_picker",
+            "type": "number",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -16,16 +16,20 @@
                 "class": "",
                 "id": ""
             },
-            "display_format": "Y-m-d H:i",
-            "return_format": "Y-m-d H:i",
-            "first_day": 1
+            "default_value": 0,
+            "min": "",
+            "max": "",
+            "placeholder": "",
+            "step": "",
+            "prepend": "",
+            "append": ""
         },
         {
-            "key": "field_65d5c7981eea9",
-            "label": "Activité",
-            "name": "activite",
+            "key": "field_66e2a5d4c1905",
+            "label": "Prix d'un repas",
+            "name": "prix_repas",
             "aria-label": "",
-            "type": "text",
+            "type": "number",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -34,9 +38,11 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "maxlength": "",
+            "default_value": 11,
+            "min": "",
+            "max": "",
             "placeholder": "",
+            "step": "",
             "prepend": "",
             "append": ""
         }
@@ -44,14 +50,9 @@
     "location": [
         [
             {
-                "param": "user_form",
+                "param": "post_type",
                 "operator": "==",
-                "value": "all"
-            },
-            {
-                "param": "current_user_role",
-                "operator": "==",
-                "value": "administrator"
+                "value": "product"
             }
         ]
     ],
@@ -64,5 +65,6 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1742114266
+    "display_title": "",
+    "modified": 1726129682
 }

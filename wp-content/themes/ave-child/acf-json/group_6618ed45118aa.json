@@ -1,6 +1,6 @@
 {
     "key": "group_6618ed45118aa",
-    "title": "Tickets - Type de produit",
+    "title": "Type de produit",
     "fields": [
         {
             "key": "field_6618ed47ad2e2",
@@ -28,12 +28,34 @@
             "allow_null": 1,
             "ui": 0,
             "ajax": 0,
-            "placeholder": ""
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
         },
         {
             "key": "field_67ae0383f3cb6",
             "label": "Adhésion inclue",
             "name": "adhesion_inclue",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_692ee3e855e90",
+            "label": "Produit nomade",
+            "name": "journee_nomade",
             "aria-label": "",
             "type": "true_false",
             "instructions": "",
@@ -69,5 +91,6 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1742114269
+    "display_title": "",
+    "modified": 1764683151
 }

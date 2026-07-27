@@ -29,7 +29,9 @@
             "allow_null": 1,
             "ui": 0,
             "ajax": 0,
-            "placeholder": ""
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
         },
         {
             "key": "field_664214b4e1e81",
@@ -74,7 +76,9 @@
             "allow_null": 1,
             "ui": 0,
             "ajax": 0,
-            "placeholder": ""
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
         }
     ],
     "location": [
@@ -100,5 +104,6 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1742114268
+    "display_title": "",
+    "modified": 1715679613
 }

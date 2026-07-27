@@ -33,7 +33,8 @@
                         "id": ""
                     },
                     "placement": "top",
-                    "endpoint": 0
+                    "endpoint": 0,
+                    "selected": 0
                 },
                 {
                     "key": "field_65e9bac3b5998",
@@ -67,7 +68,8 @@
                             },
                             "display_format": "d\/m\/Y",
                             "return_format": "Y-m-d",
-                            "first_day": 1
+                            "first_day": 1,
+                            "default_to_current_date": 0
                         }
                     ]
                 },
@@ -86,7 +88,8 @@
                         "id": ""
                     },
                     "placement": "top",
-                    "endpoint": 0
+                    "endpoint": 0,
+                    "selected": 0
                 },
                 {
                     "key": "field_65e9b80b27ed0",
@@ -196,5 +199,6 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1742114282
+    "display_title": "",
+    "modified": 1709823710
 }

@@ -147,5 +147,6 @@
     "active": true,
     "description": "Informations pour l'affichage polaroïd",
     "show_in_rest": 0,
-    "modified": 1742114272
+    "display_title": "",
+    "modified": 1698704483
 }
