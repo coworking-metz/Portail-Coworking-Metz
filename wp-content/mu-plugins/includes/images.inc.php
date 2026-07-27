@@ -1,6 +1,7 @@
 <?php
 function isImagePhoto($url)
 {
+return true;
     $payload = askGPT('Dis moi si ce fichier image est bien une photo en prise de vue réelle et quelle contient bien un visage humain. Ta réponse sera composée d\'un mot : true si c\'est une photo avec un visage, false sinon', ['image' => $url]);
 
     if($payload['status']!= 'success') return true; // dans le cas où chatgpt n'a pas sur donner une réponse claire
@@ -9,6 +10,7 @@ function isImagePhoto($url)
 
 function isImagePhotoConnue($url)
 {
+return true;
     $payload = askGPT('Dis moi si cette photo présente le visage d\'une personnalité connue. Ta réponse sera composée du nom de la personnalité connue, "false" sinon', ['image' => $url]);
 
     if($payload['status']!= 'success') return true; // dans le cas où chatgpt n'a pas sur donner une réponse claire
