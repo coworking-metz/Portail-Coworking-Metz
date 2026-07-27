@@ -8,6 +8,7 @@ add_action('wp_footer', function () {
 
     $uri = $_SERVER['REQUEST_URI'];
     if(strstr($uri,'/mon-compte/equipe/')) return;
+    if(!strstr($uri,'/mon-compte')) return;
     $uid = get_current_user_id();
     if(!$uid) return;
     $equipe = getMonEquipe($uid, true);
@@ -27,8 +28,8 @@ add_action('wp_footer', function () {
     if (!count($debiteurs)) return;
     echo generateNotification([
         // 'type' => 'warning',
-        'titre' => 'Alerte abonnement / tickets '.time(),
-        'texte' => 'Les personnes suivantes de votre équipe '.$equipe->post_title.' présentent un compte débiteur: <b>' . implode('</b>, <b>', array_column($debiteurs, 'display_name')).'</b>',
+        'titre' => 'Alerte abonnement / tickets',
+        'texte' => 'Les personnes suivantes de votre équipe '.$equipe->post_title.' présentent un compte débiteur: <b id="'.time().'">' . implode('</b>, <b>', array_column($debiteurs, 'display_name')).'</b>',
         'cta' => [
             'url' => '/mon-compte/equipe/',
             'caption' => 'Régulariser la situation'
