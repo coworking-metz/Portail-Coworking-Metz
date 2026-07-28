@@ -31,6 +31,30 @@ function tickets($endpoint, $options = [])
     return $return;
 }
 
+/**
+ * Previent tickets-backend qu'un compte a change, pour qu'il resynchronise sa copie.
+ *
+ * A appeler apres un update_field() sur un utilisateur : contrairement a
+ * wp_update_user(), il ne declenche pas le hook profile_update, donc pas le
+ * webhook de synchronisation pose dans plugins/user.php.
+ *
+ * @param int $user_id
+ */
+function notifier_sync_user($user_id)
+{
+    $url = TICKET_BASE_URL . '/sync-user-webhook?wpUserId=' . (int) $user_id;
+
+    $response = wp_remote_post($url, [
+        'method'  => 'POST',
+        'timeout' => 5,
+        'headers' => ['Authorization' => 'Token ' . API_KEY_TICKET],
+    ]);
+
+    if (is_wp_error($response)) {
+        error_log('notifier_sync_user(' . (int) $user_id . ') : ' . $response->get_error_message());
+    }
+}
+
 function isAboEnCours($date)
 {
     $dateAbo = strtotime($date);

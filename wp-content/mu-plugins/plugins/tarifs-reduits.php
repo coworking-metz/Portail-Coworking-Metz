@@ -21,7 +21,12 @@ if ($user_id) {
             if ($tarifs_reduits_ok) {
                 $status = -1;
             } else {
-                update_field('tarifs_reduits_ok', true, $cle);
+                // 1 et non true : les donnees existantes stockent '0'/'1', et ACF
+                // enregistrerait une chaine vide pour false.
+                update_field('tarifs_reduits_ok', 1, $cle);
+                // update_field() ne declenche pas profile_update, donc pas le webhook
+                // de synchro : sans cet appel, le manager afficherait l'ancienne valeur.
+                notifier_sync_user($user_id);
                 $status = 1;
             }
             wp_redirect(admin_url('user-edit.php?status_tarif-reduit=' . $status . '&user_id=' . $user_id));
