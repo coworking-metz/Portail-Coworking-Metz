@@ -52,3 +52,7 @@ efacture.md
 .docker/.env
 
 wp-content/upgrade
+
+# Doc vendorisee de la lib WonderPush (mailin) : jamais exec par WP, mais son
+# composer.lock epingle ~40 paquets dev obsoletes et pollue Dependabot
+wp-content/plugins/mailin/wonderpush-php-lib/doc/
