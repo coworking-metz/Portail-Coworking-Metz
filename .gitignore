@@ -50,3 +50,5 @@ wp-content/mu-plugins/local.php
 ASSO.md
 efacture.md
 .docker/.env
+
+wp-content/upgrade
