@@ -2,12 +2,12 @@
 # This file is distributed under the same license as the Plugins - User Menus &#8211; Nav Menu Visibility - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-02-11 19:27:11+0000\n"
+"PO-Revision-Date: 2025-02-05 08:13:13+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: GlotPress/3.0.0-alpha.2\n"
+"X-Generator: GlotPress/4.0.1\n"
 "Language: fr\n"
 "Project-Id-Version: Plugins - User Menus &#8211; Nav Menu Visibility - Stable (latest release)\n"
 
@@ -70,7 +70,7 @@ msgstr "Pseudonyme"
 
 #: includes/classes/user/codes.php:30
 msgid "Display Name"
-msgstr "Nom à afficher"
+msgstr "Nom affiché"
 
 #: includes/classes/user/codes.php:29
 msgid "Username"
