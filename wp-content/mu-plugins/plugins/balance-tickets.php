@@ -94,15 +94,12 @@ function get_produits_tickets()
 		$query = new WP_Query([
 			'post_type'      => 'product',
 			'post_status'    => 'publish',
+			'posts_per_page' => -1,
 			'meta_query'     => [
-				'relation' => 'OR',
 				[
-					'key'   => 'productType',
-					'value' => 'ticket-unite',
-				],
-				[
-					'key'   => 'productType',
-					'value' => 'carnet-tickets',
+					'key'     => 'productType',
+					'value'   => ['ticket-unite', 'carnet-tickets', 'abonnement'],
+					'compare' => 'IN',
 				],
 			],
 			'orderby'        => 'date',
