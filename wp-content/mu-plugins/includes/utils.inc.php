@@ -44,20 +44,30 @@ function custom_redirect($url, $delay = 0)
  * @param resource $context Stream context for HTTP headers (optional).
  * @return mixed Returns the decoded JSON as an array or object, or null on error.
  */
-function file_get_json($url, $assoc = true, $context = null)
+function file_get_json($url, $assoc = true, $context = null, &$status = null)
 {
+    $status = 0;
+
     if (empty($url)) {
         return null;
     }
 
-    // Use the context if provided
-    $jsonContent = file_get_contents($url, false, $context);
+    // Le @ évite qu'une réponse 404/500 de l'API affiche un warning PHP
+    // en pleine page : l'erreur est journalisée et remontée via $status.
+    $jsonContent = @file_get_contents($url, false, $context);
+
+    if (isset($http_response_header[0]) && preg_match('#\s(\d{3})\s#', $http_response_header[0], $matches)) {
+        $status = (int) $matches[1];
+    }
+
     if ($jsonContent === false) {
+        error_log('file_get_json : échec de la requête ' . $url . ' (HTTP ' . $status . ')');
         return null;
     }
 
     $data = json_decode($jsonContent, $assoc);
     if (json_last_error() !== JSON_ERROR_NONE) {
+        error_log('file_get_json : JSON invalide depuis ' . $url . ' (' . json_last_error_msg() . ')');
         return null;
     }
 

@@ -25,10 +25,30 @@ function tickets($endpoint, $options = [])
         ]
     ]);
 
-    $return = file_get_json($url, true, $context);
+    $status = 0;
+    $return = file_get_json($url, true, $context, $status);
+    $GLOBALS['tickets_last_http_status'] = $status;
+
+    // Un appel en échec (404 membre inconnu, API indisponible...) ne doit pas
+    // étre mis en cache : le prochain chargement de page doit pouvoir réessayer.
+    if ($return === null) {
+        return null;
+    }
+
     $GLOBALS[$key] = $return;
 	set_transient($key, $return);
     return $return;
+}
+
+/**
+ * Code HTTP renvoyé par le dernier appel à tickets().
+ * 404 = ressource / membre inconnu, 0 = pas de reponse du serveur.
+ *
+ * @return int
+ */
+function tickets_last_status()
+{
+    return (int) ($GLOBALS['tickets_last_http_status'] ?? 0);
 }
 
 /**
