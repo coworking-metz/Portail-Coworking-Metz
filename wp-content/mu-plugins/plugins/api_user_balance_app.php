@@ -35,14 +35,22 @@ function api_user_balance_app()
         return number_format_i18n($valeur, fmod($valeur, 1) == 0 ? 0 : 1);
     };
 
-    $tuiles = [
-        [
+    $tuiles = [];
+
+    // « 0 ticket disponible » n'apprend rien à quelqu'un dont l'abonnement couvre déjà
+    // ses journées : on masque la colonne dans ce cas seulement. Un solde négatif reste
+    // affiché, il demande une régularisation même sous abonnement.
+    if (!($abo_actif && 0.0 === $balance)) {
+        $tuiles[] = [
             'valeur' => $nombre($balance),
             'label'  => $balance < 0
                 ? 'solde de tickets à régulariser'
                 : ($balance < 2 ? 'ticket disponible' : 'tickets disponibles'),
             'alerte' => $balance < 0,
-        ],
+        ];
+    }
+
+    $tuiles = array_merge($tuiles, [
         [
             'valeur' => $fin_abo ? date_i18n('j M Y', $fin_abo) : 'Aucun',
             'label'  => $fin_abo ? 'fin de votre abonnement' : 'abonnement en cours',
@@ -53,7 +61,7 @@ function api_user_balance_app()
             'label'  => 'journées de présence au total',
             'alerte' => false,
         ],
-    ];
+    ]);
     ?>
     <div class="solde-membre">
         <div class="solde-membre__grille">
