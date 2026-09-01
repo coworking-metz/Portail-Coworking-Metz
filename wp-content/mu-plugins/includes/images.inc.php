@@ -8,7 +8,7 @@ function generer_image_alpha($url){
     if($alpha) {
         return wp_get_attachment_url($alpha->ID);
     } else {
-        $api = 'https://tools.sopress.net/remove-background/?raw&force=true&crop=false&image=' . urlencode($url);
+        $api = 'https://tools.sopress.net/remove-background/?raw&force=true&crop=false&clientId=coworking-image-alpha&image=' . urlencode($url);
         $alpha_url = file_get_contents($api);
         $alpha_id = insert_attachment_from_file($alpha_url, [], ['original' => $url], 1000);
         return wp_get_attachment_url($alpha_id);

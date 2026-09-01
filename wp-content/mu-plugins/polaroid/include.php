@@ -22,7 +22,7 @@ function get_alpha_polaroid($uid, $file)
     $alpha_id = get_field('votre_photo_alpha', 'user_' . $uid);
 
     if (!$alpha_id) {
-        $api = 'https://tools.sopress.net/remove-background/?raw&force=true&crop=false&image=' . urlencode($url);
+        $api = 'https://tools.sopress.net/remove-background/?raw&force=true&crop=false&clientId=coworking-polaroid-alpha&image=' . urlencode($url);
         $alpha_url = file_get_contents($api);
         $alpha_id = insert_attachment_from_file($alpha_url, [], ['original' => $url], 1000);
     } else {
