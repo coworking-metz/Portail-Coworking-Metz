@@ -1,0 +1,158 @@
+/* =========================================================================
+   Conseil de formule affiché en haut de la boutique
+   (voir mu-plugins/plugins/woocommerce/conseil-formule.php)
+   ========================================================================= */
+.conseil-formule-conteneur {
+    margin-bottom: 1.5rem;
+}
+
+.conseil-formule {
+    background: #fdf6e6;
+    border: 1px solid #f2debb;
+    border-left: 4px solid #e9b142;
+    border-radius: 6px;
+    padding: 1.4rem 1.6rem;
+}
+
+.conseil-formule__principal {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 2rem;
+}
+
+.conseil-formule__contenu {
+    flex: 1 1 30ch;
+}
+
+.conseil-formule__titre {
+    font-weight: 700;
+    margin: 0 0 .3em;
+}
+
+.conseil-formule__texte {
+    margin: 0;
+    font-size: .95em;
+    line-height: 1.5;
+}
+
+.conseil-formule__actions {
+    margin: 0;
+    flex: 0 0 auto;
+}
+
+.conseil-formule__cta {
+    display: inline-block;
+    background: #e9b142;
+    color: #fff;
+    padding: .6em 1.4em;
+    border-radius: 4px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.conseil-formule__cta:hover,
+.conseil-formule__cta:focus {
+    background: #d19a2e;
+    color: #fff;
+}
+
+/* Pied : le réglage de période, replié derrière un lien, calé à droite. */
+.conseil-formule__pied {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.2rem;
+    padding-top: .9rem;
+    border-top: 1px solid #f0ddb8;
+}
+
+.conseil-formule__reglage {
+    text-align: right;
+}
+
+.conseil-formule__retour {
+    margin-left: .4rem;
+    color: #8a7a55;
+    font-size: .78rem;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.conseil-formule__bascule {
+    display: inline-block;
+    list-style: none;
+    cursor: pointer;
+    font-size: .82rem;
+    line-height: 1.4;
+    color: #8a7a55;
+    text-decoration: underline;
+}
+
+.conseil-formule__bascule::-webkit-details-marker {
+    display: none;
+}
+
+.conseil-formule__bascule::marker {
+    content: '';
+}
+
+.conseil-formule__bascule:hover,
+.conseil-formule__bascule:focus {
+    color: #6f6242;
+}
+
+/* Une fois le tiroir ouvert, le lien s'efface : il ne reste que le formulaire. */
+.conseil-formule__reglage[open] .conseil-formule__bascule {
+    display: none;
+}
+
+.conseil-formule__selecteur {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: .4rem;
+    margin: .6rem 0 0;
+    font-size: .82rem;
+    color: #8a7a55;
+}
+
+.conseil-formule__selecteur label {
+    margin: 0;
+    font-size: inherit;
+    color: inherit;
+    font-weight: 400;
+}
+
+.conseil-formule__selecteur select {
+    height: auto;
+    min-height: 0;
+    padding: .3em 1.6em .3em .6em;
+    font-size: .82rem;
+    line-height: 1.3;
+    border: 1px solid #e3cf9f;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #4a4a4a;
+    width: auto;
+    max-width: 11rem;
+    margin: 0;
+}
+
+.conseil-formule__selecteur button {
+    padding: .38em 1em;
+    font-size: .82rem;
+    line-height: 1.3;
+    font-weight: 600;
+    color: #7a6633;
+    background: #fff;
+    border: 1px solid #e3cf9f;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.conseil-formule__selecteur button:hover,
+.conseil-formule__selecteur button:focus {
+    background: #f6ead0;
+}
