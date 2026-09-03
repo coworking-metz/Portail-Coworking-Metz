@@ -1,0 +1,204 @@
+/**
+ * Bulle de pré-collecte affichée aux visiteurs non connectés,
+ * à la place de la bulle Brevo (qui n'est chargée qu'ensuite).
+ */
+
+:root {
+    --brevo-pre-couleur: #efb644;
+    --brevo-pre-couleur-texte: #1c1c1c;
+}
+
+.brevo-pre-bulle,
+.brevo-pre-panneau {
+    /* au-dessus de tout, comme le widget Brevo lui-même */
+    z-index: 2147483000;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.brevo-pre-bulle *,
+.brevo-pre-panneau * {
+    box-sizing: border-box;
+}
+
+/* ---- La bulle ---- */
+
+.brevo-pre-bulle {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--brevo-pre-couleur);
+    color: var(--brevo-pre-couleur-texte);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .25);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .18s ease, box-shadow .18s ease;
+    animation: brevo-pre-apparition .28s ease both;
+}
+
+.brevo-pre-bulle:hover {
+    transform: scale(1.06);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .3);
+}
+
+.brevo-pre-bulle:focus-visible {
+    outline: 3px solid #1a73e8;
+    outline-offset: 3px;
+}
+
+.brevo-pre-bulle svg {
+    width: 30px;
+    height: 30px;
+    display: block;
+    pointer-events: none;
+}
+
+@keyframes brevo-pre-apparition {
+    from { opacity: 0; transform: scale(.7); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* ---- Le panneau ---- */
+
+.brevo-pre-panneau {
+    position: fixed;
+    right: 20px;
+    bottom: 92px;
+    width: 330px;
+    max-width: calc(100vw - 40px);
+    background: #fff;
+    color: #1c1c1c;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, .22);
+    overflow: hidden;
+    animation: brevo-pre-panneau-apparition .22s ease both;
+}
+
+@keyframes brevo-pre-panneau-apparition {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.brevo-pre-entete {
+    background: var(--brevo-pre-couleur);
+    color: var(--brevo-pre-couleur-texte);
+    padding: 16px 44px 16px 18px;
+    position: relative;
+}
+
+.brevo-pre-entete h2 {
+    margin: 0 0 4px;
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 700;
+    color: inherit;
+}
+
+.brevo-pre-entete p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.4;
+    opacity: .85;
+    color: inherit;
+}
+
+.brevo-pre-fermer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.brevo-pre-fermer:hover {
+    background: rgba(0, 0, 0, .1);
+}
+
+.brevo-pre-corps {
+    padding: 16px 18px 18px;
+}
+
+.brevo-pre-champ {
+    margin-bottom: 12px;
+}
+
+.brevo-pre-champ label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.brevo-pre-champ input {
+    width: 100%;
+    padding: 9px 11px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #1c1c1c;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.brevo-pre-champ input:focus {
+    outline: 0;
+    border-color: var(--brevo-pre-couleur);
+    box-shadow: 0 0 0 3px rgba(239, 182, 68, .25);
+}
+
+.brevo-pre-champ input[aria-invalid="true"] {
+    border-color: #d33;
+}
+
+.brevo-pre-erreur {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #d33;
+}
+
+.brevo-pre-envoyer {
+    width: 100%;
+    padding: 11px 14px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--brevo-pre-couleur);
+    color: var(--brevo-pre-couleur-texte);
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.brevo-pre-envoyer:hover {
+    filter: brightness(.94);
+}
+
+@media (max-width: 480px) {
+    .brevo-pre-panneau {
+        right: 10px;
+        left: 10px;
+        width: auto;
+        max-width: none;
+        bottom: 88px;
+    }
+    .brevo-pre-bulle {
+        right: 14px;
+        bottom: 14px;
+    }
+}

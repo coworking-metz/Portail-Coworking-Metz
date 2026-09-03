@@ -21,8 +21,16 @@ add_action('wp_enqueue_scripts', function () {
     if (equipe_admin_logged_in_as()) return;
     $base = '/wp-content/mu-plugins/js';
 
+    // Module de pre-collecte : bulle maison affichee aux visiteurs non connectes,
+    // qui recueille prenom / nom / email avant de charger le widget Brevo.
+    $css = '/wp-content/mu-plugins/css/brevo-precollect.css';
+    wp_enqueue_style('brevo-precollect', $css, array(), filemtime(ABSPATH . $css));
+
+    $precollect = $base . '/brevo-precollect.js';
+    wp_enqueue_script('brevo-precollect', $precollect, array(), filemtime(ABSPATH . $precollect), true);
+
     $js = $base . '/brevo.js';
-    wp_enqueue_script('brevo-script', $js, array(), filemtime(ABSPATH . $js), true);
+    wp_enqueue_script('brevo-script', $js, array('brevo-precollect'), filemtime(ABSPATH . $js), true);
 });
 
 add_action('wp_head', function () {
