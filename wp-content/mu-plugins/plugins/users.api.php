@@ -9,6 +9,8 @@
  *    @see plugins/woocommerce.php  (filtre woocommerce_available_payment_gateways)
  *  - tarifs_reduits_ok : autorise l'achat des produits "tarifs-reduits"
  *    @see plugins/tarifs-reduits.php
+ *  - resident_blida_ok : autorise l'achat des produits "residents-blida"
+ *    @see plugins/residents-blida.php
  *
  * Le manager passe par tickets-backend, qui appelle cet endpoint et ne repercute
  * la valeur dans MongoDB qu'une fois WordPress d'accord.
@@ -32,6 +34,7 @@ function cowo_user_options_schema()
     return [
         'payer_en_virement'    => 'bool',
         'tarifs_reduits_ok'    => 'bool',
+        'resident_blida_ok'    => 'bool',
         'candidat_au_ca'       => 'bool',
         'date_naissance'       => 'date',
         'polaroid_nom'         => 'text',

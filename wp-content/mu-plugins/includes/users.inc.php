@@ -73,6 +73,10 @@ function current_user_can_tarif_reduit(){
     $tarifs_reduits_ok = get_user_meta($user_id, 'tarifs_reduits_ok', true);
     return $tarifs_reduits_ok;
 }
+function current_user_can_resident_blida(){
+    $user_id = get_current_user_id();
+    return get_user_meta($user_id, 'resident_blida_ok', true);
+}
 function get_date_naissance($user_id) {
     $d = get_field('date_naissance', 'user_'.$user_id);
 
