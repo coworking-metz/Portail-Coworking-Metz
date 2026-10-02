@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tant que le visiteur anonyme ne s'est pas nommé, le widget Brevo n'est pas
     // chargé : c'est la bulle de pré-collecte qui prend sa place.
     let brevoCharge = false;
+
+    // Le hash #brevoConversationsExpanded est celui que Brevo utilise pour ouvrir
+    // son propre widget ; #ouvrir-brevo est le notre. Les deux demandent d'ouvrir le chat.
+    const veutOuvrirChat = () => /ouvrir-brevo|brevoConversationsExpanded/.test(document.location.hash);
     let ouvrirPrecollecte = null;
 
     // document.querySelectorAll('[href="#ouvrir-brevo"]').forEach(bouton => bouton.addEventListener('click', e => {
@@ -57,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (user_data) {
                     BrevoConversations('updateIntegrationData', user_data);
                 }
-                if (ouvrirLeChat || document.location.hash.includes('ouvrir-brevo')) {
+                if (ouvrirLeChat || veutOuvrirChat()) {
                     BrevoConversations('openChat', true);
                 }
             })
@@ -109,5 +113,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }), ouvrirLeChat);
             }
         });
+
+        // Lien direct vers le chat (/contact/#brevoConversationsExpanded) : le widget
+        // Brevo n'est pas charge, on ouvre donc notre bulle de pre-collecte.
+        if (ouvrirPrecollecte && veutOuvrirChat()) {
+            ouvrirPrecollecte();
+        }
     })
 })
