@@ -36,6 +36,10 @@ add_action('rest_api_init', function () {
             if ($activite) {
                 $nom .= ' - ' . $activite;
             }
+            $residentBliiida = !empty($user['residentBliiida']);
+            if ($residentBliiida) {
+                $nom .= ' (résident-e Bliiida)';
+            }
             if ($user['nomade']) {
                 $user['role'] = 'customer';
                 $user_id = create_wp_user_if_not_exists($user, ['activite' => $activite]);
@@ -56,7 +60,7 @@ add_action('rest_api_init', function () {
                     $event = ['name' => 'Visite pour ' . $nom, 'start' => $start, 'end' => $end];
 
                     if (!$modeTest) {
-                        envoyerMailAlerte($user_id, ['activite' => $activite ? $activite : 'Non renseigné']);
+                        envoyerMailAlerte($user_id, ['activite' => ($residentBliiida ? 'Résident-e Bliiida : ' : '') . ($activite ? $activite : 'Non renseigné')]);
                         envoyerMailVisite($user_id, $params['visite']);
                     }
 

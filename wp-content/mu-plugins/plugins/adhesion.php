@@ -18,6 +18,7 @@ add_action('wp_footer', function () {
 	if (is_checkout() || is_cart()) {
 
 		if(has_valid_membership($uid)) return;
+		if(current_user_can_resident_blida()) return;
 
 		echo generateNotification([
 			'titre' => 'Vous n\'êtes pas à jour de votre adhésion',
@@ -41,7 +42,7 @@ if (!empty($_GET['adhesion'])) {
     add_action(
         'template_redirect',
         function () {
-            if (!is_product_in_cart(PRODUIT_ADHESION)) {
+            if (!is_product_in_cart(PRODUIT_ADHESION) && !current_user_can_resident_blida()) {
                 WC()->cart->add_to_cart(PRODUIT_ADHESION);
                 wp_redirect($_SERVER['HTTP_REFERER']);
                 exit;

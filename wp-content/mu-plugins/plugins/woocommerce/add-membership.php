@@ -15,6 +15,7 @@ add_action('wp_loaded', function () {
 
 	
 	if(has_valid_membership($user_id)) return; 
+	if(current_user_can_resident_blida()) return;
 
 
 	if(is_adhesion_in_cart()) {

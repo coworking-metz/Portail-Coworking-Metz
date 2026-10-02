@@ -79,6 +79,10 @@
                 $nextYear = date('Y', strtotime('+1 year'));
                     if($result['lastMembership'] == $currentYear || $result['lastMembership'] == $nextYear){
                         echo 'Vous disposez d\'une carte d’adhérent à jour pour l\'année<em>' . $result['lastMembership'] . '</em> .';
+                    } elseif (current_user_can_resident_blida()) {
+                        $url_residents = get_term_link('residents-blida', 'product_cat');
+                        if (is_wp_error($url_residents)) $url_residents = home_url('/boutique/');
+                        echo '<div style="background:#e9b142;color:white;padding:1em;margin-block:1em;"><strong>Vous n\'êtes pas à jour concernant l\'adhésion ' . $currentYear . '.</strong><br/>En tant que résident de Blida, il vous suffit de souscrire à un <a style="color:inherit" href="' . esc_url($url_residents) . '"><u>produit réservé aux résidents</u></a> pour être à jour : l\'adhésion à l\'association n\'est pas à régler séparément.</div>';
                     } else {
                         echo '<span class="alerte"><strong>Vous n\'êtes pas à jour concernant l\'adhésion ' . $currentYear . '.</strong></span><br/><br/><u>La carte adhérent est obligatoire pour venir coworker, 
                         il s\'agit d\'une prérogative de notre assureur. Sans cette adhésion, il ne vous est pas possible de coworker.</u>';

@@ -416,6 +416,16 @@ function create_wp_user_if_not_exists($user, $meta = [])
         foreach ($meta as $key => $value) {
             update_user_meta($user_id, $key, $value);
         }
+
+        // Residents Blida/Bliiida : declare par la personne sur le formulaire
+        // "rejoindre". Uniquement a la creation du compte, jamais sur un compte
+        // existant. update_field() tient aussi la meta _resident_blida_ok (cle ACF).
+        if (!empty($user['residentBliiida'])) {
+            update_field('resident_blida_ok', 1, 'user_' . $user_id);
+            if (function_exists('notifier_sync_user')) {
+                notifier_sync_user($user_id);
+            }
+        }
     }
 
     // Réactive l'envoi de mail
