@@ -8,7 +8,7 @@ add_action(
                 $data = tickets('/current-members');
                             
                 $number_coworkers = count($data);
-                $number_worplaces = 40;
+                $number_worplaces = defined('COWORKING_NB_PLACES') ? COWORKING_NB_PLACES : 40;
                 $remaining_workplaces = $number_worplaces - $number_coworkers;
 
                 $output = '';
