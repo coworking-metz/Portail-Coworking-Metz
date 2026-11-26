@@ -2,7 +2,7 @@
 
 
 $adresseMac = $_POST['adresse-mac'] ?? $_GET['adresse-mac'] ?? false;
-if ($adresseMac) {
+if ($adresseMac && !isset($_GET['erreur'])) {
     add_action('init', function () use ($adresseMac) {
 
         $user_id = get_current_user_id();

@@ -78,7 +78,7 @@ function updateMemberMacAddresses($userId, $macAddresses)
     } else {
         // Afficher la réponse
         $data = json_decode($response, true);
-		if($data['message']??false) return false;
+		if($data['message']??false) { error_log('updateMemberMacAddresses user='.$userId.' HTTP '.curl_getinfo($ch, CURLINFO_HTTP_CODE).' : '.$response); return false; }
 		return true;
     }
     // Fermer la session cURL
