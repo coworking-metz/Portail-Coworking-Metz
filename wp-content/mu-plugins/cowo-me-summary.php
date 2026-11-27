@@ -1,12 +1,13 @@
 <?php
 /**
  * Plugin Name: Cowo - Synthèse du compte connecté (me/summary)
- * Description: Route REST GET /wp-json/cowo/v1/me/summary : synthèse minimale du compte de la personne authentifiée
- *              (adhésion, abonnement, carnets, tarif, statut nomade, présences, droits). Utilisée par l'assistant IA du coworking.
- * Version:     1.0.0
+ * Description: Routes REST GET cowo/v1/me/summary (synthèse minimale du compte de la personne authentifiée : adhésion, abonnement,
+ *              carnets, tarif, statut nomade, présences récentes, droits) et GET cowo/v1/me/presences (historique mensuel complet,
+ *              ou jours de présence d'un mois avec ?mois=AAAA-MM). Utilisées par l'assistant IA du coworking.
+ * Version:     1.1.0
  *
  * Principes :
- * - la route ne lit QUE le compte de l'utilisateur courant (aucun paramètre d'identifiant) ;
+ * - les routes ne lisent QUE le compte de l'utilisateur courant (aucun paramètre d'identifiant) ;
  * - authentification par la session WordPress ou par un jeton OAuth Bearer (filtre determine_current_user du serveur OAuth) ;
  * - aucune donnée de contact (e-mail, téléphone, adresse, naissance), aucun identifiant technique, aucune clé ;
  * - une source indisponible n'entraîne jamais d'erreur 500 : les champs concernés valent null et la section est listée dans "indisponible" ;
@@ -22,6 +23,9 @@ const COWO_MS_CACHE_TTL = 60;          // secondes, cache complet
 const COWO_MS_CACHE_TTL_PARTIAL = 15;  // secondes, cache d'une réponse partielle
 const COWO_MS_HTTP_TIMEOUT = 5;        // secondes, par appel au service tickets
 const COWO_MS_SEUIL_WEEKEND = 10;      // journées coworkées nécessaires pour venir le week-end
+const COWO_MS_HTTP_TIMEOUT_JOURS = 3;  // secondes, appel au service tickets pour la route me/presences
+const COWO_MS_ANNEE_MIN = 2014;        // aucun mois antérieur n'est accepté par me/presences
+const COWO_MS_ROUTES = ['/cowo/v1/me/summary', '/cowo/v1/me/presences'];
 
 add_action('rest_api_init', function () {
     register_rest_route('cowo/v1', '/me/summary', [
@@ -29,6 +33,14 @@ add_action('rest_api_init', function () {
         'callback'            => 'cowo_ms_handle',
         'permission_callback' => 'cowo_ms_permission',
         'args'                => [], // volontairement aucun paramètre
+    ]);
+    // Historique des présences : sans paramètre, compteurs mensuels de tout l'historique ; avec « mois » (AAAA-MM), jours de ce mois.
+    // Le paramètre est validé dans le gestionnaire (après l'authentification) ; aucun identifiant n'est lu dans la requête.
+    register_rest_route('cowo/v1', '/me/presences', [
+        'methods'             => 'GET',
+        'callback'            => 'cowo_ms_handle_presences',
+        'permission_callback' => 'cowo_ms_permission',
+        'args'                => [],
     ]);
 });
 
@@ -43,7 +55,7 @@ function cowo_ms_permission()
 
 /** En-têtes de sécurité/cache sur toutes les réponses de cette route (succès comme erreurs). */
 add_filter('rest_post_dispatch', function ($result, $server, $request) {
-    if ($request instanceof WP_REST_Request && $request->get_route() === '/cowo/v1/me/summary' && $result instanceof WP_HTTP_Response) {
+    if ($request instanceof WP_REST_Request && in_array($request->get_route(), COWO_MS_ROUTES, true) && $result instanceof WP_HTTP_Response) {
         $result->header('Cache-Control', 'no-store, private');
         $result->header('Pragma', 'no-cache');
         $result->header('Vary', 'Authorization, Cookie');
@@ -75,14 +87,46 @@ function cowo_ms_handle(WP_REST_Request $request)
     }
 }
 
+/** Présences de l'utilisateur courant : historique mensuel complet (sans paramètre) ou jours d'un mois (?mois=AAAA-MM). Jamais d'identifiant en entrée. */
+function cowo_ms_handle_presences(WP_REST_Request $request)
+{
+    $uid = (int) get_current_user_id();
+    if ($uid <= 0) {
+        return new WP_Error('cowo_non_authentifie', 'Authentification requise.', ['status' => 401]);
+    }
+    $mois = $request->get_param('mois');
+    $today = (new DateTimeImmutable('now', wp_timezone()))->format('Y-m-d');
+    if ($mois !== null && (!is_string($mois) || !preg_match('/^(\d{4})-(0[1-9]|1[0-2])$/', $mois, $mm) || (int) $mm[1] < COWO_MS_ANNEE_MIN || $mois > substr($today, 0, 7))) {
+        return new WP_Error('cowo_mois_invalide', 'Paramètre « mois » invalide : format AAAA-MM attendu, entre ' . COWO_MS_ANNEE_MIN . '-01 et le mois courant.', ['status' => 400]);
+    }
+
+    try {
+        $key = 'cowo_mp_' . $uid . '_' . ($mois === null ? 'tout' : str_replace('-', '', $mois));
+        $cached = get_transient($key);
+        if (is_array($cached)) {
+            return new WP_REST_Response($cached, 200);
+        }
+        $act = cowo_ms_tickets_get('/members/' . $uid . '/activity', COWO_MS_HTTP_TIMEOUT_JOURS);
+        if (!is_array($act)) {
+            return new WP_Error('cowo_indisponible', 'Service momentanément indisponible.', ['status' => 503]);
+        }
+        $data = $mois === null ? cowo_ms_historique($act, $today) : cowo_ms_jours_du_mois($act, $mois);
+        $data['mis_a_jour'] = gmdate('c');
+        set_transient($key, $data, COWO_MS_CACHE_TTL);
+        return new WP_REST_Response($data, 200);
+    } catch (Throwable $e) {
+        return new WP_Error('cowo_indisponible', 'Service momentanément indisponible.', ['status' => 503]);
+    }
+}
+
 /** Appel GET au service tickets (timeout court). Renvoie le JSON décodé (tableau) ou null. */
-function cowo_ms_tickets_get($path)
+function cowo_ms_tickets_get($path, $timeout = COWO_MS_HTTP_TIMEOUT)
 {
     if (!defined('TICKET_BASE_URL') || !defined('API_KEY_TICKET') || !TICKET_BASE_URL || !API_KEY_TICKET) {
         return null;
     }
     $response = wp_remote_get(rtrim(TICKET_BASE_URL, '/') . $path, [
-        'timeout'     => COWO_MS_HTTP_TIMEOUT,
+        'timeout'     => $timeout,
         'redirection' => 0,
         'headers'     => ['Authorization' => 'Token ' . API_KEY_TICKET, 'Accept' => 'application/json'],
     ]);
@@ -282,6 +326,83 @@ function cowo_ms_build($uid)
         'indisponible' => array_values(array_unique($indispo)),
         'maj'          => gmdate('c'),
     ];
+}
+
+/** Nombre entier si possible, sinon au demi près (une demi-journée vaut 0,5). */
+function cowo_ms_n($v)
+{
+    $v = round($v * 2) / 2;
+    return floor($v) == $v ? (int) $v : $v;
+}
+
+/** Présences du service tickets réduites à [date => valeur cumulée] (valeur > 0), triées par date. */
+function cowo_ms_jours(array $act)
+{
+    $jours = [];
+    foreach ($act as $p) {
+        if (!is_array($p)) continue;
+        $d = cowo_ms_date($p['date'] ?? null);
+        $v = isset($p['value']) && is_numeric($p['value']) ? (float) $p['value'] : (isset($p['amount']) && is_numeric($p['amount']) ? (float) $p['amount'] : 0.0);
+        if (!$d || $v <= 0) continue;
+        $jours[$d] = ($jours[$d] ?? 0.0) + $v;
+    }
+    ksort($jours);
+    return $jours;
+}
+
+/**
+ * Historique COMPLET sous forme compacte : { "AAAA": [12 valeurs] } (journées par mois ; null = avant la première venue ou mois
+ * à venir ; 0 = aucune venue ce mois-là), total par année, total général et date de première venue. Jamais de liste de dates.
+ */
+function cowo_ms_historique(array $act, $today)
+{
+    $jours = cowo_ms_jours($act);
+    if (!$jours) {
+        return ['historique_mensuel' => new stdClass(), 'total_par_annee' => new stdClass(), 'premiere_venue' => null, 'total' => 0];
+    }
+    $parMois = [];
+    foreach ($jours as $d => $v) {
+        $k = substr($d, 0, 7);
+        $parMois[$k] = ($parMois[$k] ?? 0.0) + $v;
+    }
+    $premier = array_key_first($jours);
+    $a0 = (int) substr($premier, 0, 4);
+    $m0 = (int) substr($premier, 5, 2);
+    $an = (int) substr($today, 0, 4);
+    $mn = (int) substr($today, 5, 2);
+    $hist = [];
+    $tot = [];
+    for ($y = $a0; $y <= $an; $y++) {
+        $ligne = [];
+        $somme = 0;
+        for ($m = 1; $m <= 12; $m++) {
+            if (($y === $a0 && $m < $m0) || ($y === $an && $m > $mn)) {
+                $ligne[] = null;
+                continue;
+            }
+            $n = cowo_ms_n($parMois[sprintf('%04d-%02d', $y, $m)] ?? 0.0);
+            $ligne[] = $n;
+            $somme += $n;
+        }
+        $hist[$y] = $ligne;
+        $tot[$y] = $somme;
+    }
+    return ['premiere_venue' => $premier, 'total' => cowo_ms_n(array_sum($tot)), 'total_par_annee' => (object) $tot, 'historique_mensuel' => (object) $hist];
+}
+
+/** Jours de présence d'un mois AAAA-MM (déjà validé) : liste de dates, dont les demi-journées signalées à part. */
+function cowo_ms_jours_du_mois(array $act, $mois)
+{
+    $liste = [];
+    $demi = [];
+    $total = 0.0;
+    foreach (cowo_ms_jours($act) as $d => $v) {
+        if (substr($d, 0, 7) !== $mois) continue;
+        $liste[] = $d;
+        $total += $v;
+        if ($v < 1) $demi[] = $d;
+    }
+    return ['mois' => $mois, 'nb_jours' => cowo_ms_n($total), 'jours' => $liste, 'demi_journees' => $demi];
 }
 
 /** Statistiques agrégées de fréquentation (jamais la liste brute des présences). */
