@@ -82,11 +82,11 @@ if (isset( $_POST['ppu_nonce'] ) && wp_verify_nonce( $_POST['ppu_nonce'], 'ppu_u
             'temporaire' => true,
         ] );
     }
-    if ( intval( $pages ) > 150 ) {
+    if ( intval( $pages ) > 30 ) {
         wp_redirect_notification( get_permalink(), [
             'type'  => 'error',
             'titre' => 'PDF trop long',
-            'texte' => 'Votre fichier contient ' . intval( $pages ) . ' pages. Maximum autorisé : 15.',
+            'texte' => 'Votre fichier contient ' . intval( $pages ) . ' pages. Maximum autorisé : 30.',
             'temporaire' => true,
         ] );
     }
@@ -170,9 +170,9 @@ display:none !important;
     <form id="pu-form" method="post" enctype="multipart/form-data" class="pu-form" style="margin-top:1.5rem;">
         <input class="pu-hidden" type="file" name="ppu_pdf" id="ppu_pdf" accept="application/pdf" required>
 
-        <div id="pu-dropzone" class="pu-dropzone" tabindex="0" role="button" aria-controls="ppu_pdf" aria-label="<?php esc_attr_e('Déposer un PDF (max 15 pages) ou cliquer pour sélectionner','ppu'); ?>">
+        <div id="pu-dropzone" class="pu-dropzone" tabindex="0" role="button" aria-controls="ppu_pdf" aria-label="<?php esc_attr_e('Déposer un PDF (max 30 pages) ou cliquer pour sélectionner','ppu'); ?>">
             <span class="pu-icon" aria-hidden="true">📄</span>
-            <div class="pu-helper">Déposez votre PDF ici (max 15 pages)</div>
+            <div class="pu-helper">Déposez votre PDF ici (max 30 pages)</div>
             <div class="pu-helper">ou cliquez pour choisir un fichier</div>
             <div id="pu-filename" class="pu-filename" aria-live="polite"></div>
         </div>
