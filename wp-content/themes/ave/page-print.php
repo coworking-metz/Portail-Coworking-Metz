@@ -28,6 +28,21 @@ function ppu_count_pdf_pages( $file ) {
     if ( ! is_readable( $file ) ) {
         return false;
     }
+    // PDF modernes (flux d'objets compressés) : le comptage par regex échoue, on passe par Imagick.
+    if ( class_exists( 'Imagick' ) ) {
+        try {
+            $im = new Imagick();
+            $im->pingImage( $file );
+            $n = (int) $im->getNumberImages();
+            $im->clear();
+            if ( $n > 0 ) {
+                return $n;
+            }
+        } catch ( Throwable $e ) {
+            // on retombe sur le comptage par regex
+        }
+    }
+
     $size = filesize( $file );
     if ( $size === false || $size > $max_bytes ) {
         // Trop gros ou taille inconnue : on abandonne proprement
