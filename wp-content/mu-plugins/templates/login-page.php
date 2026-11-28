@@ -4,6 +4,10 @@ defined('ABSPATH') || exit;
 $uploads = content_url('uploads/');
 $logo    = $uploads . '2016/04/logo-le-poulailler-seul-carre.png';
 $photo   = $uploads . '2020/05/20200524_115733-1140x641.jpg';
+$svg_dir      = dirname(__DIR__) . '/templates/assets/';
+$svg_url      = content_url('mu-plugins/templates/assets/');
+$logo_clair   = $svg_url . 'logo-poulailler-blanc.svg?v=' . (@filemtime($svg_dir . 'logo-poulailler-blanc.svg') ?: 1);
+$logo_sombre  = $svg_url . 'logo-poulailler.svg?v=' . (@filemtime($svg_dir . 'logo-poulailler.svg') ?: 1);
 $redirect = $_GET['redirect'] ?? false;
 $lien_mail = '/wp-login.php?redirect=' . urlencode($redirect) . '&login-link-email=';
 $annee = (int) wp_date('Y') - 1;
@@ -33,7 +37,7 @@ if (!empty($_GET['notification'])) {
     <link rel="shortcut icon" href="https://coworking-metz.fr/favicon/favicon.ico?v=2">
     <meta name="theme-color" content="#f2af10">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@300&display=swap" rel="stylesheet">
     <style>
         :root {
             --y: #eab234;
@@ -291,27 +295,27 @@ if (!empty($_GET['notification'])) {
         }
 
         .v1 .brand {
+            --h: 56px;
             display: flex;
             align-items: center;
-            gap: .9rem;
-            font-weight: 700;
-            font-size: 1.1rem;
+            gap: 0;
             text-decoration: none
         }
 
-        .v1 .brand img {
-            width: 54px;
-            height: 54px;
-            border-radius: 14px;
-            background: #fff;
-            padding: 4px
+        .v1 .brand .brand__logo {
+            display: block;
+            height: var(--h);
+            width: auto
         }
 
-        .v1 .brand small {
-            display: block;
-            font-weight: 400;
-            font-size: .75rem;
-            opacity: .7
+        .v1 .brand .brand__since {
+            align-self: flex-end;
+            margin: 0 0 calc(var(--h) * .104) calc(var(--h) * -.2375 + 1.5em);
+            font: 300 calc(var(--h) * .199)/1 'Montserrat', 'Poppins', system-ui, sans-serif;
+            letter-spacing: .02em;
+            text-transform: uppercase;
+            color: #fff;
+            white-space: nowrap
         }
 
         .v1 .pitch h2 {
@@ -409,10 +413,12 @@ if (!empty($_GET['notification'])) {
                 border-bottom: 1px solid var(--line)
             }
 
-            .v1 .brand img {
-                width: 46px;
-                height: 46px;
-                padding: 0
+            .v1 .brand {
+                --h: 44px
+            }
+
+            .v1 .brand .brand__since {
+                color: #000
             }
 
             .v1 .main {
@@ -469,8 +475,12 @@ if (!empty($_GET['notification'])) {
 <body>
     <div class="v1">
         <section class="side">
-            <a class="brand" href="<?= esc_url(home_url('/')) ?>"><img src="<?= esc_url($logo) ?>" alt="">
-                <div>Le Poulailler<small>Coworking Metz · depuis 2014</small></div>
+            <a class="brand" href="<?= esc_url(home_url('/')) ?>" aria-label="Le Poulailler, Coworking Metz — accueil">
+                <picture>
+                    <source media="(max-width:900px)" srcset="<?= esc_url($logo_sombre) ?>">
+                    <img class="brand__logo" src="<?= esc_url($logo_clair) ?>" alt="Le Poulailler — Coworking Metz" width="150" height="44">
+                </picture>
+                <span class="brand__since">depuis 2014</span>
             </a>
             <div class="pitch">
                 <h2>Un bureau qui donne <em>envie</em> d'aller au bureau.</h2>
